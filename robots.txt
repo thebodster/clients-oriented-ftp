@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /estilos/
+Disallow: /test/
+Disallow: /img/
+Disallow: /upload/
