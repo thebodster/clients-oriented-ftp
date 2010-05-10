@@ -152,6 +152,8 @@ if ($_POST) {
 				return false;
 			}
 
+		document.addclient.submit();
+
 		}
 	</script>
 	

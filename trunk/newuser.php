@@ -111,15 +111,15 @@ if ($_POST) {
 			var numaric = document.adduser.add_user_form_user.value;
 			if (!(numaric.match(/^[a-zA-Z0-9]+$/)))
 			  {
-				alert(create_user_chars);
+				alert(create_user_chars)
 				return false;
 			}
 			
 			// alphanumeric check for password
-			var numaric = document.adduser.add_user_form_pass.value;
-			if (!(numaric.match(/^[a-zA-Z0-9]+$/)))
+			var numeric = document.adduser.add_user_form_pass.value;
+			if (!(numeric.match(/^[a-zA-Z0-9]+$/)))
 			  {
-				alert(pass_chars);
+				alert(pass_chars)
 				return false;
 			}
 			
@@ -128,7 +128,8 @@ if ($_POST) {
 				alert(pass_mismatch)
 				return false;
 			}
-		
+			
+		document.adduser.submit();
 		}
 	
 	</script>
