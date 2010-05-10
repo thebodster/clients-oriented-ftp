@@ -15,7 +15,10 @@ Instructions:
 2. Open includes/sys.vars.php and set your database info there.
 3. Upload cFTP to your selected destination
 4. Open your browser and go to "your_selected_cftp_folder"/install
-5. Complete the data there and you are ready to go!
+5. Complete the data there and wait for the "everything went ok" confirmation message
+6. Delete the install folder
+
+Congratulations! cFTP is now installed and ready for action!
 
 ---------------------------------------------------------------------
 
