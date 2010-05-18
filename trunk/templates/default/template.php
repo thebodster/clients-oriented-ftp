@@ -70,8 +70,7 @@
 	
 	<?php
 	
-		$sqllink = mysql_connect($host, $dbuser, $dbpass)or die('Cant connect to database');
-		mysql_select_db($dbname)or die('Database not found');
+		$database->MySQLDB();
 	
 		$query = 'SELECT * from tbl_files where client_user="' . $this_user .'"';
 		$result = mysql_query($query);
@@ -144,7 +143,7 @@
 			<?php
 				}
 			}
-				mysql_close($sqllink);
+				$database->Close();
 			?>
 	
 				</tbody>

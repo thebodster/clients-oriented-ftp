@@ -46,14 +46,13 @@ if ($_POST) {
 	$got_admin_pass = md5($_POST['install_user_pass']);
 	
 	// connect to db
-	$sqllink = mysql_connect($host, $dbuser, $dbpass)or die('Cant connect to database');
-	mysql_select_db($dbname)or die('Database not found');
+	$database->MySQLDB();
 
 	// call the file that creates the tables and fills them	
 	include_once('database.php');
 
 	// close db connection
-	mysql_close($sqllink);
+	$database->Close();
 ?>
 	</div>
 <?php

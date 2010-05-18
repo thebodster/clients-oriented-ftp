@@ -22,25 +22,30 @@
 <div id="main">
 	<h2><?php echo $page_title_options; ?></h2>
 
+	<div class="options_box whitebox">
+
 <?php
 if ($_POST) { // did we clock update options?	
 
-	$sqllink2 = mysql_connect($host, $dbuser, $dbpass)or die('Cant connect to database');
-	mysql_select_db($dbname)or die('Database not found');
-	
+	$database->MySQLDB();
+
 	$keys = array_keys($_POST);
 	for ($i = 0; $i < count($keys); $i++) {
-    	mysql_query('UPDATE tbl_options SET value="'.$_POST[$keys[$i]].'" WHERE name="'.$keys[$i].'"');
-		print $_POST[$keys[$i]] . ' / ' .$keys[$i].'<br />';
+		mysql_query('UPDATE tbl_options SET value="'.$_POST[$keys[$i]].'" WHERE name="'.$keys[$i].'"');
+		$updated = 1;
+	}
+	
+	if ($updated) { //options updated succesfuly ?>
+		<div class="message message_ok"><p><?php echo $options_update_ok; ?></p></div>
+	<?php } else { 	// error updating options ?>
+		<div class="message message_error"><p><?php echo $options_update_error; ?></p></div>
+	<?php
 	}
 
-	mysql_close($sqllink2);
-		
 }
-else {
+else { // just entering the options page
 ?>
 
-	<div class="options_box whitebox">
 		<form action="" name="optionsform" method="post" target="_self">
 			<h3><?php echo $title_general_options; ?></h3>
 			<h4><?php echo $desc_general_options; ?></h4>
@@ -88,9 +93,10 @@ else {
 			</div>
 
 		</form>
-	</div>
 
 <?php } ?>
+
+	</div>
 
 	</div>
 

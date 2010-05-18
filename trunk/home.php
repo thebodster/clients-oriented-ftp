@@ -1,9 +1,6 @@
 <?php include('header.php'); ?>
 
-<?php 				
-	$sqllink = mysql_connect($host, $dbuser, $dbpass)or die('Cant connect to database');
-	mysql_select_db($dbname)or die('Database not found');
-?>
+<?php $database->MySQLDB(); ?>
 
 <div id="main">
 	<h2><?php echo $tihome; ?></h2>
@@ -55,3 +52,5 @@
 </div>
 
 <?php include('footer.php'); ?>
+
+<?php $database->Close(); ?>

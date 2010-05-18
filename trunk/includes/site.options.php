@@ -1,7 +1,6 @@
 <?php
 // get options from db
-$sqllink = mysql_connect($host, $dbuser, $dbpass)or die('Cant connect to database');
-mysql_select_db($dbname)or die('Database not found');
+$database->MySQLDB();
 
 // get admin email address for upload notifications
 $sql= @mysql_query('SELECT * FROM tbl_users WHERE user="admin"');
@@ -23,7 +22,7 @@ while ($row = @mysql_fetch_array($resu)) { $options_values[$row['name']] = $row[
 	$selected_clients_template = $options_values['selected_clients_template'];
 	$timezone = $options_values['timezone'];
 	$timeformat = $options_values['timeformat'];
-mysql_close($sqllink);
+$database->Close();
 
 date_default_timezone_set($timezone);
 ?>

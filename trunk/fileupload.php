@@ -37,8 +37,7 @@
 	
 	<?php
 		// count clients to show error or form
-		$sqllink = mysql_connect($host, $dbuser, $dbpass)or die('Cant connect to database');
-		mysql_select_db($dbname)or die('Database not found');
+		$database->MySQLDB();
 
 		$sql="SELECT * FROM tbl_clients";
 		$result=mysql_query($sql);
@@ -76,8 +75,7 @@
 			<td><select name="clientname" id="clientname" class="txtfield" >
 					<?php
 					
-						$sqllink = mysql_connect($host, $dbuser, $dbpass)or die('Cant connect to database');
-						mysql_select_db($dbname)or die('Database not found');
+						$database->MySQLDB();
 					
 						$sql="SELECT client_user, name FROM tbl_clients";
 						$result=mysql_query($sql);
@@ -86,7 +84,7 @@
 							echo '<option value="'.$row['client_user'].'">' . $row['name'] . '</option>';
 						}
 						
-						mysql_close($sqllink);
+						$database->Close();
 					?>
 				</select>
 			</td>

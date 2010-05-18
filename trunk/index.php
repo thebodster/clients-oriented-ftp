@@ -31,8 +31,7 @@
 <?php
 if ($_POST) {
 
-	$sqllink = mysql_connect($host, $dbuser, $dbpass)or die('Cant connect to database');
-	mysql_select_db($dbname)or die('Database not found');
+	$database->MySQLDB();
 	
 	$username=$_POST['usuario'];
 	$password=md5($_POST['password']);
@@ -55,7 +54,7 @@ if ($_POST) {
 	<?php
 	}
 
-	mysql_close($sqllink);
+	$database->Close();
 
 }
 ?>
