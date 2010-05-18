@@ -11,6 +11,21 @@
 // get thumbnails options
 require_once('sys.vars.php');
 
+function meassureimg($pic_source) {
+	$picture = getimagesize($pic_source);
+	$img_width = $the_picture[0];
+	$img_height = $the_picture[1];
+
+	if ($img_width > $img_height) {
+		$use_meassure = 'h';
+		$use_side = $max_logo_height;
+	}
+	else {
+		$use_meassure = 'w';
+		$use_side = $max_logo_width;
+	}
+}
+
 // let's name the file
 $thumb_name = $_GET['w'].$_GET['h'].str_replace("\)", "5", str_replace("\(", "4", str_replace(" ", "_", str_replace("/", "-", $_GET['src']))));
 

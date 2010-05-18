@@ -14,22 +14,6 @@ function gettheurl() {
 	return $actual_url;
 }
 
-
-function meassureimg($pic_source) {
-	$picture = getimagesize($pic_source);
-	$img_width = $the_picture[0];
-	$img_height = $the_picture[1];
-
-	if ($img_width > $img_height) {
-		$use_meassure = 'h';
-		$use_side = $max_logo_height;
-	}
-	else {
-		$use_meassure = 'w';
-		$use_side = $max_logo_width;
-	}
-}
-
 function getfilesize($dataarch) {
 	if( $dataarch < 1024 ) {
 		$tamfinal = $dataarch . " bytes";

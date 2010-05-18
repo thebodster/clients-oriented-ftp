@@ -24,8 +24,7 @@ $(document).ready(function()
 
 <?php
 
-	$sqllink = mysql_connect($host, $dbuser, $dbpass)or die('Cant connect to database');
-	mysql_select_db($dbname)or die('Database not found');
+	$database->MySQLDB();
 
 	$sql="SELECT * FROM tbl_users";
 	$result=mysql_query($sql);
@@ -81,7 +80,7 @@ $(document).ready(function()
 	<?php
 	}
 
-	mysql_close($sqllink);
+	$database->Close();
 ?>
 
 </tbody>

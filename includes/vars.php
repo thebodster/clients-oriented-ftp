@@ -253,6 +253,9 @@ $options_logo_height = 'Max height';
 $options_update = 'Update';
 $options_missed_data = 'Please complete all the fields.';
 
+$options_update_ok = 'Options updated succesfuly';
+$options_update_error = 'There was an error. Please try again';
+
 // others
 $copyright = 'cFTP Free software (GPL2) | 2007 - ';
 ?>

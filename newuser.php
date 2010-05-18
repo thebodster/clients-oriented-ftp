@@ -9,8 +9,7 @@ if ($_POST) {
 	$add_user_form_email = $_POST['add_user_form_email'];
 	$add_user_form_level = $_POST['add_user_form_level'];
 	
-	$sqllink = mysql_connect($host, $dbuser, $dbpass)or die('Cant connect to database');
-	mysql_select_db($dbname)or die('Database not found');
+	$database->MySQLDB();
 	
 	if (mysql_num_rows(mysql_query("SELECT * FROM tbl_users WHERE user = '$add_user_form_user'"))){
 		  print "<meta http-equiv=\"refresh\" content=\"0;URL=newuser.php?stat=err2\">";
@@ -21,7 +20,7 @@ if ($_POST) {
 		$success = mysql_query("INSERT INTO tbl_users (id,user,password,name,email,level,timestamp)"
 		."VALUES ('NULL', '$add_user_form_user', '$add_user_form_pass', '$add_user_form_name', '$add_user_form_email','$add_user_form_level', '$timestampdate')");
 		
-		mysql_close($sqllink);
+		$database->Close();
 		
 		if ($success){
 		  print "<meta http-equiv=\"refresh\" content=\"0;URL=newuser.php?stat=ok\">";

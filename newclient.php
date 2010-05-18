@@ -12,8 +12,7 @@ if ($_POST) {
 	$add_ccont = $_POST['add_ccont'];
 	if(isset($_POST["add_cnoti"])) { $add_cnoti = 1; } else { $add_cnoti = 0; }
 	
-	$sqllink = mysql_connect($host, $dbuser, $dbpass)or die('Cant connect to database');
-	mysql_select_db($dbname)or die('Database not found');
+	$database->MySQLDB();
 	
 	if(mysql_num_rows(mysql_query("SELECT * FROM tbl_clients WHERE client_user = '$add_cuser'"))){
 		  print "<meta http-equiv=\"refresh\" content=\"0;URL=newclient.php?stat=err2\">";
@@ -24,7 +23,7 @@ if ($_POST) {
 		$success = MYSQL_QUERY("INSERT INTO tbl_clients (id,name,client_user,password,address,phone,email,notify,contact,timestamp)"
 		."VALUES ('NULL', '$add_cname', '$add_cuser', '$add_cpass', '$add_cadd', '$add_cphone', '$add_cmail', '$add_cnoti', '$add_ccont', '$timestampdate')");
 		
-		mysql_close($sqllink);
+		$database->Close();
 		
 		
 		// Crear la carpeta para el cliente, si no existe

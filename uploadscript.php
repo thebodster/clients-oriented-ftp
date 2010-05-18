@@ -10,8 +10,7 @@ $client_user = $_POST['clientname'];
 $description = $_POST['description'];
 $thefile = $_FILES['ufile']['name'];
 
-$sqllink = mysql_connect($host, $dbuser, $dbpass)or die('Cant connect to database');
-mysql_select_db($dbname)or die('Database not found');
+$database->MySQLDB();
 
 // create MySQL entry
 $timestampdate = time();
@@ -23,9 +22,9 @@ $folder = 'upload/' . $client_user . '/';
 $path= $folder.$_FILES['ufile']['name'];
 if($thefile!=none)
 {
-	// start uploading ok message
 	if(copy($_FILES['ufile']['tmp_name'], $path))
 	{
+	// start uploading ok message
 ?>
 		<div id="txthome">
 	
@@ -89,7 +88,7 @@ else
 
 	</div>
 
-<?php mysql_close($sqllink); ?>
+<?php $database->Close(); ?>
 
 <?php include('footer.php'); // footer for both pages
 }
