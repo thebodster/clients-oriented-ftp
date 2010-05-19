@@ -12,7 +12,7 @@ if ($_POST) {
 	$add_user_form_level = mysql_real_escape_string($_POST['add_user_form_level']);
 	
 	if (mysql_num_rows(mysql_query("SELECT * FROM tbl_users WHERE user = '$add_user_form_user'"))){
-		  print "<meta http-equiv=\"refresh\" content=\"0;URL=newuser.php?stat=err2\">";
+		header("location:newuser.php?stat=err2");
 	}
 	else
 	{
@@ -23,10 +23,10 @@ if ($_POST) {
 		$database->Close();
 		
 		if ($success){
-		  print "<meta http-equiv=\"refresh\" content=\"0;URL=newuser.php?stat=ok\">";
+			header("location:newuser.php?stat=ok");
 		}
 		else{
-		  print "<meta http-equiv=\"refresh\" content=\"0;URL=newuser.php?stat=err\">";
+			header("location:newuser.php?stat=err");
 		}
 	}
 } else { // do if just entering (no form info sent) ?>
@@ -136,7 +136,6 @@ if ($_POST) {
 		<div class="whiteform whitebox">
 		
 		<form action="" name="adduser" method="post" target="_self">
-	
 			<table border="0" cellspacing="1" cellpadding="1">
 			  <tr>
 				<td width="40%"><?php echo $add_user_form_name; ?></td>
@@ -144,7 +143,7 @@ if ($_POST) {
 			  </tr>
 			  <tr>
 				<td><?php echo $add_user_form_user; ?></td>
-				<td><input name="add_user_form_user" id="add_user_form_user" maxlength="16" class="txtfield" maxlength="12" /></td>
+				<td><input name="add_user_form_user" id="add_user_form_user" class="txtfield" maxlength="12" value="" /></td>
 			  </tr>
 			  <tr>
 				<td><?php echo $add_user_form_pass; ?></td>

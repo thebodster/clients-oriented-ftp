@@ -15,7 +15,7 @@ if ($_POST) {
 	if(isset($_POST["add_cnoti"])) { $add_cnoti = 1; } else { $add_cnoti = 0; }
 	
 	if(mysql_num_rows(mysql_query("SELECT * FROM tbl_clients WHERE client_user = '$add_cuser'"))){
-		  print "<meta http-equiv=\"refresh\" content=\"0;URL=newclient.php?stat=err2\">";
+		header("location:newclient.php?stat=err2");
 	}
 	else
 	{
@@ -44,10 +44,10 @@ if ($_POST) {
 		}
 		
 		if ($success){
-		  print "<meta http-equiv=\"refresh\" content=\"0;URL=newclient.php?stat=ok\">";
+			header("location:newclient.php?stat=ok");
 		}
 		else{
-		  print "<meta http-equiv=\"refresh\" content=\"0;URL=newclient.php?stat=err\">";
+			header("location:newclient.php?stat=err");
 		}
 	}
 } else { // do if just entering (no form info sent) ?>
@@ -165,7 +165,7 @@ if ($_POST) {
 			  </tr>
 			  <tr>
 				<td><?php echo $add_cuser; ?></td>
-				<td><input name="add_cuser" id="add_cuser" maxlength="16" class="txtfield" maxlength="12" /></td>
+				<td><input name="add_cuser" id="add_cuser" class="txtfield" maxlength="12" /></td>
 			  </tr>
 			  <tr>
 				<td><?php echo $add_cpass; ?></td>
