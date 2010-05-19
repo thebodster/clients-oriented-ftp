@@ -1,5 +1,10 @@
 <?php
 
+function mysql_real_escape_array($t){
+	// nice function by brian on http://php.net/manual/es/function.mysql-real-escape-string.php
+    return array_map("mysql_real_escape_string",$t);
+}
+
 function gettheurl() {
 	// based on a script found on http://www.webcheatsheet.com/php/get_current_page_url.php
 	$pageURL = 'http';

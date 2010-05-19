@@ -33,8 +33,8 @@ if ($_POST) {
 
 	$database->MySQLDB();
 	
-	$username=$_POST['usuario'];
-	$password=md5($_POST['password']);
+	$username=mysql_real_escape_string($_POST['usuario']);
+	$password=mysql_real_escape_string(md5($_POST['password']));
 	
 	$sql="SELECT * FROM tbl_users WHERE user='$username' and password='$password'";
 	$result=mysql_query($sql);
