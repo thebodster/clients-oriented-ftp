@@ -38,20 +38,18 @@ if ($_POST) {
 ?>
 	<div id="install_inside">
 <?php
-	// collect data from form
-	$this_install_title = Trim(stripslashes($_POST['this_install_title']));
-	$base_uri = Trim(stripslashes($_POST['base_uri']));
-	$got_admin_name = Trim(stripslashes($_POST['install_user_fullname']));
-	$got_admin_email = Trim(stripslashes($_POST['install_user_mail']));
-	$got_admin_pass = md5($_POST['install_user_pass']);
-	
-	// connect to db
 	$database->MySQLDB();
 
-	// call the file that creates the tables and fills them	
+	// collect data from form
+	$this_install_title = mysql_real_escape_string($_POST['this_install_title']);
+	$base_uri = mysql_real_escape_string($_POST['base_uri']);
+	$got_admin_name = mysql_real_escape_string($_POST['install_user_fullname']);
+	$got_admin_email = mysql_real_escape_string($_POST['install_user_mail']);
+	$got_admin_pass = mysql_real_escape_string(md5($_POST['install_user_pass']));
+	
+	// call the file that creates the tables and fill it with the data we got previously
 	include_once('database.php');
 
-	// close db connection
 	$database->Close();
 ?>
 	</div>
@@ -119,12 +117,12 @@ else {
 			<h3><?php echo $install_database_title; ?></h3>
 			<h4><?php echo $install_database_desc; ?></h4>
 			<div class="options_column options_col_left">
-				<label for="install_db_name"><?php echo $install_db_name; ?></label><input name="install_db_name" id="install_db_name" disabled="disabled" value="<?php echo $host;?>" /><br />
-				<label for="install_db_host"><?php echo $install_db_host; ?></label><input name="install_db_host" id="install_db_host" disabled="disabled" value="<?php echo $dbname;?>" />
+				<label for="install_db_name"><?php echo $install_db_name; ?></label><input name="install_db_name" id="install_db_name" disabled="disabled" value="<?php echo DB_HOST;?>" /><br />
+				<label for="install_db_host"><?php echo $install_db_host; ?></label><input name="install_db_host" id="install_db_host" disabled="disabled" value="<?php echo DB_NAME;?>" />
 			</div>
 			<div class="options_column options_col_right">
-				<label for="install_db_user"><?php echo $install_db_user; ?></label><input name="install_db_user" id="install_db_user" disabled="disabled" value="<?php echo $dbuser;?>" /><br />
-				<label for="install_db_pass"><?php echo $install_db_pass; ?></label><input name="install_db_pass" id="install_db_pass" disabled="disabled" value="<?php echo $dbpass;?>" />
+				<label for="install_db_user"><?php echo $install_db_user; ?></label><input name="install_db_user" id="install_db_user" disabled="disabled" value="<?php echo DB_USER;?>" /><br />
+				<label for="install_db_pass"><?php echo $install_db_pass; ?></label><input name="install_db_pass" id="install_db_pass" disabled="disabled" value="<?php echo DB_PASSWORD;?>" />
 			</div>
 			<div class="clear"></div>
 			<div class="options_divide"></div>

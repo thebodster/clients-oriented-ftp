@@ -27,10 +27,9 @@ $(document).ready(function()
 
 	$database->MySQLDB();
 
-	$sql="SELECT * FROM tbl_clients";
-	$result=mysql_query($sql);
+	$sql = $database->query("SELECT * FROM tbl_clients");
 	
-	$count=mysql_num_rows($result);
+	$count=mysql_num_rows($sql);
 	if (!$count) { echo $noclients; }
 	
 	else {
@@ -55,7 +54,7 @@ $(document).ready(function()
 <tbody>
 
 <?php
-		while($row = mysql_fetch_array($result)) {
+		while($row = mysql_fetch_array($sql)) {
 	?>
 
 	<tr>

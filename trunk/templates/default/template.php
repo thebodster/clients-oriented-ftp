@@ -71,11 +71,10 @@
 	<?php
 	
 		$database->MySQLDB();
-	
-		$query = 'SELECT * from tbl_files where client_user="' . $this_user .'"';
-		$result = mysql_query($query);
-		
-		$count=mysql_num_rows($result);
+
+		$sql = $database->query('SELECT * from tbl_files where client_user="' . $this_user .'"');
+
+		$count=mysql_num_rows($sql);
 		if (!$count) {
 			echo $nofiles4u;
 		}
@@ -97,7 +96,7 @@
 			<tbody>
 			
 			<?php
-				while($row = mysql_fetch_array($result)) {
+				while($row = mysql_fetch_array($sql)) {
 			?>
 			
 				<tr>

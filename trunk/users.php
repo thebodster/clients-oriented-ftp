@@ -25,11 +25,10 @@ $(document).ready(function()
 <?php
 
 	$database->MySQLDB();
-
-	$sql="SELECT * FROM tbl_users";
-	$result=mysql_query($sql);
 	
-	$count=mysql_num_rows($result);
+	$sql = $database->query("SELECT * FROM tbl_users");
+	
+	$count=mysql_num_rows($sql);
 ?>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" id="users_tbl" class="tablesorter">
@@ -47,7 +46,7 @@ $(document).ready(function()
 <tbody>
 
 <?php
-	while($row = mysql_fetch_array($result)) {
+	while($row = mysql_fetch_array($sql)) {
 	?>
 	<tr>
 		<td><?php echo $row["id"]?></td>

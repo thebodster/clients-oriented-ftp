@@ -2,17 +2,17 @@
 
 <?php
 if ($_POST) {
-	// Variables para la base de datos
-	$add_cname = $_POST['add_cname'];
-	$add_cuser = $_POST['add_cuser'];
-	$add_cpass = md5($_POST['add_cpass']);
-	$add_cadd = $_POST['add_cadd'];
-	$add_cphone = $_POST['add_cphone'];
-	$add_cmail = $_POST['add_cmail'];
-	$add_ccont = $_POST['add_ccont'];
-	if(isset($_POST["add_cnoti"])) { $add_cnoti = 1; } else { $add_cnoti = 0; }
-	
+
 	$database->MySQLDB();
+
+	$add_cname = mysql_real_escape_string($_POST['add_cname']);
+	$add_cuser = mysql_real_escape_string($_POST['add_cuser']);
+	$add_cpass = mysql_real_escape_string(md5($_POST['add_cpass']));
+	$add_cadd = mysql_real_escape_string($_POST['add_cadd']);
+	$add_cphone = mysql_real_escape_string($_POST['add_cphone']);
+	$add_cmail = mysql_real_escape_string($_POST['add_cmail']);
+	$add_ccont = mysql_real_escape_string($_POST['add_ccont']);
+	if(isset($_POST["add_cnoti"])) { $add_cnoti = 1; } else { $add_cnoti = 0; }
 	
 	if(mysql_num_rows(mysql_query("SELECT * FROM tbl_clients WHERE client_user = '$add_cuser'"))){
 		  print "<meta http-equiv=\"refresh\" content=\"0;URL=newclient.php?stat=err2\">";
@@ -20,20 +20,19 @@ if ($_POST) {
 	else
 	{
 		$timestampdate = time();
-		$success = MYSQL_QUERY("INSERT INTO tbl_clients (id,name,client_user,password,address,phone,email,notify,contact,timestamp)"
+		$success = mysql_query("INSERT INTO tbl_clients (id,name,client_user,password,address,phone,email,notify,contact,timestamp)"
 		."VALUES ('NULL', '$add_cname', '$add_cuser', '$add_cpass', '$add_cadd', '$add_cphone', '$add_cmail', '$add_cnoti', '$add_ccont', '$timestampdate')");
 		
 		$database->Close();
 		
-		
-		// Crear la carpeta para el cliente, si no existe
+		// Create user folder
 		$folder = 'upload/' . $add_cuser . '/';
 		if (!file_exists($folder)) {
 			mkdir($folder); chmod($folder, 0755);
 			$folder2 = 'upload/' . $add_cuser . '/thumbs/';
 			mkdir($folder2); chmod($folder2, 0755);
 
-		// Crear index.php para la carpeta del cliente
+		// Create index.php on clients folder
 			$index_content = '$this_user = "' . $add_cuser . '" ; include_once(\'../../templates/default/template.php\');';
 			$addwhat = '<?php ' . $index_content . ' ?>';
 		
@@ -43,7 +42,6 @@ if ($_POST) {
 			fclose($file_handle);
 			$linkcli = realpath($file);
 		}
-		
 		
 		if ($success){
 		  print "<meta http-equiv=\"refresh\" content=\"0;URL=newclient.php?stat=ok\">";

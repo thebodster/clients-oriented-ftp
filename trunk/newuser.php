@@ -2,14 +2,14 @@
 
 <?php
 if ($_POST) {
-	// Variables para la base de datos
-	$add_user_form_name = $_POST['add_user_form_name'];
-	$add_user_form_user = $_POST['add_user_form_user'];
-	$add_user_form_pass = md5($_POST['add_user_form_pass']);
-	$add_user_form_email = $_POST['add_user_form_email'];
-	$add_user_form_level = $_POST['add_user_form_level'];
-	
+
 	$database->MySQLDB();
+
+	$add_user_form_name = mysql_real_escape_string($_POST['add_user_form_name']);
+	$add_user_form_user = mysql_real_escape_string($_POST['add_user_form_user']);
+	$add_user_form_pass = mysql_real_escape_string(md5($_POST['add_user_form_pass']));
+	$add_user_form_email = mysql_real_escape_string($_POST['add_user_form_email']);
+	$add_user_form_level = mysql_real_escape_string($_POST['add_user_form_level']);
 	
 	if (mysql_num_rows(mysql_query("SELECT * FROM tbl_users WHERE user = '$add_user_form_user'"))){
 		  print "<meta http-equiv=\"refresh\" content=\"0;URL=newuser.php?stat=err2\">";

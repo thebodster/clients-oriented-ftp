@@ -39,9 +39,8 @@
 		// count clients to show error or form
 		$database->MySQLDB();
 
-		$sql="SELECT * FROM tbl_clients";
-		$result=mysql_query($sql);
-		$count=mysql_num_rows($result);
+		$sql = $database->query("SELECT * FROM tbl_clients");
+		$count=mysql_num_rows($sql);
 		if (!$count) {
 			echo $upload_no_clients;
 		}
@@ -75,16 +74,12 @@
 			<td><select name="clientname" id="clientname" class="txtfield" >
 					<?php
 					
-						$database->MySQLDB();
-					
-						$sql="SELECT client_user, name FROM tbl_clients";
-						$result=mysql_query($sql);
+						$sql = $database->query("SELECT client_user, name FROM tbl_clients");
 						
-						while($row = mysql_fetch_array($result)) {
+						while($row = mysql_fetch_array($sql)) {
 							echo '<option value="'.$row['client_user'].'">' . $row['name'] . '</option>';
 						}
-						
-						$database->Close();
+
 					?>
 				</select>
 			</td>
@@ -100,7 +95,11 @@
 
 	</form>
 	
-	<?php } // end if for users count ?>
+	<?php
+		} // end if for users count
+
+	$database->Close();
+	?>
 
 	</div>
 </div>

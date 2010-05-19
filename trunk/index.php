@@ -36,10 +36,8 @@ if ($_POST) {
 	$username=mysql_real_escape_string($_POST['usuario']);
 	$password=mysql_real_escape_string(md5($_POST['password']));
 	
-	$sql="SELECT * FROM tbl_users WHERE user='$username' and password='$password'";
-	$result=mysql_query($sql);
-	
-	$count=mysql_num_rows($result);
+	$sql = $database->query("SELECT * FROM tbl_users WHERE user='$username' and password='$password'");
+	$count=mysql_num_rows($sql);
 	
 	if($count>0){
 		session_register("usuario");
