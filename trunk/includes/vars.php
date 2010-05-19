@@ -256,6 +256,13 @@ $options_missed_data = 'Please complete all the fields.';
 $options_update_ok = 'Options updated succesfuly';
 $options_update_error = 'There was an error. Please try again';
 
+
+// pager buttons
+$pager_first = 'First';
+$pager_prev = 'Prev';
+$pager_next = 'Next';
+$pager_last = 'Last';
+
 // others
 $copyright = 'cFTP Free software (GPL2) | 2007 - ';
 ?>

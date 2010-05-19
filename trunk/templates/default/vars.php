@@ -14,6 +14,12 @@ $file_preview = 'Image Preview';
 $file_actions = 'Actions';
 $delete = 'Delete';
 
+// pager buttons
+$pager_first = 'First';
+$pager_prev = 'Prev';
+$pager_next = 'Next';
+$pager_last = 'Last';
+
 $help_title = 'Help';
 $help_text = '<p>The file list on the right contains every file uploaded for you.</p><p>You can click on the name of each marked column to order the list.</p>';
 ?>

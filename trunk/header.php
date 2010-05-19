@@ -20,8 +20,12 @@ header("location:index.php");
 <link rel="stylesheet" media="all" type="text/css" href="styles/base.css" />
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
-<script src="includes/js/jquery.tablesorter.min.js" type="text/javascript"></script>
 <script src="includes/js/dropdownmenu.js" type="text/javascript"></script>
+
+<?php if ($tablesorter) { ?>
+<script src="includes/js/jquery.tablesorter.min.js" type="text/javascript"></script>
+<script src="../../includes/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
+<?php } ?>
 
 </head>
 
@@ -39,7 +43,8 @@ header("location:index.php");
 	<ul class="menu" id="menu">
 		<li><a href="home.php" class="menulink"><?php echo $mnu_home; ?></a></li>
 		<li><a href="fileupload.php" class="menulink"><?php echo $mnu_upload; ?></a></li>
-<!--clients-->
+
+<?php // show CLIENTS ?>
 		<li>
 			<a href="#" class="menulink dropready"><?php echo $mnu_clients; ?></a>
 			<ul>
@@ -47,7 +52,8 @@ header("location:index.php");
 				<li><a href="clients.php"><?php echo $mnu_edit_cl; ?></a></li>
 			</ul>
 		</li>
-<!--users-->
+
+<?php // show USERS ?>
 		<li>
 			<a href="#" class="menulink dropready"><?php echo $mnu_users; ?></a>
 			<ul>
@@ -55,7 +61,8 @@ header("location:index.php");
 				<li><a href="users.php"><?php echo $mnu_edit_usr; ?></a></li>
 			</ul>
 		</li>
-<!--config-->
+
+<?php // show LOGO ?>
 		<li>
 			<a href="#" class="menulink dropready"><?php echo $mnu_config; ?></a>
 			<ul>
