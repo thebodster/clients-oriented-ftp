@@ -29,12 +29,16 @@ if ($_POST) { // did we clock update options?
 
 	$database->MySQLDB();
 
+	$_POST=mysql_real_escape_array($_POST); // escape the values
 	$keys = array_keys($_POST);
+
+	$updated = 1;
 	for ($i = 0; $i < count($keys); $i++) {
-		mysql_query('UPDATE tbl_options SET value="'.$_POST[$keys[$i]].'" WHERE name="'.$keys[$i].'"');
-		$updated = 1;
+		$q = 'UPDATE tbl_options SET value="'.$_POST[$keys[$i]].'" WHERE name="'.$keys[$i].'"';
+		$sql = mysql_query($q, $database->connection);
+		$updated++;	
 	}
-	
+
 	if ($updated) { //options updated succesfuly ?>
 		<div class="message message_ok"><p><?php echo $options_update_ok; ?></p></div>
 	<?php } else { 	// error updating options ?>
