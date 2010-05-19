@@ -10,7 +10,8 @@ $(document).ready(function()
 			sortList: [[0,0]], widgets: ['zebra'], headers: {
 				6: { sorter: false }, 
 			}
-		});
+		})
+		.tablesorterPager({container: $("#pager")})
 	}
 );
 </script>
