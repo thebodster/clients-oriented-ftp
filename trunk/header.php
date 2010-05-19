@@ -24,7 +24,7 @@ header("location:index.php");
 
 <?php if ($tablesorter) { ?>
 <script src="includes/js/jquery.tablesorter.min.js" type="text/javascript"></script>
-<script src="../../includes/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
+<script src="includes/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
 <?php } ?>
 
 </head>
