@@ -1,21 +1,18 @@
 <?php
-	session_start();
-	$client = $_GET['client'];
-	
-	require_once('header.php');
+session_start();
+require_once('header.php');
 
-	$database->MySQLDB();
+$database->MySQLDB();
 
-	$sql2 = 'DELETE FROM tbl_clients WHERE client_user="' . $client .'"';
-	$result = mysql_query($sql2);
+$client = mysql_real_escape_string($_GET['client']);
 
-	$sql = 'DELETE FROM tbl_files WHERE client_user="' . $client .'"';
-	$result = mysql_query($sql);
-	
-	$dir = "./upload/" . $client . "/";
-	deleteall($dir);
+$sql = $database->query('DELETE FROM tbl_clients WHERE client_user="' . $client .'"');
+$sql = $database->query('DELETE FROM tbl_files WHERE client_user="' . $client .'"');
 
-	$database->Close();
-	
-	header("location:clients.php");
+$dir = "./upload/" . $client . "/";
+deleteall($dir);
+
+$database->Close();
+
+header("location:clients.php");
 ?>

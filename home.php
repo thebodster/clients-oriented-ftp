@@ -12,11 +12,8 @@
 				<span><?php echo $statcli; ?>:</span>
 				<?php
 
-					$sql="SELECT distinct client_user FROM tbl_clients";
-					$result=mysql_query($sql);
-					
-					$count=mysql_num_rows($result);
-					
+					$sql = $database->query("SELECT distinct client_user FROM tbl_clients");
+					$count=mysql_num_rows($sql);
 					echo $count;
 				?>
 				<a href="clients.php" target="_self"><?php echo $statview; ?></a>
@@ -27,11 +24,8 @@
 				<span><?php echo $statusr; ?>:</span> 
 				<?php
 				
-					$sql="SELECT distinct user FROM tbl_users";
-					$result=mysql_query($sql);
-					
-					$count=mysql_num_rows($result);
-					
+					$sql = $database->query("SELECT distinct user FROM tbl_users");
+					$count=mysql_num_rows($sql);
 					echo $count;
 				?>
 				<a href="users.php" target="_self"><?php echo $statview; ?></a>

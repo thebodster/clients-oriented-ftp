@@ -4,22 +4,23 @@
 		<h2><?php echo $ticonfile; ?></h2>
 
 <?php
-// database vars
-$filename = $_POST['name'];
-$client_user = $_POST['clientname'];
-$description = $_POST['description'];
-$thefile = $_FILES['ufile']['name'];
 
 $database->MySQLDB();
 
+// database vars
+$filename = mysql_real_escape_string($_POST['name']);
+$client_user = mysql_real_escape_string($_POST['clientname']);
+$description = mysql_real_escape_string($_POST['description']);
+$thefile = mysql_real_escape_string($_FILES['ufile']['name']);
+
 // create MySQL entry
 $timestampdate = time();
-$result = mysql_query("INSERT INTO tbl_files (id,url,filename,description,client_user,timestamp)"
+$result = $database->query("INSERT INTO tbl_files (id,url,filename,description,client_user,timestamp)"
 ."VALUES ('NULL', '$thefile', '$filename', '$description', '$client_user', '$timestampdate')");
 
 // upload the file
 $folder = 'upload/' . $client_user . '/';
-$path= $folder.$_FILES['ufile']['name'];
+$path= $folder.$thefile;
 if($thefile!=none)
 {
 	if(copy($_FILES['ufile']['tmp_name'], $path))
@@ -45,8 +46,8 @@ if($thefile!=none)
 
 			<?php
 				// check if user wants to receive mail notifications
-				$newsql = mysql_query('SELECT * FROM tbl_clients WHERE client_user="'.$client_user.'"');
-				while($row = mysql_fetch_array($newsql)) {
+				$sql = $database->query('SELECT * FROM tbl_clients WHERE client_user="'.$client_user.'"');
+				while($row = mysql_fetch_array($sql)) {
 					if ($row['notify'] == '1') {
 
 						$notify_email_link = $baseuri.'upload/'.$client_user.'/';

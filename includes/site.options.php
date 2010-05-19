@@ -4,8 +4,7 @@ $database->MySQLDB();
 
 // get admin email address for upload notifications
 
-$q = 'SELECT * FROM tbl_users WHERE user="admin"';
-$sql = mysql_query($q, $database->connection);
+$sql = $database->query('SELECT * FROM tbl_users WHERE user="admin"');
 
 while($row = mysql_fetch_array($sql)) {
 	$admin_email_address = $row['email'];
@@ -13,9 +12,8 @@ while($row = mysql_fetch_array($sql)) {
 
 // create array of options
 $options_values = array();
-$q = "SELECT * FROM tbl_options";
-$resu = mysql_query($q, $database->connection);
-while ($row = mysql_fetch_array($resu)) {
+$options = $database->query("SELECT * FROM tbl_options");
+while ($row = mysql_fetch_array($options)) {
 	$options_values[$row['name']] = $row['value'];
 }
 

@@ -1,16 +1,14 @@
 <?php
-	session_start();
-	$user = $_GET['user'];
-	
-	require_once('includes/vars.php');
-	require_once('includes/sys.vars.php');
+session_start();
+require_once('header.php');
 
-	$database->MySQLDB();
+$database->MySQLDB();
 
-	$sql = 'DELETE FROM tbl_users WHERE user="' . $user .'"';
-	$result = mysql_query($sql);
-	
-	$database->Close();
-	
-	header("location:users.php");
+$user = mysql_real_escape_string($_GET['user']);
+
+$sql = $database->query('DELETE FROM tbl_users WHERE user="' . $user .'"');
+
+$database->Close();
+
+header("location:users.php");
 ?>
