@@ -17,6 +17,7 @@
 <link rel="shortcut icon" href="../../favicon.ico" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
 <script src="../../includes/js/jquery.tablesorter.min.js" type="text/javascript"></script>
+<script src="../../includes/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -34,13 +35,15 @@
 	<script type="text/javascript">
 		$(document).ready(function()
 			{
-				$("#files_list").tablesorter( {
-					sortList: [[0,0]], widgets: ['zebra'], headers: {
-						4: { sorter: false },
-						5: { sorter: false },
-						6: { sorter: false }
-					}
-				});
+				$("#files_list")
+					.tablesorter( {
+						sortList: [[0,0]], widgets: ['zebra'], headers: {
+							4: { sorter: false },
+							5: { sorter: false },
+							6: { sorter: false }
+						}
+				})
+				.tablesorterPager({container: $("#pager")})
 			}
 		);
 	
@@ -106,7 +109,7 @@
 					<td>
 						<?php
 						$time_stamp=$row['timestamp']; //get timestamp
-						$date_format=date($timeformat,$time_stamp); // formats timestamp in mm:dd:yy
+						$date_format=date($timeformat,$time_stamp); // formats timestamp
 						echo $date_format; // results here ... 02 : 11 : 07
 						?>
 					</td>
@@ -147,7 +150,26 @@
 	
 				</tbody>
 			</table>
-	
+
+<?php if ($count > 10) { ?>
+	<div id="pager" class="pager">
+		<form>
+			<input type="button" class="first pag_btn" value="<?php echo $pager_first; ?>" />
+			<input type="button" class="prev pag_btn" value="<?php echo $pager_prev; ?>" />
+			<span><strong>Page</strong>:</span>
+			<input type="text" class="pagedisplay" disabled="disabled" />
+			<input type="button" class="next pag_btn" value="<?php echo $pager_next; ?>" />
+			<input type="button" class="last pag_btn" value="<?php echo $pager_last; ?>" />
+			<span><strong>Show</strong>:</span>
+			<select class="pagesize">
+				<option selected="selected" value="10">10</option>
+				<option value="20">20</option>
+				<option value="30">30</option>
+				<option value="40">40</option>
+			</select>
+		</form>
+	</div>
+<?php } ?>	
 	</div>
 
 </div> <!-- wrapper -->
