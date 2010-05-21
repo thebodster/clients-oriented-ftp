@@ -55,15 +55,15 @@ $mnu_upload = 'Upload files';
 // clients menu dropdown
 $mnu_clients = 'Clients';
 $mnu_add_cl = 'Add new';
-$mnu_edit_cl = 'Manage clients [/]';
+$mnu_edit_cl = 'Manage clients';
 // users menu dropdown
 $mnu_users = 'Users';
 $mnu_add_usr = 'Add new';
-$mnu_edit_usr = 'Manage users [/]';
+$mnu_edit_usr = 'Manage users';
 // config dropdown
 $mnu_config = 'Options';
 $mnu_config_logo = 'Your logo';
-$mnu_config_options = 'General options [/]';
+$mnu_config_options = 'General options';
 
 
 $tihome = 'Welcome to cFTP';
@@ -196,7 +196,7 @@ $create_user_length = 'Username should be between 6 and 12 characters long.';
 
 $add_user_ok = 'User added correctly';
 $add_user_error = 'There was an error. Please try again';
-$add_user_exists = 'Error. A user with this login name already exists.';
+$add_user_exists = 'A user with this login name already exists.';
 
 
 // Users section
@@ -262,6 +262,24 @@ $pager_first = 'First';
 $pager_prev = 'Prev';
 $pager_next = 'Next';
 $pager_last = 'Last';
+
+
+// form validation
+$validation_errors_title = 'The following errors were found';
+
+$validation_no_name = 'Name was not completed';
+$validation_no_user = 'Username was not completed';
+$validation_no_pass = 'Password was not completed';
+$validation_no_email = 'E-mail was not completed';
+$validation_invalid_mail = 'E-mail data is not a valid address';
+$validation_alpha_user = 'Username must be alphanumeric (a-z,A-Z,0-9 allowed)';
+$validation_alpha_pass = 'Password must be alphanumeric (a-z,A-Z,0-9 allowed)';
+$validation_length_user = 'Username length should be between 6 and 12 characters long.';
+$validation_length_pass = 'Password length should be between 6 and 12 characters long.';
+$validation_match_pass = 'Passwords did not match';
+// users forms specific
+$validation_no_level = 'User level was not specified';
+
 
 // others
 $copyright = 'cFTP Free software (GPL2) | 2007 - ';
