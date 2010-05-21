@@ -184,6 +184,15 @@ h2 { font-size:23px; font-family:Georgia, "Times New Roman", Times, serif; margi
 	margin:0;
 }
 
+.message ol {
+	margin:20px 0 0 0;
+	padding-left:2em;
+/*	list-style-type:hiragana; NIHONGO GA SUKI DESU :D */
+}
+
+.message li {
+}
+
 #login_error {
 	width:250px;
 	margin:0 auto;

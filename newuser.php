@@ -1,55 +1,68 @@
-<?php include('header.php'); ?>
+<?php include('header.php');
 
-<?php
+$database->MySQLDB();
+
+$add_user_data_name = mysql_real_escape_string($_POST['add_user_form_name']);
+$add_user_data_user = mysql_real_escape_string($_POST['add_user_form_user']);
+$add_user_data_pass = mysql_real_escape_string(md5($_POST['add_user_form_pass']));
+$add_user_data_pass2 = mysql_real_escape_string(md5($_POST['add_user_form_pass2']));
+$add_user_data_email = mysql_real_escape_string($_POST['add_user_form_email']);
+$add_user_data_level = mysql_real_escape_string($_POST['add_user_form_level']);
+
+require_once('includes/form_validation_class.php');
+
 if ($_POST) {
 
-	$database->MySQLDB();
-
-	$add_user_form_name = mysql_real_escape_string($_POST['add_user_form_name']);
-	$add_user_form_user = mysql_real_escape_string($_POST['add_user_form_user']);
-	$add_user_form_pass = mysql_real_escape_string(md5($_POST['add_user_form_pass']));
-	$add_user_form_email = mysql_real_escape_string($_POST['add_user_form_email']);
-	$add_user_form_level = mysql_real_escape_string($_POST['add_user_form_level']);
+	// begin form validation
+	$valid_me->validate('completed',$add_user_data_name,$validation_no_name);
+	$valid_me->validate('completed',$add_user_data_user,$validation_no_user);
+	$valid_me->validate('completed',$_POST['add_user_form_pass'],$validation_no_pass);
+	$valid_me->validate('completed',$add_user_data_email,$validation_no_email);
+	$valid_me->validate('completed',$add_user_data_level,$validation_no_level); // just a precaution
+	$valid_me->validate('email',$add_user_data_email,$validation_invalid_mail);
+	$valid_me->validate('alpha',$add_user_data_user,$validation_alpha_user);
+	$valid_me->validate('alpha',$_POST['add_user_form_pass'],$validation_alpha_pass);
+	$valid_me->validate('length',$add_user_data_user,$validation_length_user,6,12);
+	$valid_me->validate('length',$_POST['add_user_form_pass'],$validation_length_pass,6,12);
+	$valid_me->validate('pass_match','',$validation_match_pass,'','',$_POST['add_user_form_pass'],$_POST['add_user_form_pass2']);
+	$valid_me->validate('user_exists',$add_user_data_user,$add_user_exists,'','','','','tbl_users','user');
 	
-	if (mysql_num_rows(mysql_query("SELECT * FROM tbl_users WHERE user = '$add_user_form_user'"))){
-		header("location:newuser.php?stat=err2");
-	}
-	else
-	{
+	if ($valid_me->return_val) { //lets continue
+
+		// add new user to DB
 		$timestampdate = time();
 		$success = mysql_query("INSERT INTO tbl_users (id,user,password,name,email,level,timestamp)"
-		."VALUES ('NULL', '$add_user_form_user', '$add_user_form_pass', '$add_user_form_name', '$add_user_form_email','$add_user_form_level', '$timestampdate')");
-		
-		$database->Close();
+		."VALUES ('NULL', '$add_user_data_user', '$add_user_data_pass', '$add_user_data_name', '$add_user_data_email','$add_user_data_level', '$timestampdate')");
 		
 		if ($success){
-			header("location:newuser.php?stat=ok");
+			$query_state = 'ok';
 		}
-		else{
-			header("location:newuser.php?stat=err");
+		else {
+			$query_state = 'err';
 		}
-	}
-} else { // do if just entering (no form info sent) ?>
 
-	<div id="main">
-		<h2><?php echo $add_utitle; ?></h2>
+	} //validation ends here
 	
-	<?php
-	if ($_GET['stat'] == "ok") {
-		 echo $add_user_ok;
-	}
+
+} // do if just entering (no form info sent) ?>
+
+<div id="main">
+	<h2><?php echo $add_utitle; ?></h2>
 	
-	else if ($_GET['stat'] == "err") {
-		echo $add_user_error;
-	}
-	
-	else if ($_GET['stat'] == "err2") {
-		echo $add_user_exists;
-	}
-	
-	else {
-	?>
-	
+		<div class="whiteform whitebox">
+		
+		<?php $valid_me->list_errors(); // if the form was submited with errors, show them here ?>
+		
+		<?php
+			if ($query_state == 'ok') {
+				 echo '<div class="message message_ok"><p>'.$add_user_ok.'</p></div>';
+			}
+			else if ($query_state == 'err') {
+				echo '<div class="message message_error"><p>'.$add_user_error.'</p></div>';
+			}
+			else {
+		?>
+
 	<script type="text/javascript">
 		var add_user_form_name = "<?php echo $add_ualrt_1; ?>"
 		var add_user_form_user = "<?php echo $add_ualrt_2; ?>"
@@ -132,18 +145,16 @@ if ($_POST) {
 		}
 	
 	</script>
-	
-		<div class="whiteform whitebox">
-		
-		<form action="" name="adduser" method="post" target="_self">
+
+		<form action="newuser.php" name="adduser" method="post" target="_self">
 			<table border="0" cellspacing="1" cellpadding="1">
 			  <tr>
 				<td width="40%"><?php echo $add_user_form_name; ?></td>
-				<td><input name="add_user_form_name" id="add_user_form_name" class="txtfield" value="<?php if ($query) { echo $row["name"] ;} ?>" /></td>
+				<td><input name="add_user_form_name" id="add_user_form_name" class="txtfield" value="<?php echo $add_user_data_name; ?>" /></td>
 			  </tr>
 			  <tr>
 				<td><?php echo $add_user_form_user; ?></td>
-				<td><input name="add_user_form_user" id="add_user_form_user" class="txtfield" maxlength="12" value="" /></td>
+				<td><input name="add_user_form_user" id="add_user_form_user" class="txtfield" maxlength="12" value="<?php echo $add_user_data_user; ?>" /></td>
 			  </tr>
 			  <tr>
 				<td><?php echo $add_user_form_pass; ?></td>
@@ -155,15 +166,15 @@ if ($_POST) {
 			  </tr>
 			  <tr>
 				<td><?php echo $add_user_form_email; ?></td>
-				<td><input name="add_user_form_email" id="add_user_form_email" class="txtfield" /></td>
+				<td><input name="add_user_form_email" id="add_user_form_email" class="txtfield" value="<?php echo $add_user_data_email; ?>" /></td>
 			  </tr>
 			  <tr>
 				<td><?php echo $add_user_form_level; ?></td>
 				<td>
 					<select name="add_user_form_level" id="add_user_form_level" class="txtfield">
-						<option value="9"><?php echo $user_role_lvl9; ?></option>
-						<option value="8"><?php echo $user_role_lvl8; ?></option>
-						<option value="7"><?php echo $user_role_lvl7; ?></option>
+						<option value="9" <?php if( $add_user_data_level == '9') { echo 'selected="selected"'; } ?>><?php echo $user_role_lvl9; ?></option>
+						<option value="8" <?php if( $add_user_data_level == '8') { echo 'selected="selected"'; } ?>><?php echo $user_role_lvl8; ?></option>
+						<option value="7" <?php if( $add_user_data_level == '7') { echo 'selected="selected"'; } ?>><?php echo $user_role_lvl7; ?></option>
 					</select>
 				</td>
 			  </tr>
@@ -178,12 +189,13 @@ if ($_POST) {
 	
 		</form>
 		
-		</div>
+		<?php } ?>
 		
-	<?php } ?>
+		</div>
 
 </div>
 
-<?php include('footer.php'); ?>
-
-<?php } ?>
+<?php
+	$database->Close();
+	include('footer.php');
+?>
