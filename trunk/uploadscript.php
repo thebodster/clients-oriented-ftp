@@ -13,17 +13,19 @@ $client_user = mysql_real_escape_string($_POST['clientname']);
 $description = mysql_real_escape_string($_POST['description']);
 $thefile = mysql_real_escape_string($_FILES['ufile']['name']);
 
+$folder = 'upload/' . $client_user . '/';
+$file_final_name= time().'-'.$thefile;
+$path= $folder.$file_final_name;
+
 // create MySQL entry
 $timestampdate = time();
 $result = $database->query("INSERT INTO tbl_files (id,url,filename,description,client_user,timestamp)"
-."VALUES ('NULL', '$thefile', '$filename', '$description', '$client_user', '$timestampdate')");
+."VALUES ('NULL', '$file_final_name', '$filename', '$description', '$client_user', '$timestampdate')");
 
 // upload the file
-$folder = 'upload/' . $client_user . '/';
-$path= $folder.$thefile;
 if($thefile!=none)
 {
-	if(copy($_FILES['ufile']['tmp_name'], $path))
+	if(move_uploaded_file($_FILES['ufile']['tmp_name'], $path))
 	{
 	// start uploading ok message
 ?>
