@@ -169,7 +169,7 @@ $add_alrt_4 = 'Please add a valid e-mail address';
 
 $add_client_ok = 'Client added correctly';
 $add_client_error = 'There was an error. Please try again';
-$add_client_exists = 'Error. A client with this login username already exists.';
+$add_client_exists = 'A client with this login username already exists.';
 
 
 // Add user
@@ -185,14 +185,6 @@ $add_user_form_submit = 'Add user';
 $user_role_lvl9 = 'System Administrator';
 $user_role_lvl8 = 'Account Manager';
 $user_role_lvl7 = 'Uploader';
-
-$add_ualrt_1 = 'Please add a name';
-$add_ualrt_2 = 'Please add a username';
-$add_ualrt_3 = 'Please add a password';
-$add_ualrt_4 = 'Both passwords don\'t match.';
-$add_ualrt_5 = 'Please add a valid e-mail address';
-$create_user_chars = 'Username has invalid characters. It should contain only letters and numbers.';
-$create_user_length = 'Username should be between 6 and 12 characters long.';
 
 $add_user_ok = 'User added correctly';
 $add_user_error = 'There was an error. Please try again';

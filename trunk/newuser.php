@@ -64,18 +64,18 @@ if ($_POST) {
 		?>
 
 	<script type="text/javascript">
-		var add_user_form_name = "<?php echo $add_ualrt_1; ?>"
-		var add_user_form_user = "<?php echo $add_ualrt_2; ?>"
-		var add_user_form_pass = "<?php echo $add_ualrt_3; ?>"
-		var add_user_form_pass2 = "<?php echo $add_ualrt_4; ?>"
-		var add_user_form_email = "<?php echo $add_ualrt_5; ?>"
+		var add_user_form_name = "<?php echo $validation_no_name; ?>"
+		var add_user_form_user = "<?php echo $validation_no_user; ?>"
+		var add_user_form_pass = "<?php echo $validation_no_pass; ?>"
+		var add_user_form_pass2 = "<?php echo $validation_no_pass; ?>"
+		var add_user_form_email = "<?php echo $validation_no_email; ?>"
 		var invalid_mail = "<?php echo $install_invalid_mail; ?>"
-		var alphaerror = "<?php echo $alphaerror; ?>"
-		var pass_mismatch = "<?php echo $install_pass_mismatch; ?>"
-		var pass_short = "<?php echo $install_pass_short; ?>"
-		var pass_chars = "<?php echo $install_pass_chars; ?>"
-		var create_user_chars = "<?php echo $create_user_chars; ?>"
-		var create_user_length = "<?php echo $create_user_length; ?>"
+		var pass_mismatch = "<?php echo $validation_match_pass; ?>"
+		var create_user_length = "<?php echo $validation_length_user; ?>"
+		var create_pass_short = "<?php echo $validation_length_pass; ?>"
+		var pass_chars = "<?php echo $validation_alpha_pass; ?>"
+		var create_user_chars = "<?php echo $validation_alpha_user; ?>"
+		
 	
 		function validateme(){
 	
@@ -109,7 +109,7 @@ if ($_POST) {
 
 			// short or long passwd
 			if (document.adduser.add_user_form_pass.value.length < 6 || document.adduser.add_user_form_pass.value.length > 12) {
-				alert(pass_short)
+				alert(create_pass_short)
 				return false;
 			}
 			
