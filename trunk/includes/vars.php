@@ -262,12 +262,13 @@ $validation_errors_title = 'The following errors were found';
 $validation_no_name = 'Name was not completed';
 $validation_no_user = 'Username was not completed';
 $validation_no_pass = 'Password was not completed';
+$validation_no_pass2 = 'Password verification was not completed';
 $validation_no_email = 'E-mail was not completed';
-$validation_invalid_mail = 'E-mail data is not a valid address';
+$validation_invalid_mail = 'E-mail address is not valid';
 $validation_alpha_user = 'Username must be alphanumeric (a-z,A-Z,0-9 allowed)';
 $validation_alpha_pass = 'Password must be alphanumeric (a-z,A-Z,0-9 allowed)';
-$validation_length_user = 'Username length should be between 6 and 12 characters long.';
-$validation_length_pass = 'Password length should be between 6 and 12 characters long.';
+$validation_length_user = 'Username length should be between '.MIN_USER_CHARS.' and '.MAX_USER_CHARS.' characters long.';
+$validation_length_pass = 'Password length should be between '.MIN_PASS_CHARS.' and '.MAX_PASS_CHARS.' characters long.';
 $validation_match_pass = 'Passwords did not match';
 // users forms specific
 $validation_no_level = 'User level was not specified';

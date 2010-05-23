@@ -22,8 +22,8 @@ if ($_POST) {
 	$valid_me->validate('email',$add_user_data_email,$validation_invalid_mail);
 	$valid_me->validate('alpha',$add_user_data_user,$validation_alpha_user);
 	$valid_me->validate('alpha',$_POST['add_user_form_pass'],$validation_alpha_pass);
-	$valid_me->validate('length',$add_user_data_user,$validation_length_user,6,12);
-	$valid_me->validate('length',$_POST['add_user_form_pass'],$validation_length_pass,6,12);
+	$valid_me->validate('length',$add_user_data_user,$validation_length_user,MIN_USER_CHARS,MAX_USER_CHARS);
+	$valid_me->validate('length',$_POST['add_user_form_pass'],$validation_length_pass,MIN_PASS_CHARS,MAX_PASS_CHARS);
 	$valid_me->validate('pass_match','',$validation_match_pass,'','',$_POST['add_user_form_pass'],$_POST['add_user_form_pass2']);
 	$valid_me->validate('user_exists',$add_user_data_user,$add_user_exists,'','','','','tbl_users','user');
 	
@@ -63,90 +63,49 @@ if ($_POST) {
 			else {
 		?>
 
+	<?php include_once('includes/js/js.validations.php'); ?>
+
 	<script type="text/javascript">
-		var add_user_form_name = "<?php echo $validation_no_name; ?>"
-		var add_user_form_user = "<?php echo $validation_no_user; ?>"
-		var add_user_form_pass = "<?php echo $validation_no_pass; ?>"
-		var add_user_form_pass2 = "<?php echo $validation_no_pass; ?>"
-		var add_user_form_email = "<?php echo $validation_no_email; ?>"
-		var invalid_mail = "<?php echo $install_invalid_mail; ?>"
+	
+		window.onload = default_field;
+
+		var js_err_user_name = "<?php echo $validation_no_name; ?>"
+		var js_err_user_user = "<?php echo $validation_no_user; ?>"
+		var js_err_user_pass = "<?php echo $validation_no_pass; ?>"
+		var js_err_user_pass2 = "<?php echo $validation_no_pass2; ?>"
+		var js_err_user_email = "<?php echo $validation_no_email; ?>"
+		var js_err_user_level = "<?php echo $validation_no_level; ?>"
+		var invalid_mail = "<?php echo $validation_invalid_mail; ?>"
 		var pass_mismatch = "<?php echo $validation_match_pass; ?>"
 		var create_user_length = "<?php echo $validation_length_user; ?>"
-		var create_pass_short = "<?php echo $validation_length_pass; ?>"
+		var create_pass_length = "<?php echo $validation_length_pass; ?>"
 		var pass_chars = "<?php echo $validation_alpha_pass; ?>"
 		var create_user_chars = "<?php echo $validation_alpha_user; ?>"
-		
-	
-		function validateme(){
-	
-			if (document.adduser.add_user_form_name.value.length==0) {
-				alert(add_user_form_name)
-				return false;
-			}
-			
-			if (document.adduser.add_user_form_user.value.length==0) {
-				alert(add_user_form_user)
-				return false;
-			}
-		
-			if (document.adduser.add_user_form_pass.value.length==0) {
-				alert(add_user_form_pass)
-				return false;
-			}
-		
-			if (document.adduser.add_user_form_email.value.length==0) {
-				alert(add_user_form_email)
-				return false;
-			}
 
-			// onto email validation now
-			var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-			var address = document.adduser.add_user_form_email.value;
-			if (reg.test(address) == false) {
-				alert(invalid_mail);
+		function validateform(theform){
+			is_complete(theform.add_user_form_name,js_err_user_name);
+			is_complete(theform.add_user_form_user,js_err_user_user);
+			is_complete(theform.add_user_form_pass,js_err_user_pass);
+			is_complete(theform.add_user_form_pass2,js_err_user_pass2);
+			is_complete(theform.add_user_form_email,js_err_user_email);
+			is_complete(theform.add_user_form_level,js_err_user_level);
+			is_length(theform.add_user_form_user,<?php echo MIN_USER_CHARS; ?>,<?php echo MAX_USER_CHARS; ?>,create_user_length);
+			is_length(theform.add_user_form_pass,<?php echo MIN_PASS_CHARS; ?>,<?php echo MAX_PASS_CHARS; ?>,create_pass_length);
+			is_email(theform.add_user_form_email,invalid_mail);
+			is_alpha(theform.add_user_form_user,create_user_chars);
+			is_alpha(theform.add_user_form_pass,pass_chars);
+			is_match(theform.add_user_form_pass,theform.add_user_form_pass2,pass_mismatch);
+			// show the errors or continue if everything is ok
+			if (error_list != '') {
+				alert(error_title+error_list)
+				error_list = '';
 				return false;
 			}
-
-			// short or long passwd
-			if (document.adduser.add_user_form_pass.value.length < 6 || document.adduser.add_user_form_pass.value.length > 12) {
-				alert(create_pass_short)
-				return false;
-			}
-			
-			// short or long username
-			if (document.adduser.add_user_form_user.value.length < 6 || document.adduser.add_user_form_user.value.length > 12) {
-				alert(create_user_length)
-				return false;
-			}
-			
-			// alphanumeric check for user
-			var numaric = document.adduser.add_user_form_user.value;
-			if (!(numaric.match(/^[a-zA-Z0-9]+$/)))
-			  {
-				alert(create_user_chars)
-				return false;
-			}
-			
-			// alphanumeric check for password
-			var numeric = document.adduser.add_user_form_pass.value;
-			if (!(numeric.match(/^[a-zA-Z0-9]+$/)))
-			  {
-				alert(pass_chars)
-				return false;
-			}
-			
-			// password matching validation
-			if (document.adduser.add_user_form_pass.value != document.adduser.add_user_form_pass2.value) {
-				alert(pass_mismatch)
-				return false;
-			}
-			
-		document.adduser.submit();
 		}
 	
 	</script>
 
-		<form action="newuser.php" name="adduser" method="post" target="_self">
+		<form action="newuser.php" name="adduser" method="post" onsubmit="return validateform(this);">
 			<table border="0" cellspacing="1" cellpadding="1">
 			  <tr>
 				<td width="40%"><?php echo $add_user_form_name; ?></td>
@@ -154,15 +113,15 @@ if ($_POST) {
 			  </tr>
 			  <tr>
 				<td><?php echo $add_user_form_user; ?></td>
-				<td><input name="add_user_form_user" id="add_user_form_user" class="txtfield" maxlength="12" value="<?php echo $add_user_data_user; ?>" /></td>
+				<td><input name="add_user_form_user" id="add_user_form_user" class="txtfield" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo $add_user_data_user; ?>" /></td>
 			  </tr>
 			  <tr>
 				<td><?php echo $add_user_form_pass; ?></td>
-				<td><input name="add_user_form_pass" id="add_user_form_pass" class="txtfield" type="password" maxlength="12" /></td>
+				<td><input name="add_user_form_pass" id="add_user_form_pass" class="txtfield" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" /></td>
 			  </tr>
 			  <tr>
 				<td><?php echo $add_user_form_pass2; ?></td>
-				<td><input name="add_user_form_pass2" id="add_user_form_pass2" class="txtfield" type="password" maxlength="12" /></td>
+				<td><input name="add_user_form_pass2" id="add_user_form_pass2" class="txtfield" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" /></td>
 			  </tr>
 			  <tr>
 				<td><?php echo $add_user_form_email; ?></td>
@@ -181,7 +140,7 @@ if ($_POST) {
 			  <tr>
 				<td colspan="2">
 					<div align="right">
-						<input type="button" name="Submit" value="<?php echo $add_user_form_submit; ?>" class="boton" onclick="validateme();" />
+						<input type="submit" name="Submit" value="<?php echo $add_user_form_submit; ?>" class="boton" />
 					</div>
 				</td>
 				</tr>
