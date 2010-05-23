@@ -30,12 +30,12 @@ foreach($zonen AS $zone) {
 	  if (!empty($subcity) != ''){
 		$city = $city . '/'. $subcity;
 	  }
-	  $structure .= "\t<option ".((($continent.'/'.$city)==$selectedzone)?'selected="selected "':'')."value=\"".($continent.'/'.$city)."\">".str_replace('_',' ',$city)."</option>\n"; //Timezone
+	  $structure .= "\t<option ".((($continent.'/'.$city)==$selectedzone)?'selected="selected" ':'')."value=\"".($continent.'/'.$city)."\">".str_replace('_',' ',$city)."</option>\n"; //Timezone
 	} else {
 	  if (!empty($subcity) != ''){
 		$city = $city . '/'. $subcity;
 	  }
-	  $structure .= "\t<option ".(($continent==$selectedzone)?'selected="selected "':'')."value=\"".$continent."\">".$continent."</option>\n"; //Timezone
+	  $structure .= "\t<option ".(($continent==$selectedzone)?'selected="selected" ':'')."value=\"".$continent."\">".$continent."</option>\n"; //Timezone
 	}
 
 	$selectcontinent = $continent;
