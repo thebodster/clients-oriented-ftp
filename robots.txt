@@ -1,5 +1,6 @@
 User-agent: *
-Disallow: /estilos/
-Disallow: /test/
 Disallow: /img/
+Disallow: /install/
+Disallow: /styles/
+Disallow: /templates/
 Disallow: /upload/
