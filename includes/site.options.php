@@ -33,4 +33,9 @@ $timeformat = $options_values['timeformat'];
 $database->Close();
 
 date_default_timezone_set($timezone);
+
+define('MIN_USER_CHARS', 6);
+define('MAX_USER_CHARS', 16);
+define('MIN_PASS_CHARS', 6);
+define('MAX_PASS_CHARS', 16);
 ?>
