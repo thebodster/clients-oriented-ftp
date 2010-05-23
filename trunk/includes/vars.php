@@ -150,22 +150,17 @@ $up_filetype = 'File type:';
 $client_link = 'File uploaded correctly. Click here to see the file list for';
 
 // Add client
-$add_ctitle = 'Add client';
-$add_cname = 'Name';
-$add_cuser = 'Login username';
-$add_cpass = 'Login password';
-$add_cpass2 = 'Repeat password';
-$add_cadd = 'Address';
-$add_cphone = 'Telephone';
-$add_cmail = 'E-mail';
-$add_cnoti = 'Notify new uploads by email';
-$add_ccont = 'Internal contact';
-$add_client_submit = 'Create client';
-
-$add_alrt_1 = 'Please add a name';
-$add_alrt_2 = 'Please add a username';
-$add_alrt_3 = 'Please add a password';
-$add_alrt_4 = 'Please add a valid e-mail address';
+$add_client_title = 'Add client account';
+$add_client_label_name = 'Name';
+$add_client_label_user = 'Login username';
+$add_client_label_pass = 'Login password';
+$add_client_label_pass2 = 'Repeat password';
+$add_client_label_addr = 'Address';
+$add_client_label_phone = 'Telephone';
+$add_client_label_email = 'E-mail';
+$add_client_label_notify = 'Notify new uploads by email';
+$add_client_label_intcont = 'Internal contact';
+$add_client_form_submit = 'Create account';
 
 $add_client_ok = 'Client added correctly';
 $add_client_error = 'There was an error. Please try again';

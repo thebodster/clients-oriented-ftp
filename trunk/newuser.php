@@ -4,7 +4,7 @@ $database->MySQLDB();
 
 $add_user_data_name = mysql_real_escape_string($_POST['add_user_form_name']);
 $add_user_data_user = mysql_real_escape_string($_POST['add_user_form_user']);
-$add_user_data_pass = mysql_real_escape_string(md5($_POST['add_user_form_pass']));
+$add_user_data_pass = md5(mysql_real_escape_string($_POST['add_user_form_pass']));
 $add_user_data_pass2 = mysql_real_escape_string(md5($_POST['add_user_form_pass2']));
 $add_user_data_email = mysql_real_escape_string($_POST['add_user_form_email']);
 $add_user_data_level = mysql_real_escape_string($_POST['add_user_form_level']);
@@ -69,32 +69,32 @@ if ($_POST) {
 	
 		window.onload = default_field;
 
-		var js_err_user_name = "<?php echo $validation_no_name; ?>"
-		var js_err_user_user = "<?php echo $validation_no_user; ?>"
-		var js_err_user_pass = "<?php echo $validation_no_pass; ?>"
-		var js_err_user_pass2 = "<?php echo $validation_no_pass2; ?>"
-		var js_err_user_email = "<?php echo $validation_no_email; ?>"
-		var js_err_user_level = "<?php echo $validation_no_level; ?>"
-		var invalid_mail = "<?php echo $validation_invalid_mail; ?>"
-		var pass_mismatch = "<?php echo $validation_match_pass; ?>"
-		var create_user_length = "<?php echo $validation_length_user; ?>"
-		var create_pass_length = "<?php echo $validation_length_pass; ?>"
-		var pass_chars = "<?php echo $validation_alpha_pass; ?>"
-		var create_user_chars = "<?php echo $validation_alpha_user; ?>"
+		var js_err_name = "<?php echo $validation_no_name; ?>"
+		var js_err_user = "<?php echo $validation_no_user; ?>"
+		var js_err_pass = "<?php echo $validation_no_pass; ?>"
+		var js_err_pass2 = "<?php echo $validation_no_pass2; ?>"
+		var js_err_email = "<?php echo $validation_no_email; ?>"
+		var js_err_level = "<?php echo $validation_no_level; ?>"
+		var js_err_invalid_mail = "<?php echo $validation_invalid_mail; ?>"
+		var js_err_pass_mismatch = "<?php echo $validation_match_pass; ?>"
+		var js_err_user_length = "<?php echo $validation_length_user; ?>"
+		var js_err_pass_length = "<?php echo $validation_length_pass; ?>"
+		var je_err_pass_chars = "<?php echo $validation_alpha_pass; ?>"
+		var js_err_user_chars = "<?php echo $validation_alpha_user; ?>"
 
 		function validateform(theform){
-			is_complete(theform.add_user_form_name,js_err_user_name);
-			is_complete(theform.add_user_form_user,js_err_user_user);
-			is_complete(theform.add_user_form_pass,js_err_user_pass);
-			is_complete(theform.add_user_form_pass2,js_err_user_pass2);
-			is_complete(theform.add_user_form_email,js_err_user_email);
-			is_complete(theform.add_user_form_level,js_err_user_level);
-			is_length(theform.add_user_form_user,<?php echo MIN_USER_CHARS; ?>,<?php echo MAX_USER_CHARS; ?>,create_user_length);
-			is_length(theform.add_user_form_pass,<?php echo MIN_PASS_CHARS; ?>,<?php echo MAX_PASS_CHARS; ?>,create_pass_length);
-			is_email(theform.add_user_form_email,invalid_mail);
-			is_alpha(theform.add_user_form_user,create_user_chars);
-			is_alpha(theform.add_user_form_pass,pass_chars);
-			is_match(theform.add_user_form_pass,theform.add_user_form_pass2,pass_mismatch);
+			is_complete(theform.add_user_form_name,js_err_name);
+			is_complete(theform.add_user_form_user,js_err_user);
+			is_complete(theform.add_user_form_pass,js_err_pass);
+			is_complete(theform.add_user_form_pass2,js_err_pass2);
+			is_complete(theform.add_user_form_email,js_err_email);
+			is_complete(theform.add_user_form_level,js_err_level);
+			is_length(theform.add_user_form_user,<?php echo MIN_USER_CHARS; ?>,<?php echo MAX_USER_CHARS; ?>,js_err_user_length);
+			is_length(theform.add_user_form_pass,<?php echo MIN_PASS_CHARS; ?>,<?php echo MAX_PASS_CHARS; ?>,js_err_pass_length);
+			is_email(theform.add_user_form_email,js_err_invalid_mail);
+			is_alpha(theform.add_user_form_user,js_err_user_chars);
+			is_alpha(theform.add_user_form_pass,je_err_pass_chars);
+			is_match(theform.add_user_form_pass,theform.add_user_form_pass2,js_err_pass_mismatch);
 			// show the errors or continue if everything is ok
 			if (error_list != '') {
 				alert(error_title+error_list)
@@ -148,9 +148,9 @@ if ($_POST) {
 	
 		</form>
 		
-		<?php } ?>
-		
 		</div>
+
+		<?php } ?>
 
 </div>
 
