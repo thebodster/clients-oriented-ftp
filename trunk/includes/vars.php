@@ -203,12 +203,13 @@ $view_user_timestamp = 'Added on';
 // logo upload page
 $logo_upload_description = '<p>Use this page to upload your company logo, or update your current uploaded one. This image will be shown to your clients when they access their file list.</p>';
 $logo_select_file = 'Select file';
-$current_logo = 'Current uploaded logo:';
+$current_logo = 'Current logo:';
 $logo_replace_file = 'Select image to upload';
 $logo_upload_file = 'Upload';
 $select_logo_preview = '<p>The picture on the left is not an actual representation of what they will see. The size on this preview is fixed, but remember that you can change the display size and picture quality for your client\'s pages on the <a href="options.php">options</a> section.</p>';
 
 $logo_uploaded_ok = '<p>The image was uploaded correctly.</p>';
+$select_logo_file_err = 'Please select an image file to upload';
 $logo_uploaded_error = '<p>There was an error. Please try again.</p>';
 $logo_uploaded_filetye = '<p>The file you selected is not a valid image one. Please upload a jpg, gif or png formated logo picture.</p>';
 

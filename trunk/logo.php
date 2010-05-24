@@ -74,26 +74,31 @@ if ($_POST) { // form sent?
 else {
 ?>
 
+	<?php include_once('includes/js/js.validations.php'); ?>
+
 	<script type="text/javascript">
-		var select_logo_file_err = "<?php echo $select_logo_file_err; ?>"
-	
-		function validateme(){
-			if (document.logoupload.select_logo.value.length==0) {
-				alert(select_logo_file_err)
+
+		var ja_file_err = "<?php echo $select_logo_file_err; ?>"
+
+		function validateform(theform){
+			is_complete_no_err(theform.select_logo);
+			// show the errors or continue if everything is ok
+			if (have_error != '') {
+				alert(ja_file_err)
+				have_error = '';
 				return false;
 			}
-			document.logoupload.submit();
 		}
 	</script>
 
 		<?php echo $logo_upload_description; ?>
 		<div id="form_upload_logo" class="whitebox">
-			<form action="" name="logoupload" method="post" target="_self" enctype="multipart/form-data">
+			<form action="" name="logoupload" method="post" enctype="multipart/form-data" onsubmit="return validateform(this);">
 			<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
 				<label><?php echo $logo_replace_file; ?></label>
 				<input type="file" name="select_logo" />
 				<div class="form_btns" align="right">
-					<input type="button" name="Submit" value="<?php echo $logo_upload_file; ?>" class="boton" onclick="validateme();" />
+					<input type="submit" name="Submit" value="<?php echo $logo_upload_file; ?>" class="boton" />
 				</div>
 			</form>
 		</div>
