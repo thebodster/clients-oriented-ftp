@@ -8,17 +8,17 @@ Feel free to participate!
 How to install on your server:
 
 Preparations:
+1. Download and unzip the lastest version of cFTP to a folder of your choice.
 - Create a new database on your server. Create/assign an user to it
 
 Instructions:
-1. Download and unzip cFTP to a folder of your choice.
 2. Open includes/sys.vars.php and set your database info there.
 3. Upload cFTP to your selected destination
-4. Open your browser and go to "your_selected_cftp_folder"/install
-5. Complete the data there and wait for the "everything went ok" confirmation message
-6. Delete the install folder
+4. Open your browser and go to http://your-cftp-folder/install
+5. Complete the data there and wait for the correct installation message
 
 Congratulations! cFTP is now installed and ready for action!
+You may login with your the user "admin" and your new password.
 
 ---------------------------------------------------------------------
 
