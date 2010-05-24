@@ -114,19 +114,6 @@ else {
 
 	<div class="options_box whitebox" id="install_form">
 		<form action="" name="installform" method="post" target="_self">
-			<h3><?php echo $install_database_title; ?></h3>
-			<h4><?php echo $install_database_desc; ?></h4>
-			<div class="options_column options_col_left">
-				<label for="install_db_name"><?php echo $install_db_name; ?></label><input name="install_db_name" id="install_db_name" disabled="disabled" value="<?php echo DB_HOST;?>" /><br />
-				<label for="install_db_host"><?php echo $install_db_host; ?></label><input name="install_db_host" id="install_db_host" disabled="disabled" value="<?php echo DB_NAME;?>" />
-			</div>
-			<div class="options_column options_col_right">
-				<label for="install_db_user"><?php echo $install_db_user; ?></label><input name="install_db_user" id="install_db_user" disabled="disabled" value="<?php echo DB_USER;?>" /><br />
-				<label for="install_db_pass"><?php echo $install_db_pass; ?></label><input name="install_db_pass" id="install_db_pass" disabled="disabled" value="<?php echo DB_PASSWORD;?>" />
-			</div>
-			<div class="clear"></div>
-			<div class="options_divide"></div>
-
 
 			<h3><?php echo $install_general_title; ?></h3>
 			<h4><?php echo $install_general_desc; ?></h4>

@@ -10,8 +10,8 @@ $no = 'No';
 
 // install cftp
 
-$install_database_title = 'Database';
-$install_database_desc = 'This data will allow the installer to set up the required tables correctly. It is taken from <em>/includes/sys.vars.php</em>, and shown so you can check if it\'s correct before attemping setup.';
+$install_database_title = 'Database'; // not in use
+$install_database_desc = 'This data will allow the installer to set up the required tables correctly. It is taken from <em>/includes/sys.vars.php</em>, and shown so you can check if it\'s correct before attemping setup.'; // not in use
 
 $install_db_name = 'DB name';
 $install_db_host = 'Host';
@@ -25,7 +25,7 @@ $install_pass_short = 'Password length is wrong. Should be 6 to 12 characters.';
 $install_pass_chars = 'Password has invalid characters. It should contain only letters and numbers.';
 
 $install_general_title = 'Basic system options';
-$install_general_desc = 'You need to provide this data for a correct system installation. Please remember to end the URI field with a "/" (this will be automatic on future revisions). The site name will be visible along the system panel, and the client\'s lists.';
+$install_general_desc = 'You need to provide this data for a correct system installation. Please remember to end the URI field with a "/" (this will be automatic on future revisions). The site name will be visible along the system panel, and the client\'s lists.<br />Don\'t forget to edit <em>/includes/sys.vars.php</em> with your database settings before installing.';
 
 $install_user_title = 'Default system administrator options';
 $install_user_desc = 'This info will be appended to the user "admin", which is the default system user. It can\'t be deleted (and in this version, it isn\'t editable yet, so please pick your password carefuly). Password should be between <strong>6 and 12 characters long</strong>.';
