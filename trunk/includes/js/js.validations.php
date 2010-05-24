@@ -10,9 +10,22 @@ var norm_color = 'black';
 
 var error_title = "<?php echo $validation_errors_title; ?>\n\n";
 var error_list = '';
+var have_error = '';
 
 function default_field() {
 	document.getElementsByTagName('input')[0].focus();
+}
+
+function is_complete_no_err(field) {
+	if (field.value.length == 0) {
+		field.style.background=error_bg;
+		field.style.color=error_color;
+		have_error = 'y';
+	}
+	else {
+		field.style.background=norm_bg;
+		field.style.color=norm_color;
+	}
 }
 
 function is_complete(field,error) {
