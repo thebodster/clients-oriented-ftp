@@ -18,12 +18,6 @@ $install_db_host = 'Host';
 $install_db_user = 'User';
 $install_db_pass = 'Password';
 
-$install_missed_data = 'Please complete all the fields.';
-$install_invalid_mail = 'Please insert a valid e-mail address.';
-$install_pass_mismatch = 'Passwords do not match.';
-$install_pass_short = 'Password length is wrong. Should be 6 to 12 characters.';
-$install_pass_chars = 'Password has invalid characters. It should contain only letters and numbers.';
-
 $install_general_title = 'Basic system options';
 $install_general_desc = 'You need to provide this data for a correct system installation. Please remember to end the URI field with a "/" (this will be automatic on future revisions). The site name will be visible along the system panel, and the client\'s lists.<br />Don\'t forget to edit <em>/includes/sys.vars.php</em> with your database settings before installing.';
 
@@ -277,7 +271,9 @@ $validation_no_filename = 'File Name was not specified';
 $validation_no_description = 'File description was not specified';
 $validation_no_file = 'No file was selected';
 $validation_no_client = 'Client was not specified';
-
+// installation specific
+$install_no_sitename = 'Sitename was not completed.';
+$install_no_baseuri = 'cFTP URI was not completed.';
 
 // others
 $copyright = 'cFTP Free software (GPL2) | 2007 - ';

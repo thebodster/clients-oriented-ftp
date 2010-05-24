@@ -74,18 +74,9 @@ INSERT INTO `tbl_users` (`id`, `user`, `password`, `name`, `email`, `level`, `ti
 
 $success = mysql_query($query); mysql_query($query2); mysql_query($query3); mysql_query($query4); mysql_query($query5); mysql_query($query6);
 if ($success) {
-	?>
-		<div class="message message_ok">
-			<p><?php echo $install_ok; ?></p>
-		</div>
-		<p><?php echo $install_ok2; ?></p>	
-	<?php
+	$query_state = 'ok';
 }
 else {
-	?>
-		<div class="message message_error">
-			<p><?php echo $install_error; ?></p>	
-		</div>
-	<?php
+	$query_state = 'err';
 }
 ?>
