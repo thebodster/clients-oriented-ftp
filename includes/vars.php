@@ -217,10 +217,13 @@ $logo_replace_info = '<p>The new image will act as your logo across your client\
 
 // options page
 
-$title_general_options = 'General options';
-$desc_general_options = 'These options are to be changed only if you are moving the system to another place. Be careful when chaging them or everything will stop working.';
-$options_site_name = 'Site name';
+$title_location_options = 'System location options';
+$desc_location_options = 'These options are to be changed only if you are moving the system to another place. Be careful when chaging them or everything will stop working.';
 $options_base_uri = 'cFTP URI';
+
+$title_general_options = 'General options';
+$desc_general_options = 'Basic information to be shown around the site. The time format and zones values affect how the clients see the dates on their files lists.';
+$options_site_name = 'Site name';
 $options_template_list = 'Client\'s template';
 $options_timezone = 'Timezone';
 $options_timeformat = 'Time format';
@@ -229,7 +232,6 @@ $title_thumbnails_options = 'Thumbnails';
 $desc_thumbnails_options = 'Thumbnails are used on files lists. It\'s recommended to keep them small, unless you are using the system to upload only images and change the default client\'s template accordingly (cftp as a private image gallery?)';
 $options_max_thumb_width = 'Max width';
 $options_max_thumb_height = 'Max height';
-$options_thumbnails_folder = 'Folder';
 $options_thumbnails_quality = 'Quality';
 
 $title_logo_options = 'Own logo';
@@ -242,6 +244,7 @@ $options_missed_data = 'Please complete all the fields.';
 
 $options_update_ok = 'Options updated succesfuly';
 $options_update_error = 'There was an error. Please try again';
+$options_update_fill_error = 'Some fields were not completed. Options could not be saved.';
 
 
 // pager buttons
