@@ -143,8 +143,9 @@ $cl_msg = 'Uploaded';
 $delete = 'Delete';
 
 // file uploaded
-$up_ok = 'File sent correctly';
-$up_error = 'Error sending file. Please try again';
+$file_upload_ok = 'File sent correctly';
+$file_upload_error = 'Error sending file. Please try again';
+$file_upload_move = 'Error moving uploaded file. Please try again';
 $up_filename = 'File name:';
 $up_filetype = 'File type:';
 $client_link = 'File uploaded correctly. Click here to see the file list for';
@@ -271,6 +272,11 @@ $validation_length_pass = 'Password length should be between '.MIN_PASS_CHARS.' 
 $validation_match_pass = 'Passwords did not match';
 // users forms specific
 $validation_no_level = 'User level was not specified';
+// upload form specific
+$validation_no_filename = 'File Name was not specified';
+$validation_no_description = 'File description was not specified';
+$validation_no_file = 'No file was selected';
+$validation_no_client = 'Client was not specified';
 
 
 // others
