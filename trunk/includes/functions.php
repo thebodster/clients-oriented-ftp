@@ -15,8 +15,16 @@ function gettheurl() {
 	} else {
 		$pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
 	}
-	$actual_url = substr($pageURL,0,-8);
-	return $actual_url;
+	// check if we are accesing the install folder or the index.php file directly
+	$extension = substr($pageURL,-4);
+	if ($extension=='.php') {
+		$pageURL = substr($pageURL,0,-17);
+		return $pageURL;
+	}
+	else {
+		$pageURL = substr($pageURL,0,-8);
+		return $pageURL;
+	}
 }
 
 function getfilesize($dataarch) {

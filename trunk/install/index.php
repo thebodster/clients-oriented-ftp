@@ -47,6 +47,7 @@ require_once('../includes/form_validation_class.php');
 <?php
 if ($_POST) {
 	
+	if ($base_uri{(strlen($base_uri) - 1)}!='/') { $base_uri .= '/'; }
 	// begin form validation
 	$valid_me->validate('completed',$this_install_title,$install_no_sitename);
 	$valid_me->validate('completed',$base_uri,$install_no_baseuri);
