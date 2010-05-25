@@ -2,7 +2,10 @@
 ob_start();
 session_start();
 header("Cache-control: private");
-if(!session_is_registered("usuario")){
+if(!isset($_SESSION['loggedin'])) {
+header("location:index.php");
+}
+if ($_SESSION['access'] != 'admin') {
 header("location:index.php");
 }
 	require_once('includes/sys.vars.php');
@@ -34,7 +37,7 @@ header("location:index.php");
 <div id="wrapper">
 
 	<div id="header">
-		<p id="cftptop">cFTP (clients-oriented-ftp)</p>
+		<p id="cftptop"><?php echo $full_system_name; ?></p>
 		<p><?php echo $version; ?> <?php echo $curver; ?></p>
 		<a href="logout.php" target="_self"><img src="img/logout.gif" alt="Logout" id="logout" /></a>
 	</div>
