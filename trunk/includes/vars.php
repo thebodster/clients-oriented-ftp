@@ -1,25 +1,18 @@
 <?php
-
-$curver = '0.1';
-$uri = 'http://code.google.com/p/clients-oriented-ftp/'; // cFTP webpage URI
-$uri_txt = 'cFTP on Google Code';
-
 // First language lesson ;)
 $yes = 'Yes';
 $no = 'No';
 
 // install cftp
-
 $install_database_title = 'Database'; // not in use
 $install_database_desc = 'This data will allow the installer to set up the required tables correctly. It is taken from <em>/includes/sys.vars.php</em>, and shown so you can check if it\'s correct before attemping setup.'; // not in use
-
 $install_db_name = 'DB name';
 $install_db_host = 'Host';
 $install_db_user = 'User';
 $install_db_pass = 'Password';
 
 $install_general_title = 'Basic system options';
-$install_general_desc = 'You need to provide this data for a correct system installation. Please remember to end the URI field with a "/" (this will be automatic on future revisions). The site name will be visible along the system panel, and the client\'s lists.<br />Don\'t forget to edit <em>/includes/sys.vars.php</em> with your database settings before installing.';
+$install_general_desc = 'You need to provide this data for a correct system installation. The site name will be visible along the system panel, and the client\'s lists.<br />Don\'t forget to edit <em>/includes/sys.vars.php</em> with your database settings before installing.';
 
 $install_user_title = 'Default system administrator options';
 $install_user_desc = 'This info will be appended to the user "admin", which is the default system user. It can\'t be deleted (and in this version, it isn\'t editable yet, so please pick your password carefuly). Password should be between <strong>6 and 12 characters long</strong>.';
@@ -68,9 +61,15 @@ $page_title_logo = 'Logo configuration';
 $page_title_options = 'System options';
 $ticonfile = 'File upload';
 
-$askuser = 'User';
-$askpass = 'Password';
-$btnlogin = 'Log in';
+// login
+$login_title = 'Login';
+$login_tips = 'Please select your appropiate account type below.';
+$login_tab_admin = 'Administrator';
+$login_tab_client = 'Client';
+$login_label_user = 'User';
+$login_label_pass = 'Password';
+$login_user_submit = 'Access Administrator';
+$login_client_submit = 'Access file list';
 
 $txthome = '<p>Thank you for choosing cFTP. This software allows you to upload files for specific clients, and keep them stored for as long as you need them.</p>
 <p>cFTP lets choose a name and description for each individual file you upload, and relate it to an existing client or create a new one.<br />

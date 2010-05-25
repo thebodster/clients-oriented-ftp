@@ -1,5 +1,10 @@
-<?php	
-	/* template name: Default */
+<?php
+ob_start();
+session_start();
+header("Cache-control: private");
+if(!isset($_SESSION['loggedin'])) {
+header("location:../../index.php");
+}
 	require_once('../../includes/vars.php');
 	require_once('../../includes/sys.vars.php');
 	require_once('../../includes/site.options.php');
@@ -23,7 +28,8 @@
 <body>
 
 <div id="header">
-	<p id="cftptop">cFTP (clients-oriented-ftp)</p>
+	<p id="cftptop"><?php echo $full_system_name; ?></p>
+	<a href="../../logout.php" target="_self"><img src="../../img/logout.gif" alt="Logout" id="logout" /></a>
 </div>
 
 <div id="under_header">

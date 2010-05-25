@@ -40,7 +40,7 @@ require_once('../includes/form_validation_class.php');
 <div id="main">
 
 	<div id="lonely_logo">
-		<p>cFTP (clients-oriented-ftp)</p>
+		<p><?php echo $full_system_name; ?></p>
 	</div>
 	<div class="clear"></div>
 
