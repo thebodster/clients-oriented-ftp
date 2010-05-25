@@ -120,7 +120,13 @@ include_once('includes/js/js.validations.php'); ?>
 				<?php $total = $_FILES['ufile']['size']; getfilesize($total); ?>
 		
 				<div id="linkcliente">
-					<p><a href="upload/<?php echo $client_user; ?>/"><?php echo $client_link; ?> <strong><?php echo $client_user; ?></strong></a></p>
+					<?php
+					$sql2 = $database->query('SELECT * from tbl_clients where client_user="' . $client_user .'"');
+					while ($row = mysql_fetch_array($sql2)) {
+						$user_full_name = $row['name'];
+					}
+					?>
+					<p><a href="upload/<?php echo $client_user; ?>/"><?php echo $client_link; ?> <strong><?php echo $user_full_name; ?></strong></a></p>
 				</div>
 	
 			<?php

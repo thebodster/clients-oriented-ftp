@@ -2,12 +2,19 @@
 include ('../../templates/session_check.php');
 $this_template = '../../templates/default/';
 require($this_template.'vars.php');
+
+$database->MySQLDB();
+$sql = $database->query('SELECT * from tbl_files where client_user="' . $this_user .'"');
+$sql2 = $database->query('SELECT * from tbl_clients where client_user="' . $this_user .'"');
+while ($row = mysql_fetch_array($sql2)) {
+	$user_full_name = $row['name'];
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title><?php echo $this_user.' | '.$window_title; ?> | cFTP</title>
+<title><?php echo $user_full_name.' | '.$window_title; ?> | cFTP</title>
 <link rel="stylesheet" media="all" type="text/css" href="<?php echo $this_template; ?>main.css" />
 <link rel="shortcut icon" href="../../favicon.ico" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
@@ -23,7 +30,7 @@ require($this_template.'vars.php');
 </div>
 
 <div id="under_header">
-	<div id="window_title"><?php echo '<strong>'.$this_user.'</strong> | '.$window_title; ?></div>
+	<div id="window_title"><?php echo '<strong>'.$user_full_name.'</strong> | '.$window_title; ?></div>
 </div>
 
 <div id="wrapper">
@@ -68,11 +75,6 @@ require($this_template.'vars.php');
 	<div id="right_column">
 	
 	<?php
-	
-		$database->MySQLDB();
-
-		$sql = $database->query('SELECT * from tbl_files where client_user="' . $this_user .'"');
-
 		$count=mysql_num_rows($sql);
 		if (!$count) {
 			echo $nofiles4u;
@@ -141,7 +143,6 @@ require($this_template.'vars.php');
 			<?php
 				}
 			}
-				$database->Close();
 			?>
 	
 				</tbody>
@@ -176,3 +177,4 @@ require($this_template.'vars.php');
 
 </body>
 </html>
+<?php $database->Close(); ?>
