@@ -20,6 +20,7 @@ $sysuser_username=mysql_real_escape_string($_POST['login_form_user']);
 $sysuser_password=mysql_real_escape_string(md5($_POST['login_form_pass']));
 $client_username=mysql_real_escape_string($_POST['login_form_client_user']);
 $client_password=mysql_real_escape_string(md5($_POST['login_form_client_pass']));
+// thanks to http://www.kminek.pl/lab/yetii/ for the tabs script!
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
