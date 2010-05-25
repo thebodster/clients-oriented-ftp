@@ -1,17 +1,7 @@
 <?php
-ob_start();
-session_start();
-header("Cache-control: private");
-if(!isset($_SESSION['loggedin'])) {
-header("location:../../index.php");
-}
-	require_once('../../includes/vars.php');
-	require_once('../../includes/sys.vars.php');
-	require_once('../../includes/site.options.php');
-	require_once('../../includes/functions.php');
-
-	$this_template = '../../templates/default/';
-	require($this_template.'vars.php');
+include ('../../templates/session_check.php');
+$this_template = '../../templates/default/';
+require($this_template.'vars.php');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
