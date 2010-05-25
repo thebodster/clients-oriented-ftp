@@ -60,7 +60,7 @@ if ($_POST) {
 		if($count>0){
 			// changes here should also be reflected on templates
 			$_SESSION['loggedin'] = $client_username;
-			$_SESSION['access'] = 'client';
+			$_SESSION['access'] = $client_username;
 			header("location:upload/$client_username/");
 		}
 		else {
