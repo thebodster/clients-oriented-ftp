@@ -78,7 +78,7 @@ $(document).ready(function()
 			?>
 		</td>
 		<td>
-			<a onclick="return confdel();" href="<?php echo $baseuri;?>deleteclient.php?client=<?php echo $row["client_user"]; ?>" target="_self"><img src="img/delete.jpg" alt="<?php echo $cldel; ?>"></a>
+			<a onclick="return confdel();" href="process.php?do=del_client&amp;client=<?php echo $row["client_user"]; ?>" target="_self"><img src="img/delete.jpg" alt="<?php echo $cldel; ?>"></a>
 			<a href="<?php echo $baseuri;?>upload/<?php echo $row["client_user"]; ?>/" target="_blank"><img src="img/view.jpg" alt="<?php echo $clview; ?>"></a>
 		</td>
 	</tr>

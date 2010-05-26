@@ -73,7 +73,7 @@ $(document).ready(function()
 			?>
 		</td>
 		<td><?php if ($row["user"] != 'admin') { ?>
-			<a onclick="return confdel();" href="<?php echo $baseuri;?>deleteuser.php?user=<?php echo $row["user"]; ?>" target="_self">
+			<a onclick="return confdel();" href="process.php?do=del_user&amp;user=<?php echo $row["user"]; ?>" target="_self">
 				<img src="img/delete.jpg" alt="<?php echo $userdel; ?>">
 			</a>
 			<?php } ?>
