@@ -32,9 +32,11 @@ $install_error = 'There seems to be an error. Please try again.';
 $version = 'Version';
 
 // pages titles
-$basictitle = 'System Administrator';
+$page_title_basic = 'System Administrator';
 $page_title_login = 'Log in';
+$page_title_install = 'System setup';
 
+// login error
 $login_err = 'Wrong user or password';
 $login_err2 = 'Please try again';
 
@@ -55,13 +57,6 @@ $mnu_config_logo = 'Your logo';
 $mnu_config_options = 'General options';
 
 
-$tihome = 'Welcome to cFTP';
-$tiupl = 'Upload files';
-$ticli = 'Clients administration';
-$ti_usrs = 'Users administration';
-$page_title_logo = 'Logo configuration';
-$page_title_options = 'System options';
-$ticonfile = 'File upload';
 
 // login
 $login_title = 'Login';

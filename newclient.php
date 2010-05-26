@@ -1,4 +1,6 @@
-<?php include('header.php');
+<?php
+$page_title = 'Add new client';
+include('header.php');
 
 $database->MySQLDB();
 
@@ -64,7 +66,7 @@ if ($_POST) {
 } // do if just entering (no form info sent) ?>
 
 	<div id="main">
-		<h2><?php echo $add_client_title; ?></h2>
+		<h2><?php echo $page_title; ?></h2>
 
 		<div class="whiteform whitebox">
 	

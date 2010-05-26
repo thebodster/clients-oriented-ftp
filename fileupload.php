@@ -1,4 +1,6 @@
-<?php include('header.php');
+<?php
+$page_title = 'Upload new files';
+include('header.php');
 
 $database->MySQLDB();
 
@@ -75,7 +77,7 @@ include_once('includes/js/js.validations.php'); ?>
 </script>
 
 <div id="main">
-	<h2><?php echo $tiupl; ?></h2>
+	<h2><?php echo $page_title; ?></h2>
 	
 	<div class="whiteform whitebox">
 	
