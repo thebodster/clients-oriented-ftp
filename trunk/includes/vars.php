@@ -76,16 +76,16 @@ $login_label_pass = 'Password';
 $login_user_submit = 'Access Administrator';
 $login_client_submit = 'Access file list';
 
-$txthome = '<p>Thank you for choosing cFTP. This software allows you to upload files for specific clients, and keep them stored for as long as you need them.</p>
+$home_intro_text = '<p>Thank you for choosing cFTP. This software allows you to upload files for specific clients, and keep them stored for as long as you need them.</p>
 <p>cFTP lets choose a name and description for each individual file you upload, and relate it to an existing client or create a new one.<br />
 When the upload is complete, the system wil give you a link that you can share, where you client can see and download every file available under his account.</p>
 <p>Additionaly, you can select your own <a href="logo.php">logo</a>, that will appear in every client\'s page.</p>';
 
-$stattit = 'Statistics';
-$statcli = 'Clients';
-$statusr = 'Users';
-$statlogo = 'Personal logo';
-$statview = '[View]';
+$statistics_title = 'Statistics';
+$statistics_clients = 'Clients';
+$statistics_users = 'Users';
+$statistics_logo = 'Personal logo';
+$statistics_view = '[View]';
 $stat_logo_change = '[Change]';
 
 $upfname = 'Name';
