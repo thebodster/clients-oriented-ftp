@@ -149,23 +149,19 @@ include_once('includes/js/js.validations.php'); ?>
 
 		<table border="0" cellspacing="1" cellpadding="1">
 		  <tr>
-			<td width="20%"><?php echo $upfname; ?></td>
-			<td width="20%">&nbsp;</td>
+			<td width="40%"><?php echo $upfname; ?></td>
 			<td><input type="text" name="name" id="name" class="txtfield" value="<?php echo $filename; ?>" /></td>
 		  </tr>
 		  <tr>
 			<td><?php echo $upfdes; ?></td>
-			<td>&nbsp;</td>
-			<td valign="top"><textarea name="description" id="description" class="txtfield"><?php echo $_POST['description']; ?></textarea></td>
+			<td><textarea name="description" id="description" class="txtfield"><?php echo $_POST['description']; ?></textarea></td>
 		  </tr>
 		  <tr>
 			<td><?php echo $upffile; ?></td>
-			<td>&nbsp;</td>
 			<td><input name="ufile" type="file" id="ufile" size="32" class="txtfield" /></td>
 		  </tr>
 		  <tr>
 			<td><?php echo $upclient; ?></td>
-			<td>&nbsp;</td>
 			<td><select name="clientname" id="clientname" class="txtfield" >
 					<?php
 					
@@ -182,7 +178,6 @@ include_once('includes/js/js.validations.php'); ?>
 			</td>
 		  </tr>
 		  <tr>
-			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>
 				<div align="right"><input type="submit" name="Submit" value="<?php echo $upload_submit; ?>" class="boton" /></div>
