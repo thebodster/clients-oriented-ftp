@@ -31,7 +31,9 @@ $install_error = 'There seems to be an error. Please try again.';
 
 $version = 'Version';
 
+// pages titles
 $basictitle = 'System Administrator';
+$page_title_login = 'Log in';
 
 $login_err = 'Wrong user or password';
 $login_err2 = 'Please try again';

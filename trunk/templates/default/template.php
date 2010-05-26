@@ -26,7 +26,7 @@ while ($row = mysql_fetch_array($sql2)) {
 
 <div id="header">
 	<p id="cftptop"><?php echo $full_system_name; ?></p>
-	<a href="../../logout.php" target="_self"><img src="../../img/logout.gif" alt="Logout" id="logout" /></a>
+	<a href="../../process.php?do=logout" target="_self"><img src="../../img/logout.gif" alt="Logout" id="logout" /></a>
 </div>
 
 <div id="under_header">
@@ -134,7 +134,7 @@ while ($row = mysql_fetch_array($sql2)) {
 						<?php } ?>
 					</td>
 					<td>
-						<a onclick="return confirm_file_delete();" href="../../deletefile.php?client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>&amp;file=<?php echo $row['url']; ?>" target="_self">
+						<a onclick="return confirm_file_delete();" href="../../process.php?do=del_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>&amp;file=<?php echo $row['url']; ?>" target="_self">
 							<img src="../../img/delete.jpg" alt"<?php echo $delete; ?>" />
 						</a>
 					</td>

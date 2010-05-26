@@ -1,4 +1,6 @@
 <?php
+//ini_set("display_errors", on);
+//error_reporting(E_ALL);
 ob_start();
 session_start();
 header("Cache-control: private");
@@ -25,7 +27,7 @@ header("location:index.php");
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
 <script src="includes/js/dropdownmenu.js" type="text/javascript"></script>
 
-<?php if ($tablesorter) { ?>
+<?php if (isset($tablesorter)) { ?>
 <script src="includes/js/jquery.tablesorter.min.js" type="text/javascript"></script>
 <script src="includes/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
 <?php } ?>
@@ -39,7 +41,7 @@ header("location:index.php");
 	<div id="header">
 		<p id="cftptop"><?php echo $full_system_name; ?></p>
 		<p><?php echo $version; ?> <?php echo $curver; ?></p>
-		<a href="logout.php" target="_self"><img src="img/logout.gif" alt="Logout" id="logout" /></a>
+		<a href="process.php?do=logout" target="_self"><img src="img/logout.gif" alt="Logout" id="logout" /></a>
 	</div>
 
 <div id="top_menu">

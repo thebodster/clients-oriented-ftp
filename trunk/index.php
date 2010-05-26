@@ -26,7 +26,7 @@ $client_password=mysql_real_escape_string(md5($_POST['login_form_client_pass']))
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>cFTP | <?php echo $basictitle; ?></title>
+<title>cFTP | <?php echo $page_title_login; ?></title>
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="stylesheet" media="all" type="text/css" href="styles/base.css" />
 <script type="text/javascript" src="includes/js/yetii-min.js"></script>
