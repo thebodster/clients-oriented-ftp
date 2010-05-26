@@ -14,7 +14,7 @@ while ($row = mysql_fetch_array($sql2)) {
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title><?php echo $user_full_name.' | '.$window_title; ?> | cFTP</title>
+<title><?php echo $user_full_name.' | '.$window_title; ?> | <?php echo $short_system_name; ?></title>
 <link rel="stylesheet" media="all" type="text/css" href="<?php echo $this_template; ?>main.css" />
 <link rel="shortcut icon" href="../../favicon.ico" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>

@@ -16,6 +16,7 @@ require_once('db_class.php');
 $curver = '0.1';
 $uri = 'http://code.google.com/p/clients-oriented-ftp/'; // cFTP webpage URI
 $uri_txt = 'cFTP on Google Code';
+$short_system_name = 'cFTP';
 $full_system_name = 'cFTP (clients-oriented-ftp)';
 
 // this settings are temporally located here. will be located elsewhere on following udpates

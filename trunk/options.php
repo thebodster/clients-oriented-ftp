@@ -1,4 +1,6 @@
-<?php include('header.php');
+<?php
+$page_title = 'System options';
+include('header.php');
 
 $database->MySQLDB();
 require_once('includes/form_validation_class.php');
@@ -35,7 +37,7 @@ if ($_POST) {
 ?>
 
 <div id="main">
-	<h2><?php echo $page_title_options; ?></h2>
+	<h2><?php echo $page_title; ?></h2>
 
 	<div class="options_box whitebox">
 

@@ -1,8 +1,6 @@
 <?php
-//ini_set("display_errors", on);
-//error_reporting(E_ALL);
-ob_start();
 session_start();
+ob_start();
 header("Cache-control: private");
 if(!isset($_SESSION['loggedin'])) {
 header("location:index.php");
@@ -14,13 +12,13 @@ header("location:index.php");
 	require_once('includes/site.options.php');
 	require_once('includes/vars.php');
 	require_once('includes/functions.php');
-
+if (!isset($page_title)) { $page_title = $page_title_basic; }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title><?php echo $this_install_title; ?> | <?php echo $basictitle; ?> | cFTP</title>
+<title><?php echo $this_install_title; ?> &raquo; <?php echo $page_title; ?> | <?php echo $short_system_name; ?></title>
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="stylesheet" media="all" type="text/css" href="styles/base.css" />
 

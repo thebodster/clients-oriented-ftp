@@ -1,4 +1,6 @@
-<?php include('header.php');
+<?php
+$page_title = 'Add system user';
+include('header.php');
 
 $database->MySQLDB();
 
@@ -47,7 +49,7 @@ if ($_POST) {
 } // do if just entering (no form info sent) ?>
 
 <div id="main">
-	<h2><?php echo $add_utitle; ?></h2>
+	<h2><?php echo $page_title; ?></h2>
 	
 		<div class="whiteform whitebox">
 		

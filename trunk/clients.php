@@ -1,5 +1,6 @@
 <?php
 	$tablesorter = 1;
+	$page_title = 'Clients Administration';
 	include('header.php');
 ?>
 
@@ -17,27 +18,23 @@ $(document).ready(function()
 </script>
 
 <div id="main">
-	<h2><?php echo $ticli; ?></h2>
+	<h2><?php echo $page_title; ?></h2>
 	
-	
-<script type="text/javascript">
-	function confdel() {
-		if (confirm("<?php echo $confdel; ?>")) return true ;
-		else return false ;
-	}
-</script>
+	<script type="text/javascript">
+		function confirm_delete() {
+			if (confirm("<?php echo $confdel; ?>")) return true ;
+			else return false ;
+		}
+	</script>
 
 <?php
-
 	$database->MySQLDB();
-
 	$sql = $database->query("SELECT * FROM tbl_clients");
-	
 	$count=mysql_num_rows($sql);
-	if (!$count) { echo $noclients; }
-	
+	if (!$count) {
+		echo $noclients;
+	}
 	else {
-
 ?>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" id="clients_tbl" class="tablesorter">
@@ -78,7 +75,7 @@ $(document).ready(function()
 			?>
 		</td>
 		<td>
-			<a onclick="return confdel();" href="process.php?do=del_client&amp;client=<?php echo $row["client_user"]; ?>" target="_self"><img src="img/delete.jpg" alt="<?php echo $cldel; ?>"></a>
+			<a onclick="return confirm_delete();" href="process.php?do=del_client&amp;client=<?php echo $row["client_user"]; ?>" target="_self"><img src="img/delete.jpg" alt="<?php echo $cldel; ?>"></a>
 			<a href="<?php echo $baseuri;?>upload/<?php echo $row["client_user"]; ?>/" target="_blank"><img src="img/view.jpg" alt="<?php echo $clview; ?>"></a>
 		</td>
 	</tr>

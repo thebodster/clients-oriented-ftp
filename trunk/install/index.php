@@ -30,7 +30,7 @@ require_once('../includes/form_validation_class.php');
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>cFTP | <?php echo $basictitle; ?></title>
+<title><?php echo $page_title_install; ?> | <?php echo $short_system_name; ?></title>
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="stylesheet" media="all" type="text/css" href="../styles/base.css" />
 </head>

@@ -1,7 +1,10 @@
-<?php include('header.php'); ?>
+<?php
+$page_title = 'Logo configuration';
+include('header.php');
+?>
 
 <div id="main">
-	<h2><?php echo $page_title_logo; ?></h2>
+	<h2><?php echo $page_title; ?></h2>
 
 	<div id="current_logo" class="whitebox">
 		<p><?php echo $current_logo; ?></p>

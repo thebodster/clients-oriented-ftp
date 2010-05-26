@@ -1,5 +1,6 @@
 <?php
 	$tablesorter = 1;
+	$page_title = 'Users administration';
 	include('header.php');
 ?>
 
@@ -17,21 +18,18 @@ $(document).ready(function()
 </script>
 
 <div id="main">
-	<h2><?php echo $ti_usrs; ?></h2>
+	<h2><?php echo $page_title; ?></h2>
 	
-<script type="text/javascript">
-	function confdel() {
-		if (confirm("<?php echo $userconfdel; ?>")) return true ;
-		else return false ;
-	}
-</script>
+	<script type="text/javascript">
+		function confirm_delete() {
+			if (confirm("<?php echo $userconfdel; ?>")) return true ;
+			else return false ;
+		}
+	</script>
 
 <?php
-
 	$database->MySQLDB();
-	
 	$sql = $database->query("SELECT * FROM tbl_users");
-	
 	$count=mysql_num_rows($sql);
 ?>
 
@@ -73,7 +71,7 @@ $(document).ready(function()
 			?>
 		</td>
 		<td><?php if ($row["user"] != 'admin') { ?>
-			<a onclick="return confdel();" href="process.php?do=del_user&amp;user=<?php echo $row["user"]; ?>" target="_self">
+			<a onclick="return confirm_delete();" href="process.php?do=del_user&amp;user=<?php echo $row["user"]; ?>" target="_self">
 				<img src="img/delete.jpg" alt="<?php echo $userdel; ?>">
 			</a>
 			<?php } ?>

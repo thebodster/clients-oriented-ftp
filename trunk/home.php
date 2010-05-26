@@ -1,9 +1,12 @@
-<?php include('header.php'); ?>
+<?php
+$page_title = 'Welcome to cFTP';
+include('header.php');
+?>
 
 <?php $database->MySQLDB(); ?>
 
 <div id="main">
-	<h2><?php echo $tihome; ?></h2>
+	<h2><?php echo $page_title; ?></h2>
 
 	<div id="intstatbar" class="whitebox">
 	
