@@ -23,7 +23,7 @@ $(document).ready(function()
 	
 	<script type="text/javascript">
 		function confirm_delete() {
-			if (confirm("<?php echo $confdel; ?>")) return true ;
+			if (confirm("<?php echo $delete_client_confirm; ?>")) return true ;
 			else return false ;
 		}
 	</script>
@@ -41,33 +41,35 @@ $(document).ready(function()
 <table width="100%" border="0" cellspacing="0" cellpadding="0" id="clients_tbl" class="tablesorter">
 <thead>
 	<tr>
-		<th><?php echo $view_cid; ?></th>
-		<th><?php echo $view_cname; ?></th>
-		<th><?php echo $view_cuser; ?></th>
-		<th><?php echo $view_cadd; ?></th>
-		<th><?php echo $view_cphone; ?></th>
-		<th><?php echo $view_cmail; ?></th>
-		<th><?php echo $view_cnoti; ?></th>
-		<th><?php echo $view_ccont; ?></th>
-		<th><?php echo $view_client_timestamp; ?></th>
-		<th><?php echo $view_actions; ?></th>
+		<th><?php echo $clients_table_id; ?></th>
+		<th><?php echo $clients_table_name; ?></th>
+		<th><?php echo $clients_table_user; ?></th>
+		<th><?php echo $clients_table_address; ?></th>
+		<th><?php echo $clients_table_phone; ?></th>
+		<th><?php echo $clients_table_email; ?></th>
+		<th><?php echo $clients_table_notify; ?></th>
+		<th><?php echo $clients_table_intcont; ?></th>
+		<th><?php echo $clients_table_timestamp; ?></th>
+		<th><?php echo $clients_table_files; ?></th>
+		<th><?php echo $clients_table_actions; ?></th>
 	</tr>
 </thead>
 <tbody>
 
 <?php
 		while($row = mysql_fetch_array($sql)) {
-	?>
+		$client_user = $row["client_user"];
+?>
 
 	<tr>
-		<td><?php echo $row["id"]?></td>
-		<td><?php echo $row["name"]?></td>
-		<td><?php echo $row["client_user"]?></td>
-		<td><?php echo $row["address"]?></td>
-		<td><?php echo $row["phone"]?></td>
-		<td><?php echo $row["email"]?></td>
+		<td><?php echo $row["id"]; ?></td>
+		<td><?php echo $row["name"]; ?></td>
+		<td><?php echo $row["client_user"]; ?></td>
+		<td><?php echo $row["address"]; ?></td>
+		<td><?php echo $row["phone"]; ?></td>
+		<td><?php echo $row["email"]; ?></td>
 		<td><?php if ($row["notify"] == '1') { echo $yes; } else { echo $no; }?></td>
-		<td><?php echo $row["contact"]?></td>
+		<td><?php echo $row["contact"]; ?></td>
 		<td>
 			<?php
 			$time_stamp=$row['timestamp']; //get timestamp
@@ -76,8 +78,15 @@ $(document).ready(function()
 			?>
 		</td>
 		<td>
-			<a onclick="return confirm_delete();" href="process.php?do=del_client&amp;client=<?php echo $row["client_user"]; ?>" target="_self"><img src="img/delete.jpg" alt="<?php echo $cldel; ?>"></a>
-			<a href="<?php echo $baseuri;?>upload/<?php echo $row["client_user"]; ?>/" target="_blank"><img src="img/view.jpg" alt="<?php echo $clview; ?>"></a>
+			<?php
+				$sql_files = $database->query("SELECT * FROM tbl_files WHERE client_user='$client_user'");
+				$count_files=mysql_num_rows($sql_files);
+				echo $count_files;
+			?>
+		</td>
+		<td>
+			<a onclick="return confirm_delete();" href="process.php?do=del_client&amp;client=<?php echo $row["client_user"]; ?>" target="_self"><img src="img/delete.jpg" alt="<?php echo $client_action_delete; ?>"></a>
+			<a href="<?php echo $baseuri;?>upload/<?php echo $row["client_user"]; ?>/" target="_blank"><img src="img/view.jpg" alt="<?php echo $client_action_view; ?>"></a>
 		</td>
 	</tr>
 

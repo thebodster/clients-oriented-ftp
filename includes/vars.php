@@ -111,22 +111,22 @@ $alphaerror = 'You can only use letters, numbers and spaces on the users\'s name
 
 // View / Edit Clients section
 $nclien = 'Name:';
-$cldel = 'Delete';
-$clview = 'View';
+$client_action_delete = 'Delete';
+$client_action_view = 'View';
 $noclients = 'There are no clients at the moment';
-$confdel = 'This will delete the folder and all of the client\'s files. Continue?';
+$delete_client_confirm = 'This will delete the folder and all of the client\'s files. Continue?';
 
-$view_cid = 'ID';
-$view_cname = 'Full name';
-$view_cuser = 'Login username';
-$view_cadd = 'Address';
-$view_cphone = 'Telephone';
-$view_cmail = 'E-mails';
-$view_ccont = 'Internal Contact';
-$view_cnoti = 'Notify';
-$view_actions = 'Actions';
-$view_client_files = 'Files';
-$view_client_timestamp = 'Added on';
+$clients_table_id = 'ID';
+$clients_table_name = 'Full name';
+$clients_table_user = 'Login username';
+$clients_table_address = 'Address';
+$clients_table_phone = 'Telephone';
+$clients_table_email = 'E-mail';
+$clients_table_notify = 'Notify';
+$clients_table_intcont = 'Internal Contact';
+$clients_table_actions = 'Actions';
+$clients_table_files = 'Files';
+$clients_table_timestamp = 'Added on';
 
 
 // Clients index template data
