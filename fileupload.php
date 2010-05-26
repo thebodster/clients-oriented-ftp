@@ -1,5 +1,6 @@
 <?php
-$page_title = 'Upload new files';
+require_once('includes/vars.php');
+$page_title = $page_title_upload;
 include('header.php');
 
 $database->MySQLDB();

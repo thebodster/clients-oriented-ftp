@@ -1,5 +1,6 @@
 <?php
-$page_title = 'Add new client';
+require_once('includes/vars.php');
+$page_title = $page_title_newclient;
 include('header.php');
 
 $database->MySQLDB();

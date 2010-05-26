@@ -1,5 +1,6 @@
 <?php
-$page_title = 'System options';
+require_once('includes/vars.php');
+$page_title = $page_title_options;
 include('header.php');
 
 $database->MySQLDB();

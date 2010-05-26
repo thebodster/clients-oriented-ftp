@@ -3,9 +3,7 @@
 $database->MySQLDB();
 
 // get admin email address for upload notifications
-
 $sql = $database->query('SELECT * FROM tbl_users WHERE user="admin"');
-
 while($row = mysql_fetch_array($sql)) {
 	$admin_email_address = $row['email'];
 }

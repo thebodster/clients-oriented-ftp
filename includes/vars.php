@@ -35,6 +35,14 @@ $version = 'Version';
 $page_title_basic = 'System Administrator';
 $page_title_login = 'Log in';
 $page_title_install = 'System setup';
+$page_title_clients = 'Clients Administration';
+$page_title_upload = 'Upload new files';
+$page_title_home = 'Welcome to cFTP';
+$page_title_logo = 'Logo configuration';
+$page_title_newclient = 'Add new client';
+$page_title_newuser = 'Add system user';
+$page_title_options = 'System options';
+$page_title_users = 'Users administration';
 
 // login error
 $login_err = 'Wrong user or password';

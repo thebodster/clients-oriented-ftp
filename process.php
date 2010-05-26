@@ -1,4 +1,5 @@
 <?php
+require_once('includes/vars.php');
 require_once('header.php');
 
 class process {
