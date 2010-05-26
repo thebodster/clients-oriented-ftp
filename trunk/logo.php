@@ -1,5 +1,6 @@
 <?php
-$page_title = 'Logo configuration';
+require_once('includes/vars.php');
+$page_title = $page_title_logo;
 include('header.php');
 ?>
 

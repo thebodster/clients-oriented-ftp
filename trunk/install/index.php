@@ -2,16 +2,15 @@
 ob_start();
 session_start();
 header("Cache-control: private");
-
-	/*
-		cFTP on Google Code
-		http://code.google.com/p/clients-oriented-ftp/
-		Distributed under GPL2
-		Feel free to participate!
-	*/
-	require_once('../includes/sys.vars.php');
-	require_once('../includes/vars.php');
-	require_once('../includes/functions.php');
+/*
+	cFTP on Google Code
+	http://code.google.com/p/clients-oriented-ftp/
+	Distributed under GPL2
+	Feel free to participate!
+*/
+require_once('../includes/sys.vars.php');
+require_once('../includes/vars.php');
+require_once('../includes/functions.php');
 
 $database->MySQLDB();
 

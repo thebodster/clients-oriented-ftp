@@ -8,10 +8,9 @@ header("location:index.php");
 if ($_SESSION['access'] != 'admin') {
 header("location:index.php");
 }
-	require_once('includes/sys.vars.php');
-	require_once('includes/site.options.php');
-	require_once('includes/vars.php');
-	require_once('includes/functions.php');
+require_once('includes/sys.vars.php');
+require_once('includes/site.options.php');
+require_once('includes/functions.php');
 if (!isset($page_title)) { $page_title = $page_title_basic; }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

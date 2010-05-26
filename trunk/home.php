@@ -1,5 +1,6 @@
 <?php
-$page_title = 'Welcome to cFTP';
+require_once('includes/vars.php');
+$page_title = $page_title_home;
 include('header.php');
 ?>
 

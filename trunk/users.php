@@ -1,6 +1,7 @@
 <?php
 	$tablesorter = 1;
-	$page_title = 'Users administration';
+	require_once('includes/vars.php');
+	$page_title = $page_title_users;
 	include('header.php');
 ?>
 

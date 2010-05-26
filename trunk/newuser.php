@@ -1,5 +1,6 @@
 <?php
-$page_title = 'Add system user';
+require_once('includes/vars.php');
+$page_title = $page_title_newuser;
 include('header.php');
 
 $database->MySQLDB();

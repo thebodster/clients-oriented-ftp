@@ -1,5 +1,4 @@
 <?php
-
 $window_title = 'File downloads';
 
 $nofiles4u = 'There are no files currently';

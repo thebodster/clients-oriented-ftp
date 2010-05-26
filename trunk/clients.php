@@ -1,6 +1,7 @@
 <?php
 	$tablesorter = 1;
-	$page_title = 'Clients Administration';
+	require_once('includes/vars.php');
+	$page_title = $page_title_clients;
 	include('header.php');
 ?>
 
