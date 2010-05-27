@@ -41,17 +41,24 @@ if ($_POST) {
 
 	if (isset($_POST['sent_admin'])) {
 		// try to login as system user
-		$sql = $database->query("SELECT * FROM tbl_users WHERE user='$sysuser_username' and password='$sysuser_password'");
+		$sql = $database->query("SELECT * FROM tbl_users WHERE user='$sysuser_username'");
 		$count=mysql_num_rows($sql);
 		
 		if($count>0){
-			// changes here should also be reflected on header.php
-			$_SESSION['loggedin'] = $sysuser_username;
-			$_SESSION['access'] = 'admin';
 			while($row = mysql_fetch_array($sql)) {
-				$_SESSION['userlevel'] = $row["level"];
+				$db_pass = $row['password'];
+				$user_level = $row["level"];
 			}
-			header("location:home.php");
+			if ($db_pass == $sysuser_password) {
+				// changes here should also be reflected on header.php
+				$_SESSION['loggedin'] = $sysuser_username;
+				$_SESSION['access'] = 'admin';
+				$_SESSION['userlevel'] = $user_level;
+				header("location:home.php");
+			}
+			else {
+				$errorstate = 'admin_pass_wrong';
+			}
 		}
 		else {
 			$errorstate = 'admin_not_exists';
@@ -59,15 +66,23 @@ if ($_POST) {
 	}
 	elseif (isset($_POST['sent_client'])) {
 		// try to login as client		
-		$sql = $database->query("SELECT * FROM tbl_clients WHERE client_user='$client_username' and password='$client_password'");
+		$sql = $database->query("SELECT * FROM tbl_clients WHERE client_user='$client_username'");
 		$count=mysql_num_rows($sql);
 		
 		if($count>0){
-			// changes here should also be reflected on templates
-			$_SESSION['loggedin'] = $client_username;
-			$_SESSION['access'] = $client_username;
-			$_SESSION['userlevel'] = '0';
-			header("location:upload/$client_username/");
+			while($row = mysql_fetch_array($sql)) {
+				$db_pass = $row['password'];
+			}
+			if ($db_pass == $client_password) {
+				// changes here should also be reflected on templates
+				$_SESSION['loggedin'] = $client_username;
+				$_SESSION['access'] = $client_username;
+				$_SESSION['userlevel'] = '0';
+				header("location:upload/$client_username/");
+			}
+			else {
+				$errorstate = 'client_pass_wrong';
+			}
 		}
 		else {
 			$errorstate = 'client_not_exists';
@@ -88,10 +103,25 @@ if ($_POST) {
 		<div class="login_divide"></div>
 
 		<?php
-			// show login errors here. TO DO: show different messages for admin or clients errors
-			if (isset($errostate) || $errorstate == 'admin_not_exists' || $errorstate == 'client_not_exists') { ?>
+			// show login errors here.
+			if (isset($errorstate)) {
+				switch ($errorstate) {
+				 case 'admin_not_exists':
+				 	$login_err_message = $login_admin_not_exists;
+				 break;
+				 case 'client_not_exists':
+				 	$login_err_message = $login_client_not_exists;
+				 break;
+				 case 'admin_pass_wrong':
+				 	$login_err_message = $login_admin_pass_wrong;
+				 break;
+				 case 'client_pass_wrong':
+				 	$login_err_message = $login_client_pass_wrong;
+				 break;
+				}
+			?>
 			<div class="message message_error" id="login_error">
-				<p><?php echo $login_err.' | '.$login_err2; ?></p>
+				<p><?php echo $login_err_message; ?></p>
 			</div>
 		<?php } ?>
 
