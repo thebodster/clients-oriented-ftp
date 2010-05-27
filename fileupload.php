@@ -25,33 +25,38 @@ if ($_POST) {
 
 		// upload checkings
 		if(is_uploaded_file($_FILES['ufile']['tmp_name'])) {
-			// check for allowed file types
-			$allowed_files = "/^\.(".$allowed_file_types."){1}$/i";
-			//fix the filename
-			$safe_filename = preg_replace(array("/\s+/", "/[^-\.\w]+/"), array("_", ""), trim($_FILES['ufile']['name']));
-			if (preg_match($allowed_files, strrchr($safe_filename, '.'))) {
-				// make the final filename using timestamp+sanitized name			
-				$folder = 'upload/' . $client_user . '/';
-				$file_final_name= time().'-'.$safe_filename;
-				$path= $folder.$file_final_name;
-				// try to upload
-				if (move_uploaded_file($_FILES['ufile']['tmp_name'], $path)) {
-					// create MySQL entry if the file was uploaded correctly
-					$timestampdate = time();
-					$result = $database->query("INSERT INTO tbl_files (id,url,filename,description,client_user,timestamp)"
-					."VALUES ('NULL', '$file_final_name', '$filename', '$description', '$client_user', '$timestampdate')");
-					$query_state = 'ok';
+			if ($_FILES['ufile']['size'] > 0) {
+				// check for allowed file types
+				$allowed_files = "/^\.(".$allowed_file_types."){1}$/i";
+				//fix the filename
+				$safe_filename = preg_replace(array("/\s+/", "/[^-\.\w]+/"), array("_", ""), trim($_FILES['ufile']['name']));
+				if (preg_match($allowed_files, strrchr($safe_filename, '.'))) {
+					// make the final filename using timestamp+sanitized name			
+					$folder = 'upload/' . $client_user . '/';
+					$file_final_name= time().'-'.$safe_filename;
+					$path= $folder.$file_final_name;
+					// try to upload
+					if (move_uploaded_file($_FILES['ufile']['tmp_name'], $path)) {
+						// create MySQL entry if the file was uploaded correctly
+						$timestampdate = time();
+						$result = $database->query("INSERT INTO tbl_files (id,url,filename,description,client_user,timestamp)"
+						."VALUES ('NULL', '$file_final_name', '$filename', '$description', '$client_user', '$timestampdate')");
+						$query_state = 'ok';
+					}
+					else {
+						// could not move file
+						$query_state = 'err_move';
+					}
 				}
 				else {
-					// could not move file
-					$query_state = 'err_move';
+					// filetype isn't allowed
+					$query_state = 'err_type';
 				}
 			}
 			else {
-				// filetype isn't allowed
-				$query_state = 'err_type';
+				// file doesn't exist anymore
+				$query_state = 'err_exist';
 			}
-
 		}
 		// no file was selected
 		else {
@@ -153,6 +158,9 @@ include_once('includes/js/js.validations.php'); ?>
 			}
 			else if ($query_state == 'err_type') {
 				echo '<div class="message message_error"><p>'.$file_upload_types_error.'</p></div>';
+			}
+			else if ($query_state == 'err_exist') {
+				echo '<div class="message message_error"><p>'.$file_upload_exist_error.'</p></div>';
 			}
 			else {
 		?>
