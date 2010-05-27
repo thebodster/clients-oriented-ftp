@@ -64,7 +64,8 @@ INSERT INTO `tbl_options` (`id`, `name`, `value`) VALUES
 (9, \'selected_clients_template\', \'default\'),
 (10, \'logo_thumbnails_folder\', \'/img/custom/thumbs\'),
 (11, \'timezone\', \'America/Argentina/Buenos_Aires\'),
-(12, \'timeformat\', \'d/m/Y\');
+(12, \'timeformat\', \'d/m/Y\'),
+(13, \'allowed_file_types\', \'bmp|jpg|jpeg|gif|png|rar|tar|gz|gzip|z|zip|7z|ace|iso|bin|tiff|tif|mpg|avi|mp4|flv|wav|mp3|oog|txt|rtf|doc|docx|xls|xlsx|odt|fla|html|htm|psd|ai|eps|pdf|cdr\');
 ';
 
 $query6 = '

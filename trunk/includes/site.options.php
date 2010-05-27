@@ -27,6 +27,7 @@ $this_install_title = $options_values['this_install_title'];
 $selected_clients_template = $options_values['selected_clients_template'];
 $timezone = $options_values['timezone'];
 $timeformat = $options_values['timeformat'];
+$allowed_file_types = $options_values['allowed_file_types'];
 
 $database->Close();
 

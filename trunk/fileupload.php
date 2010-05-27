@@ -23,26 +23,37 @@ if ($_POST) {
 
 	if ($valid_me->return_val) { //validation ok. continue to upload
 
-		$folder = 'upload/' . $client_user . '/';
-		$file_final_name= time().'-'.$thefile;
-		$path= $folder.$file_final_name;
-
-		// upload the file
-		if($thefile!=none)
-		{
-			if (move_uploaded_file($_FILES['ufile']['tmp_name'], $path)) {
-				// create MySQL entry
-				$timestampdate = time();
-				$result = $database->query("INSERT INTO tbl_files (id,url,filename,description,client_user,timestamp)"
-				."VALUES ('NULL', '$file_final_name', '$filename', '$description', '$client_user', '$timestampdate')");
-				$query_state = 'ok';
+		// upload checkings
+		if(is_uploaded_file($_FILES['ufile']['tmp_name'])) {
+			// check for allowed file types
+			$allowed_files = "/^\.(".$allowed_file_types."){1}$/i";
+			//fix the filename
+			$safe_filename = preg_replace(array("/\s+/", "/[^-\.\w]+/"), array("_", ""), trim($_FILES['ufile']['name']));
+			if (preg_match($allowed_files, strrchr($safe_filename, '.'))) {
+				// make the final filename using timestamp+sanitized name			
+				$folder = 'upload/' . $client_user . '/';
+				$file_final_name= time().'-'.$safe_filename;
+				$path= $folder.$file_final_name;
+				// try to upload
+				if (move_uploaded_file($_FILES['ufile']['tmp_name'], $path)) {
+					// create MySQL entry if the file was uploaded correctly
+					$timestampdate = time();
+					$result = $database->query("INSERT INTO tbl_files (id,url,filename,description,client_user,timestamp)"
+					."VALUES ('NULL', '$file_final_name', '$filename', '$description', '$client_user', '$timestampdate')");
+					$query_state = 'ok';
+				}
+				else {
+					// could not move file
+					$query_state = 'err_move';
+				}
 			}
 			else {
-				// could not move file
-				$query_state = 'err_move';
+				// filetype isn't allowed
+				$query_state = 'err_type';
 			}
 
 		}
+		// no file was selected
 		else {
 			$query_state = 'err';
 		}
@@ -140,6 +151,9 @@ include_once('includes/js/js.validations.php'); ?>
 			else if ($query_state == 'err') {
 				echo '<div class="message message_error"><p>'.$file_upload_error.'</p></div>';
 			}
+			else if ($query_state == 'err_type') {
+				echo '<div class="message message_error"><p>'.$file_upload_types_error.'</p></div>';
+			}
 			else {
 		?>
 	
@@ -164,15 +178,12 @@ include_once('includes/js/js.validations.php'); ?>
 			<td><?php echo $upclient; ?></td>
 			<td><select name="clientname" id="clientname" class="txtfield" >
 					<?php
-					
 						$sql = $database->query("SELECT client_user, name FROM tbl_clients");
-						
 						while($row = mysql_fetch_array($sql)) {
 						?>
 							<option value="<?php echo $row['client_user']; ?>" <?php if($client_user==$row['client_user']){?>selected="selected"<?php } ?> ><?php echo $row['name']; ?></option>
 						<?php
 						}
-
 					?>
 				</select>
 			</td>

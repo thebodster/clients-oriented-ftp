@@ -148,6 +148,7 @@ $delete = 'Delete';
 // file uploaded
 $file_upload_ok = 'File sent correctly';
 $file_upload_error = 'Error sending file. Please try again';
+$file_upload_types_error = 'This filetype is not allowed. Please check the options page and change it accordingly.<br /><strong>Warning</strong>: This could break security.';
 $file_upload_move = 'Error moving uploaded file. Please try again';
 $up_filename = 'File name:';
 $up_filetype = 'File type:';
@@ -234,6 +235,10 @@ $options_site_name = 'Site name';
 $options_template_list = 'Client\'s template';
 $options_timezone = 'Timezone';
 $options_timeformat = 'Time format';
+
+$title_security_options = 'Security';
+$desc_security_options = 'Be careful when changing this options. They could affect not only the system but the whole server it is installed on.<br /><strong>Important</strong>: Separate allowed file types with a "|".';
+$options_security_filetypes = 'Allowed file types';
 
 $title_thumbnails_options = 'Thumbnails';
 $desc_thumbnails_options = 'Thumbnails are used on files lists. It\'s recommended to keep them small, unless you are using the system to upload only images and change the default client\'s template accordingly (cftp as a private image gallery?)';
