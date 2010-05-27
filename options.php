@@ -68,6 +68,7 @@ if ($_POST) {
 				is_complete_no_err(theform.this_install_title);
 				is_complete_no_err(theform.base_uri);
 				is_complete_no_err(theform.timeformat);
+				is_complete_no_err(theform.allowed_file_types);
 				is_complete_no_err(theform.selected_clients_template);
 				is_complete_no_err(theform.timezone);
 				is_complete_no_err(theform.max_thumbnail_width);
@@ -102,6 +103,12 @@ if ($_POST) {
 				<?php include_once('includes/timezones.php'); ?>
 			<label for="timeformat"><?php echo $options_timeformat; ?></label><input name="timeformat" id="timeformat" value="<?php echo $timeformat; ?>" /><br />
 			
+			<div class="options_divide"></div>
+
+			<h3><?php echo $title_security_options; ?></h3>
+			<h4><?php echo $desc_security_options; ?></h4>
+			<label for="allowed_file_types"><?php echo $options_security_filetypes; ?></label><input name="allowed_file_types" id="allowed_file_types" style="letter-spacing:+1px;" value="<?php echo $allowed_file_types; ?>" /><br />
+
 			<div class="options_divide"></div>
 	
 			<h3><?php echo $title_thumbnails_options; ?></h3>
