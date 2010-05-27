@@ -4,7 +4,7 @@ $query = '
 CREATE TABLE IF NOT EXISTS `tbl_clients` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` text COLLATE latin1_general_ci NOT NULL,
-  `client_user` varchar(16) COLLATE latin1_general_ci NOT NULL,
+  `client_user` varchar('.MAX_USER_CHARS.') COLLATE latin1_general_ci NOT NULL,
   `password` varchar(32) COLLATE latin1_general_ci NOT NULL,
   `address` text COLLATE latin1_general_ci NOT NULL,
   `phone` text COLLATE latin1_general_ci NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `tbl_files` (
   `url` text NOT NULL,
   `filename` text NOT NULL,
   `description` text NOT NULL,
-  `client_user` varchar(16) NOT NULL,
+  `client_user` varchar('.MAX_USER_CHARS.') NOT NULL,
   `timestamp` int(15) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=257 ;
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `tbl_options` (
 $query4 = '
 CREATE TABLE IF NOT EXISTS `tbl_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` varchar(16) NOT NULL,
+  `user` varchar('.MAX_USER_CHARS.') NOT NULL,
   `password` varchar(32) NOT NULL,
   `name` text NOT NULL,
   `email` varchar(60) NOT NULL,
