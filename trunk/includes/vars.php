@@ -47,8 +47,11 @@ $page_title_options = 'System options';
 $page_title_users = 'Users administration';
 
 // login error
-$login_err = 'Wrong user or password';
-$login_err2 = 'Please try again';
+$login_admin_not_exists = 'admin User doesn\'t exist.';
+$login_client_not_exists = 'client user not exists';
+$login_admin_pass_wrong = 'admin pass wrong';
+$login_client_pass_wrong = 'user pass wrong';
+
 
 // top menu bar
 $mnu_home = 'Home';
