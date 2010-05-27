@@ -12,7 +12,8 @@ require_once('includes/sys.vars.php');
 require_once('includes/site.options.php');
 require_once('includes/functions.php');
 //if logged as a system user, go directly to home.php
-if ($_SESSION['access'] == 'admin') {
+$allowed_enter = array(9,8,7);
+if (in_array($_SESSION['userlevel'],$allowed_enter)) {
 header("location:home.php");
 }
 $database->MySQLDB();
@@ -47,6 +48,9 @@ if ($_POST) {
 			// changes here should also be reflected on header.php
 			$_SESSION['loggedin'] = $sysuser_username;
 			$_SESSION['access'] = 'admin';
+			while($row = mysql_fetch_array($sql)) {
+				$_SESSION['userlevel'] = $row["level"];
+			}
 			header("location:home.php");
 		}
 		else {
@@ -62,6 +66,7 @@ if ($_POST) {
 			// changes here should also be reflected on templates
 			$_SESSION['loggedin'] = $client_username;
 			$_SESSION['access'] = $client_username;
+			$_SESSION['userlevel'] = '0';
 			header("location:upload/$client_username/");
 		}
 		else {

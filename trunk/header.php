@@ -46,7 +46,10 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 		<li><a href="home.php" class="menulink"><?php echo $mnu_home; ?></a></li>
 		<li><a href="fileupload.php" class="menulink"><?php echo $mnu_upload; ?></a></li>
 
-<?php // show CLIENTS ?>
+		<?php // show CLIENTS to allowd users
+			$clients_allowed = array(9,8);
+			if (in_array($_SESSION['userlevel'],$clients_allowed)) {
+		?>
 		<li>
 			<a href="#" class="menulink dropready"><?php echo $mnu_clients; ?></a>
 			<ul>
@@ -54,8 +57,12 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 				<li><a href="clients.php"><?php echo $mnu_edit_cl; ?></a></li>
 			</ul>
 		</li>
+		<?php } ?>
 
-<?php // show USERS ?>
+		<?php // show USERS to allowd users
+			$users_allowed = array(9);
+			if (in_array($_SESSION['userlevel'],$users_allowed)) {
+		?>
 		<li>
 			<a href="#" class="menulink dropready"><?php echo $mnu_users; ?></a>
 			<ul>
@@ -63,8 +70,12 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 				<li><a href="users.php"><?php echo $mnu_edit_usr; ?></a></li>
 			</ul>
 		</li>
+		<?php } ?>
 
-<?php // show LOGO ?>
+		<?php // show LOGO and OPTIONS to allowd users
+			$options_allowed = array(9);
+			if (in_array($_SESSION['userlevel'],$options_allowed)) {
+		?>
 		<li>
 			<a href="#" class="menulink dropready"><?php echo $mnu_config; ?></a>
 			<ul>
@@ -72,6 +83,9 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 				<li><a href="options.php"><?php echo $mnu_config_options; ?></a></li>
 			</ul>
 		</li>
+		<?php } ?>
+
 	</ul>
 	<div class="clear"></div>
 </div>
+<?php require_once('includes/userlevel_check.php'); ?>

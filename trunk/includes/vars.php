@@ -3,6 +3,8 @@
 $yes = 'Yes';
 $no = 'No';
 
+$userlevel_not_allowed = 'Your user account doesn\'t allow you to view this page. Please contact a system administrator if you need to access this functions.';
+
 // install cftp
 $install_database_title = 'Database'; // not in use
 $install_database_desc = 'This data will allow the installer to set up the required tables correctly. It is taken from <em>/includes/sys.vars.php</em>, and shown so you can check if it\'s correct before attemping setup.'; // not in use
@@ -79,7 +81,7 @@ $login_client_submit = 'Access file list';
 $home_intro_text = '<p>Thank you for choosing cFTP. This software allows you to upload files for specific clients, and keep them stored for as long as you need them.</p>
 <p>cFTP lets choose a name and description for each individual file you upload, and relate it to an existing client or create a new one.<br />
 When the upload is complete, the system wil give you a link that you can share, where you client can see and download every file available under his account.</p>
-<p>Additionaly, you can select your own <a href="logo.php">logo</a>, that will appear in every client\'s page.</p>';
+<p>Additionaly, you can select your own logo, that will appear in every client\'s page.</p>';
 
 $statistics_title = 'Statistics';
 $statistics_clients = 'Clients';

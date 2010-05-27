@@ -14,14 +14,23 @@ $database->MySQLDB();
 			<div class="statbarlogo" id="stat_clients">
 				<span><?php echo $statistics_clients; ?>:</span>
 				<?php
-
 					$sql = $database->query("SELECT distinct client_user FROM tbl_clients");
 					$count=mysql_num_rows($sql);
 					echo $count;
 				?>
-				<a href="clients.php" target="_self"><?php echo $statistics_view; ?></a>
+				<?php // show VIEW CLIENTS to allowed users
+					$clients_allowed = array(9,8);
+					if (in_array($_SESSION['userlevel'],$clients_allowed)) {
+				?>
+					<a href="clients.php" target="_self"><?php echo $statistics_view; ?></a>
+				<?php } ?>
 			</div>
 
+		<?php
+			// users stats and logo are only visible by level 9 users (system administrators)
+			$allowed = array(9);
+			if (in_array($_SESSION['userlevel'],$allowed)) {
+		?>
 		<!-- Usuarios -->								
 			<div class="statbarlogo" id="stat_users">
 				<span><?php echo $statistics_users; ?>:</span> 
@@ -33,6 +42,7 @@ $database->MySQLDB();
 				?>
 				<a href="users.php" target="_self"><?php echo $statistics_view; ?></a>
 			</div>
+
 		<!-- Logo -->				
 			<div class="statbarlogo" id="stat_logo">
 				<span><?php echo $statistics_logo; ?>:</span>
@@ -41,7 +51,9 @@ $database->MySQLDB();
 					else { echo $no; }
 				?>
 				<a href="logo.php" target="_self"><?php echo $stat_logo_change; ?></a>
-			</div>	
+			</div>
+		<?php } ?>
+
 	</div>
 
 	<div id="txthome"><?php echo $home_intro_text; ?></div>
