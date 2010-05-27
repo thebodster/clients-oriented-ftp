@@ -1,5 +1,6 @@
 <?php
 require_once('includes/vars.php');
+$allowed_levels = array(9,8,7);
 $page_title = $page_title_upload;
 include('header.php');
 

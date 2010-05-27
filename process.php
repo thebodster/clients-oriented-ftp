@@ -57,6 +57,7 @@ class process {
 		header("Cache-control: private");
 		unset($_SESSION['loggedin']);
 		unset($_SESSION['access']);
+		unset($_SESSION['userlevel']);
 		session_destroy();
 		header("location:index.php");
 	}
