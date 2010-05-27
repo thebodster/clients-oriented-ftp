@@ -149,6 +149,7 @@ $delete = 'Delete';
 $file_upload_ok = 'File sent correctly';
 $file_upload_error = 'Error sending file. Please try again';
 $file_upload_types_error = 'This filetype is not allowed. Please check the options page and change it accordingly.<br /><strong>Warning</strong>: This could break security.';
+$file_upload_exist_error = 'The file does\'t exist anymore, or it\'s empty. You cannot upload 0kb files.';
 $file_upload_move = 'Error moving uploaded file. Please try again';
 $up_filename = 'File name:';
 $up_filetype = 'File type:';
