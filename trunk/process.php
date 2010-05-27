@@ -21,34 +21,46 @@ class process {
 		}
 		$this->database->Close();
 	}
-
+	
 	function delete_file() {
+		$this->check_level = array(9,8,0);
 		if (isset($_GET['client']) && isset($_GET['id']) && isset($_GET['file'])) {
 			$this->client = mysql_real_escape_string($_GET['client']);
 			$this->id = mysql_real_escape_string($_GET['id']);
 			$this->file = mysql_real_escape_string($_GET['file']);
-			$this->sql = $this->database->query('DELETE FROM tbl_files WHERE client_user="' . $this->client .'" AND id="' . $this->id . '"');
-			$this->gone = 'upload/' . $this->client .'/' . $this->file;
-			delfile($this->gone);
+			// do a permissions check
+			if (isset($this->check_level) && in_array($_SESSION['userlevel'],$this->check_level)) {
+				$this->sql = $this->database->query('DELETE FROM tbl_files WHERE client_user="' . $this->client .'" AND id="' . $this->id . '"');
+				$this->gone = 'upload/' . $this->client .'/' . $this->file;
+				delfile($this->gone);
+			}
 			header("location:upload/" . $this->client . "/index.php");
 		}
 	}
 
 	function delete_client() {
+		$this->check_level = array(9,8);
 		if (isset($_GET['client'])) {
 			$this->client = mysql_real_escape_string($_GET['client']);
-			$this->sql = $this->database->query('DELETE FROM tbl_clients WHERE client_user="' . $this->client .'"');
-			$this->sql = $this->database->query('DELETE FROM tbl_files WHERE client_user="' . $this->client .'"');
-			$this->folder = "./upload/" . $this->client . "/";
-			deleteall($this->folder);
+			// do a permissions check
+			if (isset($this->check_level) && in_array($_SESSION['userlevel'],$this->check_level)) {
+				$this->sql = $this->database->query('DELETE FROM tbl_clients WHERE client_user="' . $this->client .'"');
+				$this->sql = $this->database->query('DELETE FROM tbl_files WHERE client_user="' . $this->client .'"');
+				$this->folder = "./upload/" . $this->client . "/";
+				deleteall($this->folder);
+			}
 			header("location:clients.php");
 		}
 	}
 
 	function delete_user() {
+		$this->check_level = array(9);
 		if (isset($_GET['user'])) {
 			$this->user = mysql_real_escape_string($_GET['user']);
-			$this->sql = $this->database->query('DELETE FROM tbl_users WHERE user="' . $this->user .'"');
+			// do a permissions check
+			if (isset($this->check_level) && in_array($_SESSION['userlevel'],$this->check_level)) {
+				$this->sql = $this->database->query('DELETE FROM tbl_users WHERE user="' . $this->user .'"');
+			}
 			header("location:users.php");
 		}
 	}
