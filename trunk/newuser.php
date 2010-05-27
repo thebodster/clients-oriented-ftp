@@ -152,10 +152,10 @@ if ($_POST) {
 		  </table>
 	
 		</form>
-		
-		</div>
 
 		<?php } ?>
+		
+	</div>
 
 </div>
 

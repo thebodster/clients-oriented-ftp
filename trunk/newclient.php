@@ -174,12 +174,12 @@ if ($_POST) {
 		  </table>
 	
 		</form>
-		
-		</div>
-		
+
 	<?php } ?>
-	
+		
 	</div>
+		
+</div>
 	
 <?php
 	$database->Close();
