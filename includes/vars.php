@@ -166,6 +166,7 @@ $add_client_form_submit = 'Create account';
 $add_client_ok = 'Client added correctly';
 $add_client_error = 'There was an error. Please try again';
 $add_client_exists = 'A client with this login username already exists.';
+$add_client_mail_exists = 'A client with this e-mail address already exists.';
 
 
 // Add user
@@ -185,6 +186,7 @@ $user_role_lvl7 = 'Uploader';
 $add_user_ok = 'User added correctly';
 $add_user_error = 'There was an error. Please try again';
 $add_user_exists = 'A user with this login name already exists.';
+$add_user_mail_exists = 'A user with this e-mail address already exists.';
 
 
 // Users section

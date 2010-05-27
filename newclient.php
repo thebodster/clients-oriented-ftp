@@ -31,6 +31,7 @@ if ($_POST) {
 	$valid_me->validate('length',$_POST['add_client_form_pass'],$validation_length_pass,MIN_PASS_CHARS,MAX_PASS_CHARS);
 	$valid_me->validate('pass_match','',$validation_match_pass,'','',$_POST['add_client_form_pass'],$_POST['add_client_form_pass2']);
 	$valid_me->validate('user_exists',$add_client_data_user,$add_client_exists,'','','','','tbl_clients','client_user');
+	$valid_me->validate('user_exists',$add_client_data_email,$add_client_mail_exists,'','','','','tbl_clients','email');
 	
 	if ($valid_me->return_val) { //lets continue
 

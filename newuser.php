@@ -30,6 +30,7 @@ if ($_POST) {
 	$valid_me->validate('length',$_POST['add_user_form_pass'],$validation_length_pass,MIN_PASS_CHARS,MAX_PASS_CHARS);
 	$valid_me->validate('pass_match','',$validation_match_pass,'','',$_POST['add_user_form_pass'],$_POST['add_user_form_pass2']);
 	$valid_me->validate('user_exists',$add_user_data_user,$add_user_exists,'','','','','tbl_users','user');
+	$valid_me->validate('user_exists',$add_user_data_email,$add_user_mail_exists,'','','','','tbl_users','email');
 	
 	if ($valid_me->return_val) { //lets continue
 
