@@ -104,8 +104,8 @@ include_once('includes/js/js.validations.php'); ?>
 
 						$notify_email_link = $baseuri.'upload/'.$client_user.'/';
 						$final_email_body = wordwrap($notify_email_body.$notify_email_link.$notify_email_body2,70);
-
-						$success = mail($row['email'], $notify_email_subject, $final_email_body, "From:&lt;$admin_email_address&gt;\r\nReply-to:&lt;$admin_email_address&gt;\r\nContent-type: text/html; charset=us-ascii");
+						
+						$success = mail($row['email'], $notify_email_subject, $final_email_body, "From:<$admin_email_address>\r\nReply-to:<$admin_email_address>\r\nContent-type: text/html; charset=us-ascii");
 
 						if ($success){
 						  echo '<div class="message message_ok"><p>'.$notify_email_ok.'</p></div>';
