@@ -27,16 +27,15 @@ if ($_POST) {
 		$file_final_name= time().'-'.$thefile;
 		$path= $folder.$file_final_name;
 
-		// create MySQL entry
-		$timestampdate = time();
-		$result = $database->query("INSERT INTO tbl_files (id,url,filename,description,client_user,timestamp)"
-		."VALUES ('NULL', '$file_final_name', '$filename', '$description', '$client_user', '$timestampdate')");
-		
 		// upload the file
 		if($thefile!=none)
 		{
 			if (move_uploaded_file($_FILES['ufile']['tmp_name'], $path)) {
-					$query_state = 'ok';
+				// create MySQL entry
+				$timestampdate = time();
+				$result = $database->query("INSERT INTO tbl_files (id,url,filename,description,client_user,timestamp)"
+				."VALUES ('NULL', '$file_final_name', '$filename', '$description', '$client_user', '$timestampdate')");
+				$query_state = 'ok';
 			}
 			else {
 				// could not move file
