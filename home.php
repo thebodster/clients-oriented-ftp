@@ -1,5 +1,6 @@
 <?php
-require_once('includes/vars.php');
+require_once('includes/includes.php');
+$allowed_levels = array(9,8,7);
 $page_title = $page_title_home;
 include('header.php');
 $database->MySQLDB();

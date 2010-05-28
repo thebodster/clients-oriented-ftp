@@ -2,15 +2,14 @@
 session_start();
 ob_start();
 header("Cache-control: private");
-if(!isset($_SESSION['loggedin'])) {
-header("location:index.php");
+if (!isset($_SESSION['loggedin'])) {
+	// check if we are logged in via session or cookie. if neither, go to login
+	header("location:index.php");
 }
 if ($_SESSION['access'] != 'admin') {
-header("location:index.php");
+	// if user access level is not that of an admin, go to the login form
+	header("location:index.php");
 }
-require_once('includes/sys.vars.php');
-require_once('includes/site.options.php');
-require_once('includes/functions.php');
 if (!isset($page_title)) { $page_title = $page_title_basic; }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -20,21 +19,16 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 <title><?php echo $this_install_title; ?> &raquo; <?php echo $page_title; ?> | <?php echo $short_system_name; ?></title>
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="stylesheet" media="all" type="text/css" href="styles/base.css" />
-
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
 <script src="includes/js/dropdownmenu.js" type="text/javascript"></script>
-
 <?php if (isset($tablesorter)) { ?>
 <script src="includes/js/jquery.tablesorter.min.js" type="text/javascript"></script>
 <script src="includes/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
 <?php } ?>
-
 </head>
 
 <body>
-
 <div id="wrapper">
-
 	<div id="header">
 		<p id="cftptop"><?php echo $full_system_name; ?></p>
 		<p><?php echo $version; ?> <?php echo $curver; ?></p>

@@ -11,6 +11,8 @@ define('MAX_USER_CHARS', 16);
 define('MIN_PASS_CHARS', 6);
 define('MAX_PASS_CHARS', 16);
 
+define('COOKIE_EXP_TIME', 93600);
+
 require_once('db_class.php');
 
 $curver = '0.1';

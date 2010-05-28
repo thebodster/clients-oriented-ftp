@@ -7,14 +7,11 @@ ob_start();
 	Distributed under GPL2
 	Feel free to participate!
 */
-require_once('includes/vars.php');
-require_once('includes/sys.vars.php');
-require_once('includes/site.options.php');
-require_once('includes/functions.php');
+require_once('includes/includes.php');
 //if logged as a system user, go directly to home.php
 $allowed_enter = array(9,8,7);
 if (in_array($_SESSION['userlevel'],$allowed_enter)) {
-header("location:home.php");
+	header("location:home.php");
 }
 $database->MySQLDB();
 $sysuser_username=mysql_real_escape_string($_POST['login_form_user']);
@@ -54,6 +51,12 @@ if ($_POST) {
 				$_SESSION['loggedin'] = $sysuser_username;
 				$_SESSION['access'] = 'admin';
 				$_SESSION['userlevel'] = $user_level;
+				// if remember me is on, set the cookie
+				if ($_POST['login_form_remember']=='on') {
+					setcookie("loggedin",$sysuser_username,time()+COOKIE_EXP_TIME);
+					setcookie("access","admin",time()+COOKIE_EXP_TIME);
+					setcookie("userlevel",$user_level,time()+COOKIE_EXP_TIME);
+				}
 				header("location:home.php");
 			}
 			else {
@@ -78,6 +81,12 @@ if ($_POST) {
 				$_SESSION['loggedin'] = $client_username;
 				$_SESSION['access'] = $client_username;
 				$_SESSION['userlevel'] = '0';
+				// if remember me is on, set the cookie
+				if ($_POST['login_form_client_remember']=='on') {
+					setcookie("loggedin",$client_username,time()+COOKIE_EXP_TIME);
+					setcookie("access",$client_username,time()+COOKIE_EXP_TIME);
+					setcookie("userlevel","0",time()+COOKIE_EXP_TIME);
+				}
 				header("location:upload/$client_username/");
 			}
 			else {
@@ -173,11 +182,15 @@ if ($_POST) {
 						<table width="100%" border="0" cellspacing="1" cellpadding="1">
 						  <tr>
 							<td width="35%"><label for="login_form_user"><?php echo $login_label_user; ?></label></td>
-							<td><input type="text" name="login_form_user" id="login_form_user" value="<?php if (isset($sysuser_username)) { echo $sysuser_username; } ?>" /></td>
+							<td><input type="text" name="login_form_user" id="login_form_user" value="<?php if (isset($sysuser_username)) { echo $sysuser_username; } ?>" class="field" /></td>
 						  </tr>
 						  <tr>
 							<td><label for="login_form_pass"><?php echo $login_label_pass; ?></label></td>
-							<td><input type="password" name="login_form_pass" id="login_form_pass" /></td>
+							<td><input type="password" name="login_form_pass" id="login_form_pass" class="field" /></td>
+						  </tr>
+						  <tr>
+							<td><label for="login_form_remember"><?php echo $login_label_remember; ?></label></td>
+							<td><input type="checkbox" name="login_form_remember" id="login_form_remember" /></td>
 						  </tr>
 						  <tr>
 							<td colspan="2"><div align="center"><input type="submit" name="Submit" value="<?php echo $login_user_submit; ?>" class="boton" /></div></td>
@@ -191,11 +204,15 @@ if ($_POST) {
 						<table width="100%" border="0" cellspacing="1" cellpadding="1">
 						  <tr>
 							<td width="35%"><label for="login_form_client_user"><?php echo $login_label_user; ?></label></td>
-							<td><input type="text" name="login_form_client_user" id="login_form_client_user" value="<?php if (isset($client_username)) { echo $client_username; } ?>" /></td>
+							<td><input type="text" name="login_form_client_user" id="login_form_client_user" value="<?php if (isset($client_username)) { echo $client_username; } ?>" class="field" /></td>
 						  </tr>
 						  <tr>
 							<td><label for="login_form_client_pass"><?php echo $login_label_pass; ?></label></td>
-							<td><input type="password" name="login_form_client_pass" id="login_form_client_pass" /></td>
+							<td><input type="password" name="login_form_client_pass" id="login_form_client_pass" class="field" /></td>
+						  </tr>
+						  <tr>
+							<td><label for="login_form_client_remember"><?php echo $login_label_remember; ?></label></td>
+							<td><input type="checkbox" name="login_form_client_remember" id="login_form_client_remember" /></td>
 						  </tr>
 						  <tr>
 							<td colspan="2"><div align="center"><input type="submit" name="Submit" value="<?php echo $login_client_submit; ?>" class="boton" /></div></td>
