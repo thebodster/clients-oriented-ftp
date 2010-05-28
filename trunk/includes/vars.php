@@ -47,10 +47,10 @@ $page_title_options = 'System options';
 $page_title_users = 'Users administration';
 
 // login error
-$login_admin_not_exists = 'admin User doesn\'t exist.';
-$login_client_not_exists = 'client user not exists';
-$login_admin_pass_wrong = 'admin pass wrong';
-$login_client_pass_wrong = 'user pass wrong';
+$login_admin_not_exists = 'The supplied username doesn\'t exist.';
+$login_client_not_exists = 'The supplied username doesn\'t exist..';
+$login_admin_pass_wrong = 'The supplied password is incorrect.';
+$login_client_pass_wrong = 'The supplied password is incorrect.';
 
 
 // top menu bar
@@ -70,7 +70,6 @@ $mnu_config_logo = 'Your logo';
 $mnu_config_options = 'General options';
 
 
-
 // login
 $login_title = 'Login';
 $login_tips = 'Please select your appropiate account type below.';
@@ -78,6 +77,7 @@ $login_tab_admin = 'Administrator';
 $login_tab_client = 'Client';
 $login_label_user = 'User';
 $login_label_pass = 'Password';
+$login_label_remember = 'Remember me';
 $login_user_submit = 'Access Administrator';
 $login_client_submit = 'Access file list';
 
