@@ -1,7 +1,7 @@
 <?php
 	$tablesorter = 1;
-	require_once('includes/includes.php');
 	$allowed_levels = array(9,8);
+	require_once('includes/includes.php');
 	$page_title = $page_title_clients;
 	include('header.php');
 ?>

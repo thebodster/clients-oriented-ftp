@@ -1,6 +1,6 @@
 <?php
-require_once('includes/includes.php');
 $allowed_levels = array(9,8,7);
+require_once('includes/includes.php');
 $page_title = $page_title_home;
 include('header.php');
 $database->MySQLDB();
@@ -21,7 +21,7 @@ $database->MySQLDB();
 				?>
 				<?php // show VIEW CLIENTS to allowed users
 					$clients_allowed = array(9,8);
-					if (in_array($_SESSION['userlevel'],$clients_allowed)) {
+					if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
 				?>
 					<a href="clients.php" target="_self"><?php echo $statistics_view; ?></a>
 				<?php } ?>
@@ -30,7 +30,7 @@ $database->MySQLDB();
 		<?php
 			// users stats and logo are only visible by level 9 users (system administrators)
 			$allowed = array(9);
-			if (in_array($_SESSION['userlevel'],$allowed)) {
+			if (in_array($_SESSION['userlevel'],$allowed) || in_array($_COOKIE['userlevel'],$allowed)) {
 		?>
 		<!-- Usuarios -->								
 			<div class="statbarlogo" id="stat_users">

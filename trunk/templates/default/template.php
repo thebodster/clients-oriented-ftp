@@ -1,7 +1,7 @@
 <?php
-include ('../../templates/session_check.php');
+require_once($this_template.'vars.php');
+include_once('../../templates/session_check.php');
 $this_template = '../../templates/default/';
-require($this_template.'vars.php');
 
 $database->MySQLDB();
 $sql = $database->query('SELECT * from tbl_files where client_user="' . $this_user .'"');

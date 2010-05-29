@@ -1,5 +1,5 @@
 	<div id="footer">
-		<span><?php echo $copyright; ?> <?php echo date("Y") ?> | <a href="<?php echo $uri;?>" target="_blank"><?php echo $uri_txt;?></a></span>
+		<span><?php echo $GLOBALS['copyright']; ?> <?php echo date("Y") ?> | <a href="<?php echo $GLOBALS['uri'];?>" target="_blank"><?php echo $GLOBALS['uri_txt'];?></a></span>
 	</div>
 
 </div> <!--wrapper-->

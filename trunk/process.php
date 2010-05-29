@@ -1,6 +1,6 @@
 <?php
-require_once('includes/includes.php');
 $allowed_levels = array(9,8,7,0);
+require_once('includes/includes.php');
 require_once('header.php');
 
 class process {

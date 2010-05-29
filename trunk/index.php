@@ -7,12 +7,13 @@ ob_start();
 	Distributed under GPL2
 	Feel free to participate!
 */
+$allowed_enter = array(9,8,7);
 require_once('includes/includes.php');
 //if logged as a system user, go directly to home.php
-$allowed_enter = array(9,8,7);
-if (in_array($_SESSION['userlevel'],$allowed_enter)) {
+if (in_array($_SESSION['userlevel'],$allowed_enter) || in_array($_COOKIE['userlevel'],$allowed_enter)) {
 	header("location:home.php");
 }
+check_for_client();
 $database->MySQLDB();
 $sysuser_username=mysql_real_escape_string($_POST['login_form_user']);
 $sysuser_password=mysql_real_escape_string(md5($_POST['login_form_pass']));
