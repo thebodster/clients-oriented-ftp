@@ -2,14 +2,8 @@
 session_start();
 ob_start();
 header("Cache-control: private");
-if (!isset($_SESSION['loggedin'])) {
-	// check if we are logged in via session or cookie. if neither, go to login
-	header("location:index.php");
-}
-if ($_SESSION['access'] != 'admin') {
-	// if user access level is not that of an admin, go to the login form
-	header("location:index.php");
-}
+check_for_session();
+check_for_admin();
 if (!isset($page_title)) { $page_title = $page_title_basic; }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -42,7 +36,7 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 
 		<?php // show CLIENTS to allowd users
 			$clients_allowed = array(9,8);
-			if (in_array($_SESSION['userlevel'],$clients_allowed)) {
+			if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
 		?>
 		<li>
 			<a href="#" class="menulink dropready"><?php echo $mnu_clients; ?></a>
@@ -55,7 +49,7 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 
 		<?php // show USERS to allowd users
 			$users_allowed = array(9);
-			if (in_array($_SESSION['userlevel'],$users_allowed)) {
+			if (in_array($_SESSION['userlevel'],$users_allowed) || in_array($_COOKIE['userlevel'],$users_allowed)) {
 		?>
 		<li>
 			<a href="#" class="menulink dropready"><?php echo $mnu_users; ?></a>
@@ -68,7 +62,7 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 
 		<?php // show LOGO and OPTIONS to allowd users
 			$options_allowed = array(9);
-			if (in_array($_SESSION['userlevel'],$options_allowed)) {
+			if (in_array($_SESSION['userlevel'],$options_allowed) || in_array($_COOKIE['userlevel'],$options_allowed)) {
 		?>
 		<li>
 			<a href="#" class="menulink dropready"><?php echo $mnu_config; ?></a>
@@ -82,4 +76,4 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 	</ul>
 	<div class="clear"></div>
 </div>
-<?php require_once('includes/userlevel_check.php'); ?>
+<?php can_see_content($allowed_levels,$page_title_not_allowed,$userlevel_not_allowed); ?>

@@ -45,6 +45,7 @@ $page_title_newclient = 'Add new client';
 $page_title_newuser = 'Add system user';
 $page_title_options = 'System options';
 $page_title_users = 'Users administration';
+$page_title_not_allowed = 'Access denied';
 
 // login error
 $login_admin_not_exists = 'The supplied username doesn\'t exist.';

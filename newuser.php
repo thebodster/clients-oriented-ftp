@@ -1,6 +1,6 @@
 <?php
-require_once('includes/includes.php');
 $allowed_levels = array(9);
+require_once('includes/includes.php');
 $page_title = $page_title_newuser;
 include('header.php');
 
