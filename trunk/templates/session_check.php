@@ -2,13 +2,6 @@
 ob_start();
 session_start();
 header("Cache-control: private");
-print_r($_COOKIE);
-print_r($_SESSION);
-//die();
-// check if user is logged in
-if(!isset($_SESSION['loggedin']) || !isset($_COOKIE['loggedin'])) {
-	//header("location:../../index.php");
-}
 // check if the logged user is an admin or the appropiate client
 $client_username = $this_user;
 if ($_SESSION['access'] == 'admin') { $canview = 1; }
