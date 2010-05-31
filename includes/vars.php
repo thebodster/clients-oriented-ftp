@@ -170,7 +170,8 @@ $add_client_label_intcont = 'Internal contact';
 $add_client_form_submit = 'Create account';
 
 $add_client_ok = 'Client added correctly';
-$add_client_error = 'There was an error. Please try again';
+$add_client_error = 'The client could not be created. A folder with this name already exists.';
+$add_client_folder_error = 'A folder for this client could not be created. Probably because of a server configuration.';
 $add_client_exists = 'A client with this login username already exists.';
 $add_client_mail_exists = 'A client with this e-mail address already exists.';
 
