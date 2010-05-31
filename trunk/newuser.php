@@ -40,10 +40,19 @@ if ($_POST) {
 		."VALUES ('NULL', '$add_user_data_user', '$add_user_data_pass', '$add_user_data_name', '$add_user_data_email','$add_user_data_level', '$timestampdate')");
 		
 		if ($success){
-			$query_state = 'ok';
+			$process_state = 'ok';
+			// send account data by email
+			$email_body = $add_user_mail_body.$add_mail_body_user.$add_user_data_user.$add_mail_body_pass.$_POST['add_user_form_pass'].$add_user_mail_body_2.$baseuri.$add_user_mail_body_3;
+			$confirmmail = @mail($add_user_data_email, $add_user_mail_subject, $email_body, "From:<$admin_email_address>\r\nReply-to:<$admin_email_address>\r\nContent-type: text/html; charset=us-ascii");
+			if ($confirmmail){
+				$email_state = 'ok';
+			}
+			else{
+				$email_state = 'err';
+			}
 		}
 		else {
-			$query_state = 'err';
+			$process_state = 'err';
 		}
 
 	} //validation ends here
@@ -59,11 +68,23 @@ if ($_POST) {
 		<?php $valid_me->list_errors(); // if the form was submited with errors, show them here ?>
 		
 		<?php
-			if ($query_state == 'ok') {
-				 echo '<div class="message message_ok"><p>'.$add_user_ok.'</p></div>';
-			}
-			else if ($query_state == 'err') {
-				echo '<div class="message message_error"><p>'.$add_user_error.'</p></div>';
+			if (isset($process_state)) {
+				switch ($process_state) {
+					case 'ok':
+						echo '<div class="message message_ok"><p>'.$add_user_ok.'</p></div>';
+					break;
+					case 'err':
+						echo '<div class="message message_error"><p>'.$add_user_error.'</p></div>';
+					break;
+				}
+				switch ($email_state) {
+					case 'ok':
+						echo '<div class="message message_ok"><p>'.$add_client_notify_ok.'</p></div>';
+					break;
+					case 'err':
+						echo '<div class="message message_error"><p>'.$add_client_notify_error.'</p></div>';
+					break;
+				}
 			}
 			else {
 		?>

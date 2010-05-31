@@ -60,15 +60,25 @@ if ($_POST) {
 				$success = mysql_query("INSERT INTO tbl_clients (id,name,client_user,password,address,phone,email,notify,contact,timestamp)"
 				."VALUES ('NULL', '$add_client_data_name', '$add_client_data_user', '$add_client_data_pass', '$add_client_data_addr', '$add_client_data_phone', '$add_client_data_email', '$add_client_data_notity', '$add_client_data_intcont', '$timestampdate')");
 
+				// send account data by email
+				$email_body = $add_client_mail_body.$add_mail_body_user.$add_client_data_user.$add_mail_body_pass.$_POST['add_client_form_pass'].$add_client_mail_body_2.$baseuri.$add_client_mail_body_3;
+				$confirmmail = @mail($add_client_data_email, $add_client_mail_subject, $email_body, "From:<$admin_email_address>\r\nReply-to:<$admin_email_address>\r\nContent-type: text/html; charset=us-ascii");
+				if ($confirmmail){
+					$email_state = 'ok';
+				}
+				else{
+					$email_state = 'err';
+				}
+
 				// everything went ok! :)
-				$query_state = 'ok';
+				$process_state = 'ok';
 			}
 			else {
-				$query_state = 'err_mkdir';
+				$process_state = 'err_mkdir';
 			}
 		}
 		else {
-			$query_state = 'err_folder_exists';
+			$process_state = 'err_folder_exists';
 		}
 
 	} //after-validation code ends here
@@ -83,19 +93,26 @@ if ($_POST) {
 		<?php $valid_me->list_errors(); // if the form was submited with errors, show them here ?>
 		
 		<?php
-			if (isset($query_state)) {
-				switch ($query_state) {
+			if (isset($process_state)) {
+				switch ($process_state) {
 					case 'ok':
-						echo '<div class="message message_ok"><p>'.$add_client_ok;
+						echo '<div class="message message_ok"><p>'.$add_client_ok.'</p></div>';
 					break;
 					case 'err_mkdir':
-						echo '<div class="message message_error"><p>'.$add_client_folder_error.' <strong>'.$add_client_data_user.'</strong>';
+						echo '<div class="message message_error"><p>'.$add_client_folder_error.' <strong>'.$add_client_data_user.'</strong></p></div>';
 					break;
 					case 'err_folder_exists':
-						echo '<div class="message message_error"><p>'.$add_client_error;
+						echo '<div class="message message_error"><p>'.$add_client_error.'</p></div>';
 					break;
 				}
-				echo '</p></div>';
+				switch ($email_state) {
+					case 'ok':
+						echo '<div class="message message_ok"><p>'.$add_client_notify_ok.'</p></div>';
+					break;
+					case 'err':
+						echo '<div class="message message_error"><p>'.$add_client_notify_error.'</p></div>';
+					break;
+				}
 			}
 			else {
 		?>
