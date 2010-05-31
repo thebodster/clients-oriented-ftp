@@ -41,26 +41,26 @@ if ($_POST) {
 						$timestampdate = time();
 						$result = $database->query("INSERT INTO tbl_files (id,url,filename,description,client_user,timestamp)"
 						."VALUES ('NULL', '$file_final_name', '$filename', '$description', '$client_user', '$timestampdate')");
-						$query_state = 'ok';
+						$upload_state = 'ok';
 					}
 					else {
 						// could not move file
-						$query_state = 'err_move';
+						$upload_state = 'err_move';
 					}
 				}
 				else {
 					// filetype isn't allowed
-					$query_state = 'err_type';
+					$upload_state = 'err_type';
 				}
 			}
 			else {
 				// file doesn't exist anymore
-				$query_state = 'err_exist';
+				$upload_state = 'err_exist';
 			}
 		}
 		// no file was selected
 		else {
-			$query_state = 'err';
+			$upload_state = 'err';
 		}
 
 	}
@@ -111,64 +111,62 @@ include_once('includes/js/js.validations.php'); ?>
 
 			$valid_me->list_errors(); // if the form was submited with errors, show them here
 
-			if ($query_state == 'ok') {
-				echo '<div class="message message_ok"><p>'.$file_upload_ok.'</p></div>';
-				// check if user wants to receive mail notifications
-				$sql = $database->query('SELECT * FROM tbl_clients WHERE client_user="'.$client_user.'"');
-				while($row = mysql_fetch_array($sql)) {
-					if ($row['notify'] == '1') {
-
-						$notify_email_link = $baseuri.'upload/'.$client_user.'/';
-						$final_email_body = wordwrap($notify_email_body.$notify_email_link.$notify_email_body2,70);
+			if (isset($upload_state)) {
+				switch ($upload_state) {
+					case 'ok':
+						echo '<div class="message message_ok"><p>'.$file_upload_ok.'</p></div>';
+						// check if user wants to receive mail notifications
+						$sql = $database->query('SELECT * FROM tbl_clients WHERE client_user="'.$client_user.'"');
+						while($row = mysql_fetch_array($sql)) {
+							if ($row['notify'] == '1') {
+								$notify_email_link = $baseuri.'upload/'.$client_user.'/';
+								$final_email_body = wordwrap($notify_email_body.$notify_email_link.$notify_email_body2,70);
+								$success = mail($row['email'], $notify_email_subject, $final_email_body, "From:<$admin_email_address>\r\nReply-to:<$admin_email_address>\r\nContent-type: text/html; charset=us-ascii");
+								if ($success){
+								  echo '<div class="message message_ok"><p>'.$notify_email_ok.'</p></div>';
+								}
+								else{
+								  echo '<div class="message message_error"><p>'.$notify_email_error.'</p></div>';
+								}
+							}
+						}
+						// end notification
+						?>
+						<p><strong><?php echo $up_filename; ?></strong> <?php echo $_FILES['ufile']['name']; ?><br />
+						<strong><?php echo $up_filetype; ?></strong> <?php echo $_FILES['ufile']['type']; ?></p>
 						
-						$success = mail($row['email'], $notify_email_subject, $final_email_body, "From:<$admin_email_address>\r\nReply-to:<$admin_email_address>\r\nContent-type: text/html; charset=us-ascii");
-
-						if ($success){
-						  echo '<div class="message message_ok"><p>'.$notify_email_ok.'</p></div>';
-						}
-						else{
-						  echo '<div class="message message_error"><p>'.$notify_email_error.'</p></div>';
-						}
-					}
-				}
-				// end notification
-			?>
-				<p><strong><?php echo $up_filename; ?></strong> <?php echo $_FILES['ufile']['name']; ?><br />
-				<strong><?php echo $up_filetype; ?></strong> <?php echo $_FILES['ufile']['type']; ?></p>
+						<?php $total = $_FILES['ufile']['size']; getfilesize($total); ?>
 				
-				<?php $total = $_FILES['ufile']['size']; getfilesize($total); ?>
-		
-				<div id="linkcliente">
-					<?php
-					$sql2 = $database->query('SELECT * from tbl_clients where client_user="' . $client_user .'"');
-					while ($row = mysql_fetch_array($sql2)) {
-						$user_full_name = $row['name'];
-					}
-					?>
-					<p><a href="upload/<?php echo $client_user; ?>/"><?php echo $client_link; ?> <strong><?php echo $user_full_name; ?></strong></a></p>
-				</div>
-	
-			<?php
-			}
-			else if ($query_state == 'err_move') {
-				echo '<div class="message message_error"><p>'.$file_upload_move.'</p></div>';
-			}
-			else if ($query_state == 'err') {
-				echo '<div class="message message_error"><p>'.$file_upload_error.'</p></div>';
-			}
-			else if ($query_state == 'err_type') {
-				echo '<div class="message message_error"><p>'.$file_upload_types_error.'</p></div>';
-			}
-			else if ($query_state == 'err_exist') {
-				echo '<div class="message message_error"><p>'.$file_upload_exist_error.'</p></div>';
+						<div id="linkcliente">
+							<?php
+							$sql2 = $database->query('SELECT * from tbl_clients where client_user="' . $client_user .'"');
+							while ($row = mysql_fetch_array($sql2)) {
+								$user_full_name = $row['name'];
+							}
+							?>
+							<p><a href="upload/<?php echo $client_user; ?>/"><?php echo $client_link; ?> <strong><?php echo $user_full_name; ?></strong></a></p>
+						</div><?php
+					break;
+					case 'err_move':
+						echo '<div class="message message_error"><p>'.$file_upload_move.'</p></div>';
+					break;
+					case 'err':
+						echo '<div class="message message_error"><p>'.$file_upload_error.'</p></div>';
+					break;
+					case 'err_type':
+						echo '<div class="message message_error"><p>'.$file_upload_types_error.'</p></div>';
+					break;
+					case 'err_exist':
+						echo '<div class="message message_error"><p>'.$file_upload_exist_error.'</p></div>';
+					break;
+				}
 			}
 			else {
 		?>
 	
 	<form action="fileupload.php" name="uploadf" method="post" enctype="multipart/form-data" onsubmit="return validateform(this);">
 
-		<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
-
+		<input type="hidden" name="MAX_FILE_SIZE" value="1048576000">
 		<table border="0" cellspacing="1" cellpadding="1">
 		  <tr>
 			<td width="40%"><?php echo $upfname; ?></td>
