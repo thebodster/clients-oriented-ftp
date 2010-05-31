@@ -175,6 +175,23 @@ $add_client_folder_error = 'A folder for this client could not be created. Proba
 $add_client_exists = 'A client with this login username already exists.';
 $add_client_mail_exists = 'A client with this e-mail address already exists.';
 
+// notification variables
+$add_mail_body_user = '<p><strong>username</strong>: ';
+$add_mail_body_pass = '<br /><strong>password</strong>: ';
+// clients specific
+$add_client_mail_subject = 'New file account created for you';
+$add_client_mail_body = '<p>A new account was created for you. From now on, you can access the files that have been uploaded under your account using the following credentials:</p>';
+$add_client_mail_body_2 = '</p><p>Log in here: ';
+$add_client_mail_body_3 = '</p><p>Please contact the administrator if you need further assistance.</p>';
+$add_client_notify_ok = 'An e-mail notification with login information was sent to your client.';
+$add_client_notify_error = 'E-mail notification couldn\'t be sent.';
+// users specific
+$add_user_mail_subject = 'New user account creater for you';
+$add_user_mail_body = '<p>A new account was created for you. From now on, you can access the system administrator using the following credentials:</p>';
+$add_user_mail_body_2 = '</p><p>Log in here: ';
+$add_user_mail_body_3 = '</p><p>Thank you for using this system.</p>';
+$add_user_notify_ok = 'An e-mail notification with the login information was sent to the user.';
+$add_user_notify_error = 'E-mail notification couldn\'t be sent.';
 
 // Add user
 $add_utitle = 'Add new system user';
