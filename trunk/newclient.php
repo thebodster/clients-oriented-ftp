@@ -35,36 +35,43 @@ if ($_POST) {
 	
 	if ($valid_me->return_val) { //lets continue
 
-		$timestampdate = time();
-		$success = mysql_query("INSERT INTO tbl_clients (id,name,client_user,password,address,phone,email,notify,contact,timestamp)"
-		."VALUES ('NULL', '$add_client_data_name', '$add_client_data_user', '$add_client_data_pass', '$add_client_data_addr', '$add_client_data_phone', '$add_client_data_email', '$add_client_data_notity', '$add_client_data_intcont', '$timestampdate')");
+		// Create user folder if it doesn't exist
+		$folder = 'upload/' . $add_client_data_user . '/';
+		if (!file_exists($folder)) {
+			$success = @mkdir($folder);
 
-		if ($success){
-			$query_state = 'ok';
-
-			// Create user folder
-			$folder = 'upload/' . $add_client_data_user . '/';
-			if (!file_exists($folder)) {
-				mkdir($folder); chmod($folder, 0755);
+			// if the folder was created, continue
+			if ($success){
+				chmod($folder, 0755);
 				$folder2 = 'upload/' . $add_client_data_user . '/thumbs/';
 				mkdir($folder2); chmod($folder2, 0755);
 	
-			// Create index.php on clients folder
+				// Create index.php on clients folder
 				$index_content = '$this_user = "' . $add_client_data_user . '" ; include_once(\'../../templates/default/template.php\');';
 				$addwhat = '<?php ' . $index_content . ' ?>';
-			
 				$file = $folder . "index.php";   
 				if (!$file_handle = fopen($file,"a")) { echo $creat_err1; }
 				if (!fwrite($file_handle, $addwhat)) { echo $creat_err2; }
 				fclose($file_handle);
 				$linkcli = realpath($file);
+
+				// insert user into db
+				$timestampdate = time();
+				$success = mysql_query("INSERT INTO tbl_clients (id,name,client_user,password,address,phone,email,notify,contact,timestamp)"
+				."VALUES ('NULL', '$add_client_data_name', '$add_client_data_user', '$add_client_data_pass', '$add_client_data_addr', '$add_client_data_phone', '$add_client_data_email', '$add_client_data_notity', '$add_client_data_intcont', '$timestampdate')");
+
+				// everything went ok! :)
+				$query_state = 'ok';
+			}
+			else {
+				$query_state = 'err_mkdir';
 			}
 		}
 		else {
-			$query_state = 'err';
+			$query_state = 'err_folder_exists';
 		}
 
-	} //validation ends here
+	} //after-validation code ends here
 
 } // do if just entering (no form info sent) ?>
 
@@ -76,11 +83,19 @@ if ($_POST) {
 		<?php $valid_me->list_errors(); // if the form was submited with errors, show them here ?>
 		
 		<?php
-			if ($query_state == 'ok') {
-				 echo '<div class="message message_ok"><p>'.$add_client_ok.'</p></div>';
-			}
-			else if ($query_state == 'err') {
-				echo '<div class="message message_error"><p>'.$add_client_error.'</p></div>';
+			if (isset($query_state)) {
+				switch ($query_state) {
+					case 'ok':
+						echo '<div class="message message_ok"><p>'.$add_client_ok;
+					break;
+					case 'err_mkdir':
+						echo '<div class="message message_error"><p>'.$add_client_folder_error.' <strong>'.$add_client_data_user.'</strong>';
+					break;
+					case 'err_folder_exists':
+						echo '<div class="message message_error"><p>'.$add_client_error;
+					break;
+				}
+				echo '</p></div>';
 			}
 			else {
 		?>
