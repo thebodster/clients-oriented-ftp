@@ -4,10 +4,6 @@
 	if something cant be used, please let me know
 */
 
-/* Nos fijamos si la foto ya existe en thumbs 
-   Si no existe creamos el Thumbnail.
-   Si ya existe, mostramos el que ya esta creado. */
-
 // get thumbnails options
 require_once('sys.vars.php');
 
@@ -17,21 +13,20 @@ function meassureimg($pic_source) {
 	$img_height = $the_picture[1];
 
 	if ($img_width > $img_height) {
-		$use_meassure = 'h';
 		$use_side = $max_logo_height;
+		return 'h';
 	}
 	else {
-		$use_meassure = 'w';
 		$use_side = $max_logo_width;
+		return 'w';
 	}
 }
 
-// let's name the file
+// let's name the file.
 $thumb_name = $_GET['w'].$_GET['h'].str_replace("\)", "5", str_replace("\(", "4", str_replace(" ", "_", str_replace("/", "-", $_GET['src']))));
 
-// start process
+// start process.
 if($_GET['ql']) { $thumbnail_default_quality = $_GET['ql']; }
-else { $thumbnail_default_quality = 100; }
 
 switch($_GET['type']) {
 	case 'logo':
@@ -46,73 +41,75 @@ switch($_GET['type']) {
 }
 
 if (!file_exists($thumb_name)) {
-	/* Detectamos que tipo de archivo es y hacemos una foto temporal */
+	/* Detect filetype and make a temp images */
 	if (strtolower(substr($_GET['src'], -3)) == "gif") { $fuente = imagecreatefromgif($_GET['src']); }
 	if (strtolower(substr($_GET['src'], -3)) == "jpg") { $fuente = imagecreatefromjpeg($_GET['src']); }
 	if (strtolower(substr($_GET['src'], -3)) == "pjpeg") { $fuente = imagecreatefromjpeg($_GET['src']); }
 	if (strtolower(substr($_GET['src'], -3)) == "jpeg") { $fuente = imagecreatefromjpeg($_GET['src']); }
 	if (strtolower(substr($_GET['src'], -3)) == "png") { $fuente = imagecreatefrompng($_GET['src']); }
 
-	/* Creamos un par de variables que vamos a usar en la modificacion del tamaño */
-	$imgAncho = imagesx ($fuente);
-	$imgAlto = imagesy($fuente);
-	$nuevoAncho = $_GET['w'];
-	$nuevoAlto = $_GET['h'];
+	$image_width = imagesx($fuente);
+	$image_height = imagesy($fuente);
+	$new_width = $_GET['w'];
+	$new_height = $_GET['h'];
 	
 	if ((!isset($_GET['w'])) && (!isset($_GET['h']))) {
-		$nuevoAncho = 70;
-		$nuevoAlto = 100;
+		$new_width = 100;
+		$new_height = 100;
 	}
 	else if (($_GET['w']) && (!$_GET['h'])) {
-		$nuevoAncho = $_GET['w'];
-		$nuevoAlto = (((($_GET['w'] * 100) / $imgAncho) * $imgAlto) / 100);
+		$new_width = $_GET['w'];
+		$new_height = (((($_GET['w'] * 100) / $image_width) * $image_height) / 100);
 	}
 	else if ((!$_GET['w']) && ($_GET['h'])) {
-		$nuevoAncho = (((($_GET['h'] * 100) / $imgAlto) * $imgAncho) / 100);
-		$nuevoAlto = $_GET['h'];
+		$new_width = (((($_GET['h'] * 100) / $image_height) * $image_width) / 100);
+		$new_height = $_GET['h'];
 	}
 	
-	/* Rehacemos la foto con los colores originales y evitando el pixelado */
-	$imagen = ImageCreateTrueColor($nuevoAncho,$nuevoAlto);
-	imagecopyresampled($imagen,$fuente,0,0,0,0,$nuevoAncho,$nuevoAlto,$imgAncho,$imgAlto);
+	/* racreate the picture with the original colors and avoiding pixelation */
+	$imagen = ImageCreateTrueColor($new_width,$new_height);
+	imagecopyresampled($imagen,$fuente,0,0,0,0,$new_width,$new_height,$image_width,$image_height);
 
-	/* Copiamos el Thumbnail a la carpeta de thumbs. */
+	/* copy thumbnail to the corresponding folder */
 	imagejpeg($imagen, $do_on_folder.$thumb_name,$thumbnail_default_quality);
 }
 
 $output = imagecreatefromjpeg($do_on_folder.$thumb_name);
 
-/* Si tiene marca de agua se la agregamos aca */
+/* add watermark */
 if ($_GET['wm']) {
 	$watermark = "flvplayer/logo.png";
 	$im = imagecreatefrompng($watermark);
 	imagecopy($output, $im, 10, 10, 0, 0, imagesx($im), imagesy($im));
 }
 
+/* add unsharp */
 if ($_GET['sh']) { 
 	if ($_GET['sh'] == 1) { $cant = 70; $radio = 0.5; $thres = 3; }
 	else { $arraysh = explode("|", $_GET['sh']); $cant = $arraysh[0]; $radio = $arraysh[1]; $thres = $arraysh[2]; }
 	UnsharpMask($output, $cant, $radio, $thres);
 }
 
+/* rotate */
 if($_GET['r']) { 
 	if($_GET['ql']) { $thumbnail_default_quality = $_GET['ql']; }
-	else { $thumbnail_default_quality = 100; }
-	
 	$arrayr = explode("|", $_GET['r']);
 	$grados = $arrayr[0];
 	$back = '0x' . $arrayr[1];
-
 	$rotate = imagerotate($output, $grados, $back);
 	imagejpeg($rotate,NULL,$thumbnail_default_quality);
 }
 
+/* add blur */
 if($_GET['bl']) { $blcant = $_GET['bl']; blur($output,$blcant); }
 
+/* add pixelate */
 if($_GET['px']) { $pxcant = $_GET['px']; pixelate($output,$pxcant); }
 
+/* add scatter */
 if($_GET['sc']) { scatter($output); }
 
+/* add duotone */
 if($_GET['duo']) { 
 	$arraynoi = explode("|", $_GET['duo']);
 	$noir = $arraynoi[0];
@@ -121,65 +118,22 @@ if($_GET['duo']) {
 	duotone($output,$noir,$noig,$noib);
 }
 
+/* make grayscale */
 if($_GET['gr']) { greyscale($output); }
 
+/* reduce colors */
 if($_GET['rc']) { $cols = $_GET['rc']; reducircols($output,$cols); }
-
-//if($_GET['ref']) { reflejo($output,'FFFFFF'); }
-
-//if($_GET['so']) { $arrayso = explode("|", $_GET['so']); $offset = $arrayso[0]; $steps = $arrayso[1]; $spread = $arrayso[2]; sombra($offset,$steps,$spread); }
-
-if($_GET['so']) { sombra($output); }
-
-if($_GET['bd']) {
-	$arraybd = explode("|", $_GET['bd']);
-	$tambd = $arraybd[0];
-	$colbd = $arraybd[1];
-	$colbd = hexdec ($colbd);
-	borde($output,$colbd,$tambd);
-}
 
 Header("Content-type: image/jpeg");
 imagejpeg($output,NULL,$thumbnail_default_quality);
 // Create thumbnail ends here
 
 
-// Here starts the functions that can be applied to the file
+// functions that can be applied to the file:
 
-// Shadow
-
-function sombra($image) {
-	/* output the image */
-	if($_GET['ql']) { $thumbnail_default_quality = $_GET['ql']; }
-	else { $thumbnail_default_quality = 90; }
-
-    header("image/jpeg");
-    imagejpeg($image,NULL,$thumbnail_default_quality);
-    imagedestroy($image);
-
-}
-
-// Border
-
-function borde(&$img, &$color, $thickness = 1)
-{
-    $x1 = 0;
-    $y1 = 0;
-    $x2 = ImageSX($img) - 1;
-    $y2 = ImageSY($img) - 1;
-
-    for($i = 0; $i < $thickness; $i++)
-    {
-        ImageRectangle($img, $x1++, $y1++, $x2--, $y2--, $color);
-    }
-} 
-
-// REDUCIR COLORES
-
+// REDUCE COLORS
 function reducircols(&$image,$colores) {
 	if($_GET['ql']) { $thumbnail_default_quality = $_GET['ql']; }
-	else { $thumbnail_default_quality = 90; }
-
     set_time_limit(0);
     imagetruecolortopalette($image, true, $colores);
     header("image/jpeg");
@@ -188,7 +142,6 @@ function reducircols(&$image,$colores) {
 }
 
 // GRAYSCALE
-
 function greyscale(&$image) {
     $imagex = imagesx($image);
     $imagey = imagesy($image);
@@ -207,8 +160,7 @@ function greyscale(&$image) {
 } 
 
 // SCATTER
-
- function scatter(&$image) {
+function scatter(&$image) {
     $imagex = imagesx($image);
     $imagey = imagesy($image);
 
@@ -231,8 +183,7 @@ function greyscale(&$image) {
 } 
 
 // DUOTONE
-
- function duotone(&$image, $rplus, $gplus, $bplus) {
+function duotone(&$image, $rplus, $gplus, $bplus) {
     $imagex = imagesx($image);
     $imagey = imagesy($image);
 
@@ -261,8 +212,7 @@ function greyscale(&$image) {
 } 
 
 // BLUR
-
- function blur (&$image,$dist) {
+function blur (&$image,$dist) {
     $imagex = imagesx($image);
     $imagey = imagesy($image);
 
@@ -302,9 +252,8 @@ function greyscale(&$image) {
     }
 } 
 
-// PIXELAR
-
- function pixelate(&$image,$blocksize) {
+// PIXELATE
+function pixelate(&$image,$blocksize) {
     $imagex = imagesx($image);
     $imagey = imagesy($image);
 
@@ -355,73 +304,6 @@ function greyscale(&$image) {
         }
     }
 } 
-
-// REFLEJO
-
-function reflejo($output,$gradientColor = 'FFFFFF') {
-	
-	// Gradient Height
-	$gradientHeight = 40;
-	
-	// Create new blank image with sizes.
-	$background = imagecreatetruecolor($nuevoAncho, $gradientHeight);
-	
-	$dividerHeight = 1;
-	
-	// Set the start coordinate of the gradient - ie below the divider, otherwise we'll end up drawing over the top of it
-	$gradient_y_startpoint = $dividerHeight;
-	
-	// Convert hex color to a color GD can use
-	sscanf($gradientColor, "%2x%2x%2x", $red2, $green2, $blue2);
-	$gdGradientColor=ImageColorAllocate($background,$red2,$green2,$blue2);
-	
-	$newImage = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
-	for ($x = 0; $x < $nuevoAncho; $x++) {
-	for ($y = 0; $y < $nuevoAlto; $y++)
-	{
-	imagecopy($newImage, $output, $x, $nuevoAlto - $y - 1, $x, $y, 1, 1);
-	}
-	}
-
-	// Add it to the blank background image
-	imagecopymerge ($background, $newImage, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, 100);
-	
-	// Create new image for our line which we will use over and over. We do this rather than
-	// drawing a GD line because we cannot set its transparency if it is a GD line.
-	$gradient_line = imagecreatetruecolor($nuevoAncho, 1);
-	
-	// Next we draw a GD line into our gradient_line
-	imageline ($gradient_line, 0, 0, $nuevoAncho, 0, $gdGradientColor);
-	
-	// Now, lets draw that gradient
-	$i = 0;
-	$transparency = 40;
-	
-	while ($i < $gradientHeight)
-	{
-	
-	imagecopymerge ($background, $gradient_line, 0, $gradient_y_startpoint, 0, 0, $nuevoAncho, 1, $transparency);
-	
-	++$i;
-	++$gradient_y_startpoint;
-	
-	if ($tranparency == 100) {
-		$transparency = 100;
-	} else {
-		$transparency = $transparency +2;
-	}
-	}
-	
-	// Set the thickness of the line we're about to draw
-	imagesetthickness ($background, $dividerHeight);
-	
-	// Draw the line
-	imageline ($background, 0, 0, $nuevoAncho, 0, $gdGradientColor);
-	imagejpeg($background, '', 100);
-	imagedestroy($background);
-	imagedestroy(gradient_line);
-	imagedestroy(newImage);
-}
 
 // UNSHARP MASK -----------------------------------------------------------------------------------------------------------------------------------
 
