@@ -91,6 +91,12 @@ while ($row = mysql_fetch_array($sql2)) {
 					<th><?php echo $file_date; ?></th>
 					<th><?php echo $file_download; ?></th>
 					<th><?php echo $file_preview; ?></th>
+					<?php // show UPLOADER only to users, not clients
+						$clients_allowed = array(9,8,7);
+						if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
+					?>
+						<th><?php echo $file_uploader; ?></th>
+					<?php } ?>
 					<th><?php echo $file_actions; ?></th>
 				</tr>
 			</thead>
@@ -133,6 +139,13 @@ while ($row = mysql_fetch_array($sql2)) {
 							<img src="../../includes/thumb.php?src=../upload/<?php echo $this_user; ?>/<?php echo $row['url']; ?>&amp;w=<?php echo $max_thumbnail_width; ?>&amp;sh=1&amp;ql=<?php echo $thumbnail_default_quality; ?>&amp;type=prev" class="thumbnail" alt="" />
 						<?php } ?>
 					</td>
+					<?php
+						// show UPLOADER only to users, not clients
+						$clients_allowed = array(9,8,7);
+						if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
+					?>
+						<td><?php echo $row['uploader']; ?></td>
+					<?php } ?>
 					<td>
 						<a onclick="return confirm_file_delete();" href="../../process.php?do=del_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>&amp;file=<?php echo $row['url']; ?>" target="_self">
 							<img src="../../img/delete.jpg" alt"<?php echo $delete; ?>" />

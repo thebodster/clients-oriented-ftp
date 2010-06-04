@@ -154,6 +154,7 @@ $file_upload_exist_error = 'The file does\'t exist anymore, or it\'s empty. You 
 $file_upload_move = 'Error moving uploaded file. Please try again';
 $up_filename = 'File name:';
 $up_filetype = 'File type:';
+$up_filesize = 'File size:';
 $client_link = 'File uploaded correctly. Click here to see the file list for';
 
 // Add client
