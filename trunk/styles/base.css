@@ -240,6 +240,13 @@ h2 { font-size:23px; font-family:Georgia, "Times New Roman", Times, serif; margi
 	border:1px solid #AC6760;
 }
 
+.message_info {
+	color:#2E8EB4;
+	background:#E1F3FA;
+	border:1px solid #2E8EB4;
+	margin-top:20px;
+}
+
 .whitebox {
 	background-color:white;
 	border:1px solid #ccc;

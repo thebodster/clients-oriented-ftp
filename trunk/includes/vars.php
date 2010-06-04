@@ -168,6 +168,8 @@ $add_client_label_email = 'E-mail';
 $add_client_label_notify = 'Notify new uploads by email';
 $add_client_label_intcont = 'Internal contact';
 $add_client_form_submit = 'Create account';
+$add_client_mail_info = 'This account information will be e-mailed to the address supplied above';
+
 
 $add_client_ok = 'Client added correctly';
 $add_client_error = 'The client could not be created. A folder with this name already exists.';
