@@ -23,6 +23,14 @@ if ($_POST) {
 
 	if ($valid_me->return_val) { //validation ok. continue to upload
 
+	// who is uploading this file?
+	if (isset($_COOKIE['loggedin'])) {
+		$this_admin = $_COOKIE['loggedin'];
+	}
+	elseif (isset($_SESSION['loggedin'])) {
+		$this_admin = $_SESSION['loggedin'];
+	}
+
 		// upload checkings
 		if(is_uploaded_file($_FILES['ufile']['tmp_name'])) {
 			if ($_FILES['ufile']['size'] > 0) {
@@ -39,8 +47,8 @@ if ($_POST) {
 					if (move_uploaded_file($_FILES['ufile']['tmp_name'], $path)) {
 						// create MySQL entry if the file was uploaded correctly
 						$timestampdate = time();
-						$result = $database->query("INSERT INTO tbl_files (id,url,filename,description,client_user,timestamp)"
-						."VALUES ('NULL', '$file_final_name', '$filename', '$description', '$client_user', '$timestampdate')");
+						$result = $database->query("INSERT INTO tbl_files (id,url,filename,description,client_user,timestamp,uploader)"
+						."VALUES ('NULL', '$file_final_name', '$filename', '$description', '$client_user', '$timestampdate', '$this_admin')");
 						$upload_state = 'ok';
 					}
 					else {
@@ -121,7 +129,7 @@ include_once('includes/js/js.validations.php'); ?>
 							if ($row['notify'] == '1') {
 								$notify_email_link = $baseuri.'upload/'.$client_user.'/';
 								$final_email_body = wordwrap($notify_email_body.$notify_email_link.$notify_email_body2,70);
-								$success = mail($row['email'], $notify_email_subject, $final_email_body, "From:<$admin_email_address>\r\nReply-to:<$admin_email_address>\r\nContent-type: text/html; charset=us-ascii");
+								$success = @mail($row['email'], $notify_email_subject, $final_email_body, "From:<$admin_email_address>\r\nReply-to:<$admin_email_address>\r\nContent-type: text/html; charset=us-ascii");
 								if ($success){
 								  echo '<div class="message message_ok"><p>'.$notify_email_ok.'</p></div>';
 								}
@@ -133,9 +141,8 @@ include_once('includes/js/js.validations.php'); ?>
 						// end notification
 						?>
 						<p><strong><?php echo $up_filename; ?></strong> <?php echo $_FILES['ufile']['name']; ?><br />
-						<strong><?php echo $up_filetype; ?></strong> <?php echo $_FILES['ufile']['type']; ?></p>
-						
-						<?php $total = $_FILES['ufile']['size']; getfilesize($total); ?>
+						<strong><?php echo $up_filetype; ?></strong> <?php echo $_FILES['ufile']['type']; ?><br />
+						<strong><?php echo $up_filesize; ?></strong> <?php $total = $_FILES['ufile']['size']; getfilesize($total); ?></p>
 				
 						<div id="linkcliente">
 							<?php

@@ -10,6 +10,7 @@ $file_size = 'Size';
 $file_date = 'Uploaded';
 $file_download = 'Download';
 $file_preview = 'Image Preview';
+$file_uploader = 'Uploader';
 $file_actions = 'Actions';
 $delete = 'Delete';
 
