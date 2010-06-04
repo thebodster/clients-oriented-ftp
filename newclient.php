@@ -201,6 +201,9 @@ if ($_POST) {
 					<div align="right">
 						<input type="submit" name="Submit" value="<?php echo $add_client_form_submit; ?>" class="boton" />
 					</div>
+					<div class="message message_info">
+						<p><?php echo $add_client_mail_info; ?></p>
+					</div>
 				</td>
 			</tr>
 		  </table>
