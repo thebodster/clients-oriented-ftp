@@ -170,10 +170,10 @@ include_once('includes/js/js.validations.php'); ?>
 			}
 			else {
 		?>
-	
+
 	<form action="fileupload.php" name="uploadf" method="post" enctype="multipart/form-data" onsubmit="return validateform(this);">
 
-		<input type="hidden" name="MAX_FILE_SIZE" value="1048576000">
+		<input type="hidden" name="MAX_FILE_SIZE" value="<?php $num = MAX_FILESIZE*1050000; echo $num; ?>" />
 		<table border="0" cellspacing="1" cellpadding="1">
 		  <tr>
 			<td width="40%"><?php echo $upfname; ?></td>

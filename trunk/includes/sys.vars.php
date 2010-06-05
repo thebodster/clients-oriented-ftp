@@ -13,6 +13,7 @@ define('MAX_PASS_CHARS', 16);
 
 define('COOKIE_EXP_TIME', 93600);
 
+define('MAX_FILESIZE',32);
 require_once('db_class.php');
 
 $curver = '0.1';
