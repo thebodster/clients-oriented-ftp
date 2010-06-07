@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `tbl_files` (
   `description` text NOT NULL,
   `client_user` varchar('.MAX_USER_CHARS.') NOT NULL,
   `timestamp` int(15) NOT NULL,
+  `uploader` varchar('.MAX_USER_CHARS.') NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=257 ;
 ';
