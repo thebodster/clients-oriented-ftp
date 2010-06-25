@@ -25,7 +25,7 @@ $install_user_pass = 'Password';
 $install_user_repeat = 'Repeat';
 
 $install_button = 'Install';
-$install_extra_info = '<p>After installing the system, you can go to the options page to set your timezone, prefered date display format and thubmnails parameters, besides being able to change the site options provided here.</p>';
+$install_extra_info = 'After installing the system, you can go to the options page to set your timezone, prefered date display format and thubmnails parameters, besides being able to change the site options provided here.';
 
 $install_ok = 'Congratulations! Everything is up and running.';
 $install_ok2 = 'You may proceed to <a href="../index.php" target="_self">log in</a> with your newely created user. Remember, the username for that account is <strong>admin</strong>.';
@@ -82,10 +82,10 @@ $login_label_remember = 'Remember me';
 $login_user_submit = 'Access Administrator';
 $login_client_submit = 'Access file list';
 
-$home_intro_text = '<p>Thank you for choosing cFTP. This software allows you to upload files for specific clients, and keep them stored for as long as you need them.</p>
-<p>cFTP lets choose a name and description for each individual file you upload, and relate it to an existing client or create a new one.<br />
-When the upload is complete, the system wil give you a link that you can share, where you client can see and download every file available under his account.</p>
-<p>Additionaly, you can select your own logo, that will appear in every client\'s page.</p>';
+$home_intro_text = 'Thank you for choosing cFTP. This software allows you to upload files for specific clients, and keep them stored for as long as you need them.';
+$home_intro_text2 = 'cFTP lets choose a name and description for each individual file you upload, and relate it to an existing client or create a new one.
+When the upload is complete, the system wil give you a link that you can share, where you client can see and download every file available under his account.';
+$home_intro_text3 = 'Additionaly, you can select your own logo, that will appear in every client\'s page.';
 
 $statistics_title = 'Statistics';
 $statistics_clients = 'Clients';
@@ -100,10 +100,17 @@ $upfdes = 'File description';
 $upffile = 'File';
 $upclient = 'Client';
 $upload_submit = 'Upload';
-$upload_no_clients = '<p>There are no clients at the moment.</p><p>Please <a href="newclient.php" target="_self">create a new one</a> to be able to upload files for that account.</p>';
-$notify_email_subject = 'New file uploaded for your account';
-$notify_email_body = '<p>A new file has been uploaded for you to download.</p><p>If you don\'t want to be notified about new files, please contact the uploader.</p><p>You can access a list of all your files <a href="';
-$notify_email_body2 = '" target="_blank">here</a>.</p>';
+// message to show when there are no clients
+$upload_no_clients = 'There are no clients at the moment.';
+$upload_no_clients2 = 'Create a new one';
+$upload_no_clients3 = 'to be able to upload files for that account.';
+
+// New file email notification texts
+$notify_email_subject = 'New file uploaded for you';
+$notify_email_body = 'A new file has been uploaded for you to download.';
+$notify_email_body2 = 'If you don\'t want to be notified about new files, please contact the uploader.';
+$notify_email_body3 = 'You can access a list of all your files';
+$notify_email_body4 = 'by logging in here';
 
 $notify_email_ok = 'Your client was notified about the file.';
 $notify_email_error = 'E-mail notify couldn\'t be sent.';
@@ -231,19 +238,19 @@ $view_user_timestamp = 'Added on';
 
 
 // logo upload page
-$logo_upload_description = '<p>Use this page to upload your company logo, or update your current uploaded one. This image will be shown to your clients when they access their file list.</p>';
+$logo_upload_description = 'Use this page to upload your company logo, or update your current uploaded one. This image will be shown to your clients when they access their file list.';
 $logo_select_file = 'Select file';
 $current_logo = 'Current logo:';
 $logo_replace_file = 'Select image to upload';
 $logo_upload_file = 'Upload';
-$select_logo_preview = '<p>The picture on the left is not an actual representation of what they will see. The size on this preview is fixed, but remember that you can change the display size and picture quality for your client\'s pages on the <a href="options.php">options</a> section.</p>';
+$select_logo_preview = 'The picture on the left is not an actual representation of what they will see. The size on this preview is fixed, but remember that you can change the display size and picture quality for your client\'s pages on the <a href="options.php">options</a> section.';
 
-$logo_uploaded_ok = '<p>The image was uploaded correctly.</p>';
+$logo_uploaded_ok = 'The image was uploaded correctly.';
 $select_logo_file_err = 'Please select an image file to upload';
-$logo_uploaded_error = '<p>There was an error. Please try again.</p>';
-$logo_uploaded_filetye = '<p>The file you selected is not a valid image one. Please upload a jpg, gif or png formated logo picture.</p>';
+$logo_uploaded_error = 'There was an error. Please try again.';
+$logo_uploaded_filetye = 'The file you selected is not a valid image one. Please upload a jpg, gif or png formated logo picture.';
 
-$logo_replace_info = '<p>The new image will act as your logo across your client\'s file lists.</p>';
+$logo_replace_info = 'The new image will act as your logo across your client\'s file lists.';
 
 
 // options page

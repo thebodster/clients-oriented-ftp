@@ -67,7 +67,7 @@ while ($row = mysql_fetch_array($sql2)) {
 
 		<div id="help">
 			<h2><?php echo $help_title; ?></h2>
-			<?php echo $help_text; ?>
+			<p><?php echo $help_text; ?></p>
 		</div>
 
 	</div>

@@ -57,7 +57,11 @@ $database->MySQLDB();
 
 	</div>
 
-	<div id="txthome"><?php echo $home_intro_text; ?></div>
+	<div id="txthome">
+		<p><?php echo $home_intro_text; ?></p>
+		<p><?php echo $home_intro_text2; ?></p>
+		<p><?php echo $home_intro_text3; ?></p>
+	</div>
 	
 </div>
 <?php
