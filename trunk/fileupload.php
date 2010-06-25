@@ -37,7 +37,7 @@ if ($_POST) {
 				// check for allowed file types
 				$allowed_files = "/^\.(".$allowed_file_types."){1}$/i";
 				//fix the filename
-				$safe_filename = preg_replace(array("/\s+/", "/[^-\.\w]+/"), array("_", ""), trim($_FILES['ufile']['name']));
+				$safe_filename = preg_replace(array("/\s+/", "/[^-\.\w]+/"), array("-", ""), trim($_FILES['ufile']['name']));
 				if (preg_match($allowed_files, strrchr($safe_filename, '.'))) {
 					// make the final filename using timestamp+sanitized name			
 					$folder = 'upload/' . $client_user . '/';
@@ -173,7 +173,7 @@ include_once('includes/js/js.validations.php'); ?>
 
 	<form action="fileupload.php" name="uploadf" method="post" enctype="multipart/form-data" onsubmit="return validateform(this);">
 
-		<input type="hidden" name="MAX_FILE_SIZE" value="<?php $num = MAX_FILESIZE*1050000; echo $num; ?>" />
+		<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_FILESIZE*1050000; ?>" />
 		<table border="0" cellspacing="1" cellpadding="1">
 		  <tr>
 			<td width="40%"><?php echo $upfname; ?></td>
