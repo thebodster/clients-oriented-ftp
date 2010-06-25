@@ -62,18 +62,18 @@ if ($_POST) { // form sent?
 			
 			delfile($dir_base.$safe_filename);
 	
-			echo '<div class="message message_ok">'.$logo_uploaded_ok.'</div>';
-			echo $logo_replace_info;
-			echo $select_logo_preview;
+			echo '<div class="message message_ok"><p>'.$logo_uploaded_ok.'</p></div>';
+			echo '<p>'.$logo_replace_info.'</p>';
+			echo '<p>'.$select_logo_preview.'</p>';
 		}
 		else {
-			echo '<div class="message message_error">'.$logo_uploaded_filetye.'</div>';
-			echo $logo_replace_info;
+			echo '<div class="message message_error"><p>'.$logo_uploaded_filetye.'</p></div>';
+			echo '<p>'.$logo_replace_info.'</p>';
 		}
 	}
 	else {
-		echo '<div class="message message_error">'.$logo_uploaded_error.'</div>';
-		echo $logo_replace_info;
+		echo '<div class="message message_error"><p>'.$logo_uploaded_error.'</p></div>';
+		echo '<p>'.$logo_replace_info.'</p>';
 	}
 }
 else {
@@ -96,7 +96,7 @@ else {
 		}
 	</script>
 
-		<?php echo $logo_upload_description; ?>
+		<p><?php echo $logo_upload_description; ?></p>
 		<div id="form_upload_logo" class="whitebox">
 			<form action="" name="logoupload" method="post" enctype="multipart/form-data" onsubmit="return validateform(this);">
 			<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
@@ -107,10 +107,8 @@ else {
 				</div>
 			</form>
 		</div>
-		<?php
-			echo $logo_replace_info;
-			echo $select_logo_preview;
-		?>
+		<p><?php echo $logo_replace_info; ?></p>
+		<p><?php echo $select_logo_preview; ?></p>
 
 <?php } ?>
 

@@ -113,7 +113,10 @@ include_once('includes/js/js.validations.php'); ?>
 		$sql = $database->query("SELECT * FROM tbl_clients");
 		$count=mysql_num_rows($sql);
 		if (!$count) {
-			echo $upload_no_clients;
+	?>
+			<p><?php echo $upload_no_clients; ?></p>
+			<p><a href="newclient.php" target="_self"><?php echo $upload_no_clients2;?></a> <?php echo $upload_no_clients3;?></p>
+	<?php
 		}
 		else { 
 
@@ -127,9 +130,18 @@ include_once('includes/js/js.validations.php'); ?>
 						$sql = $database->query('SELECT * FROM tbl_clients WHERE client_user="'.$client_user.'"');
 						while($row = mysql_fetch_array($sql)) {
 							if ($row['notify'] == '1') {
-								$notify_email_link = $baseuri.'upload/'.$client_user.'/';
-								$final_email_body = wordwrap($notify_email_body.$notify_email_link.$notify_email_body2,70);
-								$success = @mail($row['email'], $notify_email_subject, $final_email_body, "From:<$admin_email_address>\r\nReply-to:<$admin_email_address>\r\nContent-type: text/html; charset=us-ascii");
+
+								// prepare email using the template
+								$email_body = file_get_contents('emails/newfile.php');
+				
+								$email_body = str_replace('%BODY1%',$notify_email_body,$email_body);
+								$email_body = str_replace('%BODY2%',$notify_email_body2,$email_body);
+								$email_body = str_replace('%BODY3%',$notify_email_body3,$email_body);
+								$email_body = str_replace('%BODY4%',$notify_email_body4,$email_body);
+								$email_body = str_replace('%LINK%',$baseuri,$email_body);
+								$email_body = str_replace('%SUBJECT%',$notify_email_subject,$email_body);
+								
+								$success = @mail($row['email'], $notify_email_subject, $email_body, "From:<$admin_email_address>\r\nReply-to:<$admin_email_address>\r\nContent-type: text/html; charset=us-ascii");
 								if ($success){
 								  echo '<div class="message message_ok"><p>'.$notify_email_ok.'</p></div>';
 								}

@@ -154,7 +154,7 @@ if ($_POST) {
 				</div>
 	
 				<div id="install_extra">
-					<?php echo $install_extra_info; ?>
+					<p><?php echo $install_extra_info; ?></p>
 				</div>
 	
 			</form>

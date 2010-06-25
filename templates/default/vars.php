@@ -21,5 +21,5 @@ $pager_next = 'Next';
 $pager_last = 'Last';
 
 $help_title = 'Help';
-$help_text = '<p>The file list on the right contains every file uploaded for you.</p><p>You can click on the name of each marked column to order the list.</p>';
+$help_text = 'The file list on the right contains every file uploaded for you.</p><p>You can click on the name of each marked column to order the list.';
 ?>
