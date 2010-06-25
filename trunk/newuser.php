@@ -41,8 +41,21 @@ if ($_POST) {
 		
 		if ($success){
 			$process_state = 'ok';
+
+			// prepare email using the template
+			$email_body = file_get_contents('emails/newuser.php');
+
+			$email_body = str_replace('%BODY1%',$add_user_mail_body,$email_body);
+			$email_body = str_replace('%BODY2%',$add_user_mail_body_2,$email_body);
+			$email_body = str_replace('%BODY3%',$add_user_mail_body_3,$email_body);
+			$email_body = str_replace('%LBLUSER%',$add_mail_body_user,$email_body);
+			$email_body = str_replace('%LBLPASS%',$add_mail_body_pass,$email_body);
+			$email_body = str_replace('%URI%',$baseuri,$email_body);
+			$email_body = str_replace('%SUBJECT%',$add_user_mail_subject,$email_body);
+			$email_body = str_replace('%USERNAME%',$add_user_data_user,$email_body);
+			$email_body = str_replace('%PASSWORD%',$_POST['add_user_form_pass'],$email_body);
+
 			// send account data by email
-			$email_body = $add_user_mail_body.$add_mail_body_user.$add_user_data_user.$add_mail_body_pass.$_POST['add_user_form_pass'].$add_user_mail_body_2.$baseuri.$add_user_mail_body_3;
 			$confirmmail = @mail($add_user_data_email, $add_user_mail_subject, $email_body, "From:<$admin_email_address>\r\nReply-to:<$admin_email_address>\r\nContent-type: text/html; charset=us-ascii");
 			if ($confirmmail){
 				$email_state = 'ok';

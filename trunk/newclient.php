@@ -60,8 +60,20 @@ if ($_POST) {
 				$success = mysql_query("INSERT INTO tbl_clients (id,name,client_user,password,address,phone,email,notify,contact,timestamp)"
 				."VALUES ('NULL', '$add_client_data_name', '$add_client_data_user', '$add_client_data_pass', '$add_client_data_addr', '$add_client_data_phone', '$add_client_data_email', '$add_client_data_notity', '$add_client_data_intcont', '$timestampdate')");
 
-				// send account data by email
-				$email_body = $add_client_mail_body.$add_mail_body_user.$add_client_data_user.$add_mail_body_pass.$_POST['add_client_form_pass'].$add_client_mail_body_2.$baseuri.$add_client_mail_body_3;
+				// prepare email using the template
+				$email_body = file_get_contents('emails/newclient.php');
+
+				$email_body = str_replace('%BODY1%',$add_client_mail_body,$email_body);
+				$email_body = str_replace('%BODY2%',$add_client_mail_body_2,$email_body);
+				$email_body = str_replace('%BODY3%',$add_client_mail_body_3,$email_body);
+				$email_body = str_replace('%LBLUSER%',$add_mail_body_user,$email_body);
+				$email_body = str_replace('%LBLPASS%',$add_mail_body_pass,$email_body);
+				$email_body = str_replace('%URI%',$baseuri,$email_body);
+				$email_body = str_replace('%SUBJECT%',$add_client_mail_subject,$email_body);
+				$email_body = str_replace('%USERNAME%',$add_client_data_user,$email_body);
+				$email_body = str_replace('%PASSWORD%',$_POST['add_client_form_pass'],$email_body);
+
+				// send the email
 				$confirmmail = @mail($add_client_data_email, $add_client_mail_subject, $email_body, "From:<$admin_email_address>\r\nReply-to:<$admin_email_address>\r\nContent-type: text/html; charset=us-ascii");
 				if ($confirmmail){
 					$email_state = 'ok';
