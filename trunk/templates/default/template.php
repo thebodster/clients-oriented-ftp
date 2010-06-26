@@ -107,8 +107,8 @@ while ($row = mysql_fetch_array($sql2)) {
 			?>
 			
 				<tr>
-					<td><?php echo $row['filename']; ?></td>
-					<td><?php echo $row['description']; ?></td>
+					<td><?php echo htmlentities($row['filename']); ?></td>
+					<td><?php echo htmlentities($row['description']); ?></td>
 					<td><?php $entotal = $row['url']; $total = filesize($entotal); getfilesize($total); ?></td>
 					<td>
 						<?php
