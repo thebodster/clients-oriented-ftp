@@ -86,8 +86,15 @@ $(document).ready(function()
 			?>
 		</td>
 		<td>
-			<a href="<?php echo $baseuri;?>upload/<?php echo $row["client_user"]; ?>/" target="_blank"><img src="img/icons/view.png" alt="<?php echo $client_action_view; ?>"></a>
-			<a onclick="return confirm_delete();" href="process.php?do=del_client&amp;client=<?php echo $row["client_user"]; ?>" target="_self"><img src="img/icons/delete.png" alt="<?php echo $client_action_delete; ?>"></a>
+			<a href="upload/<?php echo $row["client_user"]; ?>/" target="_blank">
+				<img src="img/icons/view.png" alt="<?php echo $client_action_view; ?>">
+			</a>
+			<a href="clientform.php?do=edit&amp;client=<?php echo $row["id"]; ?>" target="_self">
+				<img src="img/icons/edit.png" alt="<?php echo $user_edit; ?>">
+			</a>
+			<a onclick="return confirm_delete();" href="process.php?do=del_client&amp;client=<?php echo $row["client_user"]; ?>" target="_self">
+				<img src="img/icons/delete.png" alt="<?php echo $client_action_delete; ?>">
+			</a>
 		</td>
 	</tr>
 

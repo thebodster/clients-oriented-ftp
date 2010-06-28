@@ -115,7 +115,7 @@ include_once('includes/js/js.validations.php'); ?>
 		if (!$count) {
 	?>
 			<p><?php echo $upload_no_clients; ?></p>
-			<p><a href="newclient.php" target="_self"><?php echo $upload_no_clients2;?></a> <?php echo $upload_no_clients3;?></p>
+			<p><a href="clientform.php" target="_self"><?php echo $upload_no_clients2;?></a> <?php echo $upload_no_clients3;?></p>
 	<?php
 		}
 		else { 
