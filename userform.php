@@ -1,21 +1,52 @@
 <?php
 $allowed_levels = array(9);
 require_once('includes/includes.php');
-$page_title = $page_title_newuser;
+
+if ($_GET['do']=='edit') {
+	$page_title = $page_title_edituser;
+}
+else {
+	$page_title = $page_title_newuser;
+}
+
 include('header.php');
 
 $database->MySQLDB();
 
-$add_user_data_name = mysql_real_escape_string($_POST['add_user_form_name']);
-$add_user_data_user = mysql_real_escape_string($_POST['add_user_form_user']);
-$add_user_data_pass = md5(mysql_real_escape_string($_POST['add_user_form_pass']));
-$add_user_data_pass2 = mysql_real_escape_string(md5($_POST['add_user_form_pass2']));
-$add_user_data_email = mysql_real_escape_string($_POST['add_user_form_email']);
-$add_user_data_level = mysql_real_escape_string($_POST['add_user_form_level']);
+if ($_GET['do']=='edit') {
+	//if we are editing a client, then the info to show on the form comes from the database
+	$edit_id = $_GET['user'];
+	$editing = $database->query("SELECT * FROM tbl_users WHERE id=$edit_id");
+	$count=mysql_num_rows($editing);
+	if (!$count) {
+		$process_state = 'edit_not_exists';
+	}
+	else {
+		while($data = mysql_fetch_array($editing)) {
+			$add_user_data_name = $data['name'];
+			$add_user_data_user = $data['user'];
+			$add_user_data_pass = '';
+			$add_user_data_pass2 = '';
+			$add_user_data_email = $data['email'];
+			$add_user_data_level = $data['level'];
+		}
+	}
+}
+else {
+	$add_user_data_name = mysql_real_escape_string($_POST['add_user_form_name']);
+	$add_user_data_user = mysql_real_escape_string($_POST['add_user_form_user']);
+	$add_user_data_pass = md5(mysql_real_escape_string($_POST['add_user_form_pass']));
+	$add_user_data_pass2 = mysql_real_escape_string(md5($_POST['add_user_form_pass2']));
+	$add_user_data_email = mysql_real_escape_string($_POST['add_user_form_email']);
+	$add_user_data_level = mysql_real_escape_string($_POST['add_user_form_level']);
+}
 
 require_once('includes/form_validation_class.php');
 
 if ($_POST) {
+	
+	// set this when editing
+	$edit_who = $_POST['edit_who'];
 
 	// begin form validation
 	$valid_me->validate('completed',$add_user_data_name,$validation_no_name);
@@ -29,49 +60,81 @@ if ($_POST) {
 	$valid_me->validate('length',$add_user_data_user,$validation_length_user,MIN_USER_CHARS,MAX_USER_CHARS);
 	$valid_me->validate('length',$_POST['add_user_form_pass'],$validation_length_pass,MIN_PASS_CHARS,MAX_PASS_CHARS);
 	$valid_me->validate('pass_match','',$validation_match_pass,'','',$_POST['add_user_form_pass'],$_POST['add_user_form_pass2']);
-	$valid_me->validate('user_exists',$add_user_data_user,$add_user_exists,'','','','','tbl_users','user');
-	$valid_me->validate('user_exists',$add_user_data_email,$add_user_mail_exists,'','','','','tbl_users','email');
-	
+
+	if (!isset($edit_who)) {
+		// only check this values when adding a new uset, not when editing
+		$valid_me->validate('user_exists',$add_user_data_user,$add_user_exists,'','','','','tbl_users','user');
+		$valid_me->validate('user_exists',$add_user_data_email,$add_user_mail_exists,'','','','','tbl_users','email');
+	}
+
 	if ($valid_me->return_val) { //lets continue
 
-		// add new user to DB
-		$timestampdate = time();
-		$success = mysql_query("INSERT INTO tbl_users (id,user,password,name,email,level,timestamp)"
-		."VALUES ('NULL', '$add_user_data_user', '$add_user_data_pass', '$add_user_data_name', '$add_user_data_email','$add_user_data_level', '$timestampdate')");
-		
-		if ($success){
-			$process_state = 'ok';
-
-			// prepare email using the template
-			$email_body = file_get_contents('emails/newuser.php');
-
-			$email_body = str_replace('%BODY1%',$add_user_mail_body,$email_body);
-			$email_body = str_replace('%BODY2%',$add_user_mail_body_2,$email_body);
-			$email_body = str_replace('%BODY3%',$add_user_mail_body_3,$email_body);
-			$email_body = str_replace('%LBLUSER%',$add_mail_body_user,$email_body);
-			$email_body = str_replace('%LBLPASS%',$add_mail_body_pass,$email_body);
-			$email_body = str_replace('%URI%',$baseuri,$email_body);
-			$email_body = str_replace('%SUBJECT%',$add_user_mail_subject,$email_body);
-			$email_body = str_replace('%USERNAME%',$add_user_data_user,$email_body);
-			$email_body = str_replace('%PASSWORD%',$_POST['add_user_form_pass'],$email_body);
-
-			// send account data by email
-			$confirmmail = @mail($add_user_data_email, $add_user_mail_subject, $email_body, "From:<$admin_email_address>\r\nReply-to:<$admin_email_address>\r\nContent-type: text/html; charset=us-ascii");
-			if ($confirmmail){
-				$email_state = 'ok';
+		if (isset($edit_who)) {
+			//we are editing a user
+			$editing = $database->query("SELECT * FROM tbl_users WHERE id=$edit_who");
+			$count=mysql_num_rows($editing);
+			if (!$count) {
+				// there is no user with the posted id
+				$process_state = 'edit_not_exists';
 			}
-			else{
-				$email_state = 'err';
+			else {
+				// posted data is valid and the user does exist for editing, so do it
+				$success = mysql_query("UPDATE tbl_users SET 
+										user = '$add_user_data_user',
+										password = '$add_user_data_pass',
+										name = '$add_user_data_name',
+										email = '$add_user_data_email',
+										level = '$add_user_data_level'
+										WHERE id = $edit_who");
+				if ($success){
+					$process_state = 'edit_ok';
+				}
+				else {
+					$process_state = 'edit_err';
+				}
 			}
 		}
 		else {
-			$process_state = 'err';
-		}
+			//we are adding a new user to the system
 
+			// add new user to DB
+			$timestampdate = time();
+			$success = mysql_query("INSERT INTO tbl_users (id,user,password,name,email,level,timestamp)"
+			."VALUES ('NULL', '$add_user_data_user', '$add_user_data_pass', '$add_user_data_name', '$add_user_data_email','$add_user_data_level', '$timestampdate')");
+			
+			if ($success){
+				$process_state = 'ok';
+	
+				// prepare email using the template
+				$email_body = file_get_contents('emails/newuser.php');
+	
+				$email_body = str_replace('%BODY1%',$add_user_mail_body,$email_body);
+				$email_body = str_replace('%BODY2%',$add_user_mail_body_2,$email_body);
+				$email_body = str_replace('%BODY3%',$add_user_mail_body_3,$email_body);
+				$email_body = str_replace('%LBLUSER%',$add_mail_body_user,$email_body);
+				$email_body = str_replace('%LBLPASS%',$add_mail_body_pass,$email_body);
+				$email_body = str_replace('%URI%',$baseuri,$email_body);
+				$email_body = str_replace('%SUBJECT%',$add_user_mail_subject,$email_body);
+				$email_body = str_replace('%USERNAME%',$add_user_data_user,$email_body);
+				$email_body = str_replace('%PASSWORD%',$_POST['add_user_form_pass'],$email_body);
+	
+				// send account data by email
+				$confirmmail = @mail($add_user_data_email, $add_user_mail_subject, $email_body, "From:<$admin_email_address>\r\nReply-to:<$admin_email_address>\r\nContent-type: text/html; charset=us-ascii");
+				if ($confirmmail){
+					$email_state = 'ok';
+				}
+				else{
+					$email_state = 'err';
+				}
+			}
+			else {
+				$process_state = 'err';
+			}
+		} // edit or add end
 	} //validation ends here
 	
 
-} // do if just entering (no form info sent) ?>
+} // no form info sent ?>
 
 <div id="main">
 	<h2><?php echo $page_title; ?></h2>
@@ -82,6 +145,7 @@ if ($_POST) {
 		
 		<?php
 			if (isset($process_state)) {
+				// get the process state and show the corresponding ok or error message
 				switch ($process_state) {
 					case 'ok':
 						echo '<div class="message message_ok"><p>'.$add_user_ok.'</p></div>';
@@ -89,7 +153,17 @@ if ($_POST) {
 					case 'err':
 						echo '<div class="message message_error"><p>'.$add_user_error.'</p></div>';
 					break;
+					case 'edit_not_exists':
+						echo '<div class="message message_error"><p>'.$edit_user_exists.'</p></div>';
+					break;
+					case 'edit_ok':
+						echo '<div class="message message_ok"><p>'.$edit_user_ok.'</p></div>';
+					break;
+					case 'edit_err':
+						echo '<div class="message message_error"><p>'.$edit_user_error.'</p></div>';
+					break;
 				}
+				// ok or error message for the email notification
 				switch ($email_state) {
 					case 'ok':
 						echo '<div class="message message_ok"><p>'.$add_client_notify_ok.'</p></div>';
@@ -100,6 +174,7 @@ if ($_POST) {
 				}
 			}
 			else {
+			// if not $process_state is set, it means we are just entering for the first time
 		?>
 
 	<?php include_once('includes/js/js.validations.php'); ?>
@@ -144,7 +219,10 @@ if ($_POST) {
 	
 	</script>
 
-		<form action="newuser.php" name="adduser" method="post" onsubmit="return validateform(this);">
+		<form action="userform.php" name="adduser" method="post" onsubmit="return validateform(this);">
+			<?php if ($_GET['do']=='edit') { ?>
+				<input type="hidden" name="edit_who" id="edit_who" value="<?php echo $_GET['user']; ?>" />
+			<?php } ?>
 			<table border="0" cellspacing="1" cellpadding="1">
 			  <tr>
 				<td width="40%"><?php echo $add_user_form_name; ?></td>
@@ -181,9 +259,11 @@ if ($_POST) {
 					<div align="right">
 						<input type="submit" name="Submit" value="<?php echo $add_user_form_submit; ?>" class="boton" />
 					</div>
+					<?php if (!$_GET['do']=='edit') { ?>
 					<div class="message message_info">
 						<p><?php echo $add_client_mail_info; ?></p>
 					</div>
+					<?php } ?>
 				</td>
 				</tr>
 		  </table>

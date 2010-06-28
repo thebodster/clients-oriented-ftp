@@ -120,7 +120,6 @@ while ($row = mysql_fetch_array($sql2)) {
 					<td>
 						<div class="download_link">
 							<a href="<?php echo $row['url']; ?>" target="_blank">
-								<!--<img src="../../img/download.jpg" alt"<?php echo $file_download; ?>" />-->
 								<?php echo $file_download; ?>
 							</a>
 						</div>
@@ -148,7 +147,7 @@ while ($row = mysql_fetch_array($sql2)) {
 					<?php } ?>
 					<td>
 						<a onclick="return confirm_file_delete();" href="../../process.php?do=del_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>&amp;file=<?php echo $row['url']; ?>" target="_self">
-							<img src="../../img/delete.jpg" alt"<?php echo $delete; ?>" />
+							<img src="../../img/icons/delete.png" alt"<?php echo $delete; ?>" />
 						</a>
 					</td>
 				</tr>

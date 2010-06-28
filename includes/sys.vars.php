@@ -6,9 +6,9 @@ define('DB_HOST', 'localhost'); // database host (most of the times its localhos
 define('DB_USER', 'root'); // user related to cftp's database
 define('DB_PASSWORD', ''); // the password for that user
 
-define('MIN_USER_CHARS', 6);
+define('MIN_USER_CHARS', 5);
 define('MAX_USER_CHARS', 16);
-define('MIN_PASS_CHARS', 6);
+define('MIN_PASS_CHARS', 5);
 define('MAX_PASS_CHARS', 16);
 
 define('COOKIE_EXP_TIME', 93600);
