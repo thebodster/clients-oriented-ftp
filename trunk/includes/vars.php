@@ -42,6 +42,7 @@ $page_title_upload = 'Upload new files';
 $page_title_home = 'Welcome to cFTP';
 $page_title_logo = 'Logo configuration';
 $page_title_newclient = 'Add new client';
+$page_title_editclient = 'Edit client';
 $page_title_newuser = 'Add system user';
 $page_title_edituser = 'Edit system user';
 $page_title_options = 'System options';
@@ -177,14 +178,18 @@ $add_client_label_email = 'E-mail';
 $add_client_label_notify = 'Notify new uploads by email';
 $add_client_label_intcont = 'Internal contact';
 $add_client_form_submit = 'Create account';
+$edit_client_form_submit = 'Edit account';
 $add_client_mail_info = 'This account information will be e-mailed to the address supplied above';
-
 
 $add_client_ok = 'Client added correctly';
 $add_client_error = 'The client could not be created. A folder with this name already exists.';
 $add_client_folder_error = 'A folder for this client could not be created. Probably because of a server configuration.';
 $add_client_exists = 'A client with this login username already exists.';
 $add_client_mail_exists = 'A client with this e-mail address already exists.';
+$edit_client_exists = 'There is no client with that ID to edit.';
+$edit_client_ok = 'The client was edited correctly.';
+$edit_client_error = 'There was an error. Please try again.';
+
 
 // notification variables
 $add_mail_body_user = 'username';

@@ -41,7 +41,7 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 		<li>
 			<a href="#" class="menulink dropready"><?php echo $mnu_clients; ?></a>
 			<ul>
-				<li><a href="newclient.php"><?php echo $mnu_add_cl; ?></a></li>
+				<li><a href="clientform.php"><?php echo $mnu_add_cl; ?></a></li>
 				<li><a href="clients.php"><?php echo $mnu_edit_cl; ?></a></li>
 			</ul>
 		</li>

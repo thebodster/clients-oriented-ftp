@@ -2,7 +2,7 @@
 $allowed_levels = array(9);
 require_once('includes/includes.php');
 
-if ($_GET['do']=='edit') {
+if ($_GET['do']=='edit' || isset($_POST['edit_who'])) {
 	$page_title = $page_title_edituser;
 }
 else {
@@ -50,14 +50,11 @@ if ($_POST) {
 
 	// begin form validation
 	$valid_me->validate('completed',$add_user_data_name,$validation_no_name);
-	$valid_me->validate('completed',$add_user_data_user,$validation_no_user);
 	$valid_me->validate('completed',$_POST['add_user_form_pass'],$validation_no_pass);
 	$valid_me->validate('completed',$add_user_data_email,$validation_no_email);
 	$valid_me->validate('completed',$add_user_data_level,$validation_no_level); // just a precaution
 	$valid_me->validate('email',$add_user_data_email,$validation_invalid_mail);
-	$valid_me->validate('alpha',$add_user_data_user,$validation_alpha_user);
 	$valid_me->validate('alpha',$_POST['add_user_form_pass'],$validation_alpha_pass);
-	$valid_me->validate('length',$add_user_data_user,$validation_length_user,MIN_USER_CHARS,MAX_USER_CHARS);
 	$valid_me->validate('length',$_POST['add_user_form_pass'],$validation_length_pass,MIN_PASS_CHARS,MAX_PASS_CHARS);
 	$valid_me->validate('pass_match','',$validation_match_pass,'','',$_POST['add_user_form_pass'],$_POST['add_user_form_pass2']);
 
@@ -65,6 +62,10 @@ if ($_POST) {
 		// only check this values when adding a new uset, not when editing
 		$valid_me->validate('user_exists',$add_user_data_user,$add_user_exists,'','','','','tbl_users','user');
 		$valid_me->validate('user_exists',$add_user_data_email,$add_user_mail_exists,'','','','','tbl_users','email');
+		// user field is only checked when adding a new client because it returns an empty value when it is disabled
+		$valid_me->validate('completed',$add_user_data_user,$validation_no_user);
+		$valid_me->validate('alpha',$add_user_data_user,$validation_alpha_user);
+		$valid_me->validate('length',$add_user_data_user,$validation_length_user,MIN_USER_CHARS,MAX_USER_CHARS);
 	}
 
 	if ($valid_me->return_val) { //lets continue
@@ -80,7 +81,6 @@ if ($_POST) {
 			else {
 				// posted data is valid and the user does exist for editing, so do it
 				$success = mysql_query("UPDATE tbl_users SET 
-										user = '$add_user_data_user',
 										password = '$add_user_data_pass',
 										name = '$add_user_data_name',
 										email = '$add_user_data_email',
@@ -230,7 +230,7 @@ if ($_POST) {
 			  </tr>
 			  <tr>
 				<td><?php echo $add_user_form_user; ?></td>
-				<td><input name="add_user_form_user" id="add_user_form_user" class="txtfield" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo $add_user_data_user; ?>" /></td>
+				<td><input name="add_user_form_user" id="add_user_form_user" class="txtfield" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo $add_user_data_user; ?>" <?php if ($_GET['do']=='edit') { ?>disabled="disabled"<?php }?> /></td>
 			  </tr>
 			  <tr>
 				<td><?php echo $add_user_form_pass; ?></td>
