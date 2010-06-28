@@ -19,6 +19,11 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 <script src="includes/js/jquery.tablesorter.min.js" type="text/javascript"></script>
 <script src="includes/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
 <?php } ?>
+<?php if (isset($textboxlist)) { ?>
+<script src="includes/js/mootools-1.2.1-core-yc.js" type="text/javascript"></script>
+<script src="includes/js/GrowingInput.js" type="text/javascript"></script>
+<script src="includes/js/TextboxList.js" type="text/javascript"></script>
+<?php } ?>
 </head>
 
 <body>

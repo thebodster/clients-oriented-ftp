@@ -278,7 +278,7 @@ $options_timezone = 'Timezone';
 $options_timeformat = 'Time format';
 
 $title_security_options = 'Security';
-$desc_security_options = 'Be careful when changing this options. They could affect not only the system but the whole server it is installed on.<br /><strong>Important</strong>: Separate allowed file types with a "|".';
+$desc_security_options = 'Be careful when changing this options. They could affect not only the system but the whole server it is installed on.<br /><strong>Important</strong>: Separate allowed file types with a \',\'. You can navigate the box with the left/right arrows, backspace and delete keys';
 $options_security_filetypes = 'Allowed file types';
 
 $title_thumbnails_options = 'Thumbnails';
