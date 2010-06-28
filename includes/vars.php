@@ -213,6 +213,7 @@ $add_user_form_pass2 = 'Repeat password';
 $add_user_form_email = 'E-mail';
 $add_user_form_level = 'Role';
 $add_user_form_submit = 'Add user';
+$edit_user_form_submit = 'Modify user';
 
 $user_role_lvl9 = 'System Administrator';
 $user_role_lvl8 = 'Account Manager';
