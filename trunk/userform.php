@@ -257,7 +257,7 @@ if ($_POST) {
 			  <tr>
 				<td colspan="2">
 					<div align="right">
-						<input type="submit" name="Submit" value="<?php echo $add_user_form_submit; ?>" class="boton" />
+						<input type="submit" name="Submit" value="<?php if ($_GET['do']=='edit') { echo $edit_user_form_submit; } else { echo $add_user_form_submit; } ?>" class="boton" />
 					</div>
 					<?php if (!$_GET['do']=='edit') { ?>
 					<div class="message message_info">
