@@ -54,7 +54,7 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 		<li>
 			<a href="#" class="menulink dropready"><?php echo $mnu_users; ?></a>
 			<ul>
-				<li><a href="newuser.php"><?php echo $mnu_add_usr; ?></a></li>
+				<li><a href="userform.php"><?php echo $mnu_add_usr; ?></a></li>
 				<li><a href="users.php"><?php echo $mnu_edit_usr; ?></a></li>
 			</ul>
 		</li>

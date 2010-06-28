@@ -24,7 +24,7 @@ $(document).ready(function()
 	
 	<script type="text/javascript">
 		function confirm_delete() {
-			if (confirm("<?php echo $userconfdel; ?>")) return true ;
+			if (confirm("<?php echo $delete_user_confirm; ?>")) return true ;
 			else return false ;
 		}
 	</script>
@@ -72,10 +72,14 @@ $(document).ready(function()
 			echo $date_format; // results here ... 02 : 11 : 07
 			?>
 		</td>
-		<td><?php if ($row["user"] != 'admin') { ?>
-			<a onclick="return confirm_delete();" href="process.php?do=del_user&amp;user=<?php echo $row["user"]; ?>" target="_self">
-				<img src="img/delete.jpg" alt="<?php echo $userdel; ?>">
+		<td>
+			<a href="userform.php?do=edit&amp;user=<?php echo $row["id"]; ?>" target="_self">
+				<img src="img/icons/edit.png" alt="<?php echo $user_edit; ?>">
 			</a>
+			<?php if ($row["user"] != 'admin') { ?>
+				<a onclick="return confirm_delete();" href="process.php?do=del_user&amp;user=<?php echo $row["user"]; ?>" target="_self">
+					<img src="img/icons/delete.png" alt="<?php echo $user_delete; ?>">
+				</a>
 			<?php } ?>
 		</td>
 	</tr>

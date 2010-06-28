@@ -43,6 +43,7 @@ $page_title_home = 'Welcome to cFTP';
 $page_title_logo = 'Logo configuration';
 $page_title_newclient = 'Add new client';
 $page_title_newuser = 'Add system user';
+$page_title_edituser = 'Edit system user';
 $page_title_options = 'System options';
 $page_title_users = 'Users administration';
 $page_title_not_allowed = 'Access denied';
@@ -221,12 +222,16 @@ $add_user_ok = 'User added correctly';
 $add_user_error = 'There was an error. Please try again';
 $add_user_exists = 'A user with this login name already exists.';
 $add_user_mail_exists = 'A user with this e-mail address already exists.';
+$edit_user_exists = 'There is no user with that ID to edit.';
+$edit_user_ok = 'The user was edited correctly.';
+$edit_user_error = 'There was an error. Please try again.';
 
 
 // Users section
 $nuser = 'Name:';
-$userdel = 'Delete';
-$userconfdel = 'This will delete the user permanently. Continue?';
+$user_edit = 'Edit';
+$user_delete = 'Delete';
+$delete_user_confirm = 'This will delete the user permanently. Continue?';
 
 $view_user_id = 'ID';
 $view_user_name = 'Full name';
