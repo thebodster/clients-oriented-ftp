@@ -1,4 +1,5 @@
 <?php
+$textboxlist = 1;
 $allowed_levels = array(9);
 require_once('includes/includes.php');
 $page_title = $page_title_options;
@@ -7,10 +8,19 @@ include('header.php');
 $database->MySQLDB();
 require_once('includes/form_validation_class.php');
 
+// replace | with , to use the tags system when showing the allowed filetypes on the form
+$allowed_file_types = str_replace('|',',',$allowed_file_types);
+// explode, sort, and implode the values to list them alphabetically
+$allowed_file_types = explode(',',$allowed_file_types);
+sort($allowed_file_types);
+$allowed_file_types = implode(',',$allowed_file_types);
+
 if ($_POST) {
 
 	$_POST=mysql_real_escape_array($_POST); // escape the values
 	$keys = array_keys($_POST);
+	// change , to | on the allowed filetypes to store the value on the db
+	$_POST[$keys[4]] = str_replace(',','|',$_POST[$keys[4]]);
 
 	// begin form validation
 	for ($i = 0; $i < count($keys); $i++) {
@@ -37,6 +47,13 @@ if ($_POST) {
 }
 
 ?>
+
+<script type="text/javascript">		
+	window.addEvent('load', function(){
+		// With custom adding keys 
+		var t = new TextboxList('allowed_file_types', {unique: true, bitsOptions:{editable:{addKeys: 188}}});
+	});
+</script>
 
 <div id="main">
 	<h2><?php echo $page_title; ?></h2>
@@ -107,7 +124,7 @@ if ($_POST) {
 
 			<h3><?php echo $title_security_options; ?></h3>
 			<h4><?php echo $desc_security_options; ?></h4>
-			<label for="allowed_file_types"><?php echo $options_security_filetypes; ?></label><input name="allowed_file_types" id="allowed_file_types" style="letter-spacing:+1px;" value="<?php echo $allowed_file_types; ?>" /><br />
+			<label for="allowed_file_types"><?php echo $options_security_filetypes; ?></label><input name="allowed_file_types" id="allowed_file_types" value="<?php echo $allowed_file_types; ?>" /><br />
 
 			<div class="options_divide"></div>
 	
