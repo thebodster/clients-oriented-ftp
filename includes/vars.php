@@ -128,7 +128,8 @@ $alphaerror = 'You can only use letters, numbers and spaces on the users\'s name
 $nclien = 'Name:';
 $client_action_delete = 'Delete';
 $client_action_view = 'View';
-$noclients = 'There are no clients at the moment';
+$view_clients_empty = 'There are no clients at the moment.';
+$view_clients_empty2 = 'Please create at least one to be able to upload files.';
 $delete_client_confirm = 'This will delete the folder and all of the client\'s files. Continue?';
 
 $clients_table_id = 'ID';
