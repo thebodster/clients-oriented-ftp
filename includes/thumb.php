@@ -22,22 +22,25 @@ function meassureimg($pic_source) {
 	}
 }
 
-// let's name the file.
-$thumb_name = $_GET['w'].$_GET['h'].str_replace("\)", "5", str_replace("\(", "4", str_replace(" ", "_", str_replace("/", "-", $_GET['src']))));
-
 // start process.
 if($_GET['ql']) { $thumbnail_default_quality = $_GET['ql']; }
 
-if($_GET['who']) { $who = $_GET['who']; }
+if(empty($_GET['type'])) {
+	return false;
+}
 
 switch($_GET['type']) {
 	case 'logo':
+		$thumb_name = $_GET['w'].$_GET['h'].str_replace("\)", "5", str_replace("\(", "4", str_replace(" ", "_", str_replace("/", "-", $_GET['src']))));
 		$do_on_folder = $thumbnails_folder;
 	break;
 	case 'tlogo':
+		$thumb_name = $_GET['w'].$_GET['h'].str_replace("\)", "5", str_replace("\(", "4", str_replace(" ", "_", str_replace("/", "-", $_GET['src']))));
 		$do_on_folder = $logo_thumbnail_folder;
 	break;
 	case 'prev':
+		$who = $_GET['who'];
+		$thumb_name = $_GET['name'];
 		$do_on_folder = '../upload/'.$who.'/thumbs/';
 	break;
 }
