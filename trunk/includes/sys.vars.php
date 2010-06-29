@@ -24,5 +24,4 @@ $full_system_name = 'cFTP (clients-oriented-ftp)';
 
 // this settings are temporally located here. will be located elsewhere on following udpates
 $logo_thumbnail_folder = '../img/custom/thumbs/';
-$user_thumbs_folder = '../upload/thumbs/';
 ?>
