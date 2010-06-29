@@ -34,11 +34,22 @@ if ($_GET['do']=='edit') {
 }
 else {
 	$add_user_data_name = mysql_real_escape_string($_POST['add_user_form_name']);
-	$add_user_data_user = mysql_real_escape_string($_POST['add_user_form_user']);
 	$add_user_data_pass = md5(mysql_real_escape_string($_POST['add_user_form_pass']));
 	$add_user_data_pass2 = mysql_real_escape_string(md5($_POST['add_user_form_pass2']));
 	$add_user_data_email = mysql_real_escape_string($_POST['add_user_form_email']);
 	$add_user_data_level = mysql_real_escape_string($_POST['add_user_form_level']);
+	// fix for showing the correct user when editing but php validation failed
+	// SHOULD WE AVOID ALL THIS BY NOT SHOWING THE USERNAME FIELD WHEN EDITING?
+	if (isset($_POST['edit_who'])) {
+		$edit_who = $_POST['edit_who'];
+		$editing_user = $database->query("SELECT * FROM tbl_users WHERE id=$edit_who");
+		while($userrow = mysql_fetch_array($editing_user)) {
+			$add_user_data_user = $userrow['user'];
+		}
+	}
+	else {
+		$add_user_data_user = mysql_real_escape_string($_POST['add_user_form_user']);
+	}
 }
 
 require_once('includes/form_validation_class.php');
@@ -220,8 +231,8 @@ if ($_POST) {
 	</script>
 
 		<form action="userform.php" name="adduser" method="post" onsubmit="return validateform(this);">
-			<?php if ($_GET['do']=='edit') { ?>
-				<input type="hidden" name="edit_who" id="edit_who" value="<?php echo $_GET['user']; ?>" />
+			<?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { ?>
+				<input type="hidden" name="edit_who" id="edit_who" value="<?php echo ($_GET['do']=='edit') ? $_GET['user'] : $_POST['edit_who']; ?>" />
 			<?php } ?>
 			<table border="0" cellspacing="1" cellpadding="1">
 			  <tr>
@@ -230,7 +241,7 @@ if ($_POST) {
 			  </tr>
 			  <tr>
 				<td><?php echo $add_user_form_user; ?></td>
-				<td><input name="add_user_form_user" id="add_user_form_user" class="txtfield" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo $add_user_data_user; ?>" <?php if ($_GET['do']=='edit') { ?>disabled="disabled"<?php }?> /></td>
+				<td><input name="add_user_form_user" id="add_user_form_user" class="txtfield" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo $add_user_data_user; ?>" <?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { ?>disabled="disabled"<?php }?> /></td>
 			  </tr>
 			  <tr>
 				<td><?php echo $add_user_form_pass; ?></td>
@@ -257,9 +268,9 @@ if ($_POST) {
 			  <tr>
 				<td colspan="2">
 					<div align="right">
-						<input type="submit" name="Submit" value="<?php if ($_GET['do']=='edit') { echo $edit_user_form_submit; } else { echo $add_user_form_submit; } ?>" class="boton" />
+						<input type="submit" name="Submit" value="<?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { echo $edit_user_form_submit; } else { echo $add_user_form_submit; } ?>" class="boton" />
 					</div>
-					<?php if (!$_GET['do']=='edit') { ?>
+					<?php if ($_GET['do']!='edit' && empty($_POST['edit_who'])) { ?>
 					<div class="message message_info">
 						<p><?php echo $add_client_mail_info; ?></p>
 					</div>
