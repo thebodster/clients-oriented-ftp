@@ -28,6 +28,8 @@ $thumb_name = $_GET['w'].$_GET['h'].str_replace("\)", "5", str_replace("\(", "4"
 // start process.
 if($_GET['ql']) { $thumbnail_default_quality = $_GET['ql']; }
 
+if($_GET['who']) { $who = $_GET['who']; }
+
 switch($_GET['type']) {
 	case 'logo':
 		$do_on_folder = $thumbnails_folder;
@@ -36,7 +38,7 @@ switch($_GET['type']) {
 		$do_on_folder = $logo_thumbnail_folder;
 	break;
 	case 'prev':
-		$do_on_folder = $user_thumbs_folder;
+		$do_on_folder = '../upload/'.$who.'/thumbs/';
 	break;
 }
 
