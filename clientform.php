@@ -13,7 +13,6 @@ include('header.php');
 
 $database->MySQLDB();
 
-
 if ($_GET['do']=='edit') {
 	//if we are editing a client, then the info to show on the form comes from the database
 	$edit_id = $_GET['client'];
@@ -38,13 +37,24 @@ if ($_GET['do']=='edit') {
 }
 else {
 	$add_client_data_name = mysql_real_escape_string($_POST['add_client_form_name']);
-	$add_client_data_user = mysql_real_escape_string($_POST['add_client_form_user']);
 	$add_client_data_pass = md5(mysql_real_escape_string($_POST['add_client_form_pass']));
 	$add_client_data_addr = mysql_real_escape_string($_POST['add_client_form_address']);
 	$add_client_data_phone = mysql_real_escape_string($_POST['add_client_form_phone']);
 	$add_client_data_email = mysql_real_escape_string($_POST['add_client_form_email']);
 	$add_client_data_intcont = mysql_real_escape_string($_POST['add_client_form_intcont']);
 	if(isset($_POST["add_client_form_notify"])) { $add_client_data_notity = 1; } else { $add_client_data_notity = 0; }
+	// fix for showing the correct user when editing but php validation failed
+	// SHOULD WE AVOID ALL THIS BY NOT SHOWING THE USERNAME FIELD WHEN EDITING?
+	if (isset($_POST['edit_who'])) {
+		$edit_who = $_POST['edit_who'];
+		$editing_user = $database->query("SELECT * FROM tbl_clients WHERE id=$edit_who");
+		while($userrow = mysql_fetch_array($editing_user)) {
+			$add_client_data_user = $userrow['client_user'];
+		}
+	}
+	else {
+		$add_client_data_user = mysql_real_escape_string($_POST['add_client_form_user']);
+	}
 }
 
 require_once('includes/form_validation_class.php');
@@ -265,7 +275,7 @@ if ($_POST) {
 			  </tr>
 			  <tr>
 				<td><?php echo $add_client_label_user; ?></td>
-				<td><input name="add_client_form_user" id="add_client_form_user" class="txtfield" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo $add_client_data_user; ?>" <?php if ($_GET['do']=='edit') { ?>disabled="disabled"<?php }?> /></td>
+				<td><input name="add_client_form_user" id="add_client_form_user" class="txtfield" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo $add_client_data_user; ?>" <?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { ?>disabled="disabled"<?php }?> /></td>
 			  </tr>
 			  <tr>
 				<td><?php echo $add_client_label_pass; ?></td>
@@ -298,12 +308,12 @@ if ($_POST) {
 			  <tr>
 				<td colspan="2">
 					<div align="right">
-						<input type="submit" name="Submit" value="<?php if ($_GET['do']=='edit') { echo $edit_client_form_submit; } else { echo $add_client_form_submit; } ?>" class="boton" />
+						<input type="submit" name="Submit" value="<?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { echo $edit_client_form_submit; } else { echo $add_client_form_submit; } ?>" class="boton" />
 					</div>
-					<?php if (!$_GET['do']=='edit') { ?>
-						<div class="message message_info">
-							<p><?php echo $add_client_mail_info; ?></p>
-						</div>
+					<?php if ($_GET['do']!='edit' && empty($_POST['edit_who'])) { ?>
+					<div class="message message_info">
+						<p><?php echo $add_client_mail_info; ?></p>
+					</div>
 					<?php } ?>
 				</td>
 			</tr>
