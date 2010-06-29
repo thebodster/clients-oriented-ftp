@@ -31,9 +31,15 @@ class process {
 			$this->file = mysql_real_escape_string($_GET['file']);
 			// do a permissions check
 			if (isset($this->check_level) && in_array($_SESSION['userlevel'],$this->check_level)) {
+				// delete from database
 				$this->sql = $this->database->query('DELETE FROM tbl_files WHERE client_user="' . $this->client .'" AND id="' . $this->id . '"');
+				// make the filename var
 				$this->gone = 'upload/' . $this->client .'/' . $this->file;
+				$this->thumb = 'upload/' . $this->client .'/thumbs/' . $this->file;
 				delfile($this->gone);
+				if (file_exists($this->thumb)) {
+					delfile($this->thumb);
+				}
 			}
 			header("location:upload/" . $this->client . "/index.php");
 		}
