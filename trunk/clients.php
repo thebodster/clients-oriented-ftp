@@ -34,7 +34,12 @@ $(document).ready(function()
 	$sql = $database->query("SELECT * FROM tbl_clients");
 	$count=mysql_num_rows($sql);
 	if (!$count) {
-		echo $noclients;
+	?>
+		<div class="whiteform whitebox">
+			<p><?php echo $view_clients_empty; ?></p>
+			<p><?php echo $view_clients_empty2; ?></p>
+		</div>
+	<?php
 	}
 	else {
 ?>
