@@ -1,6 +1,6 @@
 <?php
 $timestampdate = time();
-$query = '
+$q1 = '
 CREATE TABLE IF NOT EXISTS `tbl_clients` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` text COLLATE latin1_general_ci NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `tbl_clients` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
 ';
 
-$query2 = '
+$q2 = '
 CREATE TABLE IF NOT EXISTS `tbl_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `url` text NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `tbl_files` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=257 ;
 ';
 
-$query3 = '
+$q3 = '
 CREATE TABLE IF NOT EXISTS `tbl_options` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE latin1_general_ci NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `tbl_options` (
 ';
 
 
-$query4 = '
+$q4 = '
 CREATE TABLE IF NOT EXISTS `tbl_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user` varchar('.MAX_USER_CHARS.') NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `tbl_users` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
 ';
 
-$query5 = '
+$q5 = '
 INSERT INTO `tbl_options` (`id`, `name`, `value`) VALUES
 (1, \'base_uri\', \''.$base_uri.'\'),
 (2, \'max_thumbnail_width\', \'100\'),
@@ -69,16 +69,10 @@ INSERT INTO `tbl_options` (`id`, `name`, `value`) VALUES
 (13, \'allowed_file_types\', \'7z|ace|ai|avi|bin|bmp|cdr|doc|docx|eps|fla|flv|gif|gz|gzip|htm|html|iso|jpeg|jpg|mp3|mp4|mpg|odt|oog|pdf|png|psd|rar|rtf|tar|tif|tiff|txt|wav|xls|xlsx|z|zip\');
 ';
 
-$query6 = '
+$q6 = '
 INSERT INTO `tbl_users` (`id`, `user`, `password`, `name`, `email`, `level`, `timestamp`) VALUES
 (1, \'admin\', \''.$got_admin_pass.'\', \''.$got_admin_name.'\', \''.$got_admin_email.'\', 9, '.$timestampdate.');
 ';
 
-$success = mysql_query($query); mysql_query($query2); mysql_query($query3); mysql_query($query4); mysql_query($query5); mysql_query($query6);
-if ($success) {
-	$query_state = 'ok';
-}
-else {
-	$query_state = 'err';
-}
+try_query(array($q1,$q2,$q3,$q4,$q5,$q6));
 ?>
