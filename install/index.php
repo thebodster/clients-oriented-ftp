@@ -14,6 +14,19 @@ require_once('../includes/functions.php');
 
 $database->MySQLDB();
 
+function try_query($query) {
+	if (empty($error_str)) {
+		global $error_str;
+	}
+	foreach ($query as $i => $value) {
+		$result = mysql_query($query[$i]);
+		if (mysql_error()) {
+			$error_str .= mysql_error().'<br />';
+		}
+	}
+	return $result;
+}
+
 // collect data from form
 $this_install_title = mysql_real_escape_string($_POST['this_install_title']);
 $base_uri = mysql_real_escape_string($_POST['base_uri']);
@@ -62,11 +75,11 @@ if ($_POST) {
 	if ($valid_me->return_val) { //lets continue
 		// call the file that creates the tables and fill it with the data we got previously
 		include_once('database.php');
-		if ($success){
-			$query_state = 'ok';
+		if (!empty($error_str)) {
+			$query_state = 'err';
 		}
 		else {
-			$query_state = 'err';
+			$query_state = 'ok';
 		}
 	}
 
@@ -87,7 +100,8 @@ if ($_POST) {
 	else if ($query_state == 'err') {
 	?>
 		<div class="message message_error">
-			<p><?php echo $install_error; ?></p>	
+			<p><?php echo $install_error; ?></p>
+			<p><?php echo $error_str; ?></p>
 		</div>
 	<?php
 	}
