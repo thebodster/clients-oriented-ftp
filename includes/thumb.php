@@ -6,6 +6,7 @@
 
 // get thumbnails options
 require_once('sys.vars.php');
+require_once('site.options.php');
 
 function meassureimg($pic_source) {
 	$picture = getimagesize($pic_source);
@@ -29,13 +30,13 @@ if(empty($_GET['type'])) {
 	return false;
 }
 
+$thumb_name = 'w'.$_GET['w'].'h'.$_GET['h'].str_replace("..", "",str_replace("\)", "5", str_replace("\(", "4", str_replace(" ", "_", str_replace("/", "-", $_GET['src'])))));
+
 switch($_GET['type']) {
 	case 'logo':
-		$thumb_name = $_GET['w'].$_GET['h'].str_replace("\)", "5", str_replace("\(", "4", str_replace(" ", "_", str_replace("/", "-", $_GET['src']))));
 		$do_on_folder = $thumbnails_folder;
 	break;
 	case 'tlogo':
-		$thumb_name = $_GET['w'].$_GET['h'].str_replace("\)", "5", str_replace("\(", "4", str_replace(" ", "_", str_replace("/", "-", $_GET['src']))));
 		$do_on_folder = $logo_thumbnail_folder;
 	break;
 	case 'prev':
@@ -45,13 +46,20 @@ switch($_GET['type']) {
 	break;
 }
 
+$destination = $do_on_folder.$thumb_name;
+
 if (!file_exists($thumb_name)) {
-	/* Detect filetype and make a temp images */
-	if (strtolower(substr($_GET['src'], -3)) == "gif") { $fuente = imagecreatefromgif($_GET['src']); }
-	if (strtolower(substr($_GET['src'], -3)) == "jpg") { $fuente = imagecreatefromjpeg($_GET['src']); }
-	if (strtolower(substr($_GET['src'], -3)) == "pjpeg") { $fuente = imagecreatefromjpeg($_GET['src']); }
-	if (strtolower(substr($_GET['src'], -3)) == "jpeg") { $fuente = imagecreatefromjpeg($_GET['src']); }
-	if (strtolower(substr($_GET['src'], -3)) == "png") { $fuente = imagecreatefrompng($_GET['src']); }
+	$extension = strtolower(substr($_GET['src'], -3));
+	/* Detect filetype and make a temp image */
+	if ($extension == "gif") {
+		$fuente = imagecreatefromgif($_GET['src']);
+	}
+	if ($extension == "jpeg" || $extension == "pjpeg" || $extension == "jpg" ) {
+		$fuente = imagecreatefromjpeg($_GET['src']);
+	}
+	if ($extension == "png") {
+		$fuente = imagecreatefrompng($_GET['src']);
+	}
 
 	$image_width = imagesx($fuente);
 	$image_height = imagesy($fuente);
@@ -72,14 +80,26 @@ if (!file_exists($thumb_name)) {
 	}
 	
 	/* racreate the picture with the original colors and avoiding pixelation */
-	$imagen = ImageCreateTrueColor($new_width,$new_height);
+	$imagen = imagecreatetruecolor($new_width,$new_height);
+	imagealphablending($imagen,true);
+	imagesavealpha($imagen, true);
 	imagecopyresampled($imagen,$fuente,0,0,0,0,$new_width,$new_height,$image_width,$image_height);
 
 	/* copy thumbnail to the corresponding folder */
-	imagejpeg($imagen, $do_on_folder.$thumb_name,$thumbnail_default_quality);
+	if ($extension == "png") {
+		imagepng($imagen,$destination,3,NULL);
+	}
+	else {
+		imagejpeg($imagen,$destination,$thumbnail_default_quality);
+	}
 }
 
-$output = imagecreatefromjpeg($do_on_folder.$thumb_name);
+if ($extension == 'png') {
+	$output = imagecreatefrompng($destination);
+}
+else {
+	$output = imagecreatefromjpeg($destination);
+}
 
 /* add watermark */
 if ($_GET['wm']) {
@@ -129,15 +149,21 @@ if($_GET['gr']) { greyscale($output); }
 /* reduce colors */
 if($_GET['rc']) { $cols = $_GET['rc']; reducircols($output,$cols); }
 
-Header("Content-type: image/jpeg");
-imagejpeg($output,NULL,$thumbnail_default_quality);
-// Create thumbnail ends here
+if ($extension == 'png') {
+	header("Content-type: image/png");
+	imagepng($output,NULL,3,NULL);
+}
+else
+{
+	header("Content-type: image/jpeg");
+	imagejpeg($output,NULL,$thumbnail_default_quality);
+}// Create thumbnail ends here
 
 
 // functions that can be applied to the file:
 
 // REDUCE COLORS
-function reducircols(&$image,$colores) {
+function reducircols($image,$colores) {
 	if($_GET['ql']) { $thumbnail_default_quality = $_GET['ql']; }
     set_time_limit(0);
     imagetruecolortopalette($image, true, $colores);
@@ -147,7 +173,7 @@ function reducircols(&$image,$colores) {
 }
 
 // GRAYSCALE
-function greyscale(&$image) {
+function greyscale($image) {
     $imagex = imagesx($image);
     $imagey = imagesy($image);
 
@@ -165,7 +191,7 @@ function greyscale(&$image) {
 } 
 
 // SCATTER
-function scatter(&$image) {
+function scatter($image) {
     $imagex = imagesx($image);
     $imagey = imagesy($image);
 
@@ -188,7 +214,7 @@ function scatter(&$image) {
 } 
 
 // DUOTONE
-function duotone(&$image, $rplus, $gplus, $bplus) {
+function duotone($image, $rplus, $gplus, $bplus) {
     $imagex = imagesx($image);
     $imagey = imagesy($image);
 
@@ -217,7 +243,7 @@ function duotone(&$image, $rplus, $gplus, $bplus) {
 } 
 
 // BLUR
-function blur (&$image,$dist) {
+function blur($image,$dist) {
     $imagex = imagesx($image);
     $imagey = imagesy($image);
 
@@ -258,7 +284,7 @@ function blur (&$image,$dist) {
 } 
 
 // PIXELATE
-function pixelate(&$image,$blocksize) {
+function pixelate($image,$blocksize) {
     $imagex = imagesx($image);
     $imagey = imagesy($image);
 
