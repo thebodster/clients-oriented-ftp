@@ -23,7 +23,8 @@ function meassureimg($pic_source) {
 	}
 }
 
-// start process.
+// start process
+// if we set the quality via url, ignore the default one that comes from the database
 if($_GET['ql']) { $thumbnail_default_quality = $_GET['ql']; }
 
 if(empty($_GET['type'])) {
@@ -81,8 +82,8 @@ if (!file_exists($thumb_name)) {
 	
 	/* racreate the picture with the original colors and avoiding pixelation */
 	$imagen = imagecreatetruecolor($new_width,$new_height);
-	imagealphablending($imagen,true);
-	imagesavealpha($imagen, true);
+	imagealphablending($imagen,false);
+	imagesavealpha($imagen,true);
 	imagecopyresampled($imagen,$fuente,0,0,0,0,$new_width,$new_height,$image_width,$image_height);
 
 	/* copy thumbnail to the corresponding folder */
@@ -96,6 +97,8 @@ if (!file_exists($thumb_name)) {
 
 if ($extension == 'png') {
 	$output = imagecreatefrompng($destination);
+	imagealphablending($output, false); // setting alpha blending on
+	imagesavealpha($output, true); // save alphablending setting (important)
 }
 else {
 	$output = imagecreatefromjpeg($destination);
