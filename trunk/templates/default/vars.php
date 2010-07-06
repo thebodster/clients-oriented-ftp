@@ -11,6 +11,7 @@ $file_date = 'Uploaded';
 $file_download = 'Download';
 $file_preview = 'Image Preview';
 $file_uploader = 'Uploader';
+$file_download_count = 'Downloads';
 $file_actions = 'Actions';
 $delete = 'Delete';
 
