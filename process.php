@@ -16,6 +16,9 @@ class process {
 			case 'del_user':
 				$this->delete_user();
 			break;
+			case 'add_download_count':
+				$this->add_download_count();
+			break;
 			case 'logout':
 				$this->logout();
 			break;
@@ -69,6 +72,20 @@ class process {
 				$this->sql = $this->database->query('DELETE FROM tbl_users WHERE user="' . $this->user .'"');
 			}
 			header("location:users.php");
+		}
+	}
+
+	function add_download_count() {
+		$this->check_level = array(9,8,7,0);
+		if (isset($_GET['file'])) {
+			$this->fileid = mysql_real_escape_string($_GET['file']);
+			// do a permissions check
+			if (isset($this->check_level) && in_array($_SESSION['userlevel'],$this->check_level)) {
+				$this->sql = $this->database->query('SELECT * FROM tbl_files WHERE id="' . $this->fileid .'"');
+				$this->row = mysql_fetch_array($this->sql);
+				$this->value = $this->row['download_count']+1;
+				$this->sql2 = $this->database->query('UPDATE tbl_files SET download_count=' . $this->value .' WHERE id="' . $this->fileid .'"');
+			}
 		}
 	}
 
