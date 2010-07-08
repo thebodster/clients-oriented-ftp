@@ -29,7 +29,7 @@ var menu=function(){
 		}
 		var d=(f==1)?Math.ceil((c.mh-h)/s):Math.ceil(h/s), o=h/c.mh;
 		c.style.opacity=o; c.style.filter='alpha(opacity='+(o*100)+')';
-		c.style.height=h+(d*f)+'px'
+		c.style.height=h+(d*f-1)+'px'
 	}
 	return{dd:dd}
 }();
