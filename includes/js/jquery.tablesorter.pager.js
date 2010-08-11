@@ -21,6 +21,7 @@
 					var c = table.config, o = $(table);
 					if(o.offset) {
 						c.container.css({
+							position: 'relative'
 						});
 					}
 					c.pagerPositionSet = true;
