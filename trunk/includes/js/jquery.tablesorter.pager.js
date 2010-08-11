@@ -21,8 +21,6 @@
 					var c = table.config, o = $(table);
 					if(o.offset) {
 						c.container.css({
-							top: o.offset().top + o.height() + 'px',
-							position: 'absolute'
 						});
 					}
 					c.pagerPositionSet = true;
