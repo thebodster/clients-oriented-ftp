@@ -43,14 +43,8 @@ while ($row = mysql_fetch_array($sql2)) {
 						sortList: [[0,0]], widgets: ['zebra'], headers: {
 							4: { sorter: false },
 							5: { sorter: false },
-							6: { sorter: false }
-							<?php
-								$clients_allowed = array(9,8,7);
-								if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
-							?>
-								,7: { sorter: false },
-								8: { sorter: false }
-							<?php } ?>
+							6: { sorter: false },
+							7: { sorter: false }
 						}
 				})
 				.tablesorterPager({container: $("#pager")})
@@ -60,31 +54,6 @@ while ($row = mysql_fetch_array($sql2)) {
 		function confirm_file_delete() {
 			if (confirm("<?php echo $confirm_file_delete; ?>")) return true ;
 			else return false ;
-		}
-
-		var xhr;
-		function startAjax() {
-			if(window.XMLHttpRequest) {
-				xhr = new XMLHttpRequest();
-			}
-			else if(window.ActiveXObject) {
-				xhr = new ActiveXObject("Microsoft.XMLHTTP");
-			}
-		}
-		
-		function addDownloadCount(fileid) {
-			startAjax();
-			xhr.open("GET","../../process.php?do=add_download_count&file="+fileid);
-			xhr.onreadystatechange = callback;
-			xhr.send(null);
-		}
-
-		// i'm leaving this here for future error handling
-		function callback() {
-			if (xhr.readyState == 4) {
-				if (xhr.status == 200) {
-				}
-			}
 		}
 	</script>
 	
@@ -128,7 +97,6 @@ while ($row = mysql_fetch_array($sql2)) {
 						if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
 					?>
 						<th><?php echo $file_uploader; ?></th>
-						<th><?php echo $file_download_count; ?></th>
 					<?php } ?>
 					<th><?php echo $file_actions; ?></th>
 				</tr>
@@ -152,7 +120,7 @@ while ($row = mysql_fetch_array($sql2)) {
 					</td>
 					<td>
 						<div class="download_link">
-							<a href="<?php echo $row['url']; ?>" target="_blank" onclick="addDownloadCount(<?php echo $row['id']; ?>);">
+							<a href="<?php echo $row['url']; ?>" target="_blank">
 								<?php echo $file_download; ?>
 							</a>
 						</div>
@@ -177,7 +145,6 @@ while ($row = mysql_fetch_array($sql2)) {
 						if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
 					?>
 						<td><?php echo $row['uploader']; ?></td>
-						<td><?php echo $row['download_count']; ?></td>
 					<?php } ?>
 					<td>
 						<a onclick="return confirm_file_delete();" href="../../process.php?do=del_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>&amp;file=<?php echo $row['url']; ?>" target="_self">
@@ -210,6 +177,12 @@ while ($row = mysql_fetch_array($sql2)) {
 				<option value="30">30</option>
 				<option value="40">40</option>
 			</select>
+		</form>
+	</div>
+<?php } else {?>
+	<div id="pager">
+		<form>
+			<input type="hidden" value="<?php echo $count; ?>" class="pagesize" />
 		</form>
 	</div>
 <?php } ?>	

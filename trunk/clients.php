@@ -131,6 +131,12 @@ $(document).ready(function()
 		</select>
 	</form>
 </div>
+<?php } else {?>
+	<div id="pager">
+		<form>
+			<input type="hidden" value="<?php echo $count; ?>" class="pagesize" />
+		</form>
+	</div>
 <?php } ?>
 
 	</div>
