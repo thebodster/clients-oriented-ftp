@@ -19,6 +19,9 @@ class process {
 			case 'add_download_count':
 				$this->add_download_count();
 			break;
+			case 'download':
+				$this->download_file();
+			break;
 			case 'logout':
 				$this->logout();
 			break;
@@ -85,6 +88,18 @@ class process {
 				$this->row = mysql_fetch_array($this->sql);
 				$this->value = $this->row['download_count']+1;
 				$this->sql2 = $this->database->query('UPDATE tbl_files SET download_count=' . $this->value .' WHERE id="' . $this->fileid .'"');
+			}
+		}
+	}
+
+	function download_file() {
+		$this->check_level = array(9,8,7,0);
+		if (isset($_GET['file']) && isset($_GET['client'])) {
+			// do a permissions check for logged in user
+			if (isset($this->check_level) && in_array($_SESSION['userlevel'],$this->check_level)) {
+				// here we should check if the user is admin or the allowed client
+				$file = 'upload/'.$_GET['client'].'/'.$_GET['file'];
+				header('Location: '.$file);
 			}
 		}
 	}
