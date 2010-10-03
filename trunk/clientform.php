@@ -121,20 +121,20 @@ if ($_POST) {
 		else {
 			// we are creating a new client
 			// Create user folder if it doesn't exist
-			$folder = 'upload/' . $add_client_data_user . '/';
+			$folder = 'upload/' . $add_client_data_user;
 			if (!file_exists($folder)) {
 				$success = @mkdir($folder);
 	
 				// if the folder was created, continue
 				if ($success){
 					chmod($folder, 0755);
-					$folder2 = 'upload/' . $add_client_data_user . '/thumbs/';
+					$folder2 = $folder.'/'.'/thumbs';
 					mkdir($folder2); chmod($folder2, 0755);
 		
 					// Create index.php on clients folder
 					$index_content = '$this_user = "' . $add_client_data_user . '" ; include_once(\'../../templates/default/template.php\');';
 					$addwhat = '<?php ' . $index_content . ' ?>';
-					$file = $folder . "index.php";   
+					$file = $folder .'/'. "index.php";   
 					if (!$file_handle = fopen($file,"a")) { echo $creat_err1; }
 					if (!fwrite($file_handle, $addwhat)) { echo $creat_err2; }
 					fclose($file_handle);
