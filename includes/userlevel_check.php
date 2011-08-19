@@ -1,4 +1,24 @@
 <?php
+require_once('db_class.php');
+$database->MySQLDB();
+
+function check_valid_cookie() {
+	if (isset($_COOKIE['password']) && isset($_COOKIE['loggedin']) && isset($_COOKIE['userlevel'])) {
+		$cookie_pass = mysql_real_escape_string($_COOKIE['password']);
+		$cookie_user = mysql_real_escape_string($_COOKIE['loggedin']);
+		$cookie_level = mysql_real_escape_string($_COOKIE['userlevel']);
+		if($cookie_level == '0') {
+			$sql_cookie = mysql_query("SELECT * FROM tbl_clients WHERE client_user='$cookie_user' AND password='$cookie_pass'");
+		}
+		else {
+			$sql_cookie = mysql_query("SELECT * FROM tbl_users WHERE user='$cookie_user' AND password='$cookie_pass' AND level='$cookie_level'");
+		}
+		$count = mysql_num_rows($sql_cookie);
+		if($count>0){
+			return true;
+		}
+	}
+}
 
 // session check for the header. if no session or cookie is set, go to login
 function check_for_session() {
@@ -9,10 +29,7 @@ function check_for_session() {
 	elseif ($_SESSION['access'] == 'admin') {
 		$is_logged_now = true;
 	}
-	elseif ($_COOKIE['loggedin']) {
-		$is_logged_now = true;
-	}
-	elseif ($_COOKIE['access'] == 'admin') {
+	elseif (check_valid_cookie()) {
 		$is_logged_now = true;
 	}
 	if(!$is_logged_now) {
@@ -26,7 +43,7 @@ function check_for_admin() {
 	if ($_SESSION['access'] == 'admin') {
 		$is_logged_admin = true;
 	}
-	elseif ($_COOKIE['access'] == 'admin') {
+	elseif (check_valid_cookie() && mysql_real_escape_string($_COOKIE['access']) == 'admin') {
 		$is_logged_admin = true;
 	}
 	if(!$is_logged_admin) {
@@ -61,7 +78,7 @@ function can_see_content($allowed_levels,$page_title,$userlevel_not_allowed) {
 			the second second check looks for a session, and if found
 			see if the user level is among those defined by the page.
 		*/
-		if (isset($_SESSION['userlevel']) && in_array($_SESSION['userlevel'],$allowed_levels)) { // the page has desfined levels and we are not included on them
+		if (isset($_SESSION['userlevel']) && in_array($_SESSION['userlevel'],$allowed_levels)) { // the page has desfined levels and we are included on them
 			$permission = true;
 		}
 		/*
