@@ -15,10 +15,6 @@ if (in_array($_SESSION['userlevel'],$allowed_enter) || in_array($_COOKIE['userle
 }
 check_for_client();
 $database->MySQLDB();
-$sysuser_username=mysql_real_escape_string($_POST['login_form_user']);
-$sysuser_password=mysql_real_escape_string(md5($_POST['login_form_pass']));
-$client_username=mysql_real_escape_string($_POST['login_form_client_user']);
-$client_password=mysql_real_escape_string(md5($_POST['login_form_client_pass']));
 // thanks to http://www.kminek.pl/lab/yetii/ for the tabs script!
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -36,10 +32,14 @@ $client_password=mysql_real_escape_string(md5($_POST['login_form_client_pass']))
 
 <?php
 if ($_POST) {
+	$sysuser_username=mysql_real_escape_string($_POST['login_form_user']);
+	$sysuser_password=mysql_real_escape_string(md5($_POST['login_form_pass']));
+	$client_username=mysql_real_escape_string($_POST['login_form_client_user']);
+	$client_password=mysql_real_escape_string(md5($_POST['login_form_client_pass']));
 
 	if (isset($_POST['sent_admin'])) {
 		// try to login as system user
-		$sql = $database->query("SELECT * FROM tbl_users WHERE user='$sysuser_username'");
+		$sql = $database->query("SELECT * FROM tbl_users WHERE user='$sysuser_username' AND password='$sysuser_password'");
 		$count=mysql_num_rows($sql);
 		
 		if($count>0){
@@ -55,6 +55,7 @@ if ($_POST) {
 				// if remember me is on, set the cookie
 				if ($_POST['login_form_remember']=='on') {
 					setcookie("loggedin",$sysuser_username,time()+COOKIE_EXP_TIME);
+					setcookie("password",$sysuser_password,time()+COOKIE_EXP_TIME);
 					setcookie("access","admin",time()+COOKIE_EXP_TIME);
 					setcookie("userlevel",$user_level,time()+COOKIE_EXP_TIME);
 				}
@@ -70,7 +71,7 @@ if ($_POST) {
 	}
 	elseif (isset($_POST['sent_client'])) {
 		// try to login as client		
-		$sql = $database->query("SELECT * FROM tbl_clients WHERE client_user='$client_username'");
+		$sql = $database->query("SELECT * FROM tbl_clients WHERE client_user='$client_username' AND password='$client_password'");
 		$count=mysql_num_rows($sql);
 		
 		if($count>0){
@@ -85,6 +86,7 @@ if ($_POST) {
 				// if remember me is on, set the cookie
 				if ($_POST['login_form_client_remember']=='on') {
 					setcookie("loggedin",$client_username,time()+COOKIE_EXP_TIME);
+					setcookie("password",$client_password,time()+COOKIE_EXP_TIME);
 					setcookie("access",$client_username,time()+COOKIE_EXP_TIME);
 					setcookie("userlevel","0",time()+COOKIE_EXP_TIME);
 				}
