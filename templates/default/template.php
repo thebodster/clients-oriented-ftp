@@ -180,9 +180,15 @@ while ($row = mysql_fetch_array($sql2)) {
 						<td><?php echo $row['download_count']; ?></td>
 					<?php } ?>
 					<td>
-						<a onclick="return confirm_file_delete();" href="../../process.php?do=del_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>&amp;file=<?php echo $row['url']; ?>" target="_self">
-							<img src="../../img/icons/delete.png" alt"<?php echo $delete; ?>" />
-						</a>
+						<?php
+							// show DELETE FILE only to users, not clients
+							$clients_allowed = array(9,8,7);
+							if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
+						?>
+							<a onclick="return confirm_file_delete();" href="../../process.php?do=del_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>&amp;file=<?php echo $row['url']; ?>" target="_self">
+								<img src="../../img/icons/delete.png" alt"<?php echo $delete; ?>" />
+							</a>
+						<?php } ?>
 					</td>
 				</tr>
 			
