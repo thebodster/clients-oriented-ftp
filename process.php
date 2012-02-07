@@ -112,6 +112,7 @@ class process {
 		session_destroy();
 		// if there is a cookie, unset it
 		setcookie("loggedin","",time()-COOKIE_EXP_TIME);
+		setcookie("password","",time()-COOKIE_EXP_TIME);
 		setcookie("access","",time()-COOKIE_EXP_TIME);
 		setcookie("userlevel","",time()-COOKIE_EXP_TIME);
 		header("location:index.php");
