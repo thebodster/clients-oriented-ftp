@@ -1,6 +1,6 @@
 <?php // this great piece is based off code that comes from an example found on http://php.net/manual/es/function.timezone-identifiers-list.php ?>
 
-<label for="timezone"><?php echo $options_timezone; ?></label><select id="timezone" name="timezone">
+<label for="timezone"><?php _e('Timezone','cftp_admin'); ?></label><select id="timezone" name="timezone">
 
 <?php
 function timezonechoice($selectedzone) {

@@ -4,3 +4,4 @@ Disallow: /install/
 Disallow: /styles/
 Disallow: /templates/
 Disallow: /upload/
+Disallow: /lang/

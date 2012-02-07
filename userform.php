@@ -3,15 +3,24 @@ $allowed_levels = array(9);
 require_once('includes/includes.php');
 
 if ($_GET['do']=='edit' || isset($_POST['edit_who'])) {
-	$page_title = $page_title_edituser;
+	$page_title = __('Edit system user','cftp_admin');
 }
 else {
-	$page_title = $page_title_newuser;
+	$page_title = __('Add system user','cftp_admin');
 }
 
 include('header.php');
 
 $database->MySQLDB();
+
+// email texts
+$add_user_mail_subject = __('Welcome to cFTP','cftp_admin');
+$add_user_mail_body = __('A new account was created for you. From now on, you can access the system administrator using the following credentials:','cftp_admin');
+$add_user_mail_body_2 = __('Access the system panel here','cftp_admin');
+$add_user_mail_body_3 = __('Thank you for using this system.','cftp_admin');
+$add_mail_body_user = __('Your username','cftp_admin');
+$add_mail_body_pass = __('Your password','cftp_admin');
+
 
 if ($_GET['do']=='edit') {
 	//if we are editing a client, then the info to show on the form comes from the database
@@ -159,28 +168,35 @@ if ($_POST) {
 				// get the process state and show the corresponding ok or error message
 				switch ($process_state) {
 					case 'ok':
-						echo '<div class="message message_ok"><p>'.$add_user_ok.'</p></div>';
+						$msg = __('User added correctly.','cftp_admin');
+						echo '<div class="message message_ok"><p>'.$msg.'</p></div>';
 					break;
 					case 'err':
-						echo '<div class="message message_error"><p>'.$add_user_error.'</p></div>';
+						$msg = __('There was an error. Please try again.','cftp_admin');
+						echo '<div class="message message_error"><p>'.$msg.'</p></div>';
 					break;
 					case 'edit_not_exists':
-						echo '<div class="message message_error"><p>'.$edit_user_exists.'</p></div>';
+						$msg = __('There is no user with that ID to edit.','cftp_admin');
+						echo '<div class="message message_error"><p>'.$msg.'</p></div>';
 					break;
 					case 'edit_ok':
-						echo '<div class="message message_ok"><p>'.$edit_user_ok.'</p></div>';
+						$msg = __('The user was edited correctly.','cftp_admin');
+						echo '<div class="message message_ok"><p>'.$msg.'</p></div>';
 					break;
 					case 'edit_err':
-						echo '<div class="message message_error"><p>'.$edit_user_error.'</p></div>';
+						$msg = __('There was an error. Please try again.','cftp_admin');
+						echo '<div class="message message_error"><p>'.$msg.'</p></div>';
 					break;
 				}
 				// ok or error message for the email notification
 				switch ($email_state) {
 					case 'ok':
-						echo '<div class="message message_ok"><p>'.$add_client_notify_ok.'</p></div>';
+						$msg = __('An e-mail notification with login information was sent to your client.','cftp_admin');
+						echo '<div class="message message_ok"><p>'.$msg.'</p></div>';
 					break;
 					case 'err':
-						echo '<div class="message message_error"><p>'.$add_client_notify_error.'</p></div>';
+						$msg = __("E-mail notification couldn't be sent.",'cftp_admin');
+						echo '<div class="message message_error"><p>'.$msg.'</p></div>';
 					break;
 				}
 			}
@@ -188,7 +204,7 @@ if ($_POST) {
 			// if not $process_state is set, it means we are just entering for the first time
 		?>
 
-	<?php include_once('includes/js/js.validations.php'); ?>
+	<script type="text/javascript" src="includes/js/js.validations.php"></script>
 
 	<script type="text/javascript">
 	
@@ -236,43 +252,43 @@ if ($_POST) {
 			<?php } ?>
 			<table border="0" cellspacing="1" cellpadding="1">
 			  <tr>
-				<td width="40%"><?php echo $add_user_form_name; ?></td>
+				<td width="40%"><?php _e('Name','cftp_admin'); ?></td>
 				<td><input name="add_user_form_name" id="add_user_form_name" class="txtfield" value="<?php echo $add_user_data_name; ?>" /></td>
 			  </tr>
 			  <tr>
-				<td><?php echo $add_user_form_user; ?></td>
+				<td><?php _e('Log in username','cftp_admin'); ?></td>
 				<td><input name="add_user_form_user" id="add_user_form_user" class="txtfield" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo $add_user_data_user; ?>" <?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { ?>disabled="disabled"<?php }?> /></td>
 			  </tr>
 			  <tr>
-				<td><?php echo $add_user_form_pass; ?></td>
+				<td><?php _e('Log in password','cftp_admin'); ?></td>
 				<td><input name="add_user_form_pass" id="add_user_form_pass" class="txtfield" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" /></td>
 			  </tr>
 			  <tr>
-				<td><?php echo $add_user_form_pass2; ?></td>
+				<td><?php _e('Repeat password','cftp_admin'); ?></td>
 				<td><input name="add_user_form_pass2" id="add_user_form_pass2" class="txtfield" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" /></td>
 			  </tr>
 			  <tr>
-				<td><?php echo $add_user_form_email; ?></td>
+				<td><?php _e('E-mail','cftp_admin'); ?></td>
 				<td><input name="add_user_form_email" id="add_user_form_email" class="txtfield" value="<?php echo $add_user_data_email; ?>" /></td>
 			  </tr>
 			  <tr>
-				<td><?php echo $add_user_form_level; ?></td>
+				<td><?php _e('Role','cftp_admin'); ?></td>
 				<td>
 					<select name="add_user_form_level" id="add_user_form_level" class="txtfield">
-						<option value="9" <?php if( $add_user_data_level == '9') { echo 'selected="selected"'; } ?>><?php echo $user_role_lvl9; ?></option>
-						<option value="8" <?php if( $add_user_data_level == '8') { echo 'selected="selected"'; } ?>><?php echo $user_role_lvl8; ?></option>
-						<option value="7" <?php if( $add_user_data_level == '7') { echo 'selected="selected"'; } ?>><?php echo $user_role_lvl7; ?></option>
+						<option value="9" <?php if( $add_user_data_level == '9') { echo 'selected="selected"'; } ?>><?php echo USER_ROLE_LVL_9; ?></option>
+						<option value="8" <?php if( $add_user_data_level == '8') { echo 'selected="selected"'; } ?>><?php echo USER_ROLE_LVL_8; ?></option>
+						<option value="7" <?php if( $add_user_data_level == '7') { echo 'selected="selected"'; } ?>><?php echo USER_ROLE_LVL_7; ?></option>
 					</select>
 				</td>
 			  </tr>
 			  <tr>
 				<td colspan="2">
 					<div align="right">
-						<input type="submit" name="Submit" value="<?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { echo $edit_user_form_submit; } else { echo $add_user_form_submit; } ?>" class="boton" />
+						<input type="submit" name="Submit" value="<?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { _e('Modify user','cftp_admin'); } else { _e('Add user','cftp_admin'); } ?>" class="boton" />
 					</div>
 					<?php if ($_GET['do']!='edit' && empty($_POST['edit_who'])) { ?>
 					<div class="message message_info">
-						<p><?php echo $add_client_mail_info; ?></p>
+						<p><?php _e('This account information will be e-mailed to the address supplied above','cftp_admin'); ?></p>
 					</div>
 					<?php } ?>
 				</td>

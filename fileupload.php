@@ -1,7 +1,7 @@
 <?php
 $allowed_levels = array(9,8,7);
 require_once('includes/includes.php');
-$page_title = $page_title_upload;
+$page_title = __('Upload file', 'cftp_admin');
 include('header.php');
 
 $database->MySQLDB();
@@ -12,6 +12,13 @@ $client_user = mysql_real_escape_string($_POST['clientname']);
 $thefile = mysql_real_escape_string($_FILES['ufile']['name']);
 
 require_once('includes/form_validation_class.php');
+
+// email texts
+$notify_email_subject = __('New file uploaded for you','cftp_admin');
+$notify_email_body = __('A new file has been uploaded for you to download.','cftp_admin');
+$notify_email_body2 = __("If you don't want to be notified about new files, please contact the uploader.",'cftp_admin');
+$notify_email_body3 = __('You can access a list of all your files','cftp_admin');
+$notify_email_body4 = __('by logging in here','cftp_admin');
 
 if ($_POST) {
 	
@@ -74,8 +81,8 @@ if ($_POST) {
 	}
 
 } // do if just entering (no form info sent)
-
-include_once('includes/js/js.validations.php'); ?>
+?>
+<script src="includes/js/js.validations.php" type="text/javascript"></script>
 
 <script type="text/javascript">
 
@@ -114,8 +121,8 @@ include_once('includes/js/js.validations.php'); ?>
 		$count=mysql_num_rows($sql);
 		if (!$count) {
 	?>
-			<p><?php echo $upload_no_clients; ?></p>
-			<p><a href="clientform.php" target="_self"><?php echo $upload_no_clients2;?></a> <?php echo $upload_no_clients3;?></p>
+			<p><?php _e('There are no clients at the moment', 'cftp_admin'); ?></p>
+			<p><a href="clientform.php" target="_self"><?php _e('Create a new one', 'cftp_admin'); ?></a> <?php _e('to be able to upload files for that account.', 'cftp_admin'); ?></p>
 	<?php
 		}
 		else { 
@@ -143,18 +150,22 @@ include_once('includes/js/js.validations.php'); ?>
 								
 								$success = @mail($row['email'], $notify_email_subject, $email_body, "From:<$admin_email_address>\r\nReply-to:<$admin_email_address>\r\nContent-type: text/html; charset=us-ascii");
 								if ($success){
-								  echo '<div class="message message_ok"><p>'.$notify_email_ok.'</p></div>';
+								  echo '<div class="message message_ok"><p>';
+								  _e('Your client was notified about the file','cftp_admin');
+								  echo '</p></div>';
 								}
 								else{
-								  echo '<div class="message message_error"><p>'.$notify_email_error.'</p></div>';
+								  echo '<div class="message message_error"><p>';
+								  _e("E-mail notify couldn't be sent",'cftp_admin');
+								  echo '</p></div>';
 								}
 							}
 						}
 						// end notification
 						?>
-						<p><strong><?php echo $up_filename; ?></strong> <?php echo $_FILES['ufile']['name']; ?><br />
-						<strong><?php echo $up_filetype; ?></strong> <?php echo $_FILES['ufile']['type']; ?><br />
-						<strong><?php echo $up_filesize; ?></strong> <?php $total = $_FILES['ufile']['size']; getfilesize($total); ?></p>
+						<p><strong><?php _e('File name:','cftp_admin'); ?></strong> <?php echo $_FILES['ufile']['name']; ?><br />
+						<strong><?php _e('File type','cftp_admin'); ?></strong> <?php echo $_FILES['ufile']['type']; ?><br />
+						<strong><?php _e('File size:','cftp_admin'); ?></strong> <?php $total = $_FILES['ufile']['size']; getfilesize($total); ?></p>
 				
 						<div id="linkcliente">
 							<?php
@@ -167,16 +178,20 @@ include_once('includes/js/js.validations.php'); ?>
 						</div><?php
 					break;
 					case 'err_move':
-						echo '<div class="message message_error"><p>'.$file_upload_move.'</p></div>';
+						$msg = __('Error moving uploaded file. Please try again.','cftp_admin');
+						echo '<div class="message message_error"><p>'.$msg.'</p></div>';
 					break;
 					case 'err':
-						echo '<div class="message message_error"><p>'.$file_upload_error.'</p></div>';
+						$msg = __('Error sending file. Please try again.','cftp_admin');
+						echo '<div class="message message_error"><p>'.$msg.'</p></div>';
 					break;
 					case 'err_type':
-						echo '<div class="message message_error"><p>'.$file_upload_types_error.'</p></div>';
+						$msg = __('This filetype is not allowed. Please check the options page and change it accordingly.<br /><strong>Warning</strong>: This could break security.','cftp_admin');
+						echo '<div class="message message_error"><p>'.$msg.'</p></div>';
 					break;
 					case 'err_exist':
-						echo '<div class="message message_error"><p>'.$file_upload_exist_error.'</p></div>';
+						$msg = __("The file doesn't exist anymore, or it's empty. You cannot upload 0kb files.",'cftp_admin');
+						echo '<div class="message message_error"><p>'.$msg.'</p></div>';
 					break;
 				}
 			}
@@ -188,19 +203,19 @@ include_once('includes/js/js.validations.php'); ?>
 		<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_FILESIZE*1050000; ?>" />
 		<table border="0" cellspacing="1" cellpadding="1">
 		  <tr>
-			<td width="40%"><?php echo $upfname; ?></td>
+			<td width="40%"><?php _e('Name','cftp_admin'); ?></td>
 			<td><input type="text" name="name" id="name" class="txtfield" value="<?php echo $filename; ?>" /></td>
 		  </tr>
 		  <tr>
-			<td><?php echo $upfdes; ?></td>
+			<td><?php _e('File description','cftp_admin'); ?></td>
 			<td><textarea name="description" id="description" class="txtfield"><?php echo $_POST['description']; ?></textarea></td>
 		  </tr>
 		  <tr>
-			<td><?php echo $upffile; ?></td>
+			<td><?php _e('Select file','cftp_admin'); ?></td>
 			<td><input name="ufile" type="file" id="ufile" size="32" class="txtfield" /></td>
 		  </tr>
 		  <tr>
-			<td><?php echo $upclient; ?></td>
+			<td><?php _e('Upload for','cftp_admin'); ?></td>
 			<td><select name="clientname" id="clientname" class="txtfield" >
 					<?php
 						$sql = $database->query("SELECT client_user, name FROM tbl_clients");
@@ -216,7 +231,7 @@ include_once('includes/js/js.validations.php'); ?>
 		  <tr>
 			<td>&nbsp;</td>
 			<td>
-				<div align="right"><input type="submit" name="Submit" value="<?php echo $upload_submit; ?>" class="boton" /></div>
+				<div align="right"><input type="submit" name="Submit" value="<?php _e('Upload','cftp_admin'); ?>" class="boton" /></div>
 			</td>
 		  </tr>
 	  </table>

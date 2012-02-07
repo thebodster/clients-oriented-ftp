@@ -1,15 +1,20 @@
 <?php
 $allowed_levels = array(9);
 require_once('includes/includes.php');
-$page_title = $page_title_logo;
+$page_title = __('Logo configuration','cftp_admin');
 include('header.php');
+// lang vars
+$logo_replace_info = __("The new image will act as your logo across your client's file lists.",'cftp_admin');
+$select_logo_preview_1 = __("The picture on the left is not an actual representation of what they will see. The size on this preview is fixed, but remember that you can change the display size and picture quality for your client's pages on the",'cftp_admin');	
+$select_logo_preview_2 = __("options",'cftp_admin');	
+$select_logo_preview_3 = __("section.",'cftp_admin');	
 ?>
 
 <div id="main">
 	<h2><?php echo $page_title; ?></h2>
 
 	<div id="current_logo" class="whitebox">
-		<p><?php echo $current_logo; ?></p>
+		<p><?php _e('Current logo:','cftp_admin'); ?></p>
 		<img src="includes/thumb.php?src=../img/custom/logo.jpg&amp;w=<?php echo $max_logo_width; ?>&amp;sh=1&amp;ql=<?php echo $thumbnail_default_quality; ?>&amp;type=tlogo" alt="" />
 	</div>
 
@@ -61,29 +66,34 @@ if ($_POST) { // form sent?
 			imagedestroy($source);
 			
 			delfile($dir_base.$safe_filename);
-	
-			echo '<div class="message message_ok"><p>'.$logo_uploaded_ok.'</p></div>';
-			echo '<p>'.$logo_replace_info.'</p>';
-			echo '<p>'.$select_logo_preview.'</p>';
+			?>
+				<div class="message message_ok"><p><?php _e('The image was uploaded correctly.','cftp_admin'); ?></p></div>
+				<p><?php echo $logo_replace_info; ?></p>
+				<p><?php echo $select_logo_preview_1; ?> <a href="options.php"><?php echo $select_logo_preview_2; ?></a> <?php echo $select_logo_preview_3; ?></p>
+			<?php
 		}
 		else {
-			echo '<div class="message message_error"><p>'.$logo_uploaded_filetye.'</p></div>';
-			echo '<p>'.$logo_replace_info.'</p>';
+			?>
+				<div class="message message_error"><p><?php _e('The file you selected is not a valid image one. Please upload a jpg, gif or png formated logo picture.','cftp_admin'); ?></p></div>
+				<p><?php echo $logo_replace_info; ?></p>
+			<?php
 		}
 	}
 	else {
-		echo '<div class="message message_error"><p>'.$logo_uploaded_error.'</p></div>';
-		echo '<p>'.$logo_replace_info.'</p>';
+		?>
+			<div class="message message_error"><p><?php _e('There was an error uploading the file. Please try again.','cftp_admin'); ?></p></div>
+				<p><?php echo $logo_replace_info; ?></p>
+		<?php
 	}
 }
 else {
 ?>
 
-	<?php include_once('includes/js/js.validations.php'); ?>
+	<script type="text/javascript" src="includes/js/js.validations.php"></script>
 
 	<script type="text/javascript">
 
-		var ja_file_err = "<?php echo $select_logo_file_err; ?>"
+		var ja_file_err = "<?php _e('Please select an image file to upload','cftp_admin'); ?>"
 
 		function validateform(theform){
 			is_complete_no_err(theform.select_logo);
@@ -96,19 +106,19 @@ else {
 		}
 	</script>
 
-		<p><?php echo $logo_upload_description; ?></p>
+		<p><?php _e('Use this page to upload your company logo, or update your current uploaded one. This image will be shown to your clients when they access their file list.','cftp_admin'); ?></p>
 		<div id="form_upload_logo" class="whitebox">
 			<form action="" name="logoupload" method="post" enctype="multipart/form-data" onsubmit="return validateform(this);">
 			<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
-				<label><?php echo $logo_replace_file; ?></label>
+				<label><?php _e('Select image to upload','cftp_admin'); ?></label>
 				<input type="file" name="select_logo" />
 				<div class="form_btns" align="right">
-					<input type="submit" name="Submit" value="<?php echo $logo_upload_file; ?>" class="boton" />
+					<input type="submit" name="Submit" value="<?php _e('Upload','cftp_admin'); ?>" class="boton" />
 				</div>
 			</form>
 		</div>
 		<p><?php echo $logo_replace_info; ?></p>
-		<p><?php echo $select_logo_preview; ?></p>
+		<p><?php echo $select_logo_preview_1; ?> <a href="options.php"><?php echo $select_logo_preview_2; ?></a> <?php echo $select_logo_preview_3; ?></p>
 
 <?php } ?>
 

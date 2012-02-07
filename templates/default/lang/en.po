@@ -1,0 +1,122 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Ignacio <info@subwaydesign.com.ar>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+
+#. Text in echo
+#: cFTP/templates/default/template.php:137
+msgid "Actions"
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:193
+msgid "Delete"
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:125
+msgid "Description"
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:128
+#: cFTP/templates/default/template.php:160
+msgid "Download"
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:135
+msgid "Downloads"
+msgstr ""
+
+#. Text in function
+#: cFTP/templates/default/template.php:1
+msgid "File downloads"
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:210
+msgid "First"
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:105
+msgid "Help"
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:129
+msgid "Image preview"
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:215
+msgid "Last"
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:124
+msgid "Name"
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:214
+msgid "Next"
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:212
+msgid "Page"
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:211
+msgid "Prev."
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:216
+msgid "Show"
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:126
+msgid "Size"
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:106
+msgid "The file list on the right contains every file uploaded for you.</p><p>You can click on the name of each marked column to order the list."
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:113
+msgid "There are no files."
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:65
+msgid "This will delete the file permanently. Continue?"
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:127
+msgid "Uploaded"
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:134
+msgid "Uploader"
+msgstr ""
+
+#. Text in echo
+#: cFTP/templates/default/template.php:237
+msgid "cFTP Free software (GPL2) | 2007 - "
+msgstr ""
+

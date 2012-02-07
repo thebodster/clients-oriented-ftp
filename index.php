@@ -21,7 +21,7 @@ $database->MySQLDB();
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title><?php echo $page_title_login; ?> | <?php echo $short_system_name; ?></title>
+<title><?php _e('Log in','cftp_admin'); ?> | <?php echo $short_system_name; ?></title>
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="stylesheet" media="all" type="text/css" href="styles/base.css" />
 <script type="text/javascript" src="includes/js/yetii-min.js"></script>
@@ -109,8 +109,8 @@ if ($_POST) {
 	</div>
 	<div class="whiteform whitebox" id="loginform">
 	
-		<h3><?php echo $login_title; ?></h3>
-		<h4><?php echo $login_tips; ?></h4>
+		<h3><?php _e('Log in','cftp_admin'); ?></h3>
+		<h4><?php _e('Please select your appropiate account type below.','cftp_admin'); ?></h4>
 
 		<div class="login_divide"></div>
 
@@ -119,16 +119,16 @@ if ($_POST) {
 			if (isset($errorstate)) {
 				switch ($errorstate) {
 				 case 'admin_not_exists':
-				 	$login_err_message = $login_admin_not_exists;
+				 	$login_err_message = __("The supplied username doesn't exist.",'cftp_admin');
 				 break;
 				 case 'client_not_exists':
-				 	$login_err_message = $login_client_not_exists;
+				 	$login_err_message = __("The supplied username doesn't exist.",'cftp_admin');
 				 break;
 				 case 'admin_pass_wrong':
-				 	$login_err_message = $login_admin_pass_wrong;
+				 	$login_err_message = __("The supplied password is incorrect.",'cftp_admin');
 				 break;
 				 case 'client_pass_wrong':
-				 	$login_err_message = $login_client_pass_wrong;
+				 	$login_err_message = __("The supplied password is incorrect.",'cftp_admin');
 				 break;
 				}
 			?>
@@ -137,14 +137,14 @@ if ($_POST) {
 			</div>
 		<?php } ?>
 
-		<?php include_once('includes/js/js.validations.php'); ?>
+		<script src="includes/js/js.validations.php" type="text/javascript"></script>
 	
 		<script type="text/javascript">
 		
 			window.onload = default_field;
 	
-			var js_err_user = "<?php echo $validation_no_user; ?>"
-			var js_err_pass = "<?php echo $validation_no_pass; ?>"
+			var js_err_user = "<?php _e('Username was not completed','cftp_admin'); ?>"
+			var js_err_pass = "<?php _e('Password was not completed','cftp_admin'); ?>"
 	
 			function validateadmin(theform){
 				is_complete(theform.login_form_user,js_err_user);
@@ -173,8 +173,8 @@ if ($_POST) {
 		<div id="login-tabs" class="tabs_layout">
 
 			<ul id="login-tabs-nav" class="tabs_layout">
-				<li><a href="#tab_sysuser" id="tab_users"><?php echo $login_tab_admin; ?></a></li>
-				<li><a href="#tab_client" id="tab_clients"><?php echo $login_tab_client; ?></a></li>
+				<li><a href="#tab_sysuser" id="tab_users"><?php _e('Administrator','cftp_admin'); ?></a></li>
+				<li><a href="#tab_client" id="tab_clients"><?php _e('Client','cftp_admin'); ?></a></li>
 			</ul>
 
 			<div class="tabs-container">
@@ -184,19 +184,19 @@ if ($_POST) {
 						<input type="hidden" name="sent_admin" id="sent_admin">
 						<table width="100%" border="0" cellspacing="1" cellpadding="1">
 						  <tr>
-							<td width="35%"><label for="login_form_user"><?php echo $login_label_user; ?></label></td>
+							<td width="35%"><label for="login_form_user"><?php _e('User','cftp_admin'); ?></label></td>
 							<td><input type="text" name="login_form_user" id="login_form_user" value="<?php if (isset($sysuser_username)) { echo $sysuser_username; } ?>" class="field" /></td>
 						  </tr>
 						  <tr>
-							<td><label for="login_form_pass"><?php echo $login_label_pass; ?></label></td>
+							<td><label for="login_form_pass"><?php _e('Password','cftp_admin'); ?></label></td>
 							<td><input type="password" name="login_form_pass" id="login_form_pass" class="field" /></td>
 						  </tr>
 						  <tr>
-							<td><label for="login_form_remember"><?php echo $login_label_remember; ?></label></td>
+							<td><label for="login_form_remember"><?php _e('Remember me','cftp_admin'); ?></label></td>
 							<td><input type="checkbox" name="login_form_remember" id="login_form_remember" /></td>
 						  </tr>
 						  <tr>
-							<td colspan="2"><div align="center"><input type="submit" name="Submit" value="<?php echo $login_user_submit; ?>" class="boton" /></div></td>
+							<td colspan="2"><div align="center"><input type="submit" name="Submit" value="<?php _e('Access Administrator','cftp_admin'); ?>" class="boton" /></div></td>
 						  </tr>
 						</table>
 					</form>
@@ -206,19 +206,19 @@ if ($_POST) {
 						<input type="hidden" name="sent_client" id="sent_client">
 						<table width="100%" border="0" cellspacing="1" cellpadding="1">
 						  <tr>
-							<td width="35%"><label for="login_form_client_user"><?php echo $login_label_user; ?></label></td>
+							<td width="35%"><label for="login_form_client_user"><?php _e('User','cftp_admin'); ?></label></td>
 							<td><input type="text" name="login_form_client_user" id="login_form_client_user" value="<?php if (isset($client_username)) { echo $client_username; } ?>" class="field" /></td>
 						  </tr>
 						  <tr>
-							<td><label for="login_form_client_pass"><?php echo $login_label_pass; ?></label></td>
+							<td><label for="login_form_client_pass"><?php _e('Password','cftp_admin'); ?></label></td>
 							<td><input type="password" name="login_form_client_pass" id="login_form_client_pass" class="field" /></td>
 						  </tr>
 						  <tr>
-							<td><label for="login_form_client_remember"><?php echo $login_label_remember; ?></label></td>
+							<td><label for="login_form_client_remember"><?php _e('Remember me','cftp_admin'); ?></label></td>
 							<td><input type="checkbox" name="login_form_client_remember" id="login_form_client_remember" /></td>
 						  </tr>
 						  <tr>
-							<td colspan="2"><div align="center"><input type="submit" name="Submit" value="<?php echo $login_client_submit; ?>" class="boton" /></div></td>
+							<td colspan="2"><div align="center"><input type="submit" name="Submit" value="<?php _e('Access file list','cftp_admin'); ?>" class="boton" /></div></td>
 						  </tr>
 						</table>
 					</form>
@@ -232,7 +232,7 @@ if ($_POST) {
 </div> <!-- main -->
 
 	<div id="footer">
-		<span><?php echo $copyright; ?> <?php echo date("Y") ?> | <a href="<?php echo $uri;?>" target="_blank"><?php echo $uri_txt;?></a></span>
+		<span><?php _e('cFTP Free software (GPL2) | 2007 - ', 'cftp_admin'); ?> <?php echo date("Y") ?> | <a href="<?php echo $GLOBALS['uri'];?>" target="_blank"><?php echo $GLOBALS['uri_txt'];?></a></span>
 	</div>
 
 <script type="text/javascript">

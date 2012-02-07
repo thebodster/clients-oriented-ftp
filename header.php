@@ -31,23 +31,23 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 	<div id="header">
 		<p id="cftptop"><?php echo $full_system_name; ?></p>
 		<p><?php echo $version; ?> <?php echo $curver; ?></p>
-		<a href="process.php?do=logout" target="_self"><img src="img/logout.gif" alt="Logout" id="logout" /></a>
+		<a href="process.php?do=logout" target="_self"><img src="img/logout.gif" alt="<?php _e('Logout', 'cftp_admin'); ?>" id="logout" /></a>
 	</div>
 
 <div id="top_menu">
 	<ul class="menu" id="menu">
-		<li><a href="home.php" class="menulink"><?php echo $mnu_home; ?></a></li>
-		<li><a href="fileupload.php" class="menulink"><?php echo $mnu_upload; ?></a></li>
+		<li><a href="home.php" class="menulink"><?php _e('Home', 'cftp_admin'); ?></a></li>
+		<li><a href="fileupload.php" class="menulink"><?php _e('Upload files', 'cftp_admin'); ?></a></li>
 
 		<?php // show CLIENTS to allowd users
 			$clients_allowed = array(9,8);
 			if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
 		?>
 		<li>
-			<a href="#" class="menulink dropready"><?php echo $mnu_clients; ?></a>
+			<a href="#" class="menulink dropready"><?php _e('Clients', 'cftp_admin'); ?></a>
 			<ul>
-				<li><a href="clientform.php"><?php echo $mnu_add_cl; ?></a></li>
-				<li><a href="clients.php"><?php echo $mnu_edit_cl; ?></a></li>
+				<li><a href="clientform.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
+				<li><a href="clients.php"><?php _e('Manage clients', 'cftp_admin'); ?></a></li>
 			</ul>
 		</li>
 		<?php } ?>
@@ -57,10 +57,10 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 			if (in_array($_SESSION['userlevel'],$users_allowed) || in_array($_COOKIE['userlevel'],$users_allowed)) {
 		?>
 		<li>
-			<a href="#" class="menulink dropready"><?php echo $mnu_users; ?></a>
+			<a href="#" class="menulink dropready"><?php _e('Users', 'cftp_admin'); ?></a>
 			<ul>
-				<li><a href="userform.php"><?php echo $mnu_add_usr; ?></a></li>
-				<li><a href="users.php"><?php echo $mnu_edit_usr; ?></a></li>
+				<li><a href="userform.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
+				<li><a href="users.php"><?php _e('Manage users', 'cftp_admin'); ?></a></li>
 			</ul>
 		</li>
 		<?php } ?>
@@ -70,10 +70,10 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 			if (in_array($_SESSION['userlevel'],$options_allowed) || in_array($_COOKIE['userlevel'],$options_allowed)) {
 		?>
 		<li>
-			<a href="#" class="menulink dropready"><?php echo $mnu_config; ?></a>
+			<a href="#" class="menulink dropready"><?php _e('Options', 'cftp_admin'); ?></a>
 			<ul>
-				<li><a href="logo.php"><?php echo $mnu_config_logo; ?></a></li>
-				<li><a href="options.php"><?php echo $mnu_config_options; ?></a></li>
+				<li><a href="options.php"><?php _e('General options', 'cftp_admin'); ?></a></li>
+				<li><a href="logo.php"><?php _e('Your logo', 'cftp_admin'); ?></a></li>
 			</ul>
 		</li>
 		<?php } ?>

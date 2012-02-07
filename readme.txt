@@ -32,4 +32,4 @@ Additionaly, you can select your own logo, that will appear in every client's pa
 ---------------------------------------------------------------------
 
 Questions, ideas? Want to join the project?
-You can contact me at powerdrummer@gmail.com
+You can contact me at cftp@subwaydesign.com.ar
