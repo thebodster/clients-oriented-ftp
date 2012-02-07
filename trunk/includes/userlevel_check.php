@@ -93,7 +93,7 @@ function can_see_content($allowed_levels,$page_title,$userlevel_not_allowed) {
 			<h2><?php echo $page_title; ?></h2>
 			<div class="whiteform whitebox">
 				<div class="message message_error">
-					<p><?php echo $userlevel_not_allowed; ?></p>
+					<p><?php _e("Your user account doesn't allow you to view this page. Please contact a system administrator if you need to access this functions.",'cftp_admin'); ?></p>
 				</div>
 			</div>
 		</div>

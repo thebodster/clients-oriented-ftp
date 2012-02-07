@@ -2,7 +2,7 @@
 	$tablesorter = 1;
 	$allowed_levels = array(9,8);
 	require_once('includes/includes.php');
-	$page_title = $page_title_clients;
+	$page_title = __('Clients Administration','cftp_admin');
 	include('header.php');
 ?>
 
@@ -24,7 +24,7 @@ $(document).ready(function()
 	
 	<script type="text/javascript">
 		function confirm_delete() {
-			if (confirm("<?php echo $delete_client_confirm; ?>")) return true ;
+			if (confirm("<?php _e("This will delete the folder and all of the client's files. Continue?",'cftp_admin'); ?>")) return true ;
 			else return false ;
 		}
 	</script>
@@ -36,8 +36,8 @@ $(document).ready(function()
 	if (!$count) {
 	?>
 		<div class="whiteform whitebox">
-			<p><?php echo $view_clients_empty; ?></p>
-			<p><?php echo $view_clients_empty2; ?></p>
+			<p><?php _e('There are no clients at the moment.','cftp_admin'); ?></p>
+			<p><?php _e('Please create at least one to be able to upload files.','cftp_admin'); ?></p>
 		</div>
 	<?php
 	}
@@ -47,17 +47,17 @@ $(document).ready(function()
 <table width="100%" border="0" cellspacing="0" cellpadding="0" id="clients_tbl" class="tablesorter">
 <thead>
 	<tr>
-		<th><?php echo $clients_table_id; ?></th>
-		<th><?php echo $clients_table_name; ?></th>
-		<th><?php echo $clients_table_user; ?></th>
-		<th><?php echo $clients_table_address; ?></th>
-		<th><?php echo $clients_table_phone; ?></th>
-		<th><?php echo $clients_table_email; ?></th>
-		<th><?php echo $clients_table_notify; ?></th>
-		<th><?php echo $clients_table_intcont; ?></th>
-		<th><?php echo $clients_table_timestamp; ?></th>
-		<th><?php echo $clients_table_files; ?></th>
-		<th><?php echo $clients_table_actions; ?></th>
+		<th><?php _e('ID','cftp_admin'); ?></th>
+		<th><?php _e('Full name','cftp_admin'); ?></th>
+		<th><?php _e('Log in username','cftp_admin'); ?></th>
+		<th><?php _e('Address','cftp_admin'); ?></th>
+		<th><?php _e('Telephone','cftp_admin'); ?></th>
+		<th><?php _e('E-mail','cftp_admin'); ?></th>
+		<th><?php _e('Notify','cftp_admin'); ?></th>
+		<th><?php _e('Internal contact','cftp_admin'); ?></th>
+		<th><?php _e('Added on','cftp_admin'); ?></th>
+		<th><?php _e('Files','cftp_admin'); ?></th>
+		<th><?php _e('Actions','cftp_admin'); ?></th>
 	</tr>
 </thead>
 <tbody>
@@ -74,7 +74,7 @@ $(document).ready(function()
 		<td><?php echo $row["address"]; ?></td>
 		<td><?php echo $row["phone"]; ?></td>
 		<td><?php echo $row["email"]; ?></td>
-		<td><?php if ($row["notify"] == '1') { echo $yes; } else { echo $no; }?></td>
+		<td><?php if ($row["notify"] == '1') { _e('Yes','cftp_admin'); } else { _e('No','cftp_admin'); }?></td>
 		<td><?php echo $row["contact"]; ?></td>
 		<td>
 			<?php
@@ -92,13 +92,13 @@ $(document).ready(function()
 		</td>
 		<td>
 			<a href="upload/<?php echo $row["client_user"]; ?>/" target="_blank">
-				<img src="img/icons/view.png" alt="<?php echo $client_action_view; ?>">
+				<img src="img/icons/view.png" alt="<?php _e('View files','cftp_admin'); ?>">
 			</a>
 			<a href="clientform.php?do=edit&amp;client=<?php echo $row["id"]; ?>" target="_self">
-				<img src="img/icons/edit.png" alt="<?php echo $user_edit; ?>">
+				<img src="img/icons/edit.png" alt="<?php _e('Edit client','cftp_admin'); ?>">
 			</a>
 			<a onclick="return confirm_delete();" href="process.php?do=del_client&amp;client=<?php echo $row["client_user"]; ?>" target="_self">
-				<img src="img/icons/delete.png" alt="<?php echo $client_action_delete; ?>">
+				<img src="img/icons/delete.png" alt="<?php _e('Delete client','cftp_admin'); ?>">
 			</a>
 		</td>
 	</tr>
@@ -116,13 +116,13 @@ $(document).ready(function()
 <?php if ($count > 10) { ?>
 <div id="pager" class="pager">
 	<form>
-		<input type="button" class="first pag_btn" value="<?php echo $pager_first; ?>" />
-		<input type="button" class="prev pag_btn" value="<?php echo $pager_prev; ?>" />
-		<span><strong>Page</strong>:</span>
+		<input type="button" class="first pag_btn" value="<?php _e('First','cftp_admin'); ?>" />
+		<input type="button" class="prev pag_btn" value="<?php _e('Prev.','cftp_admin'); ?>" />
+		<span><strong><?php _e('Page','cftp_admin'); ?></strong>:</span>
 		<input type="text" class="pagedisplay" disabled="disabled" />
-		<input type="button" class="next pag_btn" value="<?php echo $pager_next; ?>" />
-		<input type="button" class="last pag_btn" value="<?php echo $pager_last; ?>" />
-		<span><strong>Show</strong>:</span>
+		<input type="button" class="next pag_btn" value="<?php _e('Next','cftp_admin'); ?>" />
+		<input type="button" class="last pag_btn" value="<?php _e('Last','cftp_admin'); ?>" />
+		<span><strong><?php _e('Show','cftp_admin'); ?></strong>:</span>
 		<select class="pagesize">
 			<option selected="selected" value="10">10</option>
 			<option value="20">20</option>
@@ -131,7 +131,7 @@ $(document).ready(function()
 		</select>
 	</form>
 </div>
-<?php } else {?>
+<?php } else { ?>
 	<div id="pager">
 		<form>
 			<input type="hidden" value="<?php echo $count; ?>" class="pagesize" />

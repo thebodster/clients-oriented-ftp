@@ -1,14 +1,14 @@
 <?php
-	// thanks to the following script for the idea http://www.webcheatsheet.com/javascript/form_validation.php
+require_once('../i18n.php');
+header('Content-type: application/x-javascript');
+// thanks to the following script for the idea http://www.webcheatsheet.com/javascript/form_validation.php
 ?>
-<script type="text/javascript">
-
 var error_bg = '#F4F8D5';
 var error_color = '#505719';
 var norm_bg = 'white';
 var norm_color = 'black';
 
-var error_title = "<?php echo $validation_errors_title; ?>\n\n";
+var error_title = "<?php _e('The following errors were found','cftp_admin'); ?>\n\n";
 var error_list = '';
 var have_error = '';
 
@@ -95,5 +95,3 @@ function is_match(field,field2,error) {
 		field2.style.color=norm_color;
 	}
 }
-
-</script>

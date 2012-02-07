@@ -1,7 +1,12 @@
 <?php
-require_once($this_template.'vars.php');
-include_once('../../templates/session_check.php');
+// define language
+$lang = 'en';
+define('I18N_DEFAULT_DOMAIN', 'cftp_template');
+require_once('../../includes/i18n.php');
+I18n::LoadDomain("../../templates/default/lang/{$lang}.mo", 'cftp_template');
+
 $this_template = '../../templates/default/';
+include_once('../../templates/session_check.php');
 
 $database->MySQLDB();
 $sql = $database->query('SELECT * from tbl_files where client_user="' . $this_user .'"');
@@ -9,6 +14,9 @@ $sql2 = $database->query('SELECT * from tbl_clients where client_user="' . $this
 while ($row = mysql_fetch_array($sql2)) {
 	$user_full_name = $row['name'];
 }
+
+$window_title = __('File downloads','cftp_template');
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -58,7 +66,7 @@ while ($row = mysql_fetch_array($sql2)) {
 		);
 	
 		function confirm_file_delete() {
-			if (confirm("<?php echo $confirm_file_delete; ?>")) return true ;
+			if (confirm("<?php _e('This will delete the file permanently. Continue?','cftp_template'); ?>")) return true ;
 			else return false ;
 		}
 
@@ -98,8 +106,8 @@ while ($row = mysql_fetch_array($sql2)) {
 		<?php } ?>
 
 		<div id="help">
-			<h2><?php echo $help_title; ?></h2>
-			<p><?php echo $help_text; ?></p>
+			<h2><?php _e('Help','cftp_template'); ?></h2>
+			<p><?php _e('The file list on the right contains every file uploaded for you.</p><p>You can click on the name of each marked column to order the list.','cftp_template'); ?></p>
 		</div>
 
 	</div>
@@ -109,7 +117,7 @@ while ($row = mysql_fetch_array($sql2)) {
 	<?php
 		$count=mysql_num_rows($sql);
 		if (!$count) {
-			echo $nofiles4u;
+			_e('There are no files.','cftp_template');
 		}
 		else {
 	?>
@@ -117,20 +125,20 @@ while ($row = mysql_fetch_array($sql2)) {
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="files_list" class="tablesorter">
 			<thead>
 				<tr>
-					<th><?php echo $file_name; ?></th>
-					<th><?php echo $file_description; ?></th>
-					<th><?php echo $file_size; ?></th>
-					<th><?php echo $file_date; ?></th>
-					<th><?php echo $file_download; ?></th>
-					<th><?php echo $file_preview; ?></th>
+					<th><?php _e('Name','cftp_template'); ?></th>
+					<th><?php _e('Description','cftp_template'); ?></th>
+					<th><?php _e('Size','cftp_template'); ?></th>
+					<th><?php _e('Uploaded','cftp_template'); ?></th>
+					<th><?php _e('Download','cftp_template'); ?></th>
+					<th><?php _e('Image preview','cftp_template'); ?></th>
 					<?php // show UPLOADER only to users, not clients
 						$clients_allowed = array(9,8,7);
 						if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
 					?>
-						<th><?php echo $file_uploader; ?></th>
-						<th><?php echo $file_download_count; ?></th>
+						<th><?php _e('Uploader','cftp_template'); ?></th>
+						<th><?php _e('Downloads','cftp_template'); ?></th>
 					<?php } ?>
-					<th><?php echo $file_actions; ?></th>
+					<th><?php _e('Actions','cftp_template'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -153,7 +161,7 @@ while ($row = mysql_fetch_array($sql2)) {
 					<td>
 						<div class="download_link">
 							<a href="../../process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank" onclick="addDownloadCount(<?php echo $row['id']; ?>);">
-								<?php echo $file_download; ?>
+								<?php _e('Download','cftp_template'); ?>
 							</a>
 						</div>
 					</td>
@@ -186,7 +194,7 @@ while ($row = mysql_fetch_array($sql2)) {
 							if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
 						?>
 							<a onclick="return confirm_file_delete();" href="../../process.php?do=del_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>&amp;file=<?php echo $row['url']; ?>" target="_self">
-								<img src="../../img/icons/delete.png" alt"<?php echo $delete; ?>" />
+								<img src="../../img/icons/delete.png" alt"<?php _e('Delete','cftp_template'); ?>" />
 							</a>
 						<?php } ?>
 					</td>
@@ -203,13 +211,13 @@ while ($row = mysql_fetch_array($sql2)) {
 <?php if ($count > 10) { ?>
 	<div id="pager" class="pager">
 		<form>
-			<input type="button" class="first pag_btn" value="<?php echo $pager_first; ?>" />
-			<input type="button" class="prev pag_btn" value="<?php echo $pager_prev; ?>" />
-			<span><strong>Page</strong>:</span>
+			<input type="button" class="first pag_btn" value="<?php _e('First','cftp_template'); ?>" />
+			<input type="button" class="prev pag_btn" value="<?php _e('Prev.','cftp_template'); ?>" />
+			<span><strong><?php _e('Page','cftp_template'); ?></strong>:</span>
 			<input type="text" class="pagedisplay" disabled="disabled" />
-			<input type="button" class="next pag_btn" value="<?php echo $pager_next; ?>" />
-			<input type="button" class="last pag_btn" value="<?php echo $pager_last; ?>" />
-			<span><strong>Show</strong>:</span>
+			<input type="button" class="next pag_btn" value="<?php _e('Next','cftp_template'); ?>" />
+			<input type="button" class="last pag_btn" value="<?php _e('Last','cftp_template'); ?>" />
+			<span><strong><?php _e('Show','cftp_template'); ?></strong>:</span>
 			<select class="pagesize">
 				<option selected="selected" value="10">10</option>
 				<option value="20">20</option>
@@ -230,7 +238,7 @@ while ($row = mysql_fetch_array($sql2)) {
 </div> <!-- wrapper -->
 
 	<div id="footer">
-		<span><?php echo $copyright; ?> <?php echo date("Y") ?> | <a href="<?php echo $uri;?>" target="_blank"><?php echo $uri_txt;?></a></span>
+		<span><?php _e('cFTP Free software (GPL2) | 2007 - ', 'cftp_template'); ?> <?php echo date("Y") ?> | <a href="<?php echo $GLOBALS['uri'];?>" target="_blank"><?php echo $GLOBALS['uri_txt'];?></a></span>
 	</div>
 
 </body>

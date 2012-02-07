@@ -2,7 +2,7 @@
 $textboxlist = 1;
 $allowed_levels = array(9);
 require_once('includes/includes.php');
-$page_title = $page_title_options;
+$page_title = __('System options','cftp_admin');
 include('header.php');
 
 $database->MySQLDB();
@@ -62,18 +62,21 @@ if ($_POST) {
 
 	<?php
 	if ($query_state == 'ok') {
-		echo '<div class="message message_ok"><p>'.$options_update_ok.'</p></div>';
+		$msg = __('Options updated succesfuly.','cftp_admin');
+		echo '<div class="message message_ok"><p>'.$msg.'</p></div>';
 	}
 	else if ($query_state == 'err') {
-		echo '<div class="message message_error"><p>'.$options_update_error.'</p></div>';
+		$msg = __('There was an error. Please try again.','cftp_admin');
+		echo '<div class="message message_error"><p>'.$msg.'</p></div>';
 	}
 	else {
 		if ($query_state == 'err_fill') {
-			echo '<div class="message message_error"><p>'.$options_update_fill_error.'</p></div>';
+			$msg = __('Some fields were not completed. Options could not be saved.','cftp_admin');
+			echo '<div class="message message_error"><p>'.$msg.'</p></div>';
 		}
 	?>
 
-		<?php include_once('includes/js/js.validations.php'); ?>
+		<script type="text/javascript" src="includes/js/js.validations.php"></script>
 	
 		<script type="text/javascript">
 		
@@ -103,57 +106,58 @@ if ($_POST) {
 		</script>
 	
 		<form action="options.php" name="optionsform" method="post" onsubmit="return validateform(this);">
-			<h3><?php echo $title_location_options; ?></h3>
-			<h4><?php echo $desc_location_options; ?></h4>
-			<label for="base_uri"><?php echo $options_base_uri; ?></label><input name="base_uri" id="base_uri" value="<?php echo $baseuri; ?>" /><br />
+			<h3><?php _e('System location options','cftp_admin'); ?></h3>
+			<h4><?php _e('These options are to be changed only if you are moving the system to another place. Be careful when chaging them or everything will stop working.','cftp_admin'); ?></h4>
+			<label for="base_uri"><?php _e('System URI','cftp_admin'); ?></label><input name="base_uri" id="base_uri" value="<?php echo $baseuri; ?>" /><br />
 
 			<div class="options_divide"></div>
 
-			<h3><?php echo $title_general_options; ?></h3>
-			<h4><?php echo $desc_general_options; ?></h4>
+			<h3><?php _e('General options','cftp_admin'); ?></h3>
+			<h4><?php _e('Basic information to be shown around the site. The time format and zones values affect how the clients see the dates on their files lists.','cftp_admin'); ?></h4>
 			
-			<label for="this_install_title"><?php echo $options_site_name; ?></label><input name="this_install_title" id="this_install_title" value="<?php echo $this_install_title; ?>" /><br />
-			<label for="selected_clients_template"><?php echo $options_template_list; ?></label>
+			<label for="this_install_title"><?php _e('Site name','cftp_admin'); ?></label><input name="this_install_title" id="this_install_title" value="<?php echo $this_install_title; ?>" /><br />
+			<label for="selected_clients_template"><?php _e("Client's template",'cftp_admin'); ?></label>
 				<select name="selected_clients_template" id="selected_clients_template" disabled="disabled">
-					<option value="default">Default</option>
+					<option value="default"><?php _e('Default','cftp_admin'); ?></option>
 				</select>
 				<?php include_once('includes/timezones.php'); ?>
-			<label for="timeformat"><?php echo $options_timeformat; ?></label><input name="timeformat" id="timeformat" value="<?php echo $timeformat; ?>" /><br />
+			<label for="timeformat"><?php _e('Time format','cftp_admin'); ?></label><input name="timeformat" id="timeformat" value="<?php echo $timeformat; ?>" /><br />
 			
 			<div class="options_divide"></div>
 
-			<h3><?php echo $title_security_options; ?></h3>
-			<h4><?php echo $desc_security_options; ?></h4>
-			<label for="allowed_file_types"><?php echo $options_security_filetypes; ?></label><input name="allowed_file_types" id="allowed_file_types" value="<?php echo $allowed_file_types; ?>" /><br />
+			<h3><?php _e('Security','cftp_admin'); ?></h3>
+			<h4><?php _e('Be careful when changing this options. They could affect not only the system but the whole server it is installed on.','cftp_admin'); ?><br />
+				<?php _e('<strong>Important</strong>: Separate allowed file types with a comma. You can navigate the box with the left/right arrows, backspace and delete keys.','cftp_admin'); ?></h4>
+			<label for="allowed_file_types"><?php _e('Allowed file extensions','cftp_admin'); ?></label><input name="allowed_file_types" id="allowed_file_types" value="<?php echo $allowed_file_types; ?>" /><br />
 
 			<div class="options_divide"></div>
 	
-			<h3><?php echo $title_thumbnails_options; ?></h3>
-			<h4><?php echo $desc_thumbnails_options; ?></h4>
+			<h3><?php _e('Thumbnails','cftp_admin'); ?></h3>
+			<h4><?php _e("Thumbnails are used on files lists. It is recommended to keep them small, unless you are using the system to upload only images and change the default client's template accordingly (cftp as a private image gallery?)",'cftp_admin'); ?></h4>
 			
 			<div class="options_column options_col_left">
-				<label for="max_thumbnail_width"><?php echo $options_max_thumb_width; ?></label><input name="max_thumbnail_width" id="max_thumbnail_width" value="<?php echo $max_thumbnail_width; ?>" /><br />
-				<label for="max_thumbnail_height"><?php echo $options_max_thumb_height; ?></label><input name="max_thumbnail_height" id="max_thumbnail_height" value="<?php echo $max_thumbnail_height; ?>" /><br />
+				<label for="max_thumbnail_width"><?php _e('Max width','cftp_admin'); ?></label><input name="max_thumbnail_width" id="max_thumbnail_width" value="<?php echo $max_thumbnail_width; ?>" /><br />
+				<label for="max_thumbnail_height"><?php _e('Max height','cftp_admin'); ?></label><input name="max_thumbnail_height" id="max_thumbnail_height" value="<?php echo $max_thumbnail_height; ?>" /><br />
 			</div>
 			<div class="options_column options_col_right">
-				<label for="thumbnail_default_quality"><?php echo $options_thumbnails_quality; ?></label><input name="thumbnail_default_quality" id="thumbnail_default_quality" value="<?php echo $thumbnail_default_quality; ?>" />
+				<label for="thumbnail_default_quality"><?php _e('JPG Quality','cftp_admin'); ?></label><input name="thumbnail_default_quality" id="thumbnail_default_quality" value="<?php echo $thumbnail_default_quality; ?>" />
 			</div>
 			<div class="clear"></div>
 			<div class="options_divide"></div>
 			
-			<h3><?php echo $title_logo_options; ?></h3>
-			<h4><?php echo $desc_logo_options; ?></h4>
+			<h3><?php _e('Company logo','cftp_admin'); ?></h3>
+			<h4><?php _e("Like the thumbnails options, this ones have to be changed taking in account the client's template design, since it can be shown there. Default template includes a left sidebar with the logo and instructions.",'cftp_admin'); ?></h4>
 			
 			<div class="options_column options_col_left">
-				<label for="max_logo_width"><?php echo $options_logo_width; ?></label><input name="max_logo_width" id="max_logo_width" value="<?php echo $max_logo_width; ?>" />
+				<label for="max_logo_width"><?php _e('Max width','cftp_admin'); ?></label><input name="max_logo_width" id="max_logo_width" value="<?php echo $max_logo_width; ?>" />
 			</div>
 			<div class="options_column options_col_right">
-				<label for="max_logo_height"><?php echo $options_logo_height; ?></label><input name="max_logo_height" id="max_logo_height" value="<?php echo $max_logo_height; ?>" />
+				<label for="max_logo_height"><?php _e('Max height','cftp_admin'); ?></label><input name="max_logo_height" id="max_logo_height" value="<?php echo $max_logo_height; ?>" />
 			</div>
 			<div class="clear"></div>
 
 			<div align="right">
-				<input type="submit" name="Submit" value="<?php echo $options_update; ?>" class="boton" />
+				<input type="submit" name="Submit" value="<?php _e('Update','cftp_admin'); ?>" class="boton" />
 			</div>
 
 		</form>

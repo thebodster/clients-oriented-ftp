@@ -2,7 +2,7 @@
 	$tablesorter = 1;
 	$allowed_levels = array(9);
 	require_once('includes/includes.php');
-	$page_title = $page_title_users;
+	$page_title = __('Users administration','cftp_admin');;
 	include('header.php');
 ?>
 
@@ -24,7 +24,7 @@ $(document).ready(function()
 	
 	<script type="text/javascript">
 		function confirm_delete() {
-			if (confirm("<?php echo $delete_user_confirm; ?>")) return true ;
+			if (confirm("<?php _e("This will delete the user permanently. Continue?",'cftp_admin'); ?>")) return true ;
 			else return false ;
 		}
 	</script>
@@ -38,13 +38,13 @@ $(document).ready(function()
 <table width="100%" border="0" cellspacing="0" cellpadding="0" id="users_tbl" class="tablesorter">
 <thead>
 	<tr>
-		<th><?php echo $view_user_id; ?></th>
-		<th><?php echo $view_user_name; ?></th>
-		<th><?php echo $view_user_user; ?></th>
-		<th><?php echo $view_user_email; ?></th>
-		<th><?php echo $view_user_level; ?></th>
-		<th><?php echo $view_user_timestamp; ?></th>
-		<th><?php echo $view_actions; ?></th>
+		<th><?php _e('ID','cftp_admin'); ?></th>
+		<th><?php _e('Full name','cftp_admin'); ?></th>
+		<th><?php _e('Log in username','cftp_admin'); ?></th>
+		<th><?php _e('E-mail','cftp_admin'); ?></th>
+		<th><?php _e('Role','cftp_admin'); ?></th>
+		<th><?php _e('Added on','cftp_admin'); ?></th>
+		<th><?php _e('Actions','cftp_admin'); ?></th>
 	</tr>
 </thead>
 <tbody>
@@ -59,9 +59,9 @@ $(document).ready(function()
 		<td><?php echo $row["email"]?></td>
 		<td><?php
 			switch($row["level"]) {
-				case '9': echo $user_role_lvl9; break;
-				case '8': echo $user_role_lvl8; break;
-				case '7': echo $user_role_lvl7; break;
+				case '9': echo USER_ROLE_LVL_9; break;
+				case '8': echo USER_ROLE_LVL_8; break;
+				case '7': echo USER_ROLE_LVL_7; break;
 			}
 		?>
 		</td>
@@ -74,11 +74,11 @@ $(document).ready(function()
 		</td>
 		<td>
 			<a href="userform.php?do=edit&amp;user=<?php echo $row["id"]; ?>" target="_self">
-				<img src="img/icons/edit.png" alt="<?php echo $user_edit; ?>">
+				<img src="img/icons/edit.png" alt="<?php _e('Edit user','cftp_admin'); ?>">
 			</a>
 			<?php if ($row["user"] != 'admin') { ?>
 				<a onclick="return confirm_delete();" href="process.php?do=del_user&amp;user=<?php echo $row["user"]; ?>" target="_self">
-					<img src="img/icons/delete.png" alt="<?php echo $user_delete; ?>">
+					<img src="img/icons/delete.png" alt="<?php _e('Delete user','cftp_admin'); ?>">
 				</a>
 			<?php } ?>
 		</td>
@@ -96,13 +96,13 @@ $(document).ready(function()
 <?php if ($count > 10) { ?>
 <div id="pager" class="pager">
 	<form>
-		<input type="button" class="first pag_btn" value="<?php echo $pager_first; ?>" />
-		<input type="button" class="prev pag_btn" value="<?php echo $pager_prev; ?>" />
-		<span><strong>Page</strong>:</span>
+		<input type="button" class="first pag_btn" value="<?php _e('First','cftp_admin'); ?>" />
+		<input type="button" class="prev pag_btn" value="<?php _e('Prev.','cftp_admin'); ?>" />
+		<span><strong><?php _e('Page','cftp_admin'); ?></strong>:</span>
 		<input type="text" class="pagedisplay" disabled="disabled" />
-		<input type="button" class="next pag_btn" value="<?php echo $pager_next; ?>" />
-		<input type="button" class="last pag_btn" value="<?php echo $pager_last; ?>" />
-		<span><strong>Show</strong>:</span>
+		<input type="button" class="next pag_btn" value="<?php _e('Next','cftp_admin'); ?>" />
+		<input type="button" class="last pag_btn" value="<?php _e('Last','cftp_admin'); ?>" />
+		<span><strong><?php _e('Show','cftp_admin'); ?></strong>:</span>
 		<select class="pagesize">
 			<option selected="selected" value="10">10</option>
 			<option value="20">20</option>
@@ -111,7 +111,7 @@ $(document).ready(function()
 		</select>
 	</form>
 </div>
-<?php } else {?>
+<?php } else { ?>
 	<div id="pager">
 		<form>
 			<input type="hidden" value="<?php echo $count; ?>" class="pagesize" />

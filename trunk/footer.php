@@ -1,5 +1,5 @@
 	<div id="footer">
-		<span><?php echo $GLOBALS['copyright']; ?> <?php echo date("Y") ?> | <a href="<?php echo $GLOBALS['uri'];?>" target="_blank"><?php echo $GLOBALS['uri_txt'];?></a></span>
+		<span><?php _e('cFTP Free software (GPL2) | 2007 - ', 'cftp_admin'); ?> <?php echo date("Y") ?> | <a href="<?php echo $GLOBALS['uri'];?>" target="_blank"><?php echo $GLOBALS['uri_txt'];?></a></span>
 	</div>
 
 </div> <!--wrapper-->

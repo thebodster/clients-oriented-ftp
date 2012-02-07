@@ -1,7 +1,7 @@
 <?php
 $allowed_levels = array(9,8,7);
 require_once('includes/includes.php');
-$page_title = $page_title_home;
+$page_title = __('Welcome to cFTP', 'cftp_admin');
 include('header.php');
 $database->MySQLDB();
 ?>
@@ -13,7 +13,7 @@ $database->MySQLDB();
 	
 		<!-- Clientes -->
 			<div class="statbarlogo" id="stat_clients">
-				<span><?php echo $statistics_clients; ?>:</span>
+				<span><?php _e('Clients', 'cftp_admin'); ?>:</span>
 				<?php
 					$sql = $database->query("SELECT distinct client_user FROM tbl_clients");
 					$count=mysql_num_rows($sql);
@@ -23,7 +23,7 @@ $database->MySQLDB();
 					$clients_allowed = array(9,8);
 					if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
 				?>
-					<a href="clients.php" target="_self"><?php echo $statistics_view; ?></a>
+					<a href="clients.php" target="_self"><?php _e('View', 'cftp_admin'); ?></a>
 				<?php } ?>
 			</div>
 
@@ -34,33 +34,33 @@ $database->MySQLDB();
 		?>
 		<!-- Usuarios -->								
 			<div class="statbarlogo" id="stat_users">
-				<span><?php echo $statistics_users; ?>:</span> 
+				<span><?php _e('Users', 'cftp_admin'); ?>:</span> 
 				<?php
 				
 					$sql = $database->query("SELECT distinct user FROM tbl_users");
 					$count=mysql_num_rows($sql);
 					echo $count;
 				?>
-				<a href="users.php" target="_self"><?php echo $statistics_view; ?></a>
+				<a href="users.php" target="_self"><?php _e('View', 'cftp_admin'); ?></a>
 			</div>
 
 		<!-- Logo -->				
 			<div class="statbarlogo" id="stat_logo">
-				<span><?php echo $statistics_logo; ?>:</span>
+				<span><?php _e('Personal logo', 'cftp_admin'); ?>:</span>
 				<?php
-					if (file_exists('img/custom/logo.jpg')) { echo $yes; }
-					else { echo $no; }
+					if (file_exists('img/custom/logo.jpg')) { _e('Yes', 'cftp_admin'); }
+					else { _e('No', 'cftp_admin'); }
 				?>
-				<a href="logo.php" target="_self"><?php echo $stat_logo_change; ?></a>
+				<a href="logo.php" target="_self"><?php _e('Change', 'cftp_admin'); ?></a>
 			</div>
 		<?php } ?>
 
 	</div>
 
 	<div id="txthome">
-		<p><?php echo $home_intro_text; ?></p>
-		<p><?php echo $home_intro_text2; ?></p>
-		<p><?php echo $home_intro_text3; ?></p>
+		<p><?php _e('Thank you for choosing cFTP. This software allows you to upload files for specific clients, and keep them stored for as long as you need them.', 'cftp_admin'); ?></p>
+		<p><?php _e('cFTP lets choose a name and description for each individual file you upload, and relate it to an existing client or create a new one. When the upload is complete, the system wil give you a link that you can share, where you client can see and download every file available under his account.', 'cftp_admin'); ?></p>
+		<p><?php _e("Additionaly, you can select your own logo, that will appear in every client's page.", 'cftp_admin'); ?></p>
 	</div>
 	
 </div>

@@ -1,5 +1,4 @@
 <?php
-
 function mysql_real_escape_array($t){
 	// nice function by brian on http://php.net/manual/es/function.mysql-real-escape-string.php
     return array_map("mysql_real_escape_string",$t);

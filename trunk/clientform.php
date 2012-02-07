@@ -3,15 +3,22 @@ $allowed_levels = array(9,8);
 require_once('includes/includes.php');
 
 if ($_GET['do']=='edit' || isset($_POST['edit_who'])) {
-	$page_title = $page_title_editclient;
+	$page_title = __('Edit client','cftp_admin');
 }
 else {
-	$page_title = $page_title_newclient;
+	$page_title = __('Add new client','cftp_admin');
 }
 
 include('header.php');
 
 $database->MySQLDB();
+
+// email texts
+$add_client_mail_subject = __('Welcome to cFTP','cftp_admin');
+$add_client_mail_body = __('A new account was created for you. From now on, you can access the files that have been uploaded under your account using the following credentials:','cftp_admin');
+$add_client_mail_body_2 = __('Access the system administration here','cftp_admin');
+$add_client_mail_body_3 = __('Please contact the administrator if you need further assistance.','cftp_admin');
+
 
 if ($_GET['do']=='edit') {
 	//if we are editing a client, then the info to show on the form comes from the database
@@ -193,30 +200,38 @@ if ($_POST) {
 			if (isset($process_state)) {
 				switch ($process_state) {
 					case 'ok':
-						echo '<div class="message message_ok"><p>'.$add_client_ok.'</p></div>';
+						$msg = __('Client added correctly','cftp_admin');
+						echo '<div class="message message_ok"><p>'.$msg.'</p></div>';
 					break;
 					case 'err_mkdir':
-						echo '<div class="message message_error"><p>'.$add_client_folder_error.' <strong>'.$add_client_data_user.'</strong></p></div>';
+						$msg = __('A folder for this client could not be created. Probably because of a server configuration.','cftp_admin');
+						echo '<div class="message message_error"><p>'.$msg.' <strong>'.$add_client_data_user.'</strong></p></div>';
 					break;
 					case 'err_folder_exists':
-						echo '<div class="message message_error"><p>'.$add_client_error.'</p></div>';
+						$msg = __('The client could not be created. A folder with this name already exists.','cftp_admin');
+						echo '<div class="message message_error"><p>'.$msg.'</p></div>';
 					break;
 					case 'edit_not_exists':
-						echo '<div class="message message_error"><p>'.$edit_client_exists.'</p></div>';
+						$msg = __('There is no client with that ID to edit.','cftp_admin');
+						echo '<div class="message message_error"><p>'.$msg.'</p></div>';
 					break;
 					case 'edit_ok':
-						echo '<div class="message message_ok"><p>'.$edit_client_ok.'</p></div>';
+						$msg = __('The client was edited correctly.','cftp_admin');
+						echo '<div class="message message_ok"><p>'.$msg.'</p></div>';
 					break;
 					case 'edit_err':
-						echo '<div class="message message_error"><p>'.$edit_client_error.'</p></div>';
+						$msg = __('There was an error. Please try again.','cftp_admin');
+						echo '<div class="message message_error"><p>'.$msg.'</p></div>';
 					break;
 				}
 				switch ($email_state) {
 					case 'ok':
-						echo '<div class="message message_ok"><p>'.$add_client_notify_ok.'</p></div>';
+						$msg = __('An e-mail notification with login information was sent to your client.','cftp_admin');
+						echo '<div class="message message_ok"><p>'.$msg.'</p></div>';
 					break;
 					case 'err':
-						echo '<div class="message message_error"><p>'.$add_client_notify_error.'</p></div>';
+						$msg = __("E-mail notification couldn't be sent.",'cftp_admin');
+						echo '<div class="message message_error"><p>'.$msg.'</p></div>';
 					break;
 				}
 			}
@@ -224,7 +239,7 @@ if ($_POST) {
 			// if not $process_state is set, it means we are just entering for the first time
 		?>
 	
-	<?php include_once('includes/js/js.validations.php'); ?>
+	<script type="text/javascript" src="includes/js/js.validations.php"></script>
 
 	<script type="text/javascript">
 	
@@ -270,49 +285,49 @@ if ($_POST) {
 			<?php } ?>
 			<table border="0" cellspacing="1" cellpadding="1">
 			  <tr>
-				<td width="40%"><?php echo $add_client_label_name; ?></td>
+				<td width="40%"><?php _e('Name','cftp_admin'); ?></td>
 				<td><input name="add_client_form_name" id="add_client_form_name" class="txtfield" value="<?php echo $add_client_data_name; ?>" /></td>
 			  </tr>
 			  <tr>
-				<td><?php echo $add_client_label_user; ?></td>
+				<td><?php _e('Log in username','cftp_admin'); ?></td>
 				<td><input name="add_client_form_user" id="add_client_form_user" class="txtfield" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo $add_client_data_user; ?>" <?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { ?>disabled="disabled"<?php }?> /></td>
 			  </tr>
 			  <tr>
-				<td><?php echo $add_client_label_pass; ?></td>
+				<td><?php _e('Password','cftp_admin'); ?></td>
 				<td><input name="add_client_form_pass" id="add_client_form_pass" class="txtfield" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" /></td>
 			  </tr>
 			  <tr>
-				<td><?php echo $add_client_label_pass2; ?></td>
+				<td><?php _e('Repeat password','cftp_admin'); ?></td>
 				<td><input name="add_client_form_pass2" id="add_client_form_pass2" class="txtfield" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" /></td>
 			  </tr>
 			  <tr>
-				<td><?php echo $add_client_label_addr; ?></td>
+				<td><?php _e('Address','cftp_admin'); ?></td>
 				<td><input name="add_client_form_address" id="add_client_form_address" class="txtfield" value="<?php echo $add_client_data_addr; ?>" /></td>
 			  </tr>
 			  <tr>
-				<td><?php echo $add_client_label_phone; ?></td>
+				<td><?php _e('Telephone','cftp_admin'); ?></td>
 				<td><input name="add_client_form_phone" id="add_client_form_phone" class="txtfield" value="<?php echo $add_client_data_phone; ?>" /></td>
 			  </tr>
 			  <tr>
-				<td><?php echo $add_client_label_email; ?></td>
+				<td><?php _e('E-mail','cftp_admin'); ?></td>
 				<td><input name="add_client_form_email" id="add_client_form_email" class="txtfield" value="<?php echo $add_client_data_email; ?>" /></td>
 			  </tr>
 			  <tr>
-				<td><?php echo $add_client_label_notify; ?></td>
+				<td><?php _e('Notify new uploads by e-mail','cftp_admin'); ?></td>
 				<td><input type="checkbox" name="add_client_form_notify" id="add_client_form_notify" <?php if($add_client_data_notity == 1) { ?>checked="checked"<?php } ?> /></td>
 			  </tr>
 			  <tr>
-				<td><?php echo $add_client_label_intcont; ?></td>
+				<td><?php _e('Internal contact','cftp_admin'); ?></td>
 				<td><input name="add_client_form_intcont" id="add_client_form_intcont" class="txtfield" value="<?php echo $add_client_data_intcont; ?>" /></td>
 			  </tr>
 			  <tr>
 				<td colspan="2">
 					<div align="right">
-						<input type="submit" name="Submit" value="<?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { echo $edit_client_form_submit; } else { echo $add_client_form_submit; } ?>" class="boton" />
+						<input type="submit" name="Submit" value="<?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { _e('Edit account','cftp_admin'); } else { _e('Create account','cftp_admin'); } ?>" class="boton" />
 					</div>
 					<?php if ($_GET['do']!='edit' && empty($_POST['edit_who'])) { ?>
 					<div class="message message_info">
-						<p><?php echo $add_client_mail_info; ?></p>
+						<p><?php _e('This account information will be e-mailed to the address supplied above','cftp_admin'); ?></p>
 					</div>
 					<?php } ?>
 				</td>

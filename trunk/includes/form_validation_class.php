@@ -1,4 +1,5 @@
 <?php
+$validation_errors_title = __('The following errors were found','cftp_admin');
 $before_error = '<div class="message message_error"><p><strong>'.$validation_errors_title.'</strong>:</p><ol>';
 $after_error = '</ol></div>';
 
