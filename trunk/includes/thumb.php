@@ -86,30 +86,43 @@ if (!file_exists($thumb_name)) {
 	imagesavealpha($imagen,true);
 	imagecopyresampled($imagen,$fuente,0,0,0,0,$new_width,$new_height,$image_width,$image_height);
 
+
 	/* copy thumbnail to the corresponding folder */
-	if ($extension == "png") {
-		imagepng($imagen,$destination,3,NULL);
+	switch($extension) {
+		case 'png':
+			imagepng($imagen,$destination,3,NULL);
+			break;
+		case 'gif':
+			imagegif($imagen);
+			break;
+		case 'jpg':
+			imagejpeg($imagen,$destination,$thumbnail_default_quality);
+			break;
+		default:
+			imagejpeg($imagen,$destination,$thumbnail_default_quality);
+			break;
 	}
-	else {
-		imagejpeg($imagen,$destination,$thumbnail_default_quality);
-	}
+	
 }
 
-if ($extension == 'png') {
-	$output = imagecreatefrompng($destination);
-	imagealphablending($output, false); // setting alpha blending on
-	imagesavealpha($output, true); // save alphablending setting (important)
-}
-else {
-	$output = imagecreatefromjpeg($destination);
+
+switch($extension) {
+	case 'png':
+		$output = imagecreatefrompng($destination);
+		imagealphablending($output, false); // setting alpha blending on
+		imagesavealpha($output, true); // save alphablending setting (important)
+		break;
+	case 'gif':
+		$output = imagecreatefromgif($destination);
+		break;
+	case 'jpg':
+		$output = imagecreatefromjpeg($destination);
+		break;
+	default:
+		$output = imagecreatefromjpeg($destination);
+		break;
 }
 
-/* add watermark */
-if ($_GET['wm']) {
-	$watermark = "flvplayer/logo.png";
-	$im = imagecreatefrompng($watermark);
-	imagecopy($output, $im, 10, 10, 0, 0, imagesx($im), imagesy($im));
-}
 
 /* add unsharp */
 if ($_GET['sh']) { 
@@ -149,31 +162,29 @@ if($_GET['duo']) {
 /* make grayscale */
 if($_GET['gr']) { greyscale($output); }
 
-/* reduce colors */
-if($_GET['rc']) { $cols = $_GET['rc']; reducircols($output,$cols); }
-
-if ($extension == 'png') {
-	header("Content-type: image/png");
-	imagepng($output,NULL,3,NULL);
+// save the file
+switch($extension) {
+	case 'png':
+		header("Content-Type: image/png");
+		imagepng($output,NULL,0,PNG_NO_FILTER);
+		break;
+	case 'gif':
+		header("Content-Type: image/gif");
+		imagegif($output);
+		break;
+	case 'jpg':
+		header("Content-Type: image/jpeg");
+		imagejpeg($output,NULL,$thumbnail_default_quality);
+		break;
+	default:
+		header("Content-Type: image/jpeg");
+		imagejpeg($output,NULL,$thumbnail_default_quality);
+		break;
 }
-else
-{
-	header("Content-type: image/jpeg");
-	imagejpeg($output,NULL,$thumbnail_default_quality);
-}// Create thumbnail ends here
+// Create thumbnail ends here
 
 
 // functions that can be applied to the file:
-
-// REDUCE COLORS
-function reducircols($image,$colores) {
-	if($_GET['ql']) { $thumbnail_default_quality = $_GET['ql']; }
-    set_time_limit(0);
-    imagetruecolortopalette($image, true, $colores);
-    header("image/jpeg");
-    imagejpeg($image,NULL,$thumbnail_default_quality);
-    imagedestroy($image);
-}
 
 // GRAYSCALE
 function greyscale($image) {

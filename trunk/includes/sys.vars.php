@@ -23,7 +23,7 @@ define('USER_ROLE_LVL_9', 'System Administrator');
 define('USER_ROLE_LVL_8', 'Account Manager');
 define('USER_ROLE_LVL_7', 'Uploader');
 
-$curver = 'r86';
+$curver = 'r87';
 $uri = 'http://code.google.com/p/clients-oriented-ftp/'; // cFTP webpage URI
 $uri_txt = 'cFTP on Google Code';
 $short_system_name = 'cFTP';

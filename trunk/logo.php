@@ -15,7 +15,7 @@ $select_logo_preview_3 = __("section.",'cftp_admin');
 
 	<div id="current_logo" class="whitebox">
 		<p><?php _e('Current logo:','cftp_admin'); ?></p>
-		<img src="includes/thumb.php?src=../img/custom/logo.jpg&amp;w=<?php echo $max_logo_width; ?>&amp;sh=1&amp;ql=<?php echo $thumbnail_default_quality; ?>&amp;type=tlogo" alt="" />
+		<img src="includes/thumb.php?src=../img/custom/logo/<?php echo $custom_logo_filename; ?>&amp;w=300&amp;ql=<?php echo $thumbnail_default_quality; ?>&amp;type=tlogo" alt="" />
 	</div>
 
 	<div id="form_logo">
@@ -31,7 +31,7 @@ if ($_POST) { // form sent?
 	//  Valid file extensions (images)  
 	$rEFileTypes =
 	  "/^\.(jpg|jpeg|gif|png){1}$/i";
-	$dir_base = "img/custom/";
+	$dir_base = "img/custom/logo/";
 	
 	$isFile = is_uploaded_file($_FILES['select_logo']['tmp_name']);
 	if ($isFile) {
@@ -49,23 +49,10 @@ if ($_POST) { // form sent?
 		  {$isMove = move_uploaded_file(
 			$_FILES['select_logo']['tmp_name'],
 			$dir_base.$safe_filename);}
+
+			$q = 'UPDATE tbl_options SET value="'.$safe_filename.'" WHERE name="logo_filename"';
+			$sql = $database->query($q, $database->connection);
 	
-			$the_picture = getimagesize($dir_base.$safe_filename);
-			$img_width = $the_picture[0];
-			$img_height = $the_picture[1];
-	
-			if (strtolower(substr($dir_base.$safe_filename, -3)) == "gif") { $source = @imagecreatefromgif($dir_base.$safe_filename); }
-			if (strtolower(substr($dir_base.$safe_filename, -3)) == "jpg") { $source = @imagecreatefromjpeg($dir_base.$safe_filename); }
-			if (strtolower(substr($dir_base.$safe_filename, -3)) == "pjpeg") { $source = @imagecreatefromjpeg($dir_base.$safe_filename); }
-			if (strtolower(substr($dir_base.$safe_filename, -3)) == "jpeg") { $source = @imagecreatefromjpeg($dir_base.$safe_filename); }
-			if (strtolower(substr($dir_base.$safe_filename, -3)) == "png") { $source = imagecreatefrompng($dir_base.$safe_filename); }
-	
-			$create_jpg = imagecreatetruecolor($img_width,$img_height);
-			imagecopyresampled($create_jpg,$source,0,0,0,0,$img_width,$img_height,$the_picture[0],$the_picture[1]);
-			imagejpeg($source,$dir_base.'logo.jpg','100');
-			imagedestroy($source);
-			
-			delfile($dir_base.$safe_filename);
 			?>
 				<div class="message message_ok"><p><?php _e('The image was uploaded correctly.','cftp_admin'); ?></p></div>
 				<p><?php echo $logo_replace_info; ?></p>

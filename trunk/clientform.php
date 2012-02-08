@@ -116,7 +116,7 @@ if ($_POST) {
 				}
 				$editquery .= " WHERE id = $edit_who";
 
-				$success = mysql_query($editquery);
+				$success = $database->query($editquery);
 				if ($success){
 					$process_state = 'edit_ok';
 				}
@@ -149,7 +149,7 @@ if ($_POST) {
 	
 					// insert user into db
 					$timestampdate = time();
-					$success = mysql_query("INSERT INTO tbl_clients (id,name,client_user,password,address,phone,email,notify,contact,timestamp)"
+					$success = $database->query("INSERT INTO tbl_clients (id,name,client_user,password,address,phone,email,notify,contact,timestamp)"
 					."VALUES ('NULL', '$add_client_data_name', '$add_client_data_user', '$add_client_data_pass', '$add_client_data_addr', '$add_client_data_phone', '$add_client_data_email', '$add_client_data_notity', '$add_client_data_intcont', '$timestampdate')");
 	
 					// prepare email using the template
