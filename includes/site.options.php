@@ -28,6 +28,7 @@ $selected_clients_template = $options_values['selected_clients_template'];
 $timezone = $options_values['timezone'];
 $timeformat = $options_values['timeformat'];
 $allowed_file_types = $options_values['allowed_file_types'];
+$custom_logo_filename = $options_values['logo_filename'];
 
 $database->Close();
 

@@ -32,7 +32,7 @@ if ($_POST) {
 				$updated = 1;
 				for ($j = 0; $j < count($keys); $j++) {
 					$q = 'UPDATE tbl_options SET value="'.$_POST[$keys[$j]].'" WHERE name="'.$keys[$j].'"';
-					$sql = mysql_query($q, $database->connection);
+					$sql = $database->query($q, $database->connection);
 					$updated++;
 				}
 				if ($updated){

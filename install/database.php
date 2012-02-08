@@ -67,7 +67,8 @@ INSERT INTO `tbl_options` (`id`, `name`, `value`) VALUES
 (10, \'logo_thumbnails_folder\', \'/img/custom/thumbs\'),
 (11, \'timezone\', \'America/Argentina/Buenos_Aires\'),
 (12, \'timeformat\', \'d/m/Y\'),
-(13, \'allowed_file_types\', \'7z|ace|ai|avi|bin|bmp|cdr|doc|docx|eps|fla|flv|gif|gz|gzip|htm|html|iso|jpeg|jpg|mp3|mp4|mpg|odt|oog|pdf|png|psd|rar|rtf|tar|tif|tiff|txt|wav|xls|xlsx|z|zip\');
+(13, \'allowed_file_types\', \'7z|ace|ai|avi|bin|bmp|cdr|doc|docx|eps|fla|flv|gif|gz|gzip|htm|html|iso|jpeg|jpg|mp3|mp4|mpg|odt|oog|pdf|png|psd|rar|rtf|tar|tif|tiff|txt|wav|xls|xlsx|z|zip\'),
+(14, \'logo_filename\', \'logo.jpg\');
 ';
 
 $q6 = '

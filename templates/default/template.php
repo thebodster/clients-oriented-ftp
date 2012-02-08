@@ -98,9 +98,9 @@ $window_title = __('File downloads','cftp_template');
 	
 	<div id="left_column">
 	
-		<?php if (file_exists('../../img/custom/logo.jpg')) { ?>
+		<?php if (file_exists('../../img/custom/logo/'.$custom_logo_filename)) { ?>
 			<div id="current_logo" class="whitebox">
-				<img src="../../includes/thumb.php?src=../img/custom/logo.jpg&amp;w=280&amp;sh=1&amp;ql=90&amp;type=tlogo" alt="" />
+				<img src="../../includes/thumb.php?src=../img/custom/logo/<?php echo $custom_logo_filename; ?>&amp;w=<?php echo $max_logo_width; ?>&amp;type=tlogo" alt="" />
 			</div>
 			<div class="clear"></div>
 		<?php } ?>
