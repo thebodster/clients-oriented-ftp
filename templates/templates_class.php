@@ -1,7 +1,6 @@
 <?php
 	$required_files = array(
 		'template.php',
-		'vars.php',
 		'main.css'
 	);
 	

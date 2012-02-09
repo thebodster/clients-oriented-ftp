@@ -1,6 +1,7 @@
 <?php
+require_once('../../includes/sys.vars.php');
 // define language
-$lang = 'en';
+$lang = $site_lang;
 define('I18N_DEFAULT_DOMAIN', 'cftp_template');
 require_once('../../includes/i18n.php');
 I18n::LoadDomain("../../templates/default/lang/{$lang}.mo", 'cftp_template');
@@ -21,7 +22,7 @@ $window_title = __('File downloads','cftp_template');
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><?php echo $user_full_name.' | '.$window_title; ?> | <?php echo $short_system_name; ?></title>
 <link rel="stylesheet" media="all" type="text/css" href="<?php echo $this_template; ?>main.css" />
 <link rel="shortcut icon" href="../../favicon.ico" />
@@ -107,7 +108,8 @@ $window_title = __('File downloads','cftp_template');
 
 		<div id="help">
 			<h2><?php _e('Help','cftp_template'); ?></h2>
-			<p><?php _e('The file list on the right contains every file uploaded for you.</p><p>You can click on the name of each marked column to order the list.','cftp_template'); ?></p>
+			<p><?php _e('The file list on the right contains every file uploaded for you.','cftp_template'); ?></p>
+			<p><?php _e('You can click on the name of each marked column to order the list.','cftp_template'); ?></p>
 		</div>
 
 	</div>

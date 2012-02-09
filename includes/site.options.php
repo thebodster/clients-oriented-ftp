@@ -29,6 +29,7 @@ $timezone = $options_values['timezone'];
 $timeformat = $options_values['timeformat'];
 $allowed_file_types = $options_values['allowed_file_types'];
 $custom_logo_filename = $options_values['logo_filename'];
+$site_lang = $options_values['site_lang'];
 
 $database->Close();
 

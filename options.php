@@ -120,6 +120,16 @@ if ($_POST) {
 				<select name="selected_clients_template" id="selected_clients_template" disabled="disabled">
 					<option value="default"><?php _e('Default','cftp_admin'); ?></option>
 				</select>
+			<label for="site_lang"><?php _e('Language','cftp_admin'); ?></label>
+				<select name="site_lang" id="site_lang">
+					<?php
+						foreach ($available_langs as $lang_code => $lang_def) {
+							echo '<option value="'.$lang_code.'"';
+								if($lang_code == $site_lang) { echo 'selected="selected"'; }
+							echo '>'.$lang_def.'</option>';
+						}
+					?>
+				</select>
 				<?php include_once('includes/timezones.php'); ?>
 			<label for="timeformat"><?php _e('Time format','cftp_admin'); ?></label><input name="timeformat" id="timeformat" value="<?php echo $timeformat; ?>" /><br />
 			
