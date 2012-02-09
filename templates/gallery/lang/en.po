@@ -1,0 +1,41 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Ignacio <info@subwaydesign.com.ar>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+
+#. Text in echo
+#: gallery/template.php:124
+msgid "Delete"
+msgstr ""
+
+#. Text in echo
+#: gallery/template.php:114
+msgid "Download original"
+msgstr ""
+
+#. Text in function
+#: gallery/template.php:88
+msgid "Gallery"
+msgstr ""
+
+#. Text in echo
+#: gallery/template.php:88
+msgid "There are no files."
+msgstr ""
+
+#. Text in echo
+#: gallery/template.php:45
+msgid "This will delete the file permanently. Continue?"
+msgstr ""
+
+#. Text in echo
+#: gallery/template.php:145
+msgid "cFTP Free software (GPL2) | 2007 - "
+msgstr ""
+

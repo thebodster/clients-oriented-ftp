@@ -1,0 +1,121 @@
+* { margin:0; padding:0; }
+
+p {
+	margin-bottom:0.8em;
+}
+
+a img {	border:none; }
+
+a { color:#999; text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+.clear { clear:both; }
+
+body {
+	color:#f0f0f0;
+	font-family: 'Sirin Stencil', cursive;
+	font-size:0.9em;
+	line-height:1.2em;
+	background:#222 url(img/bg.jpg) no-repeat top center fixed;
+	height:100%;
+}
+
+.wrapper {
+	width:960px;
+	margin:10px auto;
+}
+
+#current_logo {
+	margin:0;
+	padding:15px;
+	width:100%;
+	text-align:center;
+}
+
+#content {
+	width:100%;
+}
+
+.photo_list {
+	overflow:hidden;
+}
+
+.photo_list li {
+	display:block;
+	width:280px;
+	height:280px;
+	float:left;
+	background:#000000;
+	margin:0 8px 8px 0;
+	padding:10px;
+	border:1px solid #333333;
+	-moz-border-radius:7px;
+	-webkit-border-radius:7px;
+	-o-border-radius:7px;
+	-khtml-border-radius:7px;
+	border-radius:7px;
+	
+	-moz-box-shadow:0 1px 4px #111;
+}
+
+.photo_list li h5 {
+	color:#999999;
+	font-size:14px;
+	font-weight:normal;
+	margin-bottom:10px;
+	font-family: 'Sirin Stencil', cursive;
+}
+
+.img_prev {
+	height:220px;
+}
+
+.img_data {
+	overflow:hidden;
+	margin-top:8px;
+}
+
+.img_data .download_link {
+	width:49%;
+	float:left;
+	color:#999999;
+	font-size:11px;
+}
+
+.img_data .download_link a {
+	color:#999999;
+	text-decoration:underline;
+}
+
+.img_data .img_actions {
+	text-align:right;
+	float:right;
+	width:49%;
+}
+
+#footer {
+	background:#555;
+	color:#FFFFFF;
+	clear:both;
+	border:solid #fff;
+
+	-moz-box-shadow:0px 0px 3px #555;
+	-webkit-box-shadow:0px 0px 3px #555;
+	box-shadow:0px 0px 3px #555;
+
+	border-width:1px 1px 1px 0;
+	padding:5px 10px;
+	text-align:right;
+	font-size:11px;
+	text-shadow:1px 1px 3px black;
+
+	height:18px;
+	display:block;
+	float:left;
+	margin:50px 0 10px 0;
+}
+
+#footer a {
+	color:white;
+	text-decoration:underline;
+}

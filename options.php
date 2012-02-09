@@ -117,8 +117,17 @@ if ($_POST) {
 			
 			<label for="this_install_title"><?php _e('Site name','cftp_admin'); ?></label><input name="this_install_title" id="this_install_title" value="<?php echo $this_install_title; ?>" /><br />
 			<label for="selected_clients_template"><?php _e("Client's template",'cftp_admin'); ?></label>
-				<select name="selected_clients_template" id="selected_clients_template" disabled="disabled">
-					<option value="default"><?php _e('Default','cftp_admin'); ?></option>
+				<select name="selected_clients_template" id="selected_clients_template">
+					<?php
+						$templates = look_for_templates();
+						foreach ($templates as $template) {
+							echo '<option value="'.$template['folder'].'"';
+								if($template['folder'] == $selected_clients_template) {
+									echo ' selected="selected"';
+								}
+							echo '>'.$template['name'].'</option>';
+						}
+					?>
 				</select>
 			<label for="site_lang"><?php _e('Language','cftp_admin'); ?></label>
 				<select name="site_lang" id="site_lang">
