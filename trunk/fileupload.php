@@ -42,6 +42,7 @@ if ($_POST) {
 		if(is_uploaded_file($_FILES['ufile']['tmp_name'])) {
 			if ($_FILES['ufile']['size'] > 0) {
 				// check for allowed file types
+				$allowed_file_types = str_replace(',','|',$options_values['allowed_file_types']);
 				$allowed_files = "/^\.(".$allowed_file_types."){1}$/i";
 				//fix the filename
 				$safe_filename = preg_replace(array("/\s+/", "/[^-\.\w]+/"), array("-", ""), trim($_FILES['ufile']['name']));
