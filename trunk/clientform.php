@@ -139,7 +139,7 @@ if ($_POST) {
 					mkdir($folder2); chmod($folder2, 0755);
 		
 					// Create index.php on clients folder
-					$index_content = '$this_user = "' . $add_client_data_user . '" ; include_once(\'../../templates/default/template.php\');';
+					$index_content = 'require_once(\'../../includes/sys.vars.php\'); $this_user = "'.$add_client_data_user.'"; $template = \'../../templates/\'.$selected_clients_template.\'/template.php\'; include_once($template);';
 					$addwhat = '<?php ' . $index_content . ' ?>';
 					$file = $folder .'/'. "index.php";   
 					if (!$file_handle = fopen($file,"a")) { echo $creat_err1; }

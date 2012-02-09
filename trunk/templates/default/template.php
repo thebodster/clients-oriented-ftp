@@ -1,4 +1,9 @@
 <?php
+/*
+Template name:
+Default
+*/
+
 require_once('../../includes/sys.vars.php');
 // define language
 $lang = $site_lang;
@@ -196,7 +201,7 @@ $window_title = __('File downloads','cftp_template');
 							if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
 						?>
 							<a onclick="return confirm_file_delete();" href="../../process.php?do=del_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>&amp;file=<?php echo $row['url']; ?>" target="_self">
-								<img src="../../img/icons/delete.png" alt"<?php _e('Delete','cftp_template'); ?>" />
+								<img src="../../img/icons/delete.png" alt="<?php _e('Delete','cftp_template'); ?>" />
 							</a>
 						<?php } ?>
 					</td>
