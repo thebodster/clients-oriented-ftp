@@ -149,7 +149,12 @@ if ($_POST) {
 								$email_body = str_replace('%LINK%',$baseuri,$email_body);
 								$email_body = str_replace('%SUBJECT%',$notify_email_subject,$email_body);
 								
-								$success = @mail($row['email'], $notify_email_subject, $email_body, "From:<$admin_email_address>\r\nReply-to:<$admin_email_address>\r\nContent-type: text/html; charset=us-ascii");
+								$headers = 'From: '.$this_install_title.' <'.$admin_email_address.'>' . "\n";
+								$headers .= 'Return-Path:<'.$admin_email_address.'>\r\n';
+								$headers .= 'MIME-Version: 1.0' . "\n";
+								$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n"; 
+
+								$success = @mail($row['email'], $notify_email_subject, $email_body, $headers);
 								if ($success){
 								  echo '<div class="message message_ok"><p>';
 								  _e('Your client was notified about the file','cftp_admin');
