@@ -13,6 +13,9 @@
 				%SUBJECT%
 			</h3>
 			<p>%BODY1%</p>
+			<p><strong>%FILE_INFO%</strong></p>
+			<p><strong>%LABEL_NAME%</strong>: %FILE_NAME%</p>
+			<p><strong>%LABEL_DESCRIPTION%</strong>: %FILE_DESCRIPTION%</p>
 			<p>%BODY2%</p>
 			<p>%BODY3% <a href="%LINK%" target="_blank">%BODY4%</a></p>
 		</td>
