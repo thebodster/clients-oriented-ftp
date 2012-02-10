@@ -18,7 +18,8 @@ $add_client_mail_subject = __('Welcome to cFTP','cftp_admin');
 $add_client_mail_body = __('A new account was created for you. From now on, you can access the files that have been uploaded under your account using the following credentials:','cftp_admin');
 $add_client_mail_body_2 = __('Access the system administration here','cftp_admin');
 $add_client_mail_body_3 = __('Please contact the administrator if you need further assistance.','cftp_admin');
-
+$add_mail_body_user = __('Your username','cftp_admin');
+$add_mail_body_pass = __('Your password','cftp_admin');
 
 if ($_GET['do']=='edit') {
 	//if we are editing a client, then the info to show on the form comes from the database

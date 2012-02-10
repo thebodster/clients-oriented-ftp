@@ -16,6 +16,11 @@ require_once('includes/form_validation_class.php');
 // email texts
 $notify_email_subject = __('New file uploaded for you','cftp_admin');
 $notify_email_body = __('A new file has been uploaded for you to download.','cftp_admin');
+
+$notify_email_finfo = __('File information:','cftp_admin');
+$notify_email_fname = __('Name:','cftp_admin');
+$notify_email_fdesc = __('Description:','cftp_admin');
+
 $notify_email_body2 = __("If you don't want to be notified about new files, please contact the uploader.",'cftp_admin');
 $notify_email_body3 = __('You can access a list of all your files','cftp_admin');
 $notify_email_body4 = __('by logging in here','cftp_admin');
@@ -143,6 +148,11 @@ if ($_POST) {
 								$email_body = file_get_contents('emails/newfile.php');
 				
 								$email_body = str_replace('%BODY1%',$notify_email_body,$email_body);
+								$email_body = str_replace('%FILE_INFO%',$notify_email_finfo,$email_body);
+								$email_body = str_replace('%LABEL_NAME%',$notify_email_fname,$email_body);
+								$email_body = str_replace('%FILE_NAME%',$filename,$email_body);
+								$email_body = str_replace('%LABEL_DESCRIPTION%',$notify_email_fdesc,$email_body);
+								$email_body = str_replace('%FILE_DESCRIPTION%',$description,$email_body);
 								$email_body = str_replace('%BODY2%',$notify_email_body2,$email_body);
 								$email_body = str_replace('%BODY3%',$notify_email_body3,$email_body);
 								$email_body = str_replace('%BODY4%',$notify_email_body4,$email_body);
