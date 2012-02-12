@@ -10,7 +10,7 @@ ob_start();
 $allowed_enter = array(9,8,7);
 require_once('includes/includes.php');
 //if logged as a system user, go directly to home.php
-if (in_array($_SESSION['userlevel'],$allowed_enter) || in_array($_COOKIE['userlevel'],$allowed_enter)) {
+if (in_session_or_cookies($allowed_enter)) {
 	header("location:home.php");
 }
 check_for_client();

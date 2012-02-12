@@ -118,7 +118,7 @@ $window_title = __('Gallery','cftp_template_gallery');
 								<?php
 									// show DELETE FILE only to users, not clients
 									$clients_allowed = array(9,8,7);
-									if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
+									if (in_session_or_cookies($clients_allowed)) {
 								?>
 										<a onclick="return confirm_file_delete();" href="../../process.php?do=del_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>&amp;file=<?php echo $row['url']; ?>" target="_self">
 											<img src="<?php echo $this_template; ?>img/delete.png" alt="<?php _e('Delete','cftp_template_gallery'); ?>" />

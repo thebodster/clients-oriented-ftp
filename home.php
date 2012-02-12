@@ -21,7 +21,7 @@ $database->MySQLDB();
 				?>
 				<?php // show VIEW CLIENTS to allowed users
 					$clients_allowed = array(9,8);
-					if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
+					if (in_session_or_cookies($clients_allowed)) {
 				?>
 					<a href="clients.php" target="_self"><?php _e('View', 'cftp_admin'); ?></a>
 				<?php } ?>
@@ -30,7 +30,7 @@ $database->MySQLDB();
 		<?php
 			// users stats and logo are only visible by level 9 users (system administrators)
 			$allowed = array(9);
-			if (in_array($_SESSION['userlevel'],$allowed) || in_array($_COOKIE['userlevel'],$allowed)) {
+			if (in_session_or_cookies($allowed)) {
 		?>
 		<!-- Usuarios -->								
 			<div class="statbarlogo" id="stat_users">

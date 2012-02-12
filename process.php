@@ -30,13 +30,13 @@ class process {
 	}
 	
 	function delete_file() {
-		$this->check_level = array(9,8,0);
+		$this->check_level = array(9,8);
 		if (isset($_GET['client']) && isset($_GET['id']) && isset($_GET['file'])) {
 			$this->client = mysql_real_escape_string($_GET['client']);
 			$this->id = mysql_real_escape_string($_GET['id']);
 			$this->file = mysql_real_escape_string($_GET['file']);
 			// do a permissions check
-			if (isset($this->check_level) && in_array($_SESSION['userlevel'],$this->check_level)) {
+			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
 				// delete from database
 				$this->sql = $this->database->query('DELETE FROM tbl_files WHERE client_user="' . $this->client .'" AND id="' . $this->id . '"');
 				// make the filename var
@@ -56,7 +56,7 @@ class process {
 		if (isset($_GET['client'])) {
 			$this->client = mysql_real_escape_string($_GET['client']);
 			// do a permissions check
-			if (isset($this->check_level) && in_array($_SESSION['userlevel'],$this->check_level)) {
+			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
 				$this->sql = $this->database->query('DELETE FROM tbl_clients WHERE client_user="' . $this->client .'"');
 				$this->sql = $this->database->query('DELETE FROM tbl_files WHERE client_user="' . $this->client .'"');
 				$this->folder = "./upload/" . $this->client . "/";
@@ -71,7 +71,7 @@ class process {
 		if (isset($_GET['user'])) {
 			$this->user = mysql_real_escape_string($_GET['user']);
 			// do a permissions check
-			if (isset($this->check_level) && in_array($_SESSION['userlevel'],$this->check_level)) {
+			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
 				$this->sql = $this->database->query('DELETE FROM tbl_users WHERE user="' . $this->user .'"');
 			}
 			header("location:users.php");
@@ -83,7 +83,7 @@ class process {
 		if (isset($_GET['file'])) {
 			$this->fileid = mysql_real_escape_string($_GET['file']);
 			// do a permissions check
-			if (isset($this->check_level) && in_array($_SESSION['userlevel'],$this->check_level)) {
+			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
 				$this->sql = $this->database->query('SELECT * FROM tbl_files WHERE id="' . $this->fileid .'"');
 				$this->row = mysql_fetch_array($this->sql);
 				$this->value = $this->row['download_count']+1;
@@ -96,7 +96,7 @@ class process {
 		$this->check_level = array(9,8,7,0);
 		if (isset($_GET['file']) && isset($_GET['client'])) {
 			// do a permissions check for logged in user
-			if (isset($this->check_level) && in_array($_SESSION['userlevel'],$this->check_level)) {
+			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
 				// here we should check if the user is admin or the allowed client
 				$file = 'upload/'.$_GET['client'].'/'.$_GET['file'];
 				header('Location: '.$file);
