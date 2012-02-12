@@ -20,7 +20,7 @@ if ($_POST) {
 	$_POST=mysql_real_escape_array($_POST); // escape the values
 	$keys = array_keys($_POST);
 	// change , to | on the allowed filetypes to store the value on the db
-	$_POST[$keys[4]] = str_replace(',','|',$_POST[$keys[4]]);
+	//$_POST[$keys[4]] = str_replace(',','|',$_POST[$keys[4]]);
 
 	// begin form validation
 	for ($i = 0; $i < count($keys); $i++) {

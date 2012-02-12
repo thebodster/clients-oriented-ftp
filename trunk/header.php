@@ -41,7 +41,7 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 
 		<?php // show CLIENTS to allowd users
 			$clients_allowed = array(9,8);
-			if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
+			if (in_session_or_cookies($clients_allowed)) {
 		?>
 		<li>
 			<a href="#" class="menulink dropready"><?php _e('Clients', 'cftp_admin'); ?></a>
@@ -54,7 +54,7 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 
 		<?php // show USERS to allowd users
 			$users_allowed = array(9);
-			if (in_array($_SESSION['userlevel'],$users_allowed) || in_array($_COOKIE['userlevel'],$users_allowed)) {
+			if (in_session_or_cookies($users_allowed)) {
 		?>
 		<li>
 			<a href="#" class="menulink dropready"><?php _e('Users', 'cftp_admin'); ?></a>
@@ -67,7 +67,7 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 
 		<?php // show LOGO and OPTIONS to allowd users
 			$options_allowed = array(9);
-			if (in_array($_SESSION['userlevel'],$options_allowed) || in_array($_COOKIE['userlevel'],$options_allowed)) {
+			if (in_session_or_cookies($options_allowed)) {
 		?>
 		<li>
 			<a href="#" class="menulink dropready"><?php _e('Options', 'cftp_admin'); ?></a>

@@ -1,4 +1,14 @@
 <?php
+
+function in_session_or_cookies($levels) {
+	if (in_array($_SESSION['userlevel'],$levels) || in_array($_COOKIE['userlevel'],$levels)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 function mysql_real_escape_array($t){
 	// nice function by brian on http://php.net/manual/es/function.mysql-real-escape-string.php
     return array_map("mysql_real_escape_string",$t);

@@ -60,7 +60,7 @@ $window_title = __('File downloads','cftp_template');
 							6: { sorter: false }
 							<?php
 								$clients_allowed = array(9,8,7);
-								if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
+								if (in_session_or_cookies($clients_allowed)) {
 							?>
 								,7: { sorter: false },
 								8: { sorter: false }
@@ -140,7 +140,7 @@ $window_title = __('File downloads','cftp_template');
 					<th><?php _e('Image preview','cftp_template'); ?></th>
 					<?php // show UPLOADER only to users, not clients
 						$clients_allowed = array(9,8,7);
-						if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
+						if (in_session_or_cookies($clients_allowed)) {
 					?>
 						<th><?php _e('Uploader','cftp_template'); ?></th>
 						<th><?php _e('Downloads','cftp_template'); ?></th>
@@ -189,7 +189,7 @@ $window_title = __('File downloads','cftp_template');
 					<?php
 						// show UPLOADER only to users, not clients
 						$clients_allowed = array(9,8,7);
-						if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
+						if (in_session_or_cookies($clients_allowed)) {
 					?>
 						<td><?php echo $row['uploader']; ?></td>
 						<td><?php echo $row['download_count']; ?></td>
@@ -198,7 +198,7 @@ $window_title = __('File downloads','cftp_template');
 						<?php
 							// show DELETE FILE only to users, not clients
 							$clients_allowed = array(9,8,7);
-							if (in_array($_SESSION['userlevel'],$clients_allowed) || in_array($_COOKIE['userlevel'],$clients_allowed)) {
+							if (in_session_or_cookies($clients_allowed)) {
 						?>
 							<a onclick="return confirm_file_delete();" href="../../process.php?do=del_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>&amp;file=<?php echo $row['url']; ?>" target="_self">
 								<img src="../../img/icons/delete.png" alt="<?php _e('Delete','cftp_template'); ?>" />
