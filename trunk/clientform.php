@@ -147,11 +147,14 @@ if ($_POST) {
 					if (!fwrite($file_handle, $addwhat)) { echo $creat_err2; }
 					fclose($file_handle);
 					$linkcli = realpath($file);
+
+					// who is creating the user?
+					$this_admin = get_current_user_username();
 	
 					// insert user into db
 					$timestampdate = time();
-					$success = $database->query("INSERT INTO tbl_clients (id,name,client_user,password,address,phone,email,notify,contact,timestamp)"
-					."VALUES ('NULL', '$add_client_data_name', '$add_client_data_user', '$add_client_data_pass', '$add_client_data_addr', '$add_client_data_phone', '$add_client_data_email', '$add_client_data_notity', '$add_client_data_intcont', '$timestampdate')");
+					$success = $database->query("INSERT INTO tbl_clients (id,name,client_user,password,address,phone,email,notify,contact,timestamp,created_by)"
+					."VALUES ('NULL', '$add_client_data_name', '$add_client_data_user', '$add_client_data_pass', '$add_client_data_addr', '$add_client_data_phone', '$add_client_data_email', '$add_client_data_notity', '$add_client_data_intcont', '$timestampdate','$this_admin')");
 	
 					// prepare email using the template
 					$email_body = file_get_contents('emails/newclient.php');

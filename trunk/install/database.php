@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `tbl_clients` (
   `notify` tinyint(1) NOT NULL,
   `contact` text COLLATE latin1_general_ci NOT NULL,
   `timestamp` int(15) NOT NULL,
+  `created_by` varchar('.MAX_USER_CHARS.') NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
 ';

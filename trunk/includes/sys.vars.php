@@ -22,7 +22,7 @@ define('USER_ROLE_LVL_9', 'System Administrator');
 define('USER_ROLE_LVL_8', 'Account Manager');
 define('USER_ROLE_LVL_7', 'Uploader');
 
-define('CURRENT_VERSION', 'r93');
+define('CURRENT_VERSION', 'r94');
 
 $uri = 'http://code.google.com/p/clients-oriented-ftp/'; // cFTP webpage URI
 $uri_txt = 'cFTP on Google Code';
