@@ -21,7 +21,7 @@ class MySQLDB
     */
    function query($query){
       $a = mysql_query($query, $this->connection);
-	  echo mysql_error();
+	  //echo mysql_error();
 	  return $a;
    }
 

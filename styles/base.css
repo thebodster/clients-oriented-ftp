@@ -50,6 +50,15 @@ a:hover { text-decoration:underline; }
 	border-bottom:1px solid #999999;
 }
 
+#system_msg {
+	padding:10px;
+	background:#FFFBE4;
+}
+
+#system_msg p {
+	margin:0;
+}
+
 #cftptop {
 	color:#00B9F6;
 	font-size:27px;

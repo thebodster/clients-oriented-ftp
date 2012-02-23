@@ -7,22 +7,8 @@ Background modified from: http://www.artofadambetts.com/weblog/2008/05/black-lea
 Delete icon: http://www.iconfinder.com/icondetails/37519/16/can_delete_trash_icon
 */
 
-require_once('../../includes/sys.vars.php');
-// define language
-$lang = $site_lang;
-define('I18N_DEFAULT_DOMAIN', 'cftp_template_gallery');
-require_once('../../includes/i18n.php');
-I18n::LoadDomain("../../templates/gallery/lang/{$lang}.mo", 'cftp_template_gallery');
-
-$this_template = '../../templates/gallery/';
-include_once('../../templates/session_check.php');
-
-$database->MySQLDB();
-$sql = $database->query('SELECT * from tbl_files where client_user="' . $this_user .'"');
-$sql2 = $database->query('SELECT * from tbl_clients where client_user="' . $this_user .'"');
-while ($row = mysql_fetch_array($sql2)) {
-	$user_full_name = $row['name'];
-}
+$ld = 'cftp_template_gallery'; // specify the language domain for this template
+include_once('../../templates/common.php'); // include the required functions for every template
 
 $window_title = __('Gallery','cftp_template_gallery');
 

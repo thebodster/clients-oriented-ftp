@@ -5,6 +5,7 @@ header("Cache-control: private");
 check_for_session();
 check_for_admin();
 if (!isset($page_title)) { $page_title = $page_title_basic; }
+require_once('includes/core.update.php');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -27,58 +28,66 @@ if (!isset($page_title)) { $page_title = $page_title_basic; }
 </head>
 
 <body>
+
 <div id="wrapper">
 	<div id="header">
 		<p id="cftptop"><?php echo $full_system_name; ?></p>
-		<p><?php echo $version; ?> <?php echo $curver; ?></p>
+		<p><?php echo $version; ?> <?php echo CURRENT_VERSION; ?></p>
 		<a href="process.php?do=logout" target="_self"><img src="img/logout.gif" alt="<?php _e('Logout', 'cftp_admin'); ?>" id="logout" /></a>
 	</div>
 
-<div id="top_menu">
-	<ul class="menu" id="menu">
-		<li><a href="home.php" class="menulink"><?php _e('Home', 'cftp_admin'); ?></a></li>
-		<li><a href="fileupload.php" class="menulink"><?php _e('Upload files', 'cftp_admin'); ?></a></li>
+	<?php if($updates_made > 0) { ?>
+		<div id="system_msg">
+			<p><strong><?php _e('System Notice:', 'cftp_admin');?></strong> <?php _e('The database was updated to support this version of the software: ', 'cftp_admin'); echo CURRENT_VERSION; ?></p>
+		</div>
+	<?php } ?>
+	
+	<div id="top_menu">
+		<ul class="menu" id="menu">
+			<li><a href="home.php" class="menulink"><?php _e('Home', 'cftp_admin'); ?></a></li>
+			<li><a href="fileupload.php" class="menulink"><?php _e('Upload files', 'cftp_admin'); ?></a></li>
+	
+			<?php // show CLIENTS to allowd users
+				$clients_allowed = array(9,8);
+				if (in_session_or_cookies($clients_allowed)) {
+			?>
+			<li>
+				<a href="#" class="menulink dropready"><?php _e('Clients', 'cftp_admin'); ?></a>
+				<ul>
+					<li><a href="clientform.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
+					<li><a href="clients.php"><?php _e('Manage clients', 'cftp_admin'); ?></a></li>
+				</ul>
+			</li>
+			<?php } ?>
+	
+			<?php // show USERS to allowd users
+				$users_allowed = array(9);
+				if (in_session_or_cookies($users_allowed)) {
+			?>
+			<li>
+				<a href="#" class="menulink dropready"><?php _e('Users', 'cftp_admin'); ?></a>
+				<ul>
+					<li><a href="userform.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
+					<li><a href="users.php"><?php _e('Manage users', 'cftp_admin'); ?></a></li>
+				</ul>
+			</li>
+			<?php } ?>
+	
+			<?php // show LOGO and OPTIONS to allowd users
+				$options_allowed = array(9);
+				if (in_session_or_cookies($options_allowed)) {
+			?>
+			<li>
+				<a href="#" class="menulink dropready"><?php _e('Options', 'cftp_admin'); ?></a>
+				<ul>
+					<li><a href="options.php"><?php _e('General options', 'cftp_admin'); ?></a></li>
+					<li><a href="logo.php"><?php _e('Your logo', 'cftp_admin'); ?></a></li>
+				</ul>
+			</li>
+			<?php } ?>
+	
+		</ul>
+		<div class="clear"></div>
+	</div>
 
-		<?php // show CLIENTS to allowd users
-			$clients_allowed = array(9,8);
-			if (in_session_or_cookies($clients_allowed)) {
-		?>
-		<li>
-			<a href="#" class="menulink dropready"><?php _e('Clients', 'cftp_admin'); ?></a>
-			<ul>
-				<li><a href="clientform.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
-				<li><a href="clients.php"><?php _e('Manage clients', 'cftp_admin'); ?></a></li>
-			</ul>
-		</li>
-		<?php } ?>
-
-		<?php // show USERS to allowd users
-			$users_allowed = array(9);
-			if (in_session_or_cookies($users_allowed)) {
-		?>
-		<li>
-			<a href="#" class="menulink dropready"><?php _e('Users', 'cftp_admin'); ?></a>
-			<ul>
-				<li><a href="userform.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
-				<li><a href="users.php"><?php _e('Manage users', 'cftp_admin'); ?></a></li>
-			</ul>
-		</li>
-		<?php } ?>
-
-		<?php // show LOGO and OPTIONS to allowd users
-			$options_allowed = array(9);
-			if (in_session_or_cookies($options_allowed)) {
-		?>
-		<li>
-			<a href="#" class="menulink dropready"><?php _e('Options', 'cftp_admin'); ?></a>
-			<ul>
-				<li><a href="options.php"><?php _e('General options', 'cftp_admin'); ?></a></li>
-				<li><a href="logo.php"><?php _e('Your logo', 'cftp_admin'); ?></a></li>
-			</ul>
-		</li>
-		<?php } ?>
-
-	</ul>
-	<div class="clear"></div>
-</div>
 <?php can_see_content($allowed_levels,$page_title_not_allowed,$userlevel_not_allowed); ?>

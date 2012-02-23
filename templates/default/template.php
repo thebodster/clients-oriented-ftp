@@ -4,22 +4,8 @@ Template name:
 Default
 */
 
-require_once('../../includes/sys.vars.php');
-// define language
-$lang = $site_lang;
-define('I18N_DEFAULT_DOMAIN', 'cftp_template');
-require_once('../../includes/i18n.php');
-I18n::LoadDomain("../../templates/default/lang/{$lang}.mo", 'cftp_template');
-
-$this_template = '../../templates/default/';
-include_once('../../templates/session_check.php');
-
-$database->MySQLDB();
-$sql = $database->query('SELECT * from tbl_files where client_user="' . $this_user .'"');
-$sql2 = $database->query('SELECT * from tbl_clients where client_user="' . $this_user .'"');
-while ($row = mysql_fetch_array($sql2)) {
-	$user_full_name = $row['name'];
-}
+$ld = 'cftp_template'; // specify the language domain for this template
+include_once('../../templates/common.php'); // include the required functions for every template
 
 $window_title = __('File downloads','cftp_template');
 
