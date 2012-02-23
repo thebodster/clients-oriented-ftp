@@ -1,9 +1,5 @@
 <?php
-// Enter your database info here
-define('DB_NAME', 'cftp1'); // database name
-define('DB_HOST', 'localhost'); // database host (most of the times its localhost)
-define('DB_USER', 'root'); // user related to cftp's database
-define('DB_PASSWORD', ''); // the password for that user
+include('sys.config.php'); // create this file before installing the system, and enter your database connection information there
 
 define('MIN_USER_CHARS', 5);
 define('MAX_USER_CHARS', 16);
@@ -22,7 +18,7 @@ define('USER_ROLE_LVL_9', 'System Administrator');
 define('USER_ROLE_LVL_8', 'Account Manager');
 define('USER_ROLE_LVL_7', 'Uploader');
 
-define('CURRENT_VERSION', 'r94');
+define('CURRENT_VERSION', 'r96');
 
 $uri = 'http://code.google.com/p/clients-oriented-ftp/'; // cFTP webpage URI
 $uri_txt = 'cFTP on Google Code';
