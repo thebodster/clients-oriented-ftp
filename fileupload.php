@@ -35,13 +35,8 @@ if ($_POST) {
 
 	if ($valid_me->return_val) { //validation ok. continue to upload
 
-	// who is uploading this file?
-	if (isset($_COOKIE['loggedin'])) {
-		$this_admin = $_COOKIE['loggedin'];
-	}
-	elseif (isset($_SESSION['loggedin'])) {
-		$this_admin = $_SESSION['loggedin'];
-	}
+		// who is uploading this file?
+		$this_admin = get_current_user_username();
 
 		// upload checkings
 		if(is_uploaded_file($_FILES['ufile']['tmp_name'])) {

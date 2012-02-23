@@ -20,9 +20,15 @@ if (in_session_or_cookies($allowed_update)) {
 			$qi = "INSERT INTO tbl_options (name, value) VALUES ('$row', '$value')";
 			$sqli = $database->query($qi);
 		}
-
+		unset($q);
 	}
 
+	// r94 updates
+	$q = $database->query("SELECT created_by FROM tbl_clients");
+	if (!$q) {
+		mysql_query("ALTER TABLE tbl_clients ADD created_by VARCHAR(".MAX_USER_CHARS.") NOT NULL");
+		$updates_made++;
+	}
 
 }
 ?>

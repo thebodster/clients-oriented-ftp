@@ -9,6 +9,26 @@ function in_session_or_cookies($levels) {
 	}
 }
 
+function get_current_user_level() {
+	if (isset($_SESSION['userlevel'])) {
+		$l = $_SESSION['userlevel'];
+	}
+	elseif (isset($_COOKIE['userlevel'])) {
+		$l = $_COOKIE['userlevel'];
+	}
+	return $l;
+}
+
+function get_current_user_username() {
+	if (isset($_COOKIE['loggedin'])) {
+		$u = $_COOKIE['loggedin'];
+	}
+	elseif (isset($_SESSION['loggedin'])) {
+		$u = $_SESSION['loggedin'];
+	}
+	return $u;
+}
+
 function mysql_real_escape_array($t){
 	// nice function by brian on http://php.net/manual/es/function.mysql-real-escape-string.php
     return array_map("mysql_real_escape_string",$t);

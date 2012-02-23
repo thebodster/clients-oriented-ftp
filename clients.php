@@ -31,7 +31,16 @@ $(document).ready(function()
 
 <?php
 	$database->MySQLDB();
-	$sql = $database->query("SELECT * FROM tbl_clients");
+	$cq = "SELECT * FROM tbl_clients";
+
+/*
+	// if the current user role is "account manager", only show the clients created by this user
+	if (get_current_user_level() == '8') {
+		$u = get_current_user_username();
+		$cq .= " WHERE created_by = '$u'";
+	}
+*/
+	$sql = $database->query($cq);
 	$count=mysql_num_rows($sql);
 	if (!$count) {
 	?>
