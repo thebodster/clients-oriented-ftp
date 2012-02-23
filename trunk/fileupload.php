@@ -29,7 +29,7 @@ if ($_POST) {
 	
 	// begin form validation
 	$valid_me->validate('completed',$filename,$validation_no_filename);
-	$valid_me->validate('completed',$description,$validation_no_description);
+	//$valid_me->validate('completed',$description,$validation_no_description);
 	$valid_me->validate('completed',$thefile,$validation_no_file);
 	$valid_me->validate('completed',$client_user,$validation_no_client);
 
@@ -95,7 +95,7 @@ if ($_POST) {
 	window.onload = default_field;
 
 	var js_err_name = "<?php echo $validation_no_filename; ?>"
-	var js_err_desc = "<?php echo $validation_no_description; ?>"
+	//var js_err_desc = "<?php echo $validation_no_description; ?>"
 	var js_err_file = "<?php echo $validation_no_file; ?>"
 	var js_err_client = "<?php echo $validation_no_client; ?>"
 

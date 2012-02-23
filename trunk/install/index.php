@@ -38,6 +38,7 @@ $got_admin_pass2 = mysql_real_escape_string(md5($_POST['install_user_repeat']));
 require_once('../includes/form_validation_class.php');
 
 // lang vars
+$page_title_install = __('Install','cftp_admin');
 $install_no_sitename = __('Sitename was not completed.','cftp_admin');
 $install_no_baseuri = __('cFTP URI was not completed.','cftp_admin');
 ?>
@@ -159,7 +160,7 @@ if ($_POST) {
 				<div class="options_divide"></div>
 	
 				<h3><?php _e('Default system administrator options','cftp_admin'); ?></h3>
-				<h4><?php _e("This info will be appended to the user <em>admin</em>, which is the default system user. It can't be deleted (and in this version, it isn't editable yet, so please pick your password carefuly). Password should be between <strong>6 and 12 characters long</strong>.",'cftp_admin'); ?></h4>
+				<h4><?php _e("This info will be appended to the user <em>admin</em>, which is the default system user. It can't be deleted. Password should be between <strong>6 and 12 characters long</strong>.",'cftp_admin'); ?></h4>
 				
 				<label for="install_user_fullname"><?php _e('Full name','cftp_admin'); ?></label><input name="install_user_fullname" id="install_user_fullname" value="<?php echo $got_admin_name; ?>" /><br />
 				<label for="install_user_mail"><?php _e('Admin e-mail','cftp_admin'); ?></label><input name="install_user_mail" id="install_user_mail" value="<?php echo $got_admin_mail; ?>" /><br />
