@@ -21,7 +21,6 @@ require_once('includes/core.update.php');
 <script src="includes/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
 <?php } ?>
 <?php if (isset($textboxlist)) { ?>
-<script src="includes/js/mootools-1.2.1-core-yc.js" type="text/javascript"></script>
 <script src="includes/js/GrowingInput.js" type="text/javascript"></script>
 <script src="includes/js/TextboxList.js" type="text/javascript"></script>
 <?php } ?>
