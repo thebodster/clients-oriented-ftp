@@ -1,5 +1,7 @@
 <?php
-$textboxlist = 1;
+if (!$_POST) {
+	$textboxlist = 1;
+}
 $allowed_levels = array(9);
 require_once('includes/includes.php');
 $page_title = __('System options','cftp_admin');
@@ -48,12 +50,13 @@ if ($_POST) {
 
 ?>
 
-<script type="text/javascript">		
-	window.addEvent('load', function(){
-		// With custom adding keys 
-		var t = new TextboxList('allowed_file_types', {unique: true, bitsOptions:{editable:{addKeys: 188}}});
-	});
-</script>
+<?php if (!$_POST) { // Load TBL only when showing the form, not on saving ?>
+	<script type="text/javascript">		
+		$(function(){
+			var t = new $.TextboxList('#allowed_file_types', {unique: true, bitsOptions:{editable:{addKeys: 188}}});
+		});
+	</script>
+<?php } ?>
 
 <div id="main">
 	<h2><?php echo $page_title; ?></h2>
