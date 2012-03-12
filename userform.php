@@ -68,15 +68,26 @@ if ($_POST) {
 	// set this when editing
 	$edit_who = $_POST['edit_who'];
 
+	// cases for password checking
+	if (!isset($edit_who)) {
+		$check_password = 1;
+	}
+	if (isset($edit_who) && $_POST['add_user_form_pass'] != '') {
+		$check_password = 1;
+	}
+
 	// begin form validation
 	$valid_me->validate('completed',$add_user_data_name,$validation_no_name);
-	$valid_me->validate('completed',$_POST['add_user_form_pass'],$validation_no_pass);
 	$valid_me->validate('completed',$add_user_data_email,$validation_no_email);
 	$valid_me->validate('completed',$add_user_data_level,$validation_no_level); // just a precaution
 	$valid_me->validate('email',$add_user_data_email,$validation_invalid_mail);
-	$valid_me->validate('alpha',$_POST['add_user_form_pass'],$validation_alpha_pass);
-	$valid_me->validate('length',$_POST['add_user_form_pass'],$validation_length_pass,MIN_PASS_CHARS,MAX_PASS_CHARS);
-	$valid_me->validate('pass_match','',$validation_match_pass,'','',$_POST['add_user_form_pass'],$_POST['add_user_form_pass2']);
+
+	if (isset($check_password) && $check_password === 1) {
+		$valid_me->validate('completed',$_POST['add_user_form_pass'],$validation_no_pass);
+		$valid_me->validate('alpha',$_POST['add_user_form_pass'],$validation_alpha_pass);
+		$valid_me->validate('length',$_POST['add_user_form_pass'],$validation_length_pass,MIN_PASS_CHARS,MAX_PASS_CHARS);
+		$valid_me->validate('pass_match','',$validation_match_pass,'','',$_POST['add_user_form_pass'],$_POST['add_user_form_pass2']);
+	}
 
 	if (!isset($edit_who)) {
 		// only check this values when adding a new uset, not when editing
@@ -100,12 +111,15 @@ if ($_POST) {
 			}
 			else {
 				// posted data is valid and the user does exist for editing, so do it
-				$success = mysql_query("UPDATE tbl_users SET 
-										password = '$add_user_data_pass',
+				$editquery = "UPDATE tbl_users SET 
 										name = '$add_user_data_name',
 										email = '$add_user_data_email',
-										level = '$add_user_data_level'
-										WHERE id = $edit_who");
+										level = '$add_user_data_level'";
+				if (isset($check_password) && $check_password === 1) {
+					$editquery .= ", password = '$add_user_data_pass'";
+				}
+				$editquery .= " WHERE id = $edit_who";
+				$success = $database->query($editquery);
 				if ($success){
 					$process_state = 'edit_ok';
 				}
@@ -186,7 +200,7 @@ if ($_POST) {
 					break;
 					case 'edit_ok':
 						$msg = __('The user was edited correctly.','cftp_admin');
-						echo system_message('error',$msg);
+						echo system_message('ok',$msg);
 					break;
 					case 'edit_err':
 						$msg = __('There was an error. Please try again.','cftp_admin');
@@ -231,16 +245,35 @@ if ($_POST) {
 		function validateform(theform){
 			is_complete(theform.add_user_form_name,js_err_name);
 			is_complete(theform.add_user_form_user,js_err_user);
-			is_complete(theform.add_user_form_pass,js_err_pass);
-			is_complete(theform.add_user_form_pass2,js_err_pass2);
 			is_complete(theform.add_user_form_email,js_err_email);
 			is_complete(theform.add_user_form_level,js_err_level);
 			is_length(theform.add_user_form_user,<?php echo MIN_USER_CHARS; ?>,<?php echo MAX_USER_CHARS; ?>,js_err_user_length);
-			is_length(theform.add_user_form_pass,<?php echo MIN_PASS_CHARS; ?>,<?php echo MAX_PASS_CHARS; ?>,js_err_pass_length);
 			is_email(theform.add_user_form_email,js_err_invalid_mail);
 			is_alpha(theform.add_user_form_user,js_err_user_chars);
-			is_alpha(theform.add_user_form_pass,je_err_pass_chars);
-			is_match(theform.add_user_form_pass,theform.add_user_form_pass2,js_err_pass_mismatch);
+			<?php
+				// This should be re-done!!
+				if($_POST) {
+					if (isset($check_password) && $check_password === 1) {
+						$js_check_password = 1;
+					}
+				}
+				else {
+					if ($_GET['do']=='edit') {
+					}
+					else {
+						$js_check_password = 1;
+					}
+				}
+				if (isset($js_check_password) && $js_check_password === 1) {
+				?>
+					is_complete(theform.add_user_form_pass,js_err_pass);
+					is_complete(theform.add_user_form_pass2,js_err_pass2);
+					is_length(theform.add_user_form_pass,<?php echo MIN_PASS_CHARS; ?>,<?php echo MAX_PASS_CHARS; ?>,js_err_pass_length);
+					is_alpha(theform.add_user_form_pass,je_err_pass_chars);
+					is_match(theform.add_user_form_pass,theform.add_user_form_pass2,js_err_pass_mismatch);
+				<?php
+				}
+			?>
 			// show the errors or continue if everything is ok
 			if (error_list != '') {
 				alert(error_title+error_list)
@@ -253,7 +286,7 @@ if ($_POST) {
 
 		<form action="userform.php" name="adduser" method="post" onsubmit="return validateform(this);">
 			<?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { ?>
-				<input type="hidden" name="edit_who" id="edit_who" value="<?php echo ($_GET['do']=='edit') ? $_GET['user'] : $_POST['edit_who']; ?>" />
+				<input type="hidden" name="edit_who" id="edit_who" value="<?php if ($_GET['do']=='edit') { echo $_GET['user']; } elseif (isset($_POST['edit_who'])) { echo $_POST['edit_who']; } ?>" />
 			<?php } ?>
 			<table border="0" cellspacing="1" cellpadding="1">
 			  <tr>

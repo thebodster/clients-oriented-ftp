@@ -71,15 +71,26 @@ if ($_POST) {
 
 	// set this when editing
 	$edit_who = $_POST['edit_who'];
+	
+	// cases for password checking
+	if (!isset($edit_who)) {
+		$check_password = 1;
+	}
+	if (isset($edit_who) && $_POST['add_client_form_pass'] != '') {
+		$check_password = 1;
+	}
 
 	// begin form validation
 	$valid_me->validate('completed',$add_client_data_name,$validation_no_name);
-	$valid_me->validate('completed',$_POST['add_client_form_pass'],$validation_no_pass);
 	$valid_me->validate('completed',$add_client_data_email,$validation_no_email);
 	$valid_me->validate('email',$add_client_data_email,$validation_invalid_mail);
-	$valid_me->validate('alpha',$_POST['add_client_form_pass'],$validation_alpha_pass);
-	$valid_me->validate('length',$_POST['add_client_form_pass'],$validation_length_pass,MIN_PASS_CHARS,MAX_PASS_CHARS);
-	$valid_me->validate('pass_match','',$validation_match_pass,'','',$_POST['add_client_form_pass'],$_POST['add_client_form_pass2']);
+
+	if (isset($check_password) && $check_password === 1) {
+		$valid_me->validate('completed',$_POST['add_client_form_pass'],$validation_no_pass);
+		$valid_me->validate('alpha',$_POST['add_client_form_pass'],$validation_alpha_pass);
+		$valid_me->validate('length',$_POST['add_client_form_pass'],$validation_length_pass,MIN_PASS_CHARS,MAX_PASS_CHARS);
+		$valid_me->validate('pass_match','',$validation_match_pass,'','',$_POST['add_client_form_pass'],$_POST['add_client_form_pass2']);
+	}
 
 	if (!isset($edit_who)) {
 		// only check this values when adding a new client, not when editing
@@ -104,16 +115,18 @@ if ($_POST) {
 			else {
 				// posted data is valid and the client does exist for editing, so do it
 				$editquery = "UPDATE tbl_clients SET 
-							password = '$add_client_data_pass',
 							name = '$add_client_data_name',
 							address = '$add_client_data_addr',
 							phone = '$add_client_data_phone',
 							email = '$add_client_data_email',
-							contact = '$add_client_data_intcont'";
+							contact = '$add_client_data_intcont',";
+				if (isset($check_password) && $check_password === 1) {
+					$editquery .= "password = '$add_client_data_pass',";
+				}
 				if(isset($_POST["add_client_form_notify"])) {
-					$editquery .= ", notify = '1'";
+					$editquery .= " notify = '1'";
 				} else {
-					$editquery .= ", notify = '0'";
+					$editquery .= " notify = '0'";
 				}
 				$editquery .= " WHERE id = $edit_who";
 
@@ -269,15 +282,35 @@ if ($_POST) {
 		function validateform(theform){
 			is_complete(theform.add_client_form_name,js_err_name);
 			is_complete(theform.add_client_form_user,js_err_user);
-			is_complete(theform.add_client_form_pass,js_err_pass);
-			is_complete(theform.add_client_form_pass2,js_err_pass2);
 			is_complete(theform.add_client_form_email,js_err_email);
 			is_length(theform.add_client_form_user,<?php echo MIN_USER_CHARS; ?>,<?php echo MAX_USER_CHARS; ?>,js_err_user_length);
-			is_length(theform.add_client_form_pass,<?php echo MIN_PASS_CHARS; ?>,<?php echo MAX_PASS_CHARS; ?>,js_err_pass_length);
 			is_email(theform.add_client_form_email,js_err_invalid_mail);
 			is_alpha(theform.add_client_form_user,js_err_user_chars);
-			is_alpha(theform.add_client_form_pass,js_err_pass_chars);
-			is_match(theform.add_client_form_pass,theform.add_client_form_pass2,js_err_pass_mismatch);
+			<?php
+				// This should be re-done!!
+				if($_POST) {
+					if (isset($check_password) && $check_password === 1) {
+						$js_check_password = 1;
+					}
+				}
+				else {
+					if ($_GET['do']=='edit') {
+					}
+					else {
+						$js_check_password = 1;
+					}
+				}
+				if (isset($js_check_password) && $js_check_password === 1) {
+				?>
+					is_complete(theform.add_client_form_pass,js_err_pass);
+					is_complete(theform.add_client_form_pass2,js_err_pass2);
+					is_length(theform.add_client_form_pass,<?php echo MIN_PASS_CHARS; ?>,<?php echo MAX_PASS_CHARS; ?>,js_err_pass_length);
+					is_alpha(theform.add_client_form_pass,js_err_pass_chars);
+					is_match(theform.add_client_form_pass,theform.add_client_form_pass2,js_err_pass_mismatch);
+				<?php
+				}
+			?>
+
 			// show the errors or continue if everything is ok
 			if (error_list != '') {
 				alert(error_title+error_list)
@@ -289,8 +322,8 @@ if ($_POST) {
 	</script>
 	
 		<form action="clientform.php" name="addclient" method="post" onsubmit="return validateform(this);">
-			<?php if ($_GET['do']=='edit') { ?>
-				<input type="hidden" name="edit_who" id="edit_who" value="<?php echo $_GET['client']; ?>" />
+			<?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { ?>
+				<input type="hidden" name="edit_who" id="edit_who" value="<?php if ($_GET['do']=='edit') { echo $_GET['client']; } elseif (isset($_POST['edit_who'])) { echo $_POST['edit_who']; } ?>" />
 			<?php } ?>
 			<table border="0" cellspacing="1" cellpadding="1">
 			  <tr>
