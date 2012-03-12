@@ -17,6 +17,8 @@ $window_title = __('File downloads','cftp_template');
 <title><?php echo $user_full_name.' | '.$window_title; ?> | <?php echo $short_system_name; ?></title>
 <link rel="stylesheet" media="all" type="text/css" href="<?php echo $this_template; ?>main.css" />
 <link rel="shortcut icon" href="../../favicon.ico" />
+<link href='http://fonts.googleapis.com/css?family=Cabin+Condensed' rel='stylesheet' type='text/css'>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
 <script src="../../includes/js/jquery.tablesorter.min.js" type="text/javascript"></script>
 <script src="../../includes/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
@@ -25,8 +27,8 @@ $window_title = __('File downloads','cftp_template');
 <body>
 
 <div id="header">
-	<p id="cftptop"><?php echo $full_system_name; ?></p>
-	<a href="../../process.php?do=logout" target="_self"><img src="../../img/logout.gif" alt="Logout" id="logout" /></a>
+	<h1><?php echo $full_system_name; ?></h1>
+	<a href="../../process.php?do=logout" target="_self" id="logout"><?php _e('Logout', 'cftp_admin'); ?></a>
 </div>
 
 <div id="under_header">
@@ -40,7 +42,7 @@ $window_title = __('File downloads','cftp_template');
 			{
 				$("#files_list")
 					.tablesorter( {
-						sortList: [[0,0]], widgets: ['zebra'], headers: {
+						sortList: [[3,1]], widgets: ['zebra'], headers: {
 							4: { sorter: false },
 							5: { sorter: false },
 							6: { sorter: false }
@@ -152,11 +154,9 @@ $window_title = __('File downloads','cftp_template');
 						?>
 					</td>
 					<td>
-						<div class="download_link">
-							<a href="../../process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank" onclick="addDownloadCount(<?php echo $row['id']; ?>);">
-								<?php _e('Download','cftp_template'); ?>
-							</a>
-						</div>
+						<a href="../../process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank" class="download" onclick="addDownloadCount(<?php echo $row['id']; ?>);">
+							<?php _e('Download','cftp_template'); ?>
+						</a>
 					</td>
 					<td>
 						<?php

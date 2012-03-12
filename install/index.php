@@ -35,7 +35,7 @@ $got_admin_email = mysql_real_escape_string($_POST['install_user_mail']);
 $got_admin_pass = mysql_real_escape_string(md5($_POST['install_user_pass']));
 $got_admin_pass2 = mysql_real_escape_string(md5($_POST['install_user_repeat']));
 
-require_once('../includes/form_validation_class.php');
+require_once('../includes/classes/form-validation.php');
 
 // lang vars
 $page_title_install = __('Install','cftp_admin');
@@ -97,18 +97,18 @@ if ($_POST) {
 	if(isset($valid_me)) { $valid_me->list_errors(); } // if the form was submited with errors, show them here
 	
 	if ($query_state == 'ok') {
+		$msg = __('Congratulations! Everything is up and running.','cftp_admin');
+		echo system_message('ok',$msg);
 	?>
-		<div class="message message_ok"><p><?php _e('Congratulations! Everything is up and running.','cftp_admin'); ?></p></div>
 		<p><?php _e('You may proceed to','cftp_admin'); ?> <a href="../index.php" target="_self"><?php _e('log in','cftp_admin'); ?></a> <?php _e('with your newely created user. Remember, the username for that account is <strong>admin</strong>.','cftp_admin'); ?></p>
 	<?php
 	}
 	else if ($query_state == 'err') {
-	?>
-		<div class="message message_error">
-			<p><?php _e('There seems to be an error. Please try again.','cftp_admin'); ?></p>
-			<p><?php echo $error_str; ?></p>
-		</div>
-	<?php
+		$msg = __('There seems to be an error. Please try again.','cftp_admin');
+		$msg .= '<p>';
+		$msg .= $error_str;
+		$msg .= '</p>';
+		echo system_message('error',$msg);
 	}
 	else {
 	?>

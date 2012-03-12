@@ -61,7 +61,7 @@ else {
 	}
 }
 
-require_once('includes/form_validation_class.php');
+require_once('includes/classes/form-validation.php');
 
 if ($_POST) {
 	
@@ -174,34 +174,34 @@ if ($_POST) {
 				switch ($process_state) {
 					case 'ok':
 						$msg = __('User added correctly.','cftp_admin');
-						echo '<div class="message message_ok"><p>'.$msg.'</p></div>';
+						echo system_message('ok',$msg);
 					break;
 					case 'err':
 						$msg = __('There was an error. Please try again.','cftp_admin');
-						echo '<div class="message message_error"><p>'.$msg.'</p></div>';
+						echo system_message('error',$msg);
 					break;
 					case 'edit_not_exists':
 						$msg = __('There is no user with that ID to edit.','cftp_admin');
-						echo '<div class="message message_error"><p>'.$msg.'</p></div>';
+						echo system_message('error',$msg);
 					break;
 					case 'edit_ok':
 						$msg = __('The user was edited correctly.','cftp_admin');
-						echo '<div class="message message_ok"><p>'.$msg.'</p></div>';
+						echo system_message('error',$msg);
 					break;
 					case 'edit_err':
 						$msg = __('There was an error. Please try again.','cftp_admin');
-						echo '<div class="message message_error"><p>'.$msg.'</p></div>';
+						echo system_message('error',$msg);
 					break;
 				}
 				// ok or error message for the email notification
 				switch ($email_state) {
 					case 'ok':
 						$msg = __('An e-mail notification with login information was sent to your client.','cftp_admin');
-						echo '<div class="message message_ok"><p>'.$msg.'</p></div>';
+						echo system_message('ok',$msg);
 					break;
 					case 'err':
 						$msg = __("E-mail notification couldn't be sent.",'cftp_admin');
-						echo '<div class="message message_error"><p>'.$msg.'</p></div>';
+						echo system_message('error',$msg);
 					break;
 				}
 			}
@@ -291,11 +291,12 @@ if ($_POST) {
 					<div align="right">
 						<input type="submit" name="Submit" value="<?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { _e('Modify user','cftp_admin'); } else { _e('Add user','cftp_admin'); } ?>" class="boton" />
 					</div>
-					<?php if ($_GET['do']!='edit' && empty($_POST['edit_who'])) { ?>
-					<div class="message message_info">
-						<p><?php _e('This account information will be e-mailed to the address supplied above','cftp_admin'); ?></p>
-					</div>
-					<?php } ?>
+					<?php
+						if ($_GET['do']!='edit' && empty($_POST['edit_who'])) {
+							$msg = __('This account information will be e-mailed to the address supplied above','cftp_admin');
+							echo system_message('info',$msg);
+						}
+					?>
 				</td>
 				</tr>
 		  </table>

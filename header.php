@@ -14,6 +14,8 @@ require_once('includes/core.update.php');
 <title><?php echo $this_install_title; ?> &raquo; <?php echo $page_title; ?> | <?php echo $short_system_name; ?></title>
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="stylesheet" media="all" type="text/css" href="styles/base.css" />
+<link href='http://fonts.googleapis.com/css?family=Cabin+Condensed' rel='stylesheet' type='text/css'>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
 <script src="includes/js/dropdownmenu.js" type="text/javascript"></script>
 <?php if (isset($tablesorter)) { ?>
@@ -30,9 +32,9 @@ require_once('includes/core.update.php');
 
 <div id="wrapper">
 	<div id="header">
-		<p id="cftptop"><?php echo $full_system_name; ?></p>
+		<h1><?php echo $full_system_name; ?></h1>
 		<p><?php echo $version; ?> <?php echo CURRENT_VERSION; ?></p>
-		<a href="process.php?do=logout" target="_self"><img src="img/logout.gif" alt="<?php _e('Logout', 'cftp_admin'); ?>" id="logout" /></a>
+		<a href="process.php?do=logout" target="_self" id="logout"><?php _e('Logout', 'cftp_admin'); ?></a>
 	</div>
 
 	<?php if($updates_made > 0) { ?>
