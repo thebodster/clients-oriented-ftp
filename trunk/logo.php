@@ -52,24 +52,26 @@ if ($_POST) { // form sent?
 
 			$q = 'UPDATE tbl_options SET value="'.$safe_filename.'" WHERE name="logo_filename"';
 			$sql = $database->query($q, $database->connection);
-	
+				$msg = __('The image was uploaded correctly.','cftp_admin');
+				echo system_message('ok',$msg);
 			?>
-				<div class="message message_ok"><p><?php _e('The image was uploaded correctly.','cftp_admin'); ?></p></div>
 				<p><?php echo $logo_replace_info; ?></p>
 				<p><?php echo $select_logo_preview_1; ?> <a href="options.php"><?php echo $select_logo_preview_2; ?></a> <?php echo $select_logo_preview_3; ?></p>
 			<?php
 		}
 		else {
+				$msg = __('The file you selected is not a valid image one. Please upload a jpg, gif or png formated logo picture.','cftp_admin');
+				echo system_message('error',$msg);
 			?>
-				<div class="message message_error"><p><?php _e('The file you selected is not a valid image one. Please upload a jpg, gif or png formated logo picture.','cftp_admin'); ?></p></div>
 				<p><?php echo $logo_replace_info; ?></p>
 			<?php
 		}
 	}
 	else {
+			$msg = __('There was an error uploading the file. Please try again.','cftp_admin');
+			echo system_message('error',$msg);
 		?>
-			<div class="message message_error"><p><?php _e('There was an error uploading the file. Please try again.','cftp_admin'); ?></p></div>
-				<p><?php echo $logo_replace_info; ?></p>
+			<p><?php echo $logo_replace_info; ?></p>
 		<?php
 	}
 }

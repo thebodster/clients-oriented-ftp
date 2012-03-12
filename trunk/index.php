@@ -131,10 +131,8 @@ if ($_POST) {
 				 	$login_err_message = __("The supplied password is incorrect.",'cftp_admin');
 				 break;
 				}
+				echo system_message('error',$login_err_message,'login_error');
 			?>
-			<div class="message message_error" id="login_error">
-				<p><?php echo $login_err_message; ?></p>
-			</div>
 		<?php } ?>
 
 		<script src="includes/js/js.validations.php" type="text/javascript"></script>

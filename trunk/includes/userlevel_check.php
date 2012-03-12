@@ -1,5 +1,5 @@
 <?php
-require_once('db_class.php');
+require_once('classes/database.php');
 $database->MySQLDB();
 
 function check_valid_cookie() {
@@ -92,9 +92,10 @@ function can_see_content($allowed_levels,$page_title,$userlevel_not_allowed) {
 		<div id="main">
 			<h2><?php echo $page_title; ?></h2>
 			<div class="whiteform whitebox">
-				<div class="message message_error">
-					<p><?php _e("Your user account doesn't allow you to view this page. Please contact a system administrator if you need to access this functions.",'cftp_admin'); ?></p>
-				</div>
+				<?php
+					$msg = __("Your user account doesn't allow you to view this page. Please contact a system administrator if you need to access this functions.",'cftp_admin');
+					echo system_message('error',$msg);
+				?>
 			</div>
 		</div>
 		<?php

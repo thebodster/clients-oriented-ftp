@@ -1,5 +1,21 @@
 <?php
 
+function system_message($type,$message,$div_id = '') {
+	/*
+		Current CSS available message classes:
+		- message_ok
+		- message_error
+		- message_info
+	*/	
+	$return = '<div class="message message_'.$type.'"';
+	if (isset($div_id) && $div_id != '') {
+		$return .= ' id="'.$div_id.'"';
+	}
+	$return .= '>'.$message.'</div>';
+	// Output
+	return $return;
+}
+
 function in_session_or_cookies($levels) {
 	if (in_array($_SESSION['userlevel'],$levels) || in_array($_COOKIE['userlevel'],$levels)) {
 		return true;

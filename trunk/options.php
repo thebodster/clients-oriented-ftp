@@ -8,7 +8,7 @@ $page_title = __('System options','cftp_admin');
 include('header.php');
 
 $database->MySQLDB();
-require_once('includes/form_validation_class.php');
+require_once('includes/classes/form-validation.php');
 
 // replace | with , to use the tags system when showing the allowed filetypes on the form
 $allowed_file_types = str_replace('|',',',$allowed_file_types);
@@ -66,16 +66,16 @@ if ($_POST) {
 	<?php
 	if ($query_state == 'ok') {
 		$msg = __('Options updated succesfuly.','cftp_admin');
-		echo '<div class="message message_ok"><p>'.$msg.'</p></div>';
+		echo system_message('ok',$msg);
 	}
 	else if ($query_state == 'err') {
 		$msg = __('There was an error. Please try again.','cftp_admin');
-		echo '<div class="message message_error"><p>'.$msg.'</p></div>';
+		echo system_message('error',$msg);
 	}
 	else {
 		if ($query_state == 'err_fill') {
 			$msg = __('Some fields were not completed. Options could not be saved.','cftp_admin');
-			echo '<div class="message message_error"><p>'.$msg.'</p></div>';
+			echo system_message('error',$msg);
 		}
 	?>
 
