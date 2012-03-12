@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 include('sys.config.php'); // create this file before installing the system, and enter your database connection information there
 
 define('MIN_USER_CHARS', 5);
@@ -19,7 +19,7 @@ define('USER_ROLE_LVL_9', 'System Administrator');
 define('USER_ROLE_LVL_8', 'Account Manager');
 define('USER_ROLE_LVL_7', 'Uploader');
 
-define('CURRENT_VERSION', 'r98');
+define('CURRENT_VERSION', 'r99');
 
 $uri = 'http://code.google.com/p/clients-oriented-ftp/'; // cFTP webpage URI
 $uri_txt = 'cFTP on Google Code';
