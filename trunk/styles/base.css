@@ -1,64 +1,41 @@
-* { margin:0; padding:0; }
-
-* :focus { outline: 0; }
-
-p {
-	margin-bottom:0.8em;
-}
-
-body, html {
-	color:#666666;
-	font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;
-	font-size:0.9em;
-	line-height:1.2em;
-	background-color:#F4F4F4;
-	height:100%;
-}
+/* ProjectSend backend styles */
 
 #wrapper {
 }
-
-a img {	border:none; }
 
 a { color:#0099FF; text-decoration:none; }
 a:hover { text-decoration:underline; }
 
 .clear { clear:both; }
 
-#logout {
-	float:right;
-	position:absolute;
-	overflow:visible;
-	margin:0 0 0 -120px;
-	left:100%;
-	top:20px;
-
-	width:100px;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-	padding:6px 0;
-	font-size:12px!important;
-	text-align:center;
-	text-decoration:none;
-	
-	background:#407FB6!important;
-	background:-moz-linear-gradient(center top , #407FB6, #236299)!important;
-	background:-webkit-gradient(linear, left top, left bottom, from(#407FB6), to(#236299))!important;
-	border:1px solid #004380!important;
-	box-shadow:0 1px 0 rgba(0, 0, 0, 0.3) inset, 0 0 0 1px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(0, 0, 0, 0.5)!important;
-	text-shadow:0 -1px 0 #000000!important;
-	color:white!important;
+h1, h2, h3, h4 {
+	font-weight:normal;
+	font-family:'SansationRegular', sans-serif;
 }
 
-#header {
-	height:84px;
-	background:#1E478D url(../img/header.jpg) no-repeat top center;
-	padding:12px 0 0 10px;
-	color:#f0f0f0;
-	line-height:16px;
-	clear:both;
-	border-bottom:1px solid #333;
+h1 {
+	color:white;
+	font-size:32px;
+	margin:15px 0;
+	text-shadow:1px 1px 1px #000;
+}
+
+h2 {
+	font-size:21px;
+	margin-bottom:40px;
+}
+
+h3 {
+	font-size:19px;
+	padding-bottom:6px;
+	border-bottom:1px dotted #CCCCCC;
+	margin-bottom:12px;
+}
+
+h4 {
+	font-size:13px;
+	margin-bottom:20px;
+	line-height:18px;
 }
 
 #system_msg {
@@ -70,24 +47,28 @@ a:hover { text-decoration:underline; }
 	margin:0;
 }
 
-#header h1 {
-	color:white;
-	font-size:27px;
-	margin-bottom:16px;
-	margin-top:10px;
-	font-weight:normal;
-	font-family:'Cabin Condensed', sans-serif;
-	text-shadow:1px 1px 1px #000;
+#lonely_logo {
+	margin-top:30px;
+	text-align:center;
+	font-family:'SansationRegular', sans-serif;
 }
 
-#lonely_logo {
-	color:#407FB6;
-	font-size:27px;
-	margin-top:50px;
-	font-family:'Cabin Condensed', sans-serif;
+#login_logo {
+	margin:15px auto;
 	text-align:center;
 }
 
+#login_header_low {
+	background:#222;
+	color:#FFFFFF;
+	clear:both;
+	padding:4px 0;
+	border-top:1px solid #555;
+	border-bottom:7px solid #CCCCCC;
+	-moz-box-shadow:0 5px 5px #E1E1E1;
+	-webkit-box-shadow:0 5px 5px #E1E1E1;
+	box-shadow:0 5px 5px #E1E1E1;
+}
 
 /* dropdown menu */
 
@@ -142,40 +123,6 @@ ul.menu .topline {border-top:1px solid #aaa}
 
 #main { padding:30px; }
 
-h2 {
-	font-size:23px;
-	font-family:'Cabin Condensed', sans-serif;
-	margin-bottom:40px;
-	font-weight:normal;
-}
-
-#footer {
-	background:#555;
-	color:#FFFFFF;
-	clear:both;
-	border:solid #fff;
-
-	-moz-box-shadow:0px 0px 3px #555;
-	-webkit-box-shadow:0px 0px 3px #555;
-	box-shadow:0px 0px 3px #555;
-
-	border-width:1px 1px 1px 0;
-	padding:5px 10px;
-	text-align:right;
-	font-size:11px;
-	text-shadow:1px 1px 3px black;
-
-	height:18px;
-	display:block;
-	float:left;
-	margin:50px 0 10px 0;
-}
-
-#footer a {
-	color:white;
-	text-decoration:underline;
-}
-
 #txthome {
 	margin:0 0 30px 0;
 	font-size:12px;
@@ -217,18 +164,7 @@ h2 {
 
 #center { width:370px; margin:0 auto 0 auto; }
 
-#topbar{
-	border:solid #999999;
-	border-width:0 0 1px 0;
-	background:#333333 url(../topbar.jpg) repeat-x fixed;
-}
-
-.ncliente {
-	float:left;
-	clear:none;
-	display:block;
-	width:250px;
-}
+#main_login { margin:0 0 30px 0; }
 
 #loginform { width:340px; margin-top:40px; padding-top:20px; }
 
@@ -254,20 +190,11 @@ h2 {
 	border-radius:5px;
 }
 
-.login_divide {
-	clear:both;
-	border-bottom:1px dotted #CCCCCC;
-	margin:-5px 0 15px 0;
-}
-
 .message {
-	padding:15px;
+	padding:10px;
 	-moz-border-radius:5px;
-	-moz-box-shadow:3px 3px 5px #dedede;
 	-webkit-border-radius:5px;
-	-webkit-box-shadow:3px 3px 5px #dedede;
 	border-radius:5px;
-	box-shadow:3px 3px 5px #dedede;
 	margin-bottom:20px;
 }
 
@@ -303,8 +230,8 @@ h2 {
 
 .message_info {
 	color:#2E8EB4;
-	background:#E1F3FA;
-	border:1px solid #2E8EB4;
+	background:#E5F1FC;
+	border:1px solid #BCD8F3;
 	margin-top:20px;
 }
 
@@ -328,15 +255,94 @@ h2 {
 
 .whiteform td { height:25px; }
 
+/* forms */
+
+.form_fields li {
+	margin-bottom:2px;
+	padding-bottom:2px;
+}
+
+.form_fields li label {
+	display:inline-block;
+	width:40%;
+	min-height:23px; /* for checkboxes li */
+	font-weight:bold;
+	cursor:pointer;
+}
+
+.form_fields .form_submit_li {
+	text-align:right;
+}
+
+.required {
+	background-image:url(../img/req-field-off.png);
+	background-position:right -6px;
+	background-repeat:no-repeat;
+	width:274px;
+	padding-right:30px;
+}
+
+/* validation */
+
+.field_error {
+	color:red!important;
+	background-color:#FCEBEF!important;
+	background-image:url(../img/req-field.png);
+	background-position:right -6px;
+	background-repeat:no-repeat;
+}
+
+.field_error_msg {
+	color:red;
+	margin:0 0 3px 41%;
+	font-size:11px;
+	background:url(../img/error-field.png) no-repeat left 4px;
+	padding-left:12px;
+}
+
+.options_box .field_error_msg {
+	margin-left:45%;
+}
+
+.error_no_margin .field_error_msg {
+	margin-left:0;
+}
+
 .txtfield {
 	width:300px;
-	font-size:11px;
+	font-size:12px;
 	padding:4px;
 	margin-bottom:5px;
 	border:1px solid #CCCCCC;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
 	border-radius:5px;
+}
+
+.edit_files {
+	margin:20px 0 40px;
+}
+
+.edit_files .txtfield {
+	width:96%;
+}
+
+.edit_files textarea {
+	width:96%!important;
+	height:70px!important;
+}
+
+.td_checkbox {
+	width:50px;
+}
+
+#uploaded_files_tbl {
+	margin-bottom:70px;
+}
+
+#upload_continue {
+	margin-top:-50px;
+	margin-bottom:70px;
 }
 
 textarea {
@@ -364,75 +370,73 @@ checkbox { border:1px solid #CCCCCC; }
 	color:white!important;
 }
 
-/* Base formats ------------------------------------------------------------------------------------------------------- */
-
-.centh { text-align:center; }
-.centv { vertical-align:middle; }
-
-#coliz { width:30%; float:left; padding:30px 20px 20px 20px; border:0 dashed #00AEEF; border-right-width:1px; }
-
-#coliz span { width:98%; display:block; border:dotted #999999; border-width:0 0 1px 0; }
-
-#colder { width:60%; float:left; padding-left:15px; }
-
-
-/* View files ------------------------------------------------------------------------------------------------------- */
-
-.tabarchivo {
-	width:90%;
-	background-color:black;
-	border:1px solid #CCCCCC;
-	margin-top:20px;
-	margin-bottom:10px;
-}
-
-.nomarchivo a {
-	font-size:1.2em;
-	color:#92E4FF;
-	font-weight:bold;
-	padding:5px 0 5px 0;
-	display:block
-}
-
-.fecha {
+.btn_link {
+	width:120px;
 	display:block;
-	width:100%;
-	float:left;
-	margin-top:10px;
-	margin-bottom:5px;
-	border:solid #CACACA;
-	border-width:1px 0 0 0;
-	padding-top:5px;
-	text-align:right;
-}
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	padding:2px 0;
+	font-size:11px!important;
+	text-align:center;
+	text-decoration:none!important;
+	margin:0 auto!important;
 
-#linkcliente a {
-	font-size:15px;
-	color:#0099FF;
-	margin-top:20px;
+	background:#407FB6!important;
+	background:-moz-linear-gradient(center top , #FAFBFC, #E2E5E9)!important;
+	background:-webkit-gradient(linear, left top, left bottom, from(#FAFBFC), to(#E2E5E9))!important;
+	border:1px solid #ccc!important;
+	box-shadow:0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 0 0 1px rgba(255, 255, 255, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.5)!important;
+	text-shadow:0 -1px 0 #f0f0f0!important;
+	color:#111!important;
 }
 
 /* logo config page */
 
+#current_logo_h2 {
+	margin:30px 0 10px;
+}
+
 #current_logo {
-	margin:0 30px 0 0;
-	padding:15px;
-	width:300px;
+	margin:20px 0;
+	padding:20px 0 0;
+	border-top:1px dotted #CCCCCC;
+	overflow:hidden;
+}
+
+#current_logo_left {
+	width:35%;
 	float:left;
+	text-align:left;
+}
+
+#current_logo_left .logo_note {
+	font-size:.85em;
+	line-height:1.35em!important;
+	color:#888;
+}
+
+#current_logo_right {
+	float:right;
+	border:2px dashed #CCCCCC;
+	padding:15px;
+	display:table;
+	height:120px;
+}
+
+#current_logo_img {
+	display:table-cell;
+	vertical-align:middle;
 }
 
 #form_logo {
 	padding:0;
-	width:550px;
-	float:left;
 	line-height:21px;
 }
 
 #form_upload_logo {
-	margin:25px auto 25px 0;
-	padding:20px;
-	border:1px solid #CCCCCC;
-	width:420px;
+	padding:30px 0 10px;
+	border-top:1px dotted #CCCCCC;
 }
 
 #form_upload_logo label {
@@ -467,8 +471,8 @@ optgroup {
 }
 
 .options_box input, .options_box select {
-	width:270px;
-	font-size:11px;
+	width:240px;
+	font-size:12px;
 	padding:4px;
 	margin-bottom:7px;
 	border:1px solid #CCCCCC;
@@ -480,6 +484,10 @@ optgroup {
 .options_divide {
 	clear:both;
 	margin:35px 0;
+}
+
+.options_column {
+	overflow:hidden;
 }
 
 .options_column label { width:80px; margin-right:10px; }
@@ -496,194 +504,46 @@ optgroup {
 	float:right;
 }
 
-h3 {
-	font-family:'Cabin Condensed', sans-serif;
-	font-size:19px;
-	font-weight:normal;
-	padding-bottom:6px;
-	border-bottom:1px dotted #CCCCCC;
-	margin-bottom:12px;
+/* plupload */
+
+.plupload_button {
+	width:130px!important;
+	margin-right: 4px;
+	padding:5px 0!important;
+	font-size:12px!important;
+	text-decoration: none!important;
+	text-align:center;
+	color:white!important;
+	background:#407FB6!important;
+
+	background:-moz-linear-gradient(center top , #407FB6, #236299)!important;
+	background:-webkit-gradient(linear, left top, left bottom, from(#407FB6), to(#236299))!important;
+	border:1px solid #004380!important;
+	box-shadow:0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 0 0 1px rgba(255, 255, 255, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.5)!important;
+	text-shadow:0 -1px 0 #000000!important;
+	-moz-border-radius:5px!important;
+	-webkit-border-radius:5px!important;
+	border-radius:5px!important;
 }
 
-h4 {
-	font-weight:normal;
-	font-size:13px;
-	margin-bottom:20px;
-	line-height:18px;
-}
-
-/* Table sorter for jquery */
-
-/* tables */
-table.tablesorter {
-	font-family:arial;
-	background-color: #CDCDCD;
-	margin:10px auto 15px;
-	font-size: 8pt;
-	width: 100%;
-	text-align: left;
+#uploader {
 	-moz-box-shadow:3px 3px 5px #dedede;
 	-webkit-box-shadow:3px 3px 5px #dedede;
 	box-shadow:3px 3px 5px #dedede;
 }
 
-table.tablesorter thead {
-	color:#333;
+.plupload_container {
+	padding:1px!important;
 }
 
-table.tablesorter thead tr th, table.tablesorter tfoot tr th {
-	background: #FAFBFC;
-	background-image:-moz-linear-gradient(center top , #FAFBFC, #E2E5E9);
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#FAFBFC), to(#E2E5E9));
-	border: 1px solid #FFF;
-	font-size: 13px;
-	padding: 7px 4px;
-	text-shadow:1px 1px 1px white;
-}
-table.tablesorter thead tr .header {
-	background-image: url(../img/tablesorter/bg.gif), -moz-linear-gradient(center top , #FAFBFC, #E2E5E9);
-	background-image: url(../img/tablesorter/bg.gif), -webkit-gradient(linear, left top, left bottom, from(#FAFBFC), to(#E2E5E9));
-	background-repeat: no-repeat!important;
-	background-position: center right!important;
-	cursor: pointer;
-}
-table.tablesorter tbody td {
-	color: #3D3D3D;
-	padding: 4px;
-	background-color: #FFF;
-	vertical-align: top;
-}
-table.tablesorter tbody tr.odd td {
-	background-color:#F6F6F6;
-}
-table.tablesorter thead tr .headerSortUp {
-	background-image: url(../img/tablesorter/asc.gif), -moz-linear-gradient(center top , #407FB6, #236299)!important;
-	background-image: url(../img/tablesorter/asc.gif), -webkit-gradient(linear, left top, left bottom, from(#407FB6), to(#236299));
-	color:white;
-	text-shadow:0 -1px 0 #000000!important;
-}
-table.tablesorter thead tr .headerSortDown {
-	background-image: url(../img/tablesorter/desc.gif), -moz-linear-gradient(center top , #407FB6, #236299)!important;
-	background-image: url(../img/tablesorter/desc.gif), -webkit-gradient(linear, left top, left bottom, from(#407FB6), to(#236299));
-	color:white;
-	text-shadow:0 -1px 0 #000000!important;
-}
-table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
-	background-color: #96D1FF;
-}
-
-/* tablesorter pager plugin */
-
-div.pager {
-	padding: 10px;
-	margin-top:20px;
-	background-color: white;
-	text-align: center;
-	border:1px solid #CCCCCC;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-}
-
-div.pager input.pag_btn {
-	width:50px;
-	cursor:pointer;
-}
-
-div.pager span {
-	font-size:12px;
-	padding: 0 5px 0 10px;
-}
-
-div.pager input.prev {
-/*	margin-right: 10px;*/
-}
-
-div.pager input.next {
-	margin-left: 10px;
-}
-
-div.pager input, div.pager select {
-	width:100px;
-	font-size:11px;
-	padding:4px;
-	border:1px solid #CCCCCC;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-}
-
-/* tabs */
-
-#tab_users { background-image:url(../img/stats-users-inactive.gif); background-repeat:no-repeat; }
-#tab_clients { background-image:url(../img/stats-clients-inactive.gif); background-repeat:no-repeat; margin:0!important; }
-#tab_users.active { background-image:url(../img/stats-users.gif); }
-#tab_clients.active { background-image:url(../img/stats-clients.gif); }
-
-div.tabs_layout {
-	width: 100%;
-	margin: 0;
-}
-
-#login-tabs-nav {
-}
-
-ul.tabs_layout {
-	list-style-type: none;
-	width: 100%;
-	background: url(pixel.gif) bottom left repeat-x;
-}
-
-ul.tabs_layout img {
-	margin-right:7px;
-}
-
-ul.tabs_layout li {
-	margin: 0;
-	display:inline;
-}
-
-ul.tabs_layout a {
-	display: block;
-	width:110px;
-	float:left;
-	margin:0 4px 0 0;
-	padding: 9px 15px 10px 40px;
-	border: 1px solid #ccc;
-	color: #999;
-	background: #eee;
-	background-position:10px 7px;
-	text-decoration: none;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-}
-
-ul.tabs_layout a:hover {
-	background: #fff;
-	background-position:10px 7px;
-}
-
-ul.tabs_layout a.active {
-	background: #DFF0FF;
-	padding-bottom: 10px;
-	cursor: default;
-	color:#555;
-	background-position:10px 7px;
-}
-
-.tabs-container {
-	clear: left;
-	padding: 20px 8px 0 8px;
-	-moz-border-radius:0 0 5px 5px;
-	-webkit-border-radius:0 0 5px 5px;
-	border-radius:0 0 5px 5px;
+a.plupload_start {
+	display:none!important;
 }
 
 /* 
-		This stylesheet belongs to TextboxList - Copyright Guillermo Rauch <http://devthought.com> 2009 
-		TextboxList is not priceless for commercial use. See <http://devthought.com/projects/mootools/textboxlist/> 
-		Purchase to remove copyright
+	This stylesheet belongs to TextboxList - Copyright Guillermo Rauch <http://devthought.com> 2009 
+	TextboxList is not priceless for commercial use. See <http://devthought.com/projects/mootools/textboxlist/> 
+	Purchase to remove copyright
 */
 
 .textboxlist { width: 410px;; cursor: text; }
@@ -701,23 +561,23 @@ ul.tabs_layout a.active {
 }
 .textboxlist-bit { list-style-type: none; float: left; display: block; padding: 0; margin: 0 5px 3px 0; cursor: default; }
 .textboxlist-bit-editable { border: 1px solid #fff; }
-.textboxlist-bit-editable-input { border: 0!important; padding: 2px 0; *padding-bottom: 0; height: 14px; font: 11px "Lucida Grande", Verdana; }
+.textboxlist-bit-editable-input { border: 0!important; padding: 2px 0; *padding-bottom: 0; height: 14px; }
 .textboxlist-bit-editable-input:focus { outline: 0; }
-.textboxlist-bit-box { position: relative; line-height: 18px; padding: 0 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; border: 1px solid #D7DF96; background: #F2F6D1; cursor: default; }
+.textboxlist-bit-box { position: relative; line-height: 18px; padding: 0 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; border: 1px solid #BCD8F3; background: #E5F1FC; cursor: default; }
 .textboxlist-bit-box-deletable { padding-right: 15px; }
 .textboxlist-bit-box-deletebutton { position: absolute; right: 4px; top: 6px; display: block; width: 7px; height: 7px; font-size: 1px; background: url('../img/close.gif'); }
 .textboxlist-bit-box-deletebutton:hover { border: none; background-position: 7px; text-decoration: none; }
-.textboxlist-bit-box-hover { background: #E0E6AA; }
-.textboxlist-bit-box-focus { border-color: #687024; background: #8B9255; color: #fff; }
+.textboxlist-bit-box-hover { background: #D7EAFB; cursor:pointer; }
+.textboxlist-bit-box-focus { border-color: #366EA3; background: #3E7CB7; color: #fff; }
 .textboxlist-bit-box-focus .textboxlist-bit-box-deletebutton { background-position: bottom; }
 
 /*  TextboxList Style guidelines 
-			This style doesn't necessarily have to be in a separate file. 
-			It's advisable not to set widths and margins from here, but instead apply it to a particular object or class (#id .textboxlist { width: xxx } or .class .textboxlist { width: xxx })
-			The padding-top + padding-left + height of ".textboxlist-bit-editable-input {}" has to match the line-height of ".textboxlist-bit-box {}" for UI consistency. 
-			The font configuration has to be present in .textboxlist and .textboxlist-bit-editable-input (for IE reasons)
-			The *padding-bottom (notice the *) property of .textboxlist-bits {} has to be equal to the margin-bottom of .textboxlist-bit {} for IE reasons.
-			The padding-top of .textboxlist ul {} has to match the margin-bottom of .textboxlist-bit, and the padding-bottom has to be null.
-			Make sure the border-width of the .textboxlist-bit-editable {} is equal to the border-width of the box (a border that matches the background is advisable for the input)
-			Feel free to edit the borders, fonts, backgrounds and radius.		
+	This style doesn't necessarily have to be in a separate file. 
+	It's advisable not to set widths and margins from here, but instead apply it to a particular object or class (#id .textboxlist { width: xxx } or .class .textboxlist { width: xxx })
+	The padding-top + padding-left + height of ".textboxlist-bit-editable-input {}" has to match the line-height of ".textboxlist-bit-box {}" for UI consistency. 
+	The font configuration has to be present in .textboxlist and .textboxlist-bit-editable-input (for IE reasons)
+	The *padding-bottom (notice the *) property of .textboxlist-bits {} has to be equal to the margin-bottom of .textboxlist-bit {} for IE reasons.
+	The padding-top of .textboxlist ul {} has to match the margin-bottom of .textboxlist-bit, and the padding-bottom has to be null.
+	Make sure the border-width of the .textboxlist-bit-editable {} is equal to the border-width of the box (a border that matches the background is advisable for the input)
+	Feel free to edit the borders, fonts, backgrounds and radius.		
 */

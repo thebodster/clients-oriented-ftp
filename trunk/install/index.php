@@ -3,7 +3,7 @@ ob_start();
 session_start();
 header("Cache-control: private");
 /*
-	cFTP on Google Code
+	ProjectSend on Google Code (previously cFTP)
 	http://code.google.com/p/clients-oriented-ftp/
 	Distributed under GPL2
 	Feel free to participate!
@@ -28,38 +28,46 @@ function try_query($query) {
 }
 
 // collect data from form
-$this_install_title = mysql_real_escape_string($_POST['this_install_title']);
-$base_uri = mysql_real_escape_string($_POST['base_uri']);
-$got_admin_name = mysql_real_escape_string($_POST['install_user_fullname']);
-$got_admin_email = mysql_real_escape_string($_POST['install_user_mail']);
-$got_admin_pass = mysql_real_escape_string(md5($_POST['install_user_pass']));
-$got_admin_pass2 = mysql_real_escape_string(md5($_POST['install_user_repeat']));
+if($_POST) {
+	$this_install_title = mysql_real_escape_string($_POST['this_install_title']);
+	$base_uri = mysql_real_escape_string($_POST['base_uri']);
+	$got_admin_name = mysql_real_escape_string($_POST['install_user_fullname']);
+	$got_admin_email = mysql_real_escape_string($_POST['install_user_mail']);
+	$got_admin_pass = mysql_real_escape_string(md5($_POST['install_user_pass']));
+	$got_admin_pass2 = mysql_real_escape_string(md5($_POST['install_user_repeat']));
+}
 
 require_once('../includes/classes/form-validation.php');
 
 // lang vars
 $page_title_install = __('Install','cftp_admin');
 $install_no_sitename = __('Sitename was not completed.','cftp_admin');
-$install_no_baseuri = __('cFTP URI was not completed.','cftp_admin');
+$install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><?php echo $page_title_install; ?> | <?php echo $short_system_name; ?></title>
-<link rel="shortcut icon" href="favicon.ico" />
-<link rel="stylesheet" media="all" type="text/css" href="../styles/base.css" />
-<script src="../includes/js/js.validations.php" type="text/javascript"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><?php echo $page_title_install; ?> | <?php echo SYSTEM_NAME; ?></title>
+	<link rel="shortcut icon" href="../favicon.ico" />
+	<link rel="stylesheet" media="all" type="text/css" href="../styles/shared.css" />
+	<link rel="stylesheet" media="all" type="text/css" href="../styles/base.css" />
+	<link rel="stylesheet" media="all" type="text/css" href="../styles/font-sansation.css" />
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	<script src="../includes/js/jquery.validations.js" type="text/javascript"></script>
 </head>
 
 <body>
 
-<div id="main">
-
+<div id="header">
 	<div id="lonely_logo">
-		<p><?php echo $full_system_name; ?></p>
+		<h1><?php echo SYSTEM_NAME.' '; _e('setup','cftp_admin'); ?></h1>
 	</div>
-	<div class="clear"></div>
+</div>
+<div id="login_header_low">
+</div>
+
+<div id="main">
 
 <?php
 if ($_POST) {
@@ -95,90 +103,102 @@ if ($_POST) {
 
 <?php
 	if(isset($valid_me)) { $valid_me->list_errors(); } // if the form was submited with errors, show them here
-	
-	if ($query_state == 'ok') {
-		$msg = __('Congratulations! Everything is up and running.','cftp_admin');
-		echo system_message('ok',$msg);
-	?>
-		<p><?php _e('You may proceed to','cftp_admin'); ?> <a href="../index.php" target="_self"><?php _e('log in','cftp_admin'); ?></a> <?php _e('with your newely created user. Remember, the username for that account is <strong>admin</strong>.','cftp_admin'); ?></p>
-	<?php
+
+
+	if (isset($query_state)) {
+		switch ($query_state) {
+			case 'ok':
+				$msg = __('Congratulations! Everything is up and running.','cftp_admin');
+				echo system_message('ok',$msg);
+				?>
+					<p><?php _e('You may proceed to','cftp_admin'); ?> <a href="../index.php" target="_self"><?php _e('log in','cftp_admin'); ?></a> <?php _e('with your newely created user. Remember, the username for that account is <strong>admin</strong>.','cftp_admin'); ?></p>
+				<?php
+				break;
+			case 'err':
+				$msg = __('There seems to be an error. Please try again.','cftp_admin');
+				$msg .= '<p>';
+				$msg .= $error_str;
+				$msg .= '</p>';
+				echo system_message('error',$msg);
+				break;
+		}
 	}
-	else if ($query_state == 'err') {
-		$msg = __('There seems to be an error. Please try again.','cftp_admin');
-		$msg .= '<p>';
-		$msg .= $error_str;
-		$msg .= '</p>';
-		echo system_message('error',$msg);
-	}
+
 	else {
 	?>
 	
 		<script type="text/javascript">
-		
-			window.onload = default_field;
-	
-			var js_err_sitename = "<?php echo $install_no_sitename; ?>"
-			var js_err_baseuri = "<?php echo $install_no_baseuri; ?>"
-			var js_err_name = "<?php echo $validation_no_name; ?>"
-			var js_err_email = "<?php echo $validation_no_email; ?>"
-			var js_err_pass = "<?php echo $validation_no_pass; ?>"
-			var js_err_pass2 = "<?php echo $validation_no_pass2; ?>"
-			var js_err_invalid_mail = "<?php echo $validation_invalid_mail; ?>"
-			var js_err_pass_mismatch = "<?php echo $validation_match_pass; ?>"
-			var js_err_pass_length = "<?php echo $validation_length_pass; ?>"
-			var js_err_pass_chars = "<?php echo $validation_alpha_pass; ?>"
-	
-			function validateform(theform){
-				is_complete(theform.this_install_title,js_err_sitename);
-				is_complete(theform.base_uri,js_err_baseuri);
-				is_complete(theform.install_user_fullname,js_err_name);
-				is_complete(theform.install_user_mail,js_err_email);
-				is_complete(theform.install_user_pass,js_err_pass);
-				is_complete(theform.install_user_repeat,js_err_pass2);
-				is_email(theform.install_user_mail,js_err_invalid_mail);
-				is_length(theform.install_user_pass,<?php echo MIN_USER_CHARS; ?>,<?php echo MAX_USER_CHARS; ?>,js_err_pass_length);
-				is_alpha(theform.install_user_pass,js_err_pass_chars);
-				is_match(theform.install_user_pass,theform.install_user_repeat,js_err_pass_mismatch);
-				// show the errors or continue if everything is ok
-				if (error_list != '') {
-					alert(error_title+error_list)
-					error_list = '';
-					return false;
-				}
-			}
-	
+			$(document).ready(function() {
+				$("form").submit(function() {
+					clean_form(this);
+
+					is_complete(this.this_install_title,'<?php echo $install_no_sitename; ?>');
+					is_complete(this.base_uri,'<?php echo $install_no_baseuri; ?>');
+					is_complete(this.install_user_fullname,'<?php echo $validation_no_name; ?>');
+					is_complete(this.install_user_mail,'<?php echo $validation_no_email; ?>');
+					is_complete(this.install_user_pass,'<?php echo $validation_no_pass; ?>');
+					is_complete(this.install_user_repeat,'<?php echo $validation_no_pass2; ?>');
+					is_email(this.install_user_mail,'<?php echo $validation_invalid_mail; ?>');
+					is_length(this.install_user_pass,<?php echo MIN_USER_CHARS; ?>,<?php echo MAX_USER_CHARS; ?>,'<?php echo $validation_length_pass; ?>');
+					is_password(this.install_user_pass,'<?php $chars = addslashes($validation_valid_chars); echo $validation_valid_pass." ".$chars; ?>');
+					is_match(this.install_user_pass,this.install_user_repeat,'<?php echo $validation_match_pass; ?>');
+
+					// show the errors or continue if everything is ok
+					if (show_form_errors() == false) { return false; }
+				});
+			});
 		</script>
 	
-			<form action="index.php" name="installform" method="post" onsubmit="return validateform(this);">
-	
-				<h3><?php _e('Basic system options','cftp_admin'); ?></h3>
-				<h4><?php _e("You need to provide this data for a correct system installation. The site name will be visible along the system panel, and the client's lists.<br />Don't forget to edit <em>/includes/sys.vars.php</em> with your database settings before installing.",'cftp_admin'); ?></h4>
-				
-				<label for="this_install_title"><?php _e('Site name','cftp_admin'); ?></label><input name="this_install_title" id="this_install_title" value="<?php echo $this_install_title; ?>" /><br />
-				<label for="base_uri"><?php _e('cFTP URI (address)','cftp_admin'); ?></label><input name="base_uri" id="base_uri" value="<?php if ($base_uri) { echo $base_uri; } else { echo gettheurl();} ?>" /><br />
-				
-				<div class="options_divide"></div>
-	
-				<h3><?php _e('Default system administrator options','cftp_admin'); ?></h3>
-				<h4><?php _e("This info will be appended to the user <em>admin</em>, which is the default system user. It can't be deleted. Password should be between <strong>6 and 12 characters long</strong>.",'cftp_admin'); ?></h4>
-				
-				<label for="install_user_fullname"><?php _e('Full name','cftp_admin'); ?></label><input name="install_user_fullname" id="install_user_fullname" value="<?php echo $got_admin_name; ?>" /><br />
-				<label for="install_user_mail"><?php _e('Admin e-mail','cftp_admin'); ?></label><input name="install_user_mail" id="install_user_mail" value="<?php echo $got_admin_mail; ?>" /><br />
-	
-				<label for="install_user_pass"><?php _e('Password','cftp_admin'); ?></label><input type="password" name="install_user_pass" id="install_user_pass" maxlength="12" /><br />
-				<label for="install_user_repeat"><?php _e('Repeat','cftp_admin'); ?></label><input type="password" id="install_user_repeat" name="install_user_repeat" maxlength="12" /><br />
-				
-				<div align="right">
-					<input type="submit" name="Submit" value="<?php _e('Install','cftp_admin'); ?>" class="boton" />
-				</div>
-	
-				<div id="install_extra">
-					<p><?php _e('After installing the system, you can go to the options page to set your timezone, prefered date display format and thubmnails parameters, besides being able to change the site options provided here.','cftp_admin'); ?></p>
-				</div>
-	
-			</form>
+		<form action="index.php" name="installform" method="post">
 
-		<?php } ?>
+			<ul class="form_fields">
+				<li>
+					<h3><?php _e('Basic system options','cftp_admin'); ?></h3>
+					<p><?php _e("You need to provide this data for a correct system installation. The site name will be visible along the system panel, and the client's lists.<br />Don't forget to edit <em>/includes/sys.vars.php</em> with your database settings before installing.",'cftp_admin'); ?></p>
+				</li>
+				<li>
+					<label for="this_install_title"><?php _e('Site name','cftp_admin'); ?></label>
+					<input name="this_install_title" id="this_install_title" class="required" value="<?php echo (isset($this_install_title) ? $this_install_title : ''); ?>" />
+				</li>
+				<li>
+					<label for="base_uri"><?php _e('ProjectSend URI (address)','cftp_admin'); ?></label>
+					<input name="base_uri" id="base_uri" class="required" value="<?php echo (isset($base_uri) ? $base_uri : gettheurl()); ?>" />
+				</li>
+
+				<li class="options_divide"></li>
+
+				<li>
+					<h3><?php _e('Default system administrator options','cftp_admin'); ?></h3>
+					<p><?php _e("This info will be appended to the user <em>admin</em>, which is the default system user. It can't be deleted. Password should be between <strong>6 and 12 characters long</strong>.",'cftp_admin'); ?></p>
+				</li>
+				<li>
+					<label for="install_user_fullname"><?php _e('Full name','cftp_admin'); ?></label>
+					<input name="install_user_fullname" id="install_user_fullname" class="required" value="<?php echo (isset($got_admin_name) ? $got_admin_name : ''); ?>" />
+				</li>
+				<li>
+					<label for="install_user_mail"><?php _e('Admin e-mail','cftp_admin'); ?></label>
+					<input name="install_user_mail" id="install_user_mail" class="required" value="<?php echo (isset($got_admin_email) ? $got_admin_email : ''); ?>" />
+				</li>
+				<li>
+					<label for="install_user_pass"><?php _e('Password','cftp_admin'); ?></label>
+					<input type="password" name="install_user_pass" id="install_user_pass" class="required" maxlength="12" />
+				</li>
+				<li>
+					<label for="install_user_repeat"><?php _e('Repeat','cftp_admin'); ?></label>
+					<input type="password" name="install_user_repeat" id="install_user_repeat" class="required" maxlength="12" />
+				</li>
+				<li class="form_submit_li">
+					<input type="submit" name="Submit" value="<?php _e('Install','cftp_admin'); ?>" class="boton" />
+				</li>
+			</ul>
+
+			<div id="install_extra">
+				<p><?php _e('After installing the system, you can go to the options page to set your timezone, prefered date display format and thubmnails parameters, besides being able to change the site options provided here.','cftp_admin'); ?></p>
+			</div>
+
+		</form>
+
+	<?php } ?>
 
 	</div>
 
@@ -186,5 +206,10 @@ if ($_POST) {
 
 <?php
 	$database->Close();
-	include('../footer.php');
+
+	default_footer_info();
 ?>
+
+</body>
+</html>
+<?php ob_end_flush(); ?>

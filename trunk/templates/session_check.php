@@ -4,10 +4,10 @@ session_start();
 header("Cache-control: private");
 // check if the logged user is an admin or the appropiate client
 $client_username = $this_user;
-if ($_SESSION['access'] == 'admin') { $canview = 1; }
-if ($_SESSION['access'] == $this_user) { $canview = 1; }
-if ($_COOKIE['access'] == 'admin') { $canview = 1; }
-if ($_COOKIE['access'] == $client_username) { $canview = 1; }
+if (isset($_SESSION['access']) && $_SESSION['access'] == 'admin') { $canview = 1; }
+if (isset($_SESSION['access']) && $_SESSION['access'] == $this_user) { $canview = 1; }
+if (isset($_COOKIE['access']) && $_COOKIE['access'] == 'admin') { $canview = 1; }
+if (isset($_COOKIE['access']) && $_COOKIE['access'] == $client_username) { $canview = 1; }
 if (!isset($canview)) {
 header("location:../../index.php");
 }

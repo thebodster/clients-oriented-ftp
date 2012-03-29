@@ -33,6 +33,27 @@ class validate_form {
 		}
 	}
 
+	// check if password contains valid characters 
+	private function is_password($field, $err) {
+		$allowed_numbers = array('0','1','2','3','4','5','6','7','8','9');
+		$allowed_lower = range('a','z');
+		$allowed_upper = range('A','Z');
+		$allowed_symbols = array('`','!','"','?','$','%','^','&','*','(',')','_','-','+','=','{','[','}',']',':',';','@','~','#','|','<',',','>','.',"'","/",'\\');
+		$allowed_characters = array_merge($allowed_numbers,$allowed_lower,$allowed_upper,$allowed_symbols);
+
+		$passw = str_split($field);
+		$char_errors = 0;
+		foreach ($passw as $p) {
+			if(!in_array($p,$allowed_characters, TRUE)) {
+				$char_errors++;
+			}
+		}
+		if($char_errors > 0) {
+			$this->error_msg .= '<li>'.$err.'</li>';
+			$this->return_val = false;
+		}
+	}
+
 	// check if the character count is within range
 	private function is_length($field, $err, $min, $max) {
 		if(strlen($field) < $min || strlen($field) > $max){
@@ -50,14 +71,21 @@ class validate_form {
 	}
 
 	// check for empty field
-	private function is_user_exists($field, $err, $table, $row) {
-		if (mysql_num_rows(mysql_query("SELECT * FROM $table WHERE $row = '$field'"))){
+	private function is_user_exists($field, $err) {
+		if (mysql_num_rows(mysql_query("SELECT * FROM tbl_clients WHERE client_user = '$field'")) || mysql_num_rows(mysql_query("SELECT * FROM tbl_users WHERE user = '$field'"))){
 			$this->error_msg .= '<li>'.$err.'</li>';
 			$this->return_val = false;
 		}
 	}
 
-	function validate($val_type, $field, $err='', $min='', $max='', $pass1='', $pass2='', $table='', $row='') {
+	private function is_email_exists($field, $err) {
+		if (mysql_num_rows(mysql_query("SELECT * FROM tbl_clients WHERE email = '$field'")) || mysql_num_rows(mysql_query("SELECT * FROM tbl_users WHERE email = '$field'"))){
+			$this->error_msg .= '<li>'.$err.'</li>';
+			$this->return_val = false;
+		}
+	}
+
+	function validate($val_type, $field, $err='', $min='', $max='', $pass1='', $pass2='', $row='') {
 		switch($val_type) {
 			case 'completed':
 				$this->is_complete($field, $err);
@@ -68,6 +96,9 @@ class validate_form {
 			case 'alpha':
 				$this->is_alpha($field, $err);
 			break;
+			case 'password':
+				$this->is_password($field, $err);
+			break;
 			case 'length':
 				$this->is_length($field, $err, $min, $max);
 			break;
@@ -75,7 +106,10 @@ class validate_form {
 				$this->is_pass_match($err, $pass1, $pass2);
 			break;
 			case 'user_exists':
-				$this->is_user_exists($field, $err, $table, $row);
+				$this->is_user_exists($field, $err);
+			break;
+			case 'email_exists':
+				$this->is_email_exists($field, $err);
 			break;
 		}
 	}

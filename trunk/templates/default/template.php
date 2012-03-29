@@ -14,10 +14,11 @@ $window_title = __('File downloads','cftp_template');
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><?php echo $user_full_name.' | '.$window_title; ?> | <?php echo $short_system_name; ?></title>
-<link rel="stylesheet" media="all" type="text/css" href="<?php echo $this_template; ?>main.css" />
+<title><?php echo $user_full_name.' | '.$window_title; ?> | <?php echo SYSTEM_NAME; ?></title>
 <link rel="shortcut icon" href="../../favicon.ico" />
-<link href='http://fonts.googleapis.com/css?family=Cabin+Condensed' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" media="all" type="text/css" href="../../styles/shared.css" />
+<link rel="stylesheet" media="all" type="text/css" href="<?php echo $this_template; ?>main.css" />
+<link rel="stylesheet" media="all" type="text/css" href="../../styles/font-sansation.css" />
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
 <script src="../../includes/js/jquery.tablesorter.min.js" type="text/javascript"></script>
@@ -27,22 +28,25 @@ $window_title = __('File downloads','cftp_template');
 <body>
 
 <div id="header">
-	<h1><?php echo $full_system_name; ?></h1>
+	<div id="header_info">
+		<h1><?php echo SYSTEM_NAME; ?></h1>
+	</div>
 	<a href="../../process.php?do=logout" target="_self" id="logout"><?php _e('Logout', 'cftp_admin'); ?></a>
 </div>
 
 <div id="under_header">
-	<div id="window_title"><?php echo '<strong>'.$user_full_name.'</strong> | '.$window_title; ?></div>
+	<p><?php echo $user_full_name, ', '; _e('welcome to your downloads', 'cftp_admin'); ?></p>
 </div>
 
 <div id="wrapper">
+
 
 	<script type="text/javascript">
 		$(document).ready(function()
 			{
 				$("#files_list")
 					.tablesorter( {
-						sortList: [[3,1]], widgets: ['zebra'], headers: {
+						sortList: [[0,1]], widgets: ['zebra'], headers: {
 							4: { sorter: false },
 							5: { sorter: false },
 							6: { sorter: false }
@@ -63,68 +67,31 @@ $window_title = __('File downloads','cftp_template');
 			if (confirm("<?php _e('This will delete the file permanently. Continue?','cftp_template'); ?>")) return true ;
 			else return false ;
 		}
-
-		var xhr;
-		function startAjax() {
-			if(window.XMLHttpRequest) {
-				xhr = new XMLHttpRequest();
-			}
-			else if(window.ActiveXObject) {
-				xhr = new ActiveXObject("Microsoft.XMLHTTP");
-			}
-		}
-		
-		function addDownloadCount(fileid) {
-			startAjax();
-			xhr.open("GET","../../process.php?do=add_download_count&file="+fileid);
-			xhr.onreadystatechange = callback;
-			xhr.send(null);
-		}
-
-		// i'm leaving this here for future error handling
-		function callback() {
-			if (xhr.readyState == 4) {
-				if (xhr.status == 200) {
-				}
-			}
-		}
 	</script>
-	
+
 	<div id="left_column">
-	
-		<?php if (file_exists('../../img/custom/logo/'.$custom_logo_filename)) { ?>
-			<div id="current_logo" class="whitebox">
-				<img src="../../includes/thumb.php?src=../img/custom/logo/<?php echo $custom_logo_filename; ?>&amp;w=<?php echo $max_logo_width; ?>&amp;type=tlogo" alt="" />
-			</div>
-			<div class="clear"></div>
-		<?php } ?>
-
-		<div id="help">
-			<h2><?php _e('Help','cftp_template'); ?></h2>
-			<p><?php _e('The file list on the right contains every file uploaded for you.','cftp_template'); ?></p>
-			<p><?php _e('You can click on the name of each marked column to order the list.','cftp_template'); ?></p>
+		<div id="current_logo">
+			<img src="../../includes/thumb.php?src=../img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=250&amp;type=tlogo" alt="" />
 		</div>
-
 	</div>
-	
+
 	<div id="right_column">
 	
-	<?php
-		$count=mysql_num_rows($sql);
-		if (!$count) {
-			_e('There are no files.','cftp_template');
-		}
-		else {
-	?>
-	
-			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="files_list" class="tablesorter">
+		<?php
+			$count=mysql_num_rows($sql);
+			if (!$count) {
+				_e('There are no files.','cftp_template');
+			}
+			else {
+		?>
+
+			<table id="files_list" class="tablesorter">
 			<thead>
 				<tr>
+					<th><?php _e('Uploaded','cftp_template'); ?></th>
 					<th><?php _e('Name','cftp_template'); ?></th>
 					<th><?php _e('Description','cftp_template'); ?></th>
 					<th><?php _e('Size','cftp_template'); ?></th>
-					<th><?php _e('Uploaded','cftp_template'); ?></th>
-					<th><?php _e('Download','cftp_template'); ?></th>
 					<th><?php _e('Image preview','cftp_template'); ?></th>
 					<?php // show UPLOADER only to users, not clients
 						$clients_allowed = array(9,8,7);
@@ -133,6 +100,7 @@ $window_title = __('File downloads','cftp_template');
 						<th><?php _e('Uploader','cftp_template'); ?></th>
 						<th><?php _e('Downloads','cftp_template'); ?></th>
 					<?php } ?>
+					<th><?php _e('Download','cftp_template'); ?></th>
 					<th><?php _e('Actions','cftp_template'); ?></th>
 				</tr>
 			</thead>
@@ -143,24 +111,20 @@ $window_title = __('File downloads','cftp_template');
 			?>
 			
 				<tr>
-					<td><?php echo htmlentities($row['filename']); ?></td>
-					<td><?php echo htmlentities($row['description']); ?></td>
-					<td><?php $entotal = $row['url']; $total = filesize($entotal); getfilesize($total); ?></td>
 					<td>
 						<?php
 						$time_stamp=$row['timestamp']; //get timestamp
-						$date_format=date($timeformat,$time_stamp); // formats timestamp
+						$date_format=date(TIMEFORMAT_USE,$time_stamp); // formats timestamp
 						echo $date_format; // results here ... 02 : 11 : 07
 						?>
 					</td>
-					<td>
-						<a href="../../process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank" class="download" onclick="addDownloadCount(<?php echo $row['id']; ?>);">
-							<?php _e('Download','cftp_template'); ?>
-						</a>
-					</td>
+					<td><strong><?php echo htmlentities($row['filename']); ?></strong></td>
+					<td><?php echo htmlentities($row['description']); ?></td>
+					<td><?php $this_file = filesize($row['url']); echo format_file_size($this_file); ?></td>
 					<td>
 						<?php
-							$extension = strtolower(substr($row['url'], -3));
+							$pathinfo = pathinfo($row['url']);
+							$extension = $pathinfo['extension'];
 							if (
 								$extension == "gif" ||
 								$extension == "jpg" ||
@@ -169,7 +133,7 @@ $window_title = __('File downloads','cftp_template');
 								$extension == "png"
 							) {
 						?>
-							<img src="../../includes/thumb.php?src=../upload/<?php echo $this_user; ?>/<?php echo $row['url']; ?>&amp;w=<?php echo $max_thumbnail_width; ?>&amp;type=prev&amp;who=<?php echo $this_user; ?>&amp;name=<?php echo $row['url']; ?>" class="thumbnail" alt="" />
+							<img src="../../includes/thumb.php?src=../upload/<?php echo $this_user; ?>/<?php echo $row['url']; ?>&amp;w=<?php echo THUMBS_MAX_WIDTH; ?>&amp;type=prev&amp;who=<?php echo $this_user; ?>&amp;name=<?php echo $row['url']; ?>" class="thumbnail" alt="" />
 						<?php } ?>
 					</td>
 					<?php
@@ -181,14 +145,17 @@ $window_title = __('File downloads','cftp_template');
 						<td><?php echo $row['download_count']; ?></td>
 					<?php } ?>
 					<td>
+						<a href="../../process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank" class="button button_blue">
+							<?php _e('Download','cftp_template'); ?>
+						</a>
+					</td>
+					<td>
 						<?php
 							// show DELETE FILE only to users, not clients
 							$clients_allowed = array(9,8,7);
 							if (in_session_or_cookies($clients_allowed)) {
 						?>
-							<a onclick="return confirm_file_delete();" href="../../process.php?do=del_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>&amp;file=<?php echo $row['url']; ?>" target="_self">
-								<img src="../../img/icons/delete.png" alt="<?php _e('Delete','cftp_template'); ?>" />
-							</a>
+							<a href="../../process.php?do=del_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>&amp;file=<?php echo $row['url']; ?>" class="button button_small button_red" onclick="return confirm_file_delete();"><?php _e('Delete','cftp_admin'); ?></a>
 						<?php } ?>
 					</td>
 				</tr>
@@ -226,13 +193,13 @@ $window_title = __('File downloads','cftp_template');
 		</form>
 	</div>
 <?php } ?>
-	</div>
+
+	</div> <!-- right_column -->
+
 
 </div> <!-- wrapper -->
 
-	<div id="footer">
-		<span><?php _e('cFTP Free software (GPL2) | 2007 - ', 'cftp_template'); ?> <?php echo date("Y") ?> | <a href="<?php echo $GLOBALS['uri'];?>" target="_blank"><?php echo $GLOBALS['uri_txt'];?></a></span>
-	</div>
+<?php default_footer_info(); ?>
 
 </body>
 </html>

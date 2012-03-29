@@ -14,31 +14,43 @@ function meassureimg($pic_source) {
 	$img_height = $the_picture[1];
 
 	if ($img_width > $img_height) {
-		$use_side = $max_logo_height;
+		$use_side = LOGO_MAX_HEIGHT;
 		return 'h';
 	}
 	else {
-		$use_side = $max_logo_width;
+		$use_side = LOGO_MAX_WIDTH;
 		return 'w';
 	}
 }
 
 // start process
 // if we set the quality via url, ignore the default one that comes from the database
-if($_GET['ql']) { $thumbnail_default_quality = $_GET['ql']; }
+if(!empty($_GET['ql'])) {
+	$thumbnail_quality = $_GET['ql'];
+}
+else {
+	$thumbnail_quality = THUMBS_QUALITY;
+}
 
 if(empty($_GET['type'])) {
 	return false;
 }
 
-$thumb_name = 'w'.$_GET['w'].'h'.$_GET['h'].str_replace("..", "",str_replace("\)", "5", str_replace("\(", "4", str_replace(" ", "_", str_replace("/", "-", $_GET['src'])))));
+$pathinfo = pathinfo($_GET['src']);
 
+// Generate the file name
+$thumb_name = $pathinfo['filename'];
+if(isset($_GET['w'])) { $thumb_name .= '-W'.$_GET['w']; }
+if(isset($_GET['h'])) { $thumb_name .= '-H'.$_GET['h']; }
+$thumb_name .= '.'.$pathinfo['extension'];
+
+// Continue
 switch($_GET['type']) {
 	case 'logo':
-		$do_on_folder = $thumbnails_folder;
+		$do_on_folder = THUMBS_FOLDER;
 	break;
 	case 'tlogo':
-		$do_on_folder = $logo_thumbnail_folder;
+		$do_on_folder = LOGO_THUMB_FOLDER;
 	break;
 	case 'prev':
 		$who = $_GET['who'];
@@ -50,7 +62,7 @@ switch($_GET['type']) {
 $destination = $do_on_folder.$thumb_name;
 
 if (!file_exists($thumb_name)) {
-	$extension = strtolower(substr($_GET['src'], -3));
+	$extension = $pathinfo['extension'];
 	/* Detect filetype and make a temp image */
 	if ($extension == "gif") {
 		$fuente = imagecreatefromgif($_GET['src']);
@@ -96,10 +108,10 @@ if (!file_exists($thumb_name)) {
 			imagegif($imagen);
 			break;
 		case 'jpg':
-			imagejpeg($imagen,$destination,$thumbnail_default_quality);
+			imagejpeg($imagen,$destination,$thumbnail_quality);
 			break;
 		default:
-			imagejpeg($imagen,$destination,$thumbnail_default_quality);
+			imagejpeg($imagen,$destination,$thumbnail_quality);
 			break;
 	}
 	
@@ -133,12 +145,11 @@ if ($_GET['sh']) {
 
 /* rotate */
 if($_GET['r']) { 
-	if($_GET['ql']) { $thumbnail_default_quality = $_GET['ql']; }
 	$arrayr = explode("|", $_GET['r']);
 	$grados = $arrayr[0];
 	$back = '0x' . $arrayr[1];
 	$rotate = imagerotate($output, $grados, $back);
-	imagejpeg($rotate,NULL,$thumbnail_default_quality);
+	imagejpeg($rotate,NULL,$thumbnail_quality);
 }
 
 /* add blur */
@@ -174,11 +185,11 @@ switch($extension) {
 		break;
 	case 'jpg':
 		header("Content-Type: image/jpeg");
-		imagejpeg($output,NULL,$thumbnail_default_quality);
+		imagejpeg($output,NULL,$thumbnail_quality);
 		break;
 	default:
 		header("Content-Type: image/jpeg");
-		imagejpeg($output,NULL,$thumbnail_default_quality);
+		imagejpeg($output,NULL,$thumbnail_quality);
 		break;
 }
 // Create thumbnail ends here

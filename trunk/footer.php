@@ -1,8 +1,4 @@
-	<div id="footer">
-		<span><?php _e('cFTP Free software (GPL2) | 2007 - ', 'cftp_admin'); ?> <?php echo date("Y") ?> | <a href="<?php echo $GLOBALS['uri'];?>" target="_blank"><?php echo $GLOBALS['uri_txt'];?></a></span>
-	</div>
-
-</div> <!--wrapper-->
+<?php default_footer_info(); ?>
 
 <script type="text/javascript">
 	var menu=new menu.dd("menu");

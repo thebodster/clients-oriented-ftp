@@ -1,5 +1,26 @@
 <?php
 
+function check_if_notify_client($client) {
+	global $database;
+	$get_notify = $database->query("SELECT notify, email FROM tbl_clients WHERE client_user='$client'");
+	while ($row = mysql_fetch_assoc($get_notify)) {
+		if($row['notify'] === '1') {
+			return $row['email'];
+		}
+		else {
+			return false;
+		}
+	}
+}
+
+function default_footer_info() {
+?>
+	<div id="footer">
+			<span><?php _e('ProjectSend Free software (GPL2) | 2007 - ', 'cftp_admin'); ?> <?php echo date("Y") ?> | <a href="<?php echo SYSTEM_URI; ?>" target="_blank"><?php echo SYSTEM_URI_LABEL; ?></a></span>
+	</div>
+<?php
+}
+
 function system_message($type,$message,$div_id = '') {
 	/*
 		Current CSS available message classes:
@@ -17,11 +38,13 @@ function system_message($type,$message,$div_id = '') {
 }
 
 function in_session_or_cookies($levels) {
-	if (in_array($_SESSION['userlevel'],$levels) || in_array($_COOKIE['userlevel'],$levels)) {
-		return true;
-	}
-	else {
-		return false;
+	if (isset($_SESSION['userlevel']) || isset($_COOKIE['userlevel'])) {
+		if (in_array($_SESSION['userlevel'],$levels) || in_array($_COOKIE['userlevel'],$levels)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
 
@@ -53,7 +76,7 @@ function mysql_real_escape_array($t){
 function gettheurl() {
 	// based on a script found on http://www.webcheatsheet.com/php/get_current_page_url.php
 	$pageURL = 'http';
-	if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+	if (!empty($_SERVER['HTTPS'])) {if($_SERVER['HTTPS'] == 'on'){$pageURL .= "s";}}
 		$pageURL .= "://";
 	if ($_SERVER["SERVER_PORT"] != "80") {
 		$pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
@@ -72,19 +95,17 @@ function gettheurl() {
 	}
 }
 
-function getfilesize($dataarch) {
-	if( $dataarch < 1024 ) {
-		$tamfinal = $dataarch . " bytes";
-		echo $tamfinal;
+function format_file_size($size) {
+	if( $size < 1024 ) {
+		$format_size = $size . " bytes";
 	}
-	else if( $dataarch < 1024000 ) {
-		$tamfinal = round( ( $dataarch / 1024 ), 1 ) . " kb";
-		echo $tamfinal;
+	else if( $size < 1024000 ) {
+		$format_size = round( ( $size / 1024 ), 1 ) . " kb.";
 	}
 	else {
-		$tamfinal = round( ( $dataarch / 1024000 ), 1 ) . " mb";
-		echo $tamfinal;
+		$format_size = round( ( $size / 1024000 ), 1 ) . " mb.";
 	}
+	return $format_size;
 }
 
 function delfile($curfile)

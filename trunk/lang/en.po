@@ -10,231 +10,269 @@ msgstr ""
 "MIME-Version: 1.0\n"
 
 #. Text in echo
-#: cFTP/options.php:149
+#: cFTP/options.php:151
 msgid "<strong>Important</strong>: Separate allowed file types with a comma. You can navigate the box with the left/right arrows, backspace and delete keys."
 msgstr ""
 
 #. Text in function
-#: cFTP/clientform.php:205
+#: cFTP/clientform.php:199
 msgid "A folder for this client could not be created. Probably because of a server configuration."
 msgstr ""
 
 #. Text in function
-#: cFTP/clientform.php:351
+#: cFTP/includes/classes/send-email.php:1
 msgid "A new account was created for you. From now on, you can access the files that have been uploaded under your account using the following credentials:"
 msgstr ""
 
 #. Text in function
-#: cFTP/userform.php:311
+#: cFTP/includes/classes/send-email.php:1
 msgid "A new account was created for you. From now on, you can access the system administrator using the following credentials:"
 msgstr ""
 
 #. Text in function
-#: cFTP/fileupload.php:265
+#: cFTP/includes/classes/send-email.php:1
 msgid "A new file has been uploaded for you to download."
 msgstr ""
 
 #. Text in function
 #: cFTP/includes/vars.php:1
-msgid "A user with this e-mail address already exists."
+msgid "A system user or client with this e-mail address already exists."
 msgstr ""
 
 #. Text in function
 #: cFTP/includes/vars.php:1
-msgid "A user with this login name already exists."
+msgid "A system user or client with this login name already exists."
 msgstr ""
 
 #. Text in echo
-#: cFTP/index.php:199
-msgid "Access Administrator"
+#: cFTP/upload-process-form.php:174
+msgid "Access"
 msgstr ""
 
 #. Text in echo
-#: cFTP/index.php:221
-msgid "Access file list"
+#: cFTP/includes/userlevel_check.php:95
+msgid "Access denied"
 msgstr ""
 
 #. Text in function
-#: cFTP/clientform.php:351
+#: cFTP/includes/classes/send-email.php:1
 msgid "Access the system administration here"
 msgstr ""
 
 #. Text in function
-#: cFTP/userform.php:311
+#: cFTP/includes/classes/send-email.php:1
 msgid "Access the system panel here"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:60
-#: cFTP/users.php:47
+#: cFTP/clients.php:68
+#: cFTP/users.php:46
 msgid "Actions"
 msgstr ""
 
 #. Text in echo
-#: cFTP/header.php:57
 #: cFTP/header.php:70
+#: cFTP/header.php:83
 msgid "Add new"
 msgstr ""
 
 #. Text in function
-#: cFTP/clientform.php:351
+#: cFTP/clientform.php:346
 msgid "Add new client"
 msgstr ""
 
 #. Text in function
-#: cFTP/userform.php:311
+#: cFTP/userform.php:300
 msgid "Add system user"
 msgstr ""
 
 #. Text in echo
-#: cFTP/userform.php:292
+#: cFTP/userform.php:281
 msgid "Add user"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:58
-#: cFTP/users.php:46
+#: cFTP/clients.php:66
+#: cFTP/users.php:45
 msgid "Added on"
 msgstr ""
 
 #. Text in echo
-#: cFTP/home.php:63
+#: cFTP/home.php:59
 msgid "Additionaly, you can select your own logo, that will appear in every client's page."
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:53
-#: cFTP/clientform.php:310
+#: cFTP/clients.php:61
+#: cFTP/clientform.php:307
 msgid "Address"
 msgstr ""
 
 #. Text in echo
-#: cFTP/install/index.php:166
+#: cFTP/install/index.php:179
 msgid "Admin e-mail"
 msgstr ""
 
 #. Text in echo
-#: cFTP/index.php:176
-msgid "Administrator"
-msgstr ""
-
-#. Text in echo
-#: cFTP/install/index.php:176
+#: cFTP/install/index.php:196
 msgid "After installing the system, you can go to the options page to set your timezone, prefered date display format and thubmnails parameters, besides being able to change the site options provided here."
 msgstr ""
 
 #. Text in echo
-#: cFTP/options.php:150
+#: cFTP/options.php:154
 msgid "Allowed file extensions"
 msgstr ""
 
+#. Text in echo
+#: cFTP/upload-by-ftp.php:53
+msgid "Also, please note that the listed files were renamed if they contained invalid characters."
+msgstr ""
+
 #. Text in function
-#: cFTP/userform.php:171
-#: cFTP/clientform.php:205
+#: cFTP/userform.php:163
+#: cFTP/clientform.php:199
 msgid "An e-mail notification with login information was sent to your client."
 msgstr ""
 
 #. Text in echo
-#: cFTP/options.php:116
-msgid "Basic information to be shown around the site. The time format and zones values affect how the clients see the dates on their files lists."
+#: cFTP/upload-process-form.php:228
+msgid "Assign to client"
 msgstr ""
 
 #. Text in echo
-#: cFTP/install/index.php:154
-msgid "Basic system options"
-msgstr ""
-
-#. Text in echo
-#: cFTP/options.php:148
-msgid "Be careful when changing this options. They could affect not only the system but the whole server it is installed on."
-msgstr ""
-
-#. Text in echo
-#: cFTP/home.php:54
-msgid "Change"
-msgstr ""
-
-#. Text in echo
-#: cFTP/index.php:177
-msgid "Client"
-msgstr ""
-
-#. Text in function
-#: cFTP/clientform.php:205
-msgid "Client added correctly"
-msgstr ""
-
-#. Text in function
-#: cFTP/includes/vars.php:1
-msgid "Client was not specified"
+#: cFTP/upload-process-form.php:142
+msgid "Assigned to"
 msgstr ""
 
 #. Text in echo
 #: cFTP/options.php:119
+msgid "Basic information to be shown around the site. The time format and zones values affect how the clients see the dates on their files lists."
+msgstr ""
+
+#. Text in echo
+#: cFTP/install/index.php:156
+msgid "Basic system options"
+msgstr ""
+
+#. Text in echo
+#: cFTP/options.php:150
+msgid "Be careful when changing this options. They could affect not only the system but the whole server it is installed on."
+msgstr ""
+
+#. Text in echo
+#: cFTP/home.php:49
+#: cFTP/header.php:97
+#: cFTP/branding.php:17
+msgid "Branding"
+msgstr ""
+
+#. Text in echo
+#: cFTP/home.php:50
+msgid "Change logo"
+msgstr ""
+
+#. Text in echo
+#: cFTP/upload-from-computer.php:25
+msgid "Click on Add files to select all the files that you want to upload, and then click continue. On the next step, you will be able to set a name and description for each uploaded file. Remember that the maximum allowed file size (in mb.) is "
+msgstr ""
+
+#. Text in function
+#: cFTP/clientform.php:199
+msgid "Client added correctly"
+msgstr ""
+
+#. Text in echo
+#: cFTP/upload-process-form.php:143
+msgid "Client was notified"
+msgstr ""
+
+#. Text in echo
+#: cFTP/upload-process-form.php:144
+msgid "Client's file list"
+msgstr ""
+
+#. Text in echo
+#: cFTP/options.php:126
 msgid "Client's template"
 msgstr ""
 
 #. Text in echo
 #: cFTP/home.php:16
-#: cFTP/header.php:55
+#: cFTP/header.php:68
 msgid "Clients"
 msgstr ""
 
 #. Text in function
-#: cFTP/clients.php:65
+#: cFTP/clients.php:73
 msgid "Clients Administration"
 msgstr ""
 
 #. Text in echo
-#: cFTP/options.php:167
+#: cFTP/options.php:177
 msgid "Company logo"
 msgstr ""
 
-#. Text in echo
-#: cFTP/install/index.php:101
+#. Text in function
+#: cFTP/install/index.php:207
 msgid "Congratulations! Everything is up and running."
 msgstr ""
 
 #. Text in echo
-#: cFTP/fileupload.php:131
+#: cFTP/upload-by-ftp.php:84
+#: cFTP/upload-from-computer.php:87
+#: cFTP/upload-process-form.php:301
+msgid "Continue"
+msgstr ""
+
+#. Text in echo
+#: cFTP/index.php:166
+msgid "Continue to log in"
+msgstr ""
+
+#. Text in echo
+#: cFTP/upload-by-ftp.php:23
+#: cFTP/upload-from-computer.php:20
 msgid "Create a new one"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clientform.php:332
+#: cFTP/clientform.php:327
 msgid "Create account"
 msgstr ""
 
 #. Text in echo
-#: cFTP/logo.php:17
-msgid "Current logo:"
+#: cFTP/branding.php:92
+msgid "Current logo"
 msgstr ""
 
 #. Text in echo
-#: cFTP/install/index.php:162
+#: cFTP/install/index.php:171
 msgid "Default system administrator options"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:101
-msgid "Delete client"
+#: cFTP/clients.php:103
+#: cFTP/users.php:76
+#: cFTP/templates/default/template.php:158
+msgid "Delete"
 msgstr ""
 
 #. Text in echo
-#: cFTP/users.php:81
-msgid "Delete user"
+#: cFTP/upload-process-form.php:141
+#: cFTP/upload-process-form.php:227
+msgid "Description"
 msgstr ""
 
 #. Text in function
-#: cFTP/fileupload.php:265
-msgid "Description:"
+#: cFTP/upload-process-form.php:156
+msgid "Disabled for this client"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:55
-#: cFTP/users.php:44
-#: cFTP/userform.php:276
-#: cFTP/clientform.php:318
+#: cFTP/clients.php:63
+#: cFTP/users.php:43
+#: cFTP/userform.php:269
+#: cFTP/clientform.php:315
 msgid "E-mail"
 msgstr ""
 
@@ -244,14 +282,9 @@ msgid "E-mail address is not valid"
 msgstr ""
 
 #. Text in function
-#: cFTP/userform.php:171
-#: cFTP/clientform.php:205
+#: cFTP/userform.php:163
+#: cFTP/clientform.php:199
 msgid "E-mail notification couldn't be sent."
-msgstr ""
-
-#. Text in echo
-#: cFTP/fileupload.php:257
-msgid "E-mail notify couldn't be sent"
 msgstr ""
 
 #. Text in function
@@ -260,214 +293,202 @@ msgid "E-mail was not completed"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clientform.php:332
-msgid "Edit account"
+#: cFTP/clients.php:102
+#: cFTP/users.php:74
+msgid "Edit"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:98
-#: cFTP/clientform.php:351
+#: cFTP/clientform.php:327
+msgid "Edit account"
+msgstr ""
+
+#. Text in function
+#: cFTP/clientform.php:346
 msgid "Edit client"
 msgstr ""
 
 #. Text in function
-#: cFTP/userform.php:311
+#: cFTP/userform.php:300
 msgid "Edit system user"
 msgstr ""
 
-#. Text in echo
-#: cFTP/users.php:77
-msgid "Edit user"
-msgstr ""
-
 #. Text in function
-#: cFTP/includes/sys.vars.php:1
-msgid "English"
-msgstr ""
-
-#. Text in function
-#: cFTP/fileupload.php:194
-msgid "Error moving uploaded file. Please try again."
-msgstr ""
-
-#. Text in function
-#: cFTP/fileupload.php:194
-msgid "Error sending file. Please try again."
-msgstr ""
-
-#. Text in function
-#: cFTP/includes/vars.php:1
-msgid "File Name was not specified"
+#: cFTP/upload-process-form.php:156
+msgid "Error sending notification"
 msgstr ""
 
 #. Text in echo
-#: cFTP/fileupload.php:226
-msgid "File description"
-msgstr ""
-
-#. Text in function
-#: cFTP/includes/vars.php:1
-msgid "File description was not specified"
-msgstr ""
-
-#. Text in function
-#: cFTP/fileupload.php:265
-msgid "File information:"
+#: cFTP/upload-process-form.php:139
+#: cFTP/upload-process-form.php:225
+#: cFTP/upload-process-form.php:315
+msgid "File Name"
 msgstr ""
 
 #. Text in echo
-#: cFTP/fileupload.php:182
-msgid "File name:"
-msgstr ""
-
-#. Text in function
-#: cFTP/includes/vars.php:1
-msgid "File sent correctly"
+#: cFTP/upload-by-ftp.php:62
+msgid "File name"
 msgstr ""
 
 #. Text in echo
-#: cFTP/fileupload.php:184
-msgid "File size:"
+#: cFTP/upload-by-ftp.php:63
+msgid "File size"
 msgstr ""
 
 #. Text in echo
-#: cFTP/fileupload.php:183
-msgid "File type"
-msgstr ""
-
-#. Text in echo
-#: cFTP/clients.php:59
+#: cFTP/clients.php:67
 msgid "Files"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:119
-#: cFTP/users.php:99
+#: cFTP/upload-process-form.php:311
+msgid "Files not uploaded"
+msgstr ""
+
+#. Text in echo
+#: cFTP/upload-process-form.php:191
+msgid "Files ready to upload"
+msgstr ""
+
+#. Text in echo
+#: cFTP/upload-process-form.php:135
+msgid "Files uploaded correctly"
+msgstr ""
+
+#. Text in echo
+#: cFTP/clients.php:120
+#: cFTP/users.php:93
 msgid "First"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:51
-#: cFTP/users.php:42
-#: cFTP/install/index.php:165
+#: cFTP/clients.php:59
+#: cFTP/users.php:41
+#: cFTP/install/index.php:175
 msgid "Full name"
 msgstr ""
 
 #. Text in echo
-#: cFTP/options.php:115
-#: cFTP/header.php:83
+#: cFTP/options.php:118
+#: cFTP/header.php:96
 msgid "General options"
 msgstr ""
 
 #. Text in echo
-#: cFTP/header.php:47
+#: cFTP/header.php:54
 msgid "Home"
 msgstr ""
 
-#. Text in echo
-#: cFTP/clients.php:50
-#: cFTP/users.php:41
-msgid "ID"
-msgstr ""
-
 #. Text in function
-#: cFTP/fileupload.php:265
+#: cFTP/includes/classes/send-email.php:1
 msgid "If you don't want to be notified about new files, please contact the uploader."
 msgstr ""
 
 #. Text in function
-#: cFTP/install/index.php:187
-#: cFTP/install/index.php:172
+#: cFTP/upload-by-ftp.php:135
+msgid "Import files from FTP"
+msgstr ""
+
+#. Text in echo
+#: cFTP/header.php:59
+msgid "Import from FTP"
+msgstr ""
+
+#. Text in echo
+#: cFTP/upload-by-ftp.php:52
+msgid "Important"
+msgstr ""
+
+#. Text in function
+#: cFTP/install/index.php:207
+#: cFTP/install/index.php:191
 msgid "Install"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:57
-#: cFTP/clientform.php:326
+#: cFTP/clients.php:65
+#: cFTP/clientform.php:323
 msgid "Internal contact"
 msgstr ""
 
 #. Text in echo
-#: cFTP/options.php:162
+#: cFTP/options.php:170
 msgid "JPG Quality"
 msgstr ""
 
 #. Text in echo
-#: cFTP/options.php:132
-msgid "Language"
-msgstr ""
-
-#. Text in echo
-#: cFTP/clients.php:124
-#: cFTP/users.php:104
+#: cFTP/clients.php:125
+#: cFTP/users.php:98
 msgid "Last"
 msgstr ""
 
 #. Text in echo
-#: cFTP/options.php:168
-msgid "Like the thumbnails options, this ones have to be changed taking in account the client's template design, since it can be shown there. Default template includes a left sidebar with the logo and instructions."
+#: cFTP/upload-by-ftp.php:64
+msgid "Last modified"
 msgstr ""
 
 #. Text in echo
-#: cFTP/index.php:24
-#: cFTP/index.php:112
+#: cFTP/options.php:178
+msgid "Like the thumbnails options, this ones have to be changed taking in account the client's template design, since it can be shown there. The default template uses a fixed width for the logo, however the Gallery one uses this settings to show the image on top."
+msgstr ""
+
+#. Text in echo
+#: cFTP/index.php:23
 msgid "Log in"
 msgstr ""
 
 #. Text in echo
-#: cFTP/userform.php:268
+#: cFTP/userform.php:261
 msgid "Log in password"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:52
-#: cFTP/users.php:43
-#: cFTP/userform.php:264
-#: cFTP/clientform.php:298
+#: cFTP/clients.php:60
+#: cFTP/users.php:42
+#: cFTP/userform.php:258
+#: cFTP/clientform.php:295
 msgid "Log in username"
 msgstr ""
 
-#. Text in function
-#: cFTP/logo.php:23
-msgid "Logo configuration"
-msgstr ""
-
 #. Text in echo
-#: cFTP/header.php:36
+#: cFTP/templates/gallery/template.php:44
+#: cFTP/templates/default/template.php:34
+#: cFTP/header.php:43
 msgid "Logout"
 msgstr ""
 
 #. Text in echo
-#: cFTP/header.php:58
+#: cFTP/header.php:71
 msgid "Manage clients"
 msgstr ""
 
 #. Text in echo
-#: cFTP/header.php:71
+#: cFTP/header.php:84
 msgid "Manage users"
 msgstr ""
 
 #. Text in echo
-#: cFTP/options.php:159
-#: cFTP/options.php:174
+#: cFTP/options.php:167
+#: cFTP/options.php:185
 msgid "Max height"
 msgstr ""
 
 #. Text in echo
-#: cFTP/options.php:158
-#: cFTP/options.php:171
+#: cFTP/options.php:166
+#: cFTP/options.php:182
 msgid "Max width"
 msgstr ""
 
 #. Text in echo
-#: cFTP/userform.php:292
+#: cFTP/userform.php:281
 msgid "Modify user"
 msgstr ""
 
 #. Text in echo
-#: cFTP/userform.php:260
-#: cFTP/fileupload.php:222
-#: cFTP/clientform.php:294
+#: cFTP/userform.php:254
+#: cFTP/upload-process-form.php:140
+#: cFTP/upload-process-form.php:226
+#: cFTP/clientform.php:291
 msgid "Name"
 msgstr ""
 
@@ -477,64 +498,52 @@ msgid "Name was not completed"
 msgstr ""
 
 #. Text in function
-#: cFTP/fileupload.php:265
-msgid "Name:"
-msgstr ""
-
-#. Text in function
-#: cFTP/fileupload.php:265
+#: cFTP/includes/classes/send-email.php:1
 msgid "New file uploaded for you"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:123
-#: cFTP/users.php:103
+#: cFTP/clients.php:124
+#: cFTP/users.php:97
 msgid "Next"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:77
-#: cFTP/home.php:50
+#: cFTP/clients.php:84
 msgid "No"
 msgstr ""
 
-#. Text in function
-#: cFTP/includes/vars.php:1
-msgid "No file was selected"
-msgstr ""
-
 #. Text in echo
-#: cFTP/clients.php:56
+#: cFTP/clients.php:64
 msgid "Notify"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clientform.php:322
+#: cFTP/clientform.php:319
 msgid "Notify new uploads by e-mail"
 msgstr ""
 
 #. Text in echo
-#: cFTP/header.php:81
+#: cFTP/header.php:94
 msgid "Options"
 msgstr ""
 
 #. Text in function
-#: cFTP/options.php:63
+#: cFTP/options.php:62
 msgid "Options updated succesfuly."
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:121
-#: cFTP/users.php:101
+#: cFTP/clients.php:122
+#: cFTP/users.php:95
 msgid "Page"
 msgstr ""
 
 #. Text in function
 #: cFTP/includes/vars.php:1
-#: cFTP/install/index.php:168
-#: cFTP/clientform.php:302
-#: cFTP/index.php:191
-#: cFTP/index.php:213
+#: cFTP/install/index.php:183
+#: cFTP/clientform.php:299
+#: cFTP/index.php:158
 msgid "Password"
 msgstr ""
 
@@ -550,7 +559,7 @@ msgstr ""
 
 #. Text in function
 #: cFTP/includes/vars.php:1
-#: cFTP/index.php:147
+#: cFTP/index.php:142
 msgid "Password was not completed"
 msgstr ""
 
@@ -560,103 +569,122 @@ msgid "Passwords did not match"
 msgstr ""
 
 #. Text in echo
-#: cFTP/home.php:49
-msgid "Personal logo"
+#: cFTP/options.php:96
+msgid "Please complete all the fields."
+msgstr ""
+
+#. Text in echo
+#: cFTP/upload-process-form.php:192
+msgid "Please complete the following information to finish the uploading proccess. \"Name\" and \"Assign to client\" fields are required."
 msgstr ""
 
 #. Text in function
-#: cFTP/clientform.php:351
+#: cFTP/includes/classes/send-email.php:1
 msgid "Please contact the administrator if you need further assistance."
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:40
+#: cFTP/clients.php:49
 msgid "Please create at least one to be able to upload files."
 msgstr ""
 
 #. Text in echo
-#: cFTP/logo.php:83
+#: cFTP/branding.php:80
 msgid "Please select an image file to upload"
 msgstr ""
 
 #. Text in echo
-#: cFTP/index.php:113
-msgid "Please select your appropiate account type below."
+#: cFTP/upload-by-ftp.php:105
+msgid "Please select at least one file to proceed."
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:120
-#: cFTP/users.php:100
+#: cFTP/clients.php:121
+#: cFTP/users.php:94
 msgid "Prev."
 msgstr ""
 
 #. Text in echo
-#: cFTP/index.php:195
-#: cFTP/index.php:217
+#: cFTP/includes/functions.php:19
+msgid "ProjectSend Free software (GPL2) | 2007 - "
+msgstr ""
+
+#. Text in echo
+#: cFTP/install/index.php:164
+msgid "ProjectSend URI (address)"
+msgstr ""
+
+#. Text in function
+#: cFTP/install/index.php:207
+msgid "ProjectSend URI was not completed."
+msgstr ""
+
+#. Text in echo
+#: cFTP/home.php:58
+msgid "ProjectSend lets choose a name and description for each individual file you upload, and relate it to an existing client or create a new one. When the upload is complete, the system wil give you a link that you can share, where you client can see and download every file available under his account."
+msgstr ""
+
+#. Text in echo
+#: cFTP/home.php:60
+msgid "ProjectSend was originally called cFTP, but since the system isn't intended to use the FTP protocol for uploads the name was changed to avoid confusion. Also, ProjectSend is a fancier name!"
+msgstr ""
+
+#. Text in echo
+#: cFTP/index.php:162
 msgid "Remember me"
 msgstr ""
 
 #. Text in echo
-#: cFTP/install/index.php:169
+#: cFTP/install/index.php:187
 msgid "Repeat"
 msgstr ""
 
 #. Text in echo
-#: cFTP/userform.php:272
-#: cFTP/clientform.php:306
+#: cFTP/userform.php:265
+#: cFTP/clientform.php:303
 msgid "Repeat password"
 msgstr ""
 
 #. Text in echo
-#: cFTP/users.php:45
-#: cFTP/userform.php:280
+#: cFTP/users.php:44
+#: cFTP/userform.php:273
 msgid "Role"
 msgstr ""
 
 #. Text in echo
-#: cFTP/options.php:147
+#: cFTP/options.php:149
 msgid "Security"
 msgstr ""
 
 #. Text in echo
-#: cFTP/fileupload.php:230
-msgid "Select file"
-msgstr ""
-
-#. Text in echo
-#: cFTP/logo.php:100
+#: cFTP/branding.php:108
 msgid "Select image to upload"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:125
-#: cFTP/users.php:105
+#: cFTP/clients.php:126
+#: cFTP/users.php:99
 msgid "Show"
 msgstr ""
 
 #. Text in echo
-#: cFTP/options.php:118
-#: cFTP/install/index.php:157
+#: cFTP/options.php:122
+#: cFTP/install/index.php:160
 msgid "Site name"
 msgstr ""
 
 #. Text in function
-#: cFTP/install/index.php:187
+#: cFTP/install/index.php:207
 msgid "Sitename was not completed."
 msgstr ""
 
 #. Text in function
-#: cFTP/options.php:63
+#: cFTP/options.php:62
 msgid "Some fields were not completed. Options could not be saved."
 msgstr ""
 
-#. Text in function
-#: cFTP/includes/sys.vars.php:1
-msgid "Spanish"
-msgstr ""
-
 #. Text in echo
-#: cFTP/header.php:41
+#: cFTP/header.php:48
 msgid "System Notice:"
 msgstr ""
 
@@ -666,148 +694,148 @@ msgid "System URI"
 msgstr ""
 
 #. Text in echo
-#: cFTP/options.php:109
+#: cFTP/options.php:107
 msgid "System location options"
 msgstr ""
 
 #. Text in function
-#: cFTP/options.php:190
+#: cFTP/options.php:200
 msgid "System options"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:54
-#: cFTP/clientform.php:314
+#: cFTP/clients.php:62
+#: cFTP/clientform.php:311
 msgid "Telephone"
 msgstr ""
 
 #. Text in echo
-#: cFTP/home.php:61
-msgid "Thank you for choosing cFTP. This software allows you to upload files for specific clients, and keep them stored for as long as you need them."
+#: cFTP/home.php:57
+msgid "Thank you for choosing ProjectSend. This software allows you to upload files for specific clients, and keep them stored for as long as you need them."
 msgstr ""
 
 #. Text in function
-#: cFTP/userform.php:311
-msgid "Thank you for using this system."
+#: cFTP/includes/classes/send-email.php:1
+msgid "Thank you for using ProjectSend."
 msgstr ""
 
 #. Text in function
-#: cFTP/clientform.php:205
+#: cFTP/clientform.php:199
 msgid "The client could not be created. A folder with this name already exists."
 msgstr ""
 
 #. Text in function
-#: cFTP/clientform.php:205
+#: cFTP/clientform.php:199
 msgid "The client was edited correctly."
 msgstr ""
 
 #. Text in echo
-#: cFTP/header.php:41
+#: cFTP/header.php:48
 msgid "The database was updated to support this version of the software: "
 msgstr ""
 
 #. Text in function
-#: cFTP/fileupload.php:194
-msgid "The file doesn't exist anymore, or it's empty. You cannot upload 0kb files."
-msgstr ""
-
-#. Text in echo
-#: cFTP/logo.php:64
+#: cFTP/branding.php:61
 msgid "The file you selected is not a valid image one. Please upload a jpg, gif or png formated logo picture."
 msgstr ""
 
 #. Text in function
-#: cFTP/includes/form_validation_class.php:1
-#: cFTP/includes/js/js.validations.php:11
+#: cFTP/includes/classes/form-validation.php:1
 msgid "The following errors were found"
 msgstr ""
 
-#. Text in echo
-#: cFTP/logo.php:57
+#. Text in function
+#: cFTP/branding.php:17
 msgid "The image was uploaded correctly."
 msgstr ""
 
 #. Text in function
-#: cFTP/logo.php:23
-msgid "The new image will act as your logo across your client's file lists."
+#: cFTP/branding.php:17
+msgid "The picture on the right is not an actual representation of what they will see. The size on this preview is fixed, but remember that you can change the display size and picture quality for your client's pages on the"
 msgstr ""
 
 #. Text in function
-#: cFTP/logo.php:23
-msgid "The picture on the left is not an actual representation of what they will see. The size on this preview is fixed, but remember that you can change the display size and picture quality for your client's pages on the"
-msgstr ""
-
-#. Text in function
-#: cFTP/index.php:117
+#: cFTP/index.php:121
 msgid "The supplied password is incorrect."
 msgstr ""
 
 #. Text in function
-#: cFTP/index.php:117
+#: cFTP/index.php:121
 msgid "The supplied username doesn't exist."
 msgstr ""
 
 #. Text in function
-#: cFTP/userform.php:171
+#: cFTP/userform.php:163
 msgid "The user was edited correctly."
 msgstr ""
 
 #. Text in echo
-#: cFTP/fileupload.php:130
+#: cFTP/upload-by-ftp.php:22
+#: cFTP/upload-from-computer.php:19
 msgid "There are no clients at the moment"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:39
+#: cFTP/clients.php:48
 msgid "There are no clients at the moment."
 msgstr ""
 
+#. Text in echo
+#: cFTP/upload-by-ftp.php:118
+msgid "There are no files available to add right now."
+msgstr ""
+
 #. Text in function
-#: cFTP/clientform.php:205
+#: cFTP/clientform.php:199
 msgid "There is no client with that ID to edit."
 msgstr ""
 
 #. Text in function
-#: cFTP/userform.php:171
+#: cFTP/userform.php:163
 msgid "There is no user with that ID to edit."
 msgstr ""
 
-#. Text in echo
-#: cFTP/install/index.php:108
+#. Text in function
+#: cFTP/install/index.php:115
 msgid "There seems to be an error. Please try again."
 msgstr ""
 
-#. Text in echo
-#: cFTP/logo.php:71
+#. Text in function
+#: cFTP/branding.php:61
 msgid "There was an error uploading the file. Please try again."
 msgstr ""
 
 #. Text in function
-#: cFTP/options.php:63
-#: cFTP/userform.php:171
-#: cFTP/clientform.php:205
+#: cFTP/options.php:62
+#: cFTP/userform.php:163
+#: cFTP/clientform.php:199
 msgid "There was an error. Please try again."
 msgstr ""
 
 #. Text in echo
-#: cFTP/options.php:110
+#: cFTP/options.php:108
 msgid "These options are to be changed only if you are moving the system to another place. Be careful when chaging them or everything will stop working."
 msgstr ""
 
-#. Text in echo
-#: cFTP/userform.php:296
-#: cFTP/clientform.php:336
+#. Text in function
+#: cFTP/userform.php:285
+#: cFTP/clientform.php:331
 msgid "This account information will be e-mailed to the address supplied above"
 msgstr ""
 
-#. Text in function
-#: cFTP/fileupload.php:194
-msgid "This filetype is not allowed. Please check the options page and change it accordingly.<br /><strong>Warning</strong>: This could break security."
+#. Text in echo
+#: cFTP/install/index.php:172
+msgid "This info will be appended to the user <em>admin</em>, which is the default system user. It can't be deleted. Password should be between <strong>6 and 12 characters long</strong>."
 msgstr ""
 
 #. Text in echo
-#: cFTP/install/index.php:163
-msgid "This info will be appended to the user <em>admin</em>, which is the default system user. It can't be deleted. Password should be between <strong>6 and 12 characters long</strong>."
+#: cFTP/upload-by-ftp.php:126
+msgid "This is the same folder where the files uploaded by the web interface will be located before you assign them to a client. So if you finish uploading your files but then fail to complete the form, the files will still be there for you to use later."
+msgstr ""
+
+#. Text in echo
+#: cFTP/upload-by-ftp.php:52
+msgid "This list only shows the files that are allowed according to your security settings. If the file you need to add is not listed here, make sure to add the extension to the \"Allowed file extensions\" box on the options page."
 msgstr ""
 
 #. Text in echo
@@ -821,17 +849,17 @@ msgid "This will delete the user permanently. Continue?"
 msgstr ""
 
 #. Text in echo
-#: cFTP/options.php:154
+#: cFTP/options.php:161
 msgid "Thumbnails"
 msgstr ""
 
 #. Text in echo
-#: cFTP/options.php:155
-msgid "Thumbnails are used on files lists. It is recommended to keep them small, unless you are using the system to upload only images and change the default client's template accordingly (cftp as a private image gallery?)"
+#: cFTP/options.php:162
+msgid "Thumbnails are used on files lists. It is recommended to keep them small, unless you are using the system to upload only images and change the default client's template accordingly."
 msgstr ""
 
 #. Text in echo
-#: cFTP/options.php:143
+#: cFTP/options.php:142
 msgid "Time format"
 msgstr ""
 
@@ -841,44 +869,39 @@ msgid "Timezone"
 msgstr ""
 
 #. Text in echo
-#: cFTP/options.php:179
+#: cFTP/upload-by-ftp.php:120
+msgid "To use this feature you need to upload your files via FTP to the folder"
+msgstr ""
+
+#. Text in echo
+#: cFTP/options.php:189
 msgid "Update"
 msgstr ""
 
 #. Text in echo
-#: cFTP/logo.php:103
-#: cFTP/fileupload.php:250
+#: cFTP/branding.php:112
 msgid "Upload"
 msgstr ""
 
 #. Text in function
-#: cFTP/fileupload.php:265
-msgid "Upload file"
-msgstr ""
-
-#. Text in echo
-#: cFTP/header.php:48
+#: cFTP/upload-from-computer.php:97
+#: cFTP/upload-process-form.php:363
+#: cFTP/header.php:56
 msgid "Upload files"
 msgstr ""
 
 #. Text in echo
-#: cFTP/fileupload.php:234
-msgid "Upload for"
+#: cFTP/header.php:58
+msgid "Upload from computer"
 msgstr ""
 
 #. Text in echo
-#: cFTP/logo.php:96
+#: cFTP/branding.php:88
 msgid "Use this page to upload your company logo, or update your current uploaded one. This image will be shown to your clients when they access their file list."
 msgstr ""
 
-#. Text in echo
-#: cFTP/index.php:187
-#: cFTP/index.php:209
-msgid "User"
-msgstr ""
-
 #. Text in function
-#: cFTP/userform.php:171
+#: cFTP/userform.php:163
 msgid "User added correctly."
 msgstr ""
 
@@ -889,6 +912,7 @@ msgstr ""
 
 #. Text in function
 #: cFTP/includes/vars.php:1
+#: cFTP/index.php:154
 msgid "Username"
 msgstr ""
 
@@ -899,84 +923,82 @@ msgstr ""
 
 #. Text in function
 #: cFTP/includes/vars.php:1
-#: cFTP/index.php:146
+#: cFTP/index.php:141
 msgid "Username was not completed"
 msgstr ""
 
 #. Text in echo
 #: cFTP/home.php:37
-#: cFTP/header.php:68
+#: cFTP/header.php:81
 msgid "Users"
 msgstr ""
 
 #. Text in function
-#: cFTP/users.php:52
+#: cFTP/users.php:51
 msgid "Users administration"
 msgstr ""
 
 #. Text in echo
+#: cFTP/clients.php:101
 #: cFTP/home.php:26
 #: cFTP/home.php:44
 msgid "View"
 msgstr ""
 
-#. Text in echo
-#: cFTP/clients.php:95
-msgid "View files"
-msgstr ""
-
 #. Text in function
-#: cFTP/userform.php:311
-#: cFTP/home.php:67
-#: cFTP/clientform.php:351
-msgid "Welcome to cFTP"
+#: cFTP/includes/classes/send-email.php:1
+#: cFTP/home.php:64
+msgid "Welcome to ProjectSend"
 msgstr ""
 
 #. Text in echo
-#: cFTP/clients.php:77
-#: cFTP/home.php:50
+#: cFTP/clients.php:84
+#: cFTP/upload-process-form.php:156
 msgid "Yes"
 msgstr ""
 
 #. Text in function
-#: cFTP/fileupload.php:265
+#: cFTP/includes/classes/send-email.php:1
 msgid "You can access a list of all your files"
 msgstr ""
 
 #. Text in echo
-#: cFTP/install/index.php:102
+#: cFTP/install/index.php:114
 msgid "You may proceed to"
 msgstr ""
 
 #. Text in echo
-#: cFTP/install/index.php:155
+#: cFTP/upload-from-computer.php:74
+msgid "You must select at least one file to upload."
+msgstr ""
+
+#. Text in echo
+#: cFTP/install/index.php:157
 msgid "You need to provide this data for a correct system installation. The site name will be visible along the system panel, and the client's lists.<br />Don't forget to edit <em>/includes/sys.vars.php</em> with your database settings before installing."
 msgstr ""
 
 #. Text in echo
-#: cFTP/fileupload.php:257
-msgid "Your client was notified about the file"
-msgstr ""
-
-#. Text in echo
-#: cFTP/header.php:84
-msgid "Your logo"
+#: cFTP/upload-from-computer.php:84
+msgid "Your browser doesn't have Flash, Silverlight, Google Gears, BrowserPlus or HTML5 support. Please update your browser or install Adobe Flash to continue."
 msgstr ""
 
 #. Text in function
-#: cFTP/userform.php:311
-#: cFTP/clientform.php:351
+#: cFTP/includes/classes/send-email.php:1
 msgid "Your password"
 msgstr ""
 
-#. Text in echo
-#: cFTP/includes/userlevel_check.php:96
+#. Text in function
+#: cFTP/includes/vars.php:1
+msgid "Your password can only contain letters, numbers and the following characters:"
+msgstr ""
+
+#. Text in function
+#: cFTP/includes/userlevel_check.php:97
 msgid "Your user account doesn't allow you to view this page. Please contact a system administrator if you need to access this functions."
 msgstr ""
 
 #. Text in function
-#: cFTP/userform.php:311
-#: cFTP/clientform.php:351
+#: cFTP/includes/classes/send-email.php:1
 msgid "Your username"
 msgstr ""
 
@@ -986,29 +1008,8 @@ msgid "and"
 msgstr ""
 
 #. Text in function
-#: cFTP/fileupload.php:265
+#: cFTP/includes/classes/send-email.php:1
 msgid "by logging in here"
-msgstr ""
-
-#. Text in echo
-#: cFTP/footer.php:2
-#: cFTP/index.php:235
-msgid "cFTP Free software (GPL2) | 2007 - "
-msgstr ""
-
-#. Text in echo
-#: cFTP/install/index.php:158
-msgid "cFTP URI (address)"
-msgstr ""
-
-#. Text in function
-#: cFTP/install/index.php:187
-msgid "cFTP URI was not completed."
-msgstr ""
-
-#. Text in echo
-#: cFTP/home.php:62
-msgid "cFTP lets choose a name and description for each individual file you upload, and relate it to an existing client or create a new one. When the upload is complete, the system wil give you a link that you can share, where you client can see and download every file available under his account."
 msgstr ""
 
 #. Text in function
@@ -1022,27 +1023,43 @@ msgid "length should be between"
 msgstr ""
 
 #. Text in echo
-#: cFTP/install/index.php:102
+#: cFTP/install/index.php:114
 msgid "log in"
 msgstr ""
 
 #. Text in function
-#: cFTP/logo.php:23
+#: cFTP/branding.php:17
 msgid "options"
 msgstr ""
 
 #. Text in function
-#: cFTP/logo.php:23
+#: cFTP/branding.php:17
 msgid "section."
 msgstr ""
 
 #. Text in echo
-#: cFTP/fileupload.php:131
+#: cFTP/install/index.php:64
+msgid "setup"
+msgstr ""
+
+#. Text in echo
+#: cFTP/upload-by-ftp.php:120
+msgid "that is located on the root of your ProjectSend installation."
+msgstr ""
+
+#. Text in echo
+#: cFTP/upload-by-ftp.php:23
+#: cFTP/upload-from-computer.php:20
 msgid "to be able to upload files for that account."
 msgstr ""
 
 #. Text in echo
-#: cFTP/install/index.php:102
+#: cFTP/templates/default/template.php:38
+msgid "welcome to your downloads"
+msgstr ""
+
+#. Text in echo
+#: cFTP/install/index.php:114
 msgid "with your newely created user. Remember, the username for that account is <strong>admin</strong>."
 msgstr ""
 

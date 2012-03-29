@@ -1,11 +1,11 @@
 <?php
 // define language
-$lang = $site_lang;
-define('I18N_DEFAULT_DOMAIN', $ld);
+$lang = SITE_LANG;
+if(!isset($ld)) { $ld = 'cftp_admin'; }
 require_once('../../includes/i18n.php');
-I18n::LoadDomain("../../templates/$selected_clients_template/lang/{$lang}.mo", $ld);
+I18n::LoadDomain("../../templates/".TEMPLATE_USE."/lang/{$lang}.mo", $ld);
 
-$this_template = '../../templates/'.$selected_clients_template.'/'; 
+$this_template = '../../templates/'.TEMPLATE_USE.'/'; 
 include_once('../../templates/session_check.php');
 
 $database->MySQLDB();

@@ -16,9 +16,6 @@ class process {
 			case 'del_user':
 				$this->delete_user();
 			break;
-			case 'add_download_count':
-				$this->add_download_count();
-			break;
 			case 'download':
 				$this->download_file();
 			break;
@@ -78,26 +75,17 @@ class process {
 		}
 	}
 
-	function add_download_count() {
-		$this->check_level = array(9,8,7,0);
-		if (isset($_GET['file'])) {
-			$this->fileid = mysql_real_escape_string($_GET['file']);
-			// do a permissions check
-			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
-				$this->sql = $this->database->query('SELECT * FROM tbl_files WHERE id="' . $this->fileid .'"');
-				$this->row = mysql_fetch_array($this->sql);
-				$this->value = $this->row['download_count']+1;
-				$this->sql2 = $this->database->query('UPDATE tbl_files SET download_count=' . $this->value .' WHERE id="' . $this->fileid .'"');
-			}
-		}
-	}
-
 	function download_file() {
 		$this->check_level = array(9,8,7,0);
 		if (isset($_GET['file']) && isset($_GET['client'])) {
 			// do a permissions check for logged in user
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
-				// here we should check if the user is admin or the allowed client
+
+				$this->sql = $this->database->query('SELECT * FROM tbl_files WHERE url="' . $_GET['file'] .'"');
+				$this->row = mysql_fetch_array($this->sql);
+				$this->value = $this->row['download_count']+1;
+				$this->sql2 = $this->database->query('UPDATE tbl_files SET download_count=' . $this->value .' WHERE url="' . $_GET['file'] .'"');
+
 				$file = 'upload/'.$_GET['client'].'/'.$_GET['file'];
 				header('Location: '.$file);
 			}

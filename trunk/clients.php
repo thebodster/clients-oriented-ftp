@@ -11,7 +11,7 @@ $(document).ready(function()
 	{
 		$("#clients_tbl").tablesorter( {
 			sortList: [[0,0]], widgets: ['zebra'], headers: {
-				9: { sorter: false }, 
+				9: { sorter: false }
 			}
 		})
 		.tablesorterPager({container: $("#pager")})
@@ -53,10 +53,9 @@ $(document).ready(function()
 	else {
 ?>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" id="clients_tbl" class="tablesorter">
+<table id="clients_tbl" class="tablesorter vertical_middle">
 <thead>
 	<tr>
-		<th><?php _e('ID','cftp_admin'); ?></th>
 		<th><?php _e('Full name','cftp_admin'); ?></th>
 		<th><?php _e('Log in username','cftp_admin'); ?></th>
 		<th><?php _e('Address','cftp_admin'); ?></th>
@@ -77,7 +76,6 @@ $(document).ready(function()
 ?>
 
 	<tr>
-		<td><?php echo $row["id"]; ?></td>
 		<td><?php echo $row["name"]; ?></td>
 		<td><?php echo $row["client_user"]; ?></td>
 		<td><?php echo $row["address"]; ?></td>
@@ -88,7 +86,7 @@ $(document).ready(function()
 		<td>
 			<?php
 			$time_stamp=$row['timestamp']; //get timestamp
-			$date_format=date($timeformat,$time_stamp); // formats timestamp in mm:dd:yy
+			$date_format=date(TIMEFORMAT_USE,$time_stamp); // formats timestamp in mm:dd:yy
 			echo $date_format; // results here ... 02 : 11 : 07
 			?>
 		</td>
@@ -100,15 +98,9 @@ $(document).ready(function()
 			?>
 		</td>
 		<td>
-			<a href="upload/<?php echo $row["client_user"]; ?>/" target="_blank">
-				<img src="img/icons/view.png" alt="<?php _e('View files','cftp_admin'); ?>">
-			</a>
-			<a href="clientform.php?do=edit&amp;client=<?php echo $row["id"]; ?>" target="_self">
-				<img src="img/icons/edit.png" alt="<?php _e('Edit client','cftp_admin'); ?>">
-			</a>
-			<a onclick="return confirm_delete();" href="process.php?do=del_client&amp;client=<?php echo $row["client_user"]; ?>" target="_self">
-				<img src="img/icons/delete.png" alt="<?php _e('Delete client','cftp_admin'); ?>">
-			</a>
+			<a href="upload/<?php echo $row["client_user"]; ?>/" class="button button_small button_blue" target="_blank"><?php _e('View','cftp_admin'); ?></a>
+			<a href="clientform.php?do=edit&amp;client=<?php echo $row["id"]; ?>" class="button button_small button_blue"><?php _e('Edit','cftp_admin'); ?></a>
+			<a href="process.php?do=del_client&amp;client=<?php echo $row["client_user"]; ?>" class="button button_small button_red" onclick="return confirm_delete();"><?php _e('Delete','cftp_admin'); ?></a>
 		</td>
 	</tr>
 

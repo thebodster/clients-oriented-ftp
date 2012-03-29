@@ -10,32 +10,27 @@ msgstr ""
 "MIME-Version: 1.0\n"
 
 #. Text in echo
-#: gallery/template.php:124
+#: cFTP/templates/gallery/template.php:87
 msgid "Delete"
 msgstr ""
 
 #. Text in echo
-#: gallery/template.php:114
+#: cFTP/templates/gallery/template.php:77
 msgid "Download original"
 msgstr ""
 
 #. Text in function
-#: gallery/template.php:88
+#: cFTP/templates/gallery/template.php:51
 msgid "Gallery"
 msgstr ""
 
 #. Text in echo
-#: gallery/template.php:88
+#: cFTP/templates/gallery/template.php:51
 msgid "There are no files."
 msgstr ""
 
 #. Text in echo
-#: gallery/template.php:45
+#: cFTP/templates/gallery/template.php:31
 msgid "This will delete the file permanently. Continue?"
-msgstr ""
-
-#. Text in echo
-#: gallery/template.php:145
-msgid "cFTP Free software (GPL2) | 2007 - "
 msgstr ""
 

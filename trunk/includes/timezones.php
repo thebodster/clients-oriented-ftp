@@ -44,6 +44,6 @@ foreach($zonen AS $zone) {
 $structure .= '</optgroup>';
 return $structure;
 }
-echo timezonechoice($timezone);
+echo timezonechoice(TIMEZONE_USE);
 ?>
 </select>

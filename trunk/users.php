@@ -11,7 +11,7 @@ $(document).ready(function()
 	{
 		$("#users_tbl").tablesorter( {
 			sortList: [[0,0]], widgets: ['zebra'], headers: {
-				6: { sorter: false }, 
+				5: { sorter: false }, 
 			}
 		})
 		.tablesorterPager({container: $("#pager")})
@@ -35,10 +35,9 @@ $(document).ready(function()
 	$count=mysql_num_rows($sql);
 ?>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" id="users_tbl" class="tablesorter">
+<table id="users_tbl" class="tablesorter vertical_middle">
 <thead>
 	<tr>
-		<th><?php _e('ID','cftp_admin'); ?></th>
 		<th><?php _e('Full name','cftp_admin'); ?></th>
 		<th><?php _e('Log in username','cftp_admin'); ?></th>
 		<th><?php _e('E-mail','cftp_admin'); ?></th>
@@ -53,7 +52,6 @@ $(document).ready(function()
 	while($row = mysql_fetch_array($sql)) {
 	?>
 	<tr>
-		<td><?php echo $row["id"]?></td>
 		<td><?php echo $row["name"]?></td>
 		<td><?php echo $row["user"]?></td>
 		<td><?php echo $row["email"]?></td>
@@ -68,18 +66,14 @@ $(document).ready(function()
 		<td>
 			<?php
 			$time_stamp=$row['timestamp']; //get timestamp
-			$date_format=date($timeformat,$time_stamp); // formats timestamp in mm:dd:yy
+			$date_format=date(TIMEFORMAT_USE,$time_stamp); // formats timestamp in mm:dd:yy
 			echo $date_format; // results here ... 02 : 11 : 07
 			?>
 		</td>
 		<td>
-			<a href="userform.php?do=edit&amp;user=<?php echo $row["id"]; ?>" target="_self">
-				<img src="img/icons/edit.png" alt="<?php _e('Edit user','cftp_admin'); ?>">
-			</a>
+			<a href="userform.php?do=edit&amp;user=<?php echo $row["id"]; ?>" class="button button_small button_blue"><?php _e('Edit','cftp_admin'); ?></a>
 			<?php if ($row["user"] != 'admin') { ?>
-				<a onclick="return confirm_delete();" href="process.php?do=del_user&amp;user=<?php echo $row["user"]; ?>" target="_self">
-					<img src="img/icons/delete.png" alt="<?php _e('Delete user','cftp_admin'); ?>">
-				</a>
+				<a href="process.php?do=del_user&amp;user=<?php echo $row["user"]; ?>" class="button button_small button_red" onclick="return confirm_delete();"><?php _e('Delete','cftp_admin'); ?></a>
 			<?php } ?>
 		</td>
 	</tr>
