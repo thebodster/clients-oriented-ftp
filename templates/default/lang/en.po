@@ -2,119 +2,101 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Ignacio <info@subwaydesign.com.ar>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
 
 #. Text in echo
-#: template.php:143
+#: cFTP/templates/default/template.php:104
 msgid "Actions"
 msgstr ""
 
 #. Text in echo
-#: template.php:199
-msgid "Delete"
-msgstr ""
-
-#. Text in echo
-#: template.php:131
+#: cFTP/templates/default/template.php:93
 msgid "Description"
 msgstr ""
 
 #. Text in echo
-#: template.php:134
-#: template.php:166
+#: cFTP/templates/default/template.php:103
+#: cFTP/templates/default/template.php:149
 msgid "Download"
 msgstr ""
 
 #. Text in echo
-#: template.php:141
+#: cFTP/templates/default/template.php:101
 msgid "Downloads"
 msgstr ""
 
 #. Text in function
-#: template.php:1
+#: cFTP/templates/default/template.php:1
 msgid "File downloads"
 msgstr ""
 
 #. Text in echo
-#: template.php:216
+#: cFTP/templates/default/template.php:174
 msgid "First"
 msgstr ""
 
 #. Text in echo
-#: template.php:110
-msgid "Help"
-msgstr ""
-
-#. Text in echo
-#: template.php:135
+#: cFTP/templates/default/template.php:95
 msgid "Image preview"
 msgstr ""
 
 #. Text in echo
-#: template.php:221
+#: cFTP/templates/default/template.php:179
 msgid "Last"
 msgstr ""
 
 #. Text in echo
-#: template.php:130
+#: cFTP/templates/default/template.php:92
 msgid "Name"
 msgstr ""
 
 #. Text in echo
-#: template.php:220
+#: cFTP/templates/default/template.php:178
 msgid "Next"
 msgstr ""
 
 #. Text in echo
-#: template.php:218
+#: cFTP/templates/default/template.php:176
 msgid "Page"
 msgstr ""
 
 #. Text in echo
-#: template.php:217
+#: cFTP/templates/default/template.php:175
 msgid "Prev."
 msgstr ""
 
 #. Text in echo
-#: template.php:222
+#: cFTP/templates/default/template.php:180
 msgid "Show"
 msgstr ""
 
 #. Text in echo
-#: template.php:132
+#: cFTP/templates/default/template.php:94
 msgid "Size"
 msgstr ""
 
 #. Text in echo
-#: template.php:111
-msgid "The file list on the right contains every file uploaded for you."
-msgstr ""
-
-#. Text in echo
-#: template.php:119
+#: cFTP/templates/default/template.php:80
 msgid "There are no files."
 msgstr ""
 
 #. Text in echo
-#: template.php:70
+#: cFTP/templates/default/template.php:67
 msgid "This will delete the file permanently. Continue?"
 msgstr ""
 
 #. Text in echo
-#: template.php:133
+#: cFTP/templates/default/template.php:91
 msgid "Uploaded"
 msgstr ""
 
 #. Text in echo
-#: template.php:140
+#: cFTP/templates/default/template.php:100
 msgid "Uploader"
 msgstr ""
 
-#. Text in echo
-#: template.php:112
-msgid "You can click on the name of each marked column to order the list."
-msgstr ""
-
-#. Text in echo
-#: template.php:243
-msgid "cFTP Free software (GPL2) | 2007 - "
-msgstr ""

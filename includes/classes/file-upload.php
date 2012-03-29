@@ -1,6 +1,6 @@
 <?php
 
-class Upload_File {
+class PSend_Upload_File {
 
 	var $folder;
 	var $client;
@@ -9,6 +9,80 @@ class Upload_File {
 	var $name;
 	var $description;
 	var $upload_state;
+	
+	function is_filetype_allowed($filename) {
+		global $options_values;
+		$this->safe_filename = $filename;
+		$allowed_file_types = str_replace(',','|',$options_values['allowed_file_types']);
+		$file_types = "/^\.(".$allowed_file_types."){1}$/i";
+		if (preg_match($file_types, strrchr($this->safe_filename, '.'))) {
+			return true;
+		}
+	}
+	
+	function safe_rename($name) {
+		$this->name = $name;
+		$safe_filename = preg_replace('/[^\w\._]+/', '_', $this->name);
+		return $safe_filename;
+	}
+	
+	function safe_rename_on_disc($name,$folder) {
+		$this->name = $name;
+		$this->folder = $folder;
+		$new_filename = preg_replace('/[^\w\._]+/', '_', $this->name);
+		if(rename($this->folder.'/'.$this->name, $this->folder.'/'.$new_filename)) {
+			return $new_filename;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	function upload_move($arguments) {
+		$this->uploaded_name = $arguments['uploaded_name'];
+		$this->folder = $arguments['move_to_folder'];
+		$this->filename = $arguments['filename'];
+
+		$this->file_final_name = time().'-'.$this->filename;
+		$this->path = $this->folder.$this->file_final_name;
+		if (move_uploaded_file($this->uploaded_name, $this->path)) {
+			return true;
+		}
+	}
+
+	function upload_copy($arguments) {
+		$this->uploaded_name = $arguments['uploaded_name'];
+		$this->folder = $arguments['move_to_folder'];
+		$this->filename = $arguments['filename'];
+
+		$this->file_final_name = time().'-'.$this->filename;
+		$this->path = $this->folder.$this->file_final_name;
+		if (copy($this->uploaded_name, $this->path)) {
+			unlink($this->uploaded_name);
+			return $this->file_final_name;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	function upload_add_to_database($arguments) {
+		global $database;
+		$this->post_file = $arguments['file'];
+		$this->name = $arguments['name'];
+		$this->description = $arguments['description'];
+		$this->client = $arguments['client'];
+		$this->uploader = $arguments['uploader'];
+		$this->timestamp = time();
+		$result = $database->query("INSERT INTO tbl_files (id,url,filename,description,client_user,timestamp,uploader)"
+		."VALUES ('NULL', '$this->post_file', '$this->name', '$this->description', '$this->client', '$this->timestamp', '$this->uploader')");
+		if(!empty($result)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
 	function upload($arguments) {
 		global $database;

@@ -52,17 +52,19 @@ function check_for_admin() {
 }
 
 function check_for_client() {
-	if ($_SESSION['userlevel'] == '0') {
-		$client_username = $_SESSION['access'];
-		header("location:upload/$client_username/");
-	}
-	elseif ($_COOKIE['userlevel'] == '0') {
-		$client_username = $_COOKIE['access'];
-		header("location:upload/$client_username/");
+	if (isset($_SESSION['userlevel']) || isset($_COOKIE['userlevel'])) {
+		if ($_SESSION['userlevel'] == '0') {
+			$client_username = $_SESSION['access'];
+			header("location:upload/$client_username/");
+		}
+		elseif ($_COOKIE['userlevel'] == '0') {
+			$client_username = $_COOKIE['access'];
+			header("location:upload/$client_username/");
+		}
 	}
 }
 
-function can_see_content($allowed_levels,$page_title,$userlevel_not_allowed) {
+function can_see_content($allowed_levels) {
 	$permission = false;
 	if(isset($allowed_levels)) {
 		/*
@@ -90,7 +92,7 @@ function can_see_content($allowed_levels,$page_title,$userlevel_not_allowed) {
 	if (!$permission) {
 	?>
 		<div id="main">
-			<h2><?php echo $page_title; ?></h2>
+			<h2><?php _e('Access denied','cftp_admin'); ?></h2>
 			<div class="whiteform whitebox">
 				<?php
 					$msg = __("Your user account doesn't allow you to view this page. Please contact a system administrator if you need to access this functions.",'cftp_admin');

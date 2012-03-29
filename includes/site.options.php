@@ -5,7 +5,7 @@ $database->MySQLDB();
 // get admin email address for upload notifications
 $sql = $database->query('SELECT * FROM tbl_users WHERE user="admin"');
 while($row = @mysql_fetch_array($sql)) {
-	$admin_email_address = $row['email'];
+	define('ADMIN_EMAIL_ADDRESS',$row['email']);
 }
 
 // create array of options
@@ -15,23 +15,25 @@ while ($row = @mysql_fetch_array($options)) {
 	$options_values[$row['name']] = $row['value'];
 }
 
-// here we get the system options
-$baseuri = $options_values['base_uri'];
-$max_thumbnail_width = $options_values['max_thumbnail_width'];
-$max_thumbnail_height = $options_values['max_thumbnail_height'];
-$thumbnails_folder = $options_values['thumbnails_folder'];
-$thumbnail_default_quality = $options_values['thumbnail_default_quality'];
-$max_logo_width = $options_values['max_logo_width'];
-$max_logo_height = $options_values['max_logo_height'];
-$this_install_title = $options_values['this_install_title'];
-$selected_clients_template = $options_values['selected_clients_template'];
-$timezone = $options_values['timezone'];
-$timeformat = $options_values['timeformat'];
-$allowed_file_types = $options_values['allowed_file_types'];
-$custom_logo_filename = $options_values['logo_filename'];
-$site_lang = $options_values['site_lang'];
-
 $database->Close();
 
-date_default_timezone_set($timezone);
+// here we get the system options
+if(!empty($options_values)) {
+	$allowed_file_types = $options_values['allowed_file_types'];
+	
+	define('BASE_URI',$options_values['base_uri']);
+	define('THUMBS_MAX_WIDTH',$options_values['max_thumbnail_width']);
+	define('THUMBS_MAX_HEIGHT',$options_values['max_thumbnail_height']);
+	define('THUMBS_FOLDER',$options_values['thumbnails_folder']);
+	define('THUMBS_QUALITY',$options_values['thumbnail_default_quality']);
+	define('LOGO_MAX_WIDTH',$options_values['max_logo_width']);
+	define('LOGO_MAX_HEIGHT',$options_values['max_logo_height']);
+	define('LOGO_FILENAME',$options_values['logo_filename']);
+	define('THIS_INSTALL_SET_TITLE',$options_values['this_install_title']);
+	define('TEMPLATE_USE',$options_values['selected_clients_template']);
+	define('TIMEZONE_USE',$options_values['timezone']);
+	define('TIMEFORMAT_USE',$options_values['timeformat']);
+	
+	date_default_timezone_set(TIMEZONE_USE);
+}
 ?>

@@ -13,14 +13,6 @@ include('header.php');
 
 $database->MySQLDB();
 
-// email texts
-$add_client_mail_subject = __('Welcome to cFTP','cftp_admin');
-$add_client_mail_body = __('A new account was created for you. From now on, you can access the files that have been uploaded under your account using the following credentials:','cftp_admin');
-$add_client_mail_body_2 = __('Access the system administration here','cftp_admin');
-$add_client_mail_body_3 = __('Please contact the administrator if you need further assistance.','cftp_admin');
-$add_mail_body_user = __('Your username','cftp_admin');
-$add_mail_body_pass = __('Your password','cftp_admin');
-
 if ($_GET['do']=='edit') {
 	//if we are editing a client, then the info to show on the form comes from the database
 	$edit_id = $_GET['client'];
@@ -84,18 +76,18 @@ if ($_POST) {
 	$valid_me->validate('completed',$add_client_data_name,$validation_no_name);
 	$valid_me->validate('completed',$add_client_data_email,$validation_no_email);
 	$valid_me->validate('email',$add_client_data_email,$validation_invalid_mail);
+	$valid_me->validate('email_exists',$add_client_data_email,$add_user_mail_exists);
 
 	if (isset($check_password) && $check_password === 1) {
 		$valid_me->validate('completed',$_POST['add_client_form_pass'],$validation_no_pass);
-		$valid_me->validate('alpha',$_POST['add_client_form_pass'],$validation_alpha_pass);
+		$valid_me->validate('password',$_POST['add_client_form_pass'],$validation_valid_pass.' '.$validation_valid_chars);
 		$valid_me->validate('length',$_POST['add_client_form_pass'],$validation_length_pass,MIN_PASS_CHARS,MAX_PASS_CHARS);
 		$valid_me->validate('pass_match','',$validation_match_pass,'','',$_POST['add_client_form_pass'],$_POST['add_client_form_pass2']);
 	}
 
 	if (!isset($edit_who)) {
 		// only check this values when adding a new client, not when editing
-		$valid_me->validate('user_exists',$add_client_data_user,$add_client_exists,'','','','','tbl_clients','client_user');
-		$valid_me->validate('user_exists',$add_client_data_email,$add_client_mail_exists,'','','','','tbl_clients','email');
+		$valid_me->validate('user_exists',$add_client_data_user,$add_user_exists);
 		// user field is only checked when adding a new client because it returns an empty value when it is disabled
 		$valid_me->validate('completed',$add_client_data_user,$validation_no_user);
 		$valid_me->validate('length',$add_client_data_user,$validation_length_user,MIN_USER_CHARS,MAX_USER_CHARS);
@@ -153,7 +145,7 @@ if ($_POST) {
 					mkdir($folder2); chmod($folder2, 0755);
 		
 					// Create index.php on clients folder
-					$index_content = 'require_once(\'../../includes/sys.vars.php\'); $this_user = "'.$add_client_data_user.'"; $template = \'../../templates/\'.$selected_clients_template.\'/template.php\'; include_once($template);';
+					$index_content = 'require_once(\'../../includes/sys.vars.php\'); $this_user = "'.$add_client_data_user.'"; $template = \'../../templates/\'.TEMPLATE_USE.\'/template.php\'; include_once($template);';
 					$addwhat = '<?php ' . $index_content . ' ?>';
 					$file = $folder .'/'. "index.php";   
 					if (!$file_handle = fopen($file,"a")) { echo $creat_err1; }
@@ -169,27 +161,13 @@ if ($_POST) {
 					$success = $database->query("INSERT INTO tbl_clients (id,name,client_user,password,address,phone,email,notify,contact,timestamp,created_by)"
 					."VALUES ('NULL', '$add_client_data_name', '$add_client_data_user', '$add_client_data_pass', '$add_client_data_addr', '$add_client_data_phone', '$add_client_data_email', '$add_client_data_notity', '$add_client_data_intcont', '$timestampdate','$this_admin')");
 	
-					// prepare email using the template
-					$email_body = file_get_contents('emails/newclient.php');
-	
-					$email_body = str_replace('%BODY1%',$add_client_mail_body,$email_body);
-					$email_body = str_replace('%BODY2%',$add_client_mail_body_2,$email_body);
-					$email_body = str_replace('%BODY3%',$add_client_mail_body_3,$email_body);
-					$email_body = str_replace('%LBLUSER%',$add_mail_body_user,$email_body);
-					$email_body = str_replace('%LBLPASS%',$add_mail_body_pass,$email_body);
-					$email_body = str_replace('%URI%',$baseuri,$email_body);
-					$email_body = str_replace('%SUBJECT%',$add_client_mail_subject,$email_body);
-					$email_body = str_replace('%USERNAME%',$add_client_data_user,$email_body);
-					$email_body = str_replace('%PASSWORD%',$_POST['add_client_form_pass'],$email_body);
-					
-					$headers = 'From: '.$this_install_title.' <'.$admin_email_address.'>' . "\n";
-					$headers .= 'Return-Path:<'.$admin_email_address.'>\r\n';
-					$headers .= 'MIME-Version: 1.0' . "\n";
-					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n"; 
-	
-					// send the email
-					$confirmmail = @mail($add_client_data_email, $add_client_mail_subject, $email_body, $headers);
-					if ($confirmmail){
+					// Send notification e-mail
+						// Call the e-mail sending class
+					require_once('includes/classes/send-email.php');
+					$notify_client = new PSend_Email();
+					$notify_send = $notify_client->psend_send_email('new_client',$add_client_data_email,$add_client_data_user,$_POST['add_client_form_pass']);
+
+					if (notify_send == 1){
 						$email_state = 'ok';
 					}
 					else{
@@ -261,122 +239,102 @@ if ($_POST) {
 			// if not $process_state is set, it means we are just entering for the first time
 		?>
 	
-	<script type="text/javascript" src="includes/js/js.validations.php"></script>
-
 	<script type="text/javascript">
-	
-		window.onload = default_field;
+		$(document).ready(function() {
+			$("form").submit(function() {
+				clean_form(this);
 
-		var js_err_name = "<?php echo $validation_no_name; ?>"
-		var js_err_user = "<?php echo $validation_no_user; ?>"
-		var js_err_pass = "<?php echo $validation_no_pass; ?>"
-		var js_err_pass2 = "<?php echo $validation_no_pass2; ?>"
-		var js_err_email = "<?php echo $validation_no_email; ?>"
-		var js_err_invalid_mail = "<?php echo $validation_invalid_mail; ?>"
-		var js_err_pass_mismatch = "<?php echo $validation_match_pass; ?>"
-		var js_err_user_length = "<?php echo $validation_length_user; ?>"
-		var js_err_pass_length = "<?php echo $validation_length_pass; ?>"
-		var js_err_user_chars = "<?php echo $validation_alpha_user; ?>"
-		var js_err_pass_chars = "<?php echo $validation_alpha_pass; ?>"
-
-		function validateform(theform){
-			is_complete(theform.add_client_form_name,js_err_name);
-			is_complete(theform.add_client_form_user,js_err_user);
-			is_complete(theform.add_client_form_email,js_err_email);
-			is_length(theform.add_client_form_user,<?php echo MIN_USER_CHARS; ?>,<?php echo MAX_USER_CHARS; ?>,js_err_user_length);
-			is_email(theform.add_client_form_email,js_err_invalid_mail);
-			is_alpha(theform.add_client_form_user,js_err_user_chars);
-			<?php
-				// This should be re-done!!
-				if($_POST) {
-					if (isset($check_password) && $check_password === 1) {
-						$js_check_password = 1;
-					}
-				}
-				else {
-					if ($_GET['do']=='edit') {
+				is_complete(this.add_client_form_name,'<?php echo $validation_no_name; ?>');
+				is_complete(this.add_client_form_user,'<?php echo $validation_no_user; ?>');
+				is_complete(this.add_client_form_email,'<?php echo $validation_no_email; ?>');
+				is_length(this.add_client_form_user,<?php echo MIN_USER_CHARS; ?>,<?php echo MAX_USER_CHARS; ?>,'<?php echo $validation_length_user; ?>');
+				is_email(this.add_client_form_email,'<?php echo $validation_invalid_mail; ?>');
+				is_alpha(this.add_client_form_user,'<?php echo $validation_alpha_user; ?>');
+				<?php
+					// This should be re-done!!
+					if($_POST) {
+						if (isset($check_password) && $check_password === 1) {
+							$js_check_password = 1;
+						}
 					}
 					else {
-						$js_check_password = 1;
+						if ($_GET['do']=='edit') {
+						}
+						else {
+							$js_check_password = 1;
+						}
 					}
-				}
-				if (isset($js_check_password) && $js_check_password === 1) {
+					if (isset($js_check_password) && $js_check_password === 1) {
+					?>
+						is_complete(this.add_client_form_pass,'<?php echo $validation_no_pass; ?>');
+						is_complete(this.add_client_form_pass2,'<?php echo $validation_no_pass2; ?>');
+						is_length(this.add_client_form_pass,<?php echo MIN_PASS_CHARS; ?>,<?php echo MAX_PASS_CHARS; ?>,'<?php echo $validation_length_pass; ?>');
+						is_password(this.add_client_form_pass,'<?php $chars = addslashes($validation_valid_chars); echo $validation_valid_pass." ".$chars; ?>');
+						is_match(this.add_client_form_pass,this.add_client_form_pass2,'<?php echo $validation_match_pass; ?>');
+					<?php
+					}
 				?>
-					is_complete(theform.add_client_form_pass,js_err_pass);
-					is_complete(theform.add_client_form_pass2,js_err_pass2);
-					is_length(theform.add_client_form_pass,<?php echo MIN_PASS_CHARS; ?>,<?php echo MAX_PASS_CHARS; ?>,js_err_pass_length);
-					is_alpha(theform.add_client_form_pass,js_err_pass_chars);
-					is_match(theform.add_client_form_pass,theform.add_client_form_pass2,js_err_pass_mismatch);
-				<?php
-				}
-			?>
-
-			// show the errors or continue if everything is ok
-			if (error_list != '') {
-				alert(error_title+error_list)
-				error_list = '';
-				return false;
-			}
-		}
+	
+				// show the errors or continue if everything is ok
+				if (show_form_errors() == false) { return false; }
+			});
+		});
 
 	</script>
 	
-		<form action="clientform.php" name="addclient" method="post" onsubmit="return validateform(this);">
+		<form action="clientform.php" name="addclient" method="post">
 			<?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { ?>
 				<input type="hidden" name="edit_who" id="edit_who" value="<?php if ($_GET['do']=='edit') { echo $_GET['client']; } elseif (isset($_POST['edit_who'])) { echo $_POST['edit_who']; } ?>" />
 			<?php } ?>
-			<table border="0" cellspacing="1" cellpadding="1">
-			  <tr>
-				<td width="40%"><?php _e('Name','cftp_admin'); ?></td>
-				<td><input name="add_client_form_name" id="add_client_form_name" class="txtfield" value="<?php echo $add_client_data_name; ?>" /></td>
-			  </tr>
-			  <tr>
-				<td><?php _e('Log in username','cftp_admin'); ?></td>
-				<td><input name="add_client_form_user" id="add_client_form_user" class="txtfield" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo $add_client_data_user; ?>" <?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { ?>disabled="disabled"<?php }?> /></td>
-			  </tr>
-			  <tr>
-				<td><?php _e('Password','cftp_admin'); ?></td>
-				<td><input name="add_client_form_pass" id="add_client_form_pass" class="txtfield" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" /></td>
-			  </tr>
-			  <tr>
-				<td><?php _e('Repeat password','cftp_admin'); ?></td>
-				<td><input name="add_client_form_pass2" id="add_client_form_pass2" class="txtfield" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" /></td>
-			  </tr>
-			  <tr>
-				<td><?php _e('Address','cftp_admin'); ?></td>
-				<td><input name="add_client_form_address" id="add_client_form_address" class="txtfield" value="<?php echo $add_client_data_addr; ?>" /></td>
-			  </tr>
-			  <tr>
-				<td><?php _e('Telephone','cftp_admin'); ?></td>
-				<td><input name="add_client_form_phone" id="add_client_form_phone" class="txtfield" value="<?php echo $add_client_data_phone; ?>" /></td>
-			  </tr>
-			  <tr>
-				<td><?php _e('E-mail','cftp_admin'); ?></td>
-				<td><input name="add_client_form_email" id="add_client_form_email" class="txtfield" value="<?php echo $add_client_data_email; ?>" /></td>
-			  </tr>
-			  <tr>
-				<td><?php _e('Notify new uploads by e-mail','cftp_admin'); ?></td>
-				<td><input type="checkbox" name="add_client_form_notify" id="add_client_form_notify" <?php if($add_client_data_notity == 1) { ?>checked="checked"<?php } ?> /></td>
-			  </tr>
-			  <tr>
-				<td><?php _e('Internal contact','cftp_admin'); ?></td>
-				<td><input name="add_client_form_intcont" id="add_client_form_intcont" class="txtfield" value="<?php echo $add_client_data_intcont; ?>" /></td>
-			  </tr>
-			  <tr>
-				<td colspan="2">
-					<div align="right">
-						<input type="submit" name="Submit" value="<?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { _e('Edit account','cftp_admin'); } else { _e('Create account','cftp_admin'); } ?>" class="boton" />
-					</div>
-					<?php
-						if ($_GET['do'] != 'edit' && empty($_POST['edit_who'])) {
-							$msg = __('This account information will be e-mailed to the address supplied above','cftp_admin');
-							echo system_message('info',$msg);
-						}
-					?>
-				</td>
-			</tr>
-		  </table>
-	
+			<ul class="form_fields">
+				<li>
+					<label for="add_client_form_name"><?php _e('Name','cftp_admin'); ?></label>
+					<input name="add_client_form_name" id="add_client_form_name" class="txtfield required" value="<?php echo stripslashes($add_client_data_name); ?>" />
+				</li>
+				<li>
+					<label for="add_client_form_user"><?php _e('Log in username','cftp_admin'); ?></label>
+					<input name="add_client_form_user" id="add_client_form_user" class="txtfield required" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo stripslashes($add_client_data_user); ?>" <?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { ?>disabled="disabled"<?php }?> />
+				</li>
+				<li>
+					<label for="add_client_form_pass"><?php _e('Password','cftp_admin'); ?></label>
+					<input name="add_client_form_pass" id="add_client_form_pass" class="txtfield required" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
+				</li>
+				<li>
+					<label for="add_client_form_pass2"><?php _e('Repeat password','cftp_admin'); ?></label>
+					<input name="add_client_form_pass2" id="add_client_form_pass2" class="txtfield required" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
+				</li>
+				<li>
+					<label for="add_client_form_address"><?php _e('Address','cftp_admin'); ?></label>
+					<input name="add_client_form_address" id="add_client_form_address" class="txtfield" value="<?php echo stripslashes($add_client_data_addr); ?>" />
+				</li>
+				<li>
+					<label for="add_client_form_phone"><?php _e('Telephone','cftp_admin'); ?></label>
+					<input name="add_client_form_phone" id="add_client_form_phone" class="txtfield" value="<?php echo stripslashes($add_client_data_phone); ?>" />
+				</li>
+				<li>
+					<label for="add_client_form_email"><?php _e('E-mail','cftp_admin'); ?></label>
+					<input name="add_client_form_email" id="add_client_form_email" class="txtfield required" value="<?php echo stripslashes($add_client_data_email); ?>" />
+				</li>
+				<li>
+					<label for="add_client_form_notify"><?php _e('Notify new uploads by e-mail','cftp_admin'); ?></label>
+					<input type="checkbox" name="add_client_form_notify" id="add_client_form_notify" <?php if($add_client_data_notity == 1) { ?>checked="checked"<?php } ?> />
+				</li>
+				<li>
+					<label for="add_client_form_intcont"><?php _e('Internal contact','cftp_admin'); ?></label>
+					<input name="add_client_form_intcont" id="add_client_form_intcont" class="txtfield" value="<?php echo stripslashes($add_client_data_intcont); ?>" />
+				</li>
+				<li class="form_submit_li">
+					<input type="submit" name="Submit" value="<?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { _e('Edit account','cftp_admin'); } else { _e('Create account','cftp_admin'); } ?>" class="boton" />
+				</li>
+			</ul>
+
+			<?php
+				if ($_GET['do'] != 'edit' && empty($_POST['edit_who'])) {
+					$msg = __('This account information will be e-mailed to the address supplied above','cftp_admin');
+					echo system_message('info',$msg);
+				}
+			?>
+
 		</form>
 
 	<?php } ?>
