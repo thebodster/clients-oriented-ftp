@@ -10,6 +10,12 @@ class process {
 			case 'del_file':
 				$this->delete_file();
 			break;
+			case 'hide_file':
+				$this->hide_file();
+			break;
+			case 'show_file':
+				$this->show_file();
+			break;
 			case 'del_client':
 				$this->delete_client();
 			break;
@@ -43,6 +49,32 @@ class process {
 				if (file_exists($this->thumb)) {
 					delfile($this->thumb);
 				}
+			}
+			header("location:upload/" . $this->client . "/index.php");
+		}
+	}
+
+	function hide_file() {
+		$this->check_level = array(9,8,7);
+		if (isset($_GET['client']) && isset($_GET['id'])) {
+			$this->client = mysql_real_escape_string($_GET['client']);
+			$this->id = mysql_real_escape_string($_GET['id']);
+			// do a permissions check
+			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
+				$this->sql = $this->database->query('UPDATE tbl_files SET hidden=1 WHERE id="' . $this->id . '"');
+			}
+			header("location:upload/" . $this->client . "/index.php");
+		}
+	}
+
+	function show_file() {
+		$this->check_level = array(9,8,7);
+		if (isset($_GET['client']) && isset($_GET['id'])) {
+			$this->client = mysql_real_escape_string($_GET['client']);
+			$this->id = mysql_real_escape_string($_GET['id']);
+			// do a permissions check
+			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
+				$this->sql = $this->database->query('UPDATE tbl_files SET hidden=0 WHERE id="' . $this->id . '"');
 			}
 			header("location:upload/" . $this->client . "/index.php");
 		}
