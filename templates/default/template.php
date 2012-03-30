@@ -9,7 +9,13 @@ include_once('../../templates/common.php'); // include the required functions fo
 
 $window_title = __('File downloads','cftp_template');
 
+// User or client?
+$actions_allowed = array(9,8,7);
+if (in_session_or_cookies($actions_allowed)) {
+	$view_actions = 1;
+}
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -101,7 +107,13 @@ $window_title = __('File downloads','cftp_template');
 						<th><?php _e('Downloads','cftp_template'); ?></th>
 					<?php } ?>
 					<th><?php _e('Download','cftp_template'); ?></th>
-					<th><?php _e('Actions','cftp_template'); ?></th>
+					<?php
+						if(isset($view_actions) && $view_actions === 1) {
+					?>
+							<th><?php _e('Actions','cftp_template'); ?></th>
+					<?php
+						}
+					?>
 				</tr>
 			</thead>
 			<tbody>
@@ -149,15 +161,29 @@ $window_title = __('File downloads','cftp_template');
 							<?php _e('Download','cftp_template'); ?>
 						</a>
 					</td>
-					<td>
-						<?php
-							// show DELETE FILE only to users, not clients
-							$clients_allowed = array(9,8,7);
-							if (in_session_or_cookies($clients_allowed)) {
-						?>
-							<a href="../../process.php?do=del_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>&amp;file=<?php echo $row['url']; ?>" class="button button_small button_red" onclick="return confirm_file_delete();"><?php _e('Delete','cftp_admin'); ?></a>
-						<?php } ?>
-					</td>
+					<?php
+					// Actions column
+					if(isset($view_actions) && $view_actions === 1) {
+					?>
+						<td>
+							<?php
+								if($row['hidden'] === '0' || empty($row['hidden'])) {
+							?>
+									<a href="../../process.php?do=hide_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>" class="button button_small button_red"><?php _e('Hide','cftp_admin'); ?></a>
+							<?php
+								} else {
+							?>
+									<a href="../../process.php?do=show_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>" class="button button_small button_green"><?php _e('Show','cftp_admin'); ?></a>
+							<?php
+								}
+								// show DELETE FILE only to users (except uploaders), not clients
+								$delete_allowed = array(9,8);
+								if (in_session_or_cookies($delete_allowed)) {
+							?>
+								<a href="../../process.php?do=del_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>&amp;file=<?php echo $row['url']; ?>" class="button button_small button_red" onclick="return confirm_file_delete();"><?php _e('Delete','cftp_admin'); ?></a>
+							<?php } ?>
+						</td>
+					<?php } ?>
 				</tr>
 			
 			<?php

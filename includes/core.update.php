@@ -30,5 +30,12 @@ if (in_session_or_cookies($allowed_update)) {
 		$updates_made++;
 	}
 
+	// r102 updates
+	$q = $database->query("SELECT hidden FROM tbl_files");
+	if (!$q) {
+		mysql_query("ALTER TABLE tbl_files ADD hidden INT(1) NOT NULL");
+		$updates_made++;
+	}
+
 }
 ?>
