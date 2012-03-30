@@ -48,25 +48,15 @@ if ($_POST) { // form sent?
 			$sql = $database->query($q, $database->connection);
 				$msg = __('The image was uploaded correctly.','cftp_admin');
 				echo system_message('ok',$msg);
-			?>
-				<p><?php echo $logo_replace_info; ?></p>
-				<p><?php echo $select_logo_preview_1; ?> <a href="options.php"><?php echo $select_logo_preview_2; ?></a> <?php echo $select_logo_preview_3; ?></p>
-			<?php
 		}
 		else {
 				$msg = __('The file you selected is not a valid image one. Please upload a jpg, gif or png formated logo picture.','cftp_admin');
 				echo system_message('error',$msg);
-			?>
-				<p><?php echo $logo_replace_info; ?></p>
-			<?php
 		}
 	}
 	else {
 			$msg = __('There was an error uploading the file. Please try again.','cftp_admin');
 			echo system_message('error',$msg);
-		?>
-			<p><?php echo $logo_replace_info; ?></p>
-		<?php
 	}
 }
 else {
