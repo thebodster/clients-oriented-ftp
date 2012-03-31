@@ -8,12 +8,6 @@ $ld = 'cftp_template'; // specify the language domain for this template
 include_once('../../templates/common.php'); // include the required functions for every template
 
 $window_title = __('File downloads','cftp_template');
-
-// User or client?
-$actions_allowed = array(9,8,7);
-if (in_session_or_cookies($actions_allowed)) {
-	$view_actions = 1;
-}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -46,7 +40,6 @@ if (in_session_or_cookies($actions_allowed)) {
 
 <div id="wrapper">
 
-
 	<script type="text/javascript">
 		$(document).ready(function()
 			{
@@ -68,11 +61,6 @@ if (in_session_or_cookies($actions_allowed)) {
 				.tablesorterPager({container: $("#pager")})
 			}
 		);
-	
-		function confirm_file_delete() {
-			if (confirm("<?php _e('This will delete the file permanently. Continue?','cftp_template'); ?>")) return true ;
-			else return false ;
-		}
 	</script>
 
 	<div id="left_column">
@@ -94,26 +82,12 @@ if (in_session_or_cookies($actions_allowed)) {
 			<table id="files_list" class="tablesorter">
 			<thead>
 				<tr>
-					<th><?php _e('Uploaded','cftp_template'); ?></th>
+					<th><?php _e('Uploaded date','cftp_template'); ?></th>
 					<th><?php _e('Name','cftp_template'); ?></th>
 					<th><?php _e('Description','cftp_template'); ?></th>
 					<th><?php _e('Size','cftp_template'); ?></th>
 					<th><?php _e('Image preview','cftp_template'); ?></th>
-					<?php // show UPLOADER only to users, not clients
-						$clients_allowed = array(9,8,7);
-						if (in_session_or_cookies($clients_allowed)) {
-					?>
-						<th><?php _e('Uploader','cftp_template'); ?></th>
-						<th><?php _e('Downloads','cftp_template'); ?></th>
-					<?php } ?>
 					<th><?php _e('Download','cftp_template'); ?></th>
-					<?php
-						if(isset($view_actions) && $view_actions === 1) {
-					?>
-							<th><?php _e('Actions','cftp_template'); ?></th>
-					<?php
-						}
-					?>
 				</tr>
 			</thead>
 			<tbody>
@@ -148,42 +122,11 @@ if (in_session_or_cookies($actions_allowed)) {
 							<img src="../../includes/thumb.php?src=../upload/<?php echo $this_user; ?>/<?php echo $row['url']; ?>&amp;w=<?php echo THUMBS_MAX_WIDTH; ?>&amp;type=prev&amp;who=<?php echo $this_user; ?>&amp;name=<?php echo $row['url']; ?>" class="thumbnail" alt="" />
 						<?php } ?>
 					</td>
-					<?php
-						// show UPLOADER only to users, not clients
-						$clients_allowed = array(9,8,7);
-						if (in_session_or_cookies($clients_allowed)) {
-					?>
-						<td><?php echo $row['uploader']; ?></td>
-						<td><?php echo $row['download_count']; ?></td>
-					<?php } ?>
 					<td>
 						<a href="../../process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank" class="button button_blue">
 							<?php _e('Download','cftp_template'); ?>
 						</a>
 					</td>
-					<?php
-					// Actions column
-					if(isset($view_actions) && $view_actions === 1) {
-					?>
-						<td>
-							<?php
-								if($row['hidden'] === '0' || empty($row['hidden'])) {
-							?>
-									<a href="../../process.php?do=hide_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>" class="button button_small button_red"><?php _e('Hide','cftp_admin'); ?></a>
-							<?php
-								} else {
-							?>
-									<a href="../../process.php?do=show_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>" class="button button_small button_green"><?php _e('Show','cftp_admin'); ?></a>
-							<?php
-								}
-								// show DELETE FILE only to users (except uploaders), not clients
-								$delete_allowed = array(9,8);
-								if (in_session_or_cookies($delete_allowed)) {
-							?>
-								<a href="../../process.php?do=del_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>&amp;file=<?php echo $row['url']; ?>" class="button button_small button_red" onclick="return confirm_file_delete();"><?php _e('Delete','cftp_admin'); ?></a>
-							<?php } ?>
-						</td>
-					<?php } ?>
 				</tr>
 			
 			<?php

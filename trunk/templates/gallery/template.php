@@ -26,13 +26,6 @@ $window_title = __('Gallery','cftp_template_gallery');
 
 <body>
 
-<script type="text/javascript">
-	function confirm_file_delete() {
-		if (confirm("<?php _e('This will delete the file permanently. Continue?','cftp_template_gallery'); ?>")) return true ;
-		else return false ;
-	}
-</script>
-
 <div id="header">
 
 	<?php if (file_exists('../../img/custom/logo/'.LOGO_FILENAME)) { ?>
@@ -76,19 +69,6 @@ $window_title = __('Gallery','cftp_template_gallery');
 								<a href="../../process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank">
 									<?php _e('Download original','cftp_template_gallery'); ?>
 								</a>
-							</div>
-							<div class="img_actions">
-								<?php
-									// show DELETE FILE only to users, not clients
-									$clients_allowed = array(9,8,7);
-									if (in_session_or_cookies($clients_allowed)) {
-								?>
-										<a onclick="return confirm_file_delete();" href="../../process.php?do=del_file&amp;client=<?php echo $this_user; ?>&amp;id=<?php echo $row['id']; ?>&amp;file=<?php echo $row['url']; ?>" target="_self">
-											<img src="<?php echo $this_template; ?>img/delete.png" alt="<?php _e('Delete','cftp_template_gallery'); ?>" />
-										</a>
-								<?php
-									}
-								?>
 							</div>
 						</div>
 					</li>

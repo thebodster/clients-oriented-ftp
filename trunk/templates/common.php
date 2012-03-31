@@ -10,12 +10,7 @@ include_once('../../templates/session_check.php');
 
 $database->MySQLDB();
 
-$files_query = 'SELECT * FROM tbl_files WHERE client_user="' . $this_user .'"';
-// show HIDE OR SHOW FILE only to users, not clients
-$view_hidden_allowed = array(9,8,7);
-if (!in_session_or_cookies($view_hidden_allowed)) {
-	$files_query .= ' AND hidden=0';
-}
+$files_query = 'SELECT * FROM tbl_files WHERE client_user="' . $this_user .'" AND hidden=0';
 
 $sql = $database->query($files_query);
 $sql2 = $database->query('SELECT * FROM tbl_clients WHERE client_user="' . $this_user .'"');

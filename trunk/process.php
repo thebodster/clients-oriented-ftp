@@ -11,10 +11,10 @@ class process {
 				$this->delete_file();
 			break;
 			case 'hide_file':
-				$this->hide_file();
+				$this->change_hidden_file_status('1');
 			break;
 			case 'show_file':
-				$this->show_file();
+				$this->change_hidden_file_status('0');
 			break;
 			case 'del_client':
 				$this->delete_client();
@@ -34,10 +34,11 @@ class process {
 	
 	function delete_file() {
 		$this->check_level = array(9,8);
-		if (isset($_GET['client']) && isset($_GET['id']) && isset($_GET['file'])) {
-			$this->client = mysql_real_escape_string($_GET['client']);
-			$this->id = mysql_real_escape_string($_GET['id']);
-			$this->file = mysql_real_escape_string($_GET['file']);
+		if (isset($_GET['client_id']) && isset($_GET['client_user']) && isset($_GET['file_id']) && isset($_GET['file_name'])) {
+			$this->client_id = mysql_real_escape_string($_GET['client_id']);
+			$this->client = mysql_real_escape_string($_GET['client_user']);
+			$this->id = mysql_real_escape_string($_GET['file_id']);
+			$this->file = mysql_real_escape_string($_GET['file_name']);
 			// do a permissions check
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
 				// delete from database
@@ -50,33 +51,20 @@ class process {
 					delfile($this->thumb);
 				}
 			}
-			header("location:upload/" . $this->client . "/index.php");
+			header("location:manage-files.php?id=".$this->client_id);
 		}
 	}
-
-	function hide_file() {
+	
+	function change_hidden_file_status($change_to) {
 		$this->check_level = array(9,8,7);
 		if (isset($_GET['client']) && isset($_GET['id'])) {
 			$this->client = mysql_real_escape_string($_GET['client']);
 			$this->id = mysql_real_escape_string($_GET['id']);
 			// do a permissions check
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
-				$this->sql = $this->database->query('UPDATE tbl_files SET hidden=1 WHERE id="' . $this->id . '"');
+				$this->sql = $this->database->query('UPDATE tbl_files SET hidden='.$change_to.' WHERE id="' . $this->id . '"');
 			}
-			header("location:upload/" . $this->client . "/index.php");
-		}
-	}
-
-	function show_file() {
-		$this->check_level = array(9,8,7);
-		if (isset($_GET['client']) && isset($_GET['id'])) {
-			$this->client = mysql_real_escape_string($_GET['client']);
-			$this->id = mysql_real_escape_string($_GET['id']);
-			// do a permissions check
-			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
-				$this->sql = $this->database->query('UPDATE tbl_files SET hidden=0 WHERE id="' . $this->id . '"');
-			}
-			header("location:upload/" . $this->client . "/index.php");
+			header("location:manage-files.php?id=".$this->client);
 		}
 	}
 

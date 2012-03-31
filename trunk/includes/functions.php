@@ -1,5 +1,29 @@
 <?php
 
+function get_client_information($client) {
+	global $database;
+	$get_client_info = $database->query("SELECT * FROM tbl_clients WHERE id='$client'");
+	while ($row = mysql_fetch_assoc($get_client_info)) {
+		$information = array(
+							'name' => $row['name'],
+							'username' => $row['client_user'],
+							'address' => $row['address'],
+							'phone' => $row['phone'],
+							'email' => $row['email'],
+							'notify' => $row['notify'],
+							'contact' => $row['contact'],
+							'created_date' => $row['timestamp'],
+							'created_by' => $row['created_by']
+						);
+		if(!empty($information)) {
+			return $information;
+		}
+		else {
+			return false;
+		}
+	}
+}
+
 function check_if_notify_client($client) {
 	global $database;
 	$get_notify = $database->query("SELECT notify, email FROM tbl_clients WHERE client_user='$client'");
