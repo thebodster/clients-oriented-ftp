@@ -1,4 +1,6 @@
 <?php
+define('CURRENT_VERSION', 'r105');
+
 error_reporting(0);
 
 define('ROOT_DIR', dirname(__FILE__));
@@ -29,8 +31,6 @@ require_once(ROOT_DIR.'/site.options.php');
 define('USER_ROLE_LVL_9', 'System Administrator');
 define('USER_ROLE_LVL_8', 'Account Manager');
 define('USER_ROLE_LVL_7', 'Uploader');
-
-define('CURRENT_VERSION', 'r104');
 
 define('SYSTEM_URI','http://code.google.com/p/clients-oriented-ftp/');
 define('SYSTEM_URI_LABEL','ProjectSend on Google Code');

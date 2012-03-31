@@ -10,93 +10,107 @@ msgstr ""
 "MIME-Version: 1.0\n"
 
 #. Text in echo
-#: cFTP/templates/default/template.php:104
+#: ProjectSend/manage-files.php:76
 msgid "Actions"
 msgstr ""
 
 #. Text in echo
-#: cFTP/templates/default/template.php:93
+#: ProjectSend/manage-files.php:71
+#: ProjectSend/templates/default/template.php:87
 msgid "Description"
 msgstr ""
 
 #. Text in echo
-#: cFTP/templates/default/template.php:103
-#: cFTP/templates/default/template.php:149
+#: ProjectSend/manage-files.php:100
+#: ProjectSend/templates/default/template.php:90
+#: ProjectSend/templates/default/template.php:127
 msgid "Download"
 msgstr ""
 
 #. Text in echo
-#: cFTP/templates/default/template.php:101
-msgid "Downloads"
+#: ProjectSend/manage-files.php:75
+msgid "Download count"
 msgstr ""
 
 #. Text in function
-#: cFTP/templates/default/template.php:1
+#: ProjectSend/templates/default/template.php:1
 msgid "File downloads"
 msgstr ""
 
 #. Text in echo
-#: cFTP/templates/default/template.php:174
+#: ProjectSend/templates/default/template.php:143
 msgid "First"
 msgstr ""
 
 #. Text in echo
-#: cFTP/templates/default/template.php:95
+#: ProjectSend/templates/default/template.php:89
 msgid "Image preview"
 msgstr ""
 
 #. Text in echo
-#: cFTP/templates/default/template.php:179
+#: ProjectSend/templates/default/template.php:148
 msgid "Last"
 msgstr ""
 
 #. Text in echo
-#: cFTP/templates/default/template.php:92
+#: ProjectSend/manage-files.php:70
+#: ProjectSend/templates/default/template.php:86
 msgid "Name"
 msgstr ""
 
 #. Text in echo
-#: cFTP/templates/default/template.php:178
+#: ProjectSend/templates/default/template.php:147
 msgid "Next"
 msgstr ""
 
 #. Text in echo
-#: cFTP/templates/default/template.php:176
+#: ProjectSend/templates/default/template.php:145
 msgid "Page"
 msgstr ""
 
 #. Text in echo
-#: cFTP/templates/default/template.php:175
+#: ProjectSend/templates/default/template.php:144
 msgid "Prev."
 msgstr ""
 
 #. Text in echo
-#: cFTP/templates/default/template.php:180
+#: ProjectSend/templates/default/template.php:149
 msgid "Show"
 msgstr ""
 
 #. Text in echo
-#: cFTP/templates/default/template.php:94
+#: ProjectSend/manage-files.php:72
+#: ProjectSend/templates/default/template.php:88
 msgid "Size"
 msgstr ""
 
 #. Text in echo
-#: cFTP/templates/default/template.php:80
+#: ProjectSend/manage-files.php:73
+msgid "Status"
+msgstr ""
+
+#. Text in echo
+#: ProjectSend/templates/default/template.php:74
 msgid "There are no files."
 msgstr ""
 
 #. Text in echo
-#: cFTP/templates/default/template.php:67
+#: ProjectSend/manage-files.php:29
 msgid "This will delete the file permanently. Continue?"
 msgstr ""
 
 #. Text in echo
-#: cFTP/templates/default/template.php:91
+#: ProjectSend/manage-files.php:69
 msgid "Uploaded"
 msgstr ""
 
 #. Text in echo
-#: cFTP/templates/default/template.php:100
+#: ProjectSend/templates/default/template.php:85
+msgid "Uploaded date"
+msgstr ""
+
+#. Text in echo
+#: ProjectSend/manage-files.php:74
 msgid "Uploader"
 msgstr ""
 
