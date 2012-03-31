@@ -19,9 +19,7 @@
 		$("#files_list")
 			.tablesorter( {
 				sortList: [[0,1]], widgets: ['zebra'], headers: {
-					5: { sorter: false },
-					8: { sorter: false },
-					9: { sorter: false }
+					7: { sorter: false }
 				}
 		})
 		.tablesorterPager({container: $("#pager")})
@@ -73,7 +71,6 @@
 							<th><?php _e('Description','cftp_template'); ?></th>
 							<th><?php _e('Size','cftp_template'); ?></th>
 							<th><?php _e('Status','cftp_template'); ?></th>
-							<th><?php _e('Image preview','cftp_template'); ?></th>
 							<th><?php _e('Uploader','cftp_template'); ?></th>
 							<th><?php _e('Download count','cftp_template'); ?></th>
 							<th><?php _e('Actions','cftp_template'); ?></th>
@@ -95,21 +92,6 @@
 											$status_visible = __('Visible','cftp_admin');
 											echo ($row['hidden'] === '1') ? $status_hidden : $status_visible;
 										?>
-									</td>
-									<td>
-										<?php
-											$pathinfo = pathinfo($this_file_uri);
-											$extension = $pathinfo['extension'];
-											if (
-												$extension == "gif" ||
-												$extension == "jpg" ||
-												$extension == "pjpeg" ||
-												$extension == "jpeg" ||
-												$extension == "png"
-											) {
-										?>
-											<img src="includes/thumb.php?src=<?php echo $this_file_uri; ?>&amp;w=<?php echo THUMBS_MAX_WIDTH; ?>&amp;type=prev&amp;who=<?php echo $this_user; ?>&amp;name=<?php echo $row['url']; ?>" class="thumbnail" alt="" />
-										<?php } ?>
 									</td>
 									<td><?php echo $row['uploader']; ?></td>
 									<td><?php echo $row['download_count']; ?></td>
