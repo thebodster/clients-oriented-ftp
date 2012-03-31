@@ -27,7 +27,7 @@ body {
 
 #current_logo {
 	margin:0;
-	padding:15px;
+	padding:30px 0;
 	width:100%;
 	text-align:center;
 }
@@ -87,42 +87,40 @@ body {
 	text-decoration:underline;
 }
 
-.img_data .img_actions {
-	text-align:right;
-	float:right;
-	width:49%;
-}
-
 #logout {
 	float:right;
 	position:absolute;
 	overflow:visible;
-	margin:0 0 0 -120px;
+	margin:0 0 0 -140px;
 	left:100%;
-	top:20px;
+	top:25px;
 
-	width:100px;
+	width:120px;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
 	border-radius:5px;
 	padding:3px 0 8px;
-	font-size:13px!important;
+	font-size:11px!important;
 	text-align:center;
 	text-decoration:none;
+	text-transform:uppercase;
 	
-	background:#407FB6!important;
-	background:-moz-linear-gradient(center top , #407FB6, #236299)!important;
-	background:-webkit-gradient(linear, left top, left bottom, from(#407FB6), to(#236299))!important;
-	border:1px solid #004380!important;
+	background:#111!important;
+	background:-moz-linear-gradient(center top , #333, #111)!important;
+	background:-webkit-gradient(linear, left top, left bottom, from(#333), to(#111))!important;
+	border:1px solid #444!important;
 	box-shadow:0 1px 0 rgba(0, 0, 0, 0.3) inset, 0 0 0 1px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(0, 0, 0, 0.5)!important;
 	text-shadow:0 -1px 0 #000000!important;
-	color:white!important;
+	color:#999!important;
 }
 
+#logout:hover {
+	color:#fff!important;
+}
 
 #footer {
 	background:#111;
-	color:#FFFFFF;
+	color:#999;
 
 	clear:both;
 	-moz-box-shadow:1px 1px 2px #222;

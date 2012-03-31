@@ -7,16 +7,14 @@
 ?>
 
 <script type="text/javascript">
-$(document).ready(function()
-	{
-		$("#clients_tbl").tablesorter( {
-			sortList: [[0,0]], widgets: ['zebra'], headers: {
-				9: { sorter: false }
-			}
-		})
-		.tablesorterPager({container: $("#pager")})
-	}
-);
+$(document).ready(function() {
+	$("#clients_tbl").tablesorter( {
+		sortList: [[0,0]], widgets: ['zebra'], headers: {
+			9: { sorter: false }
+		}
+	})
+	.tablesorterPager({container: $("#pager")})
+});
 </script>
 
 <div id="main">
@@ -53,66 +51,69 @@ $(document).ready(function()
 	else {
 ?>
 
-<table id="clients_tbl" class="tablesorter vertical_middle">
-<thead>
-	<tr>
-		<th><?php _e('Full name','cftp_admin'); ?></th>
-		<th><?php _e('Log in username','cftp_admin'); ?></th>
-		<th><?php _e('Address','cftp_admin'); ?></th>
-		<th><?php _e('Telephone','cftp_admin'); ?></th>
-		<th><?php _e('E-mail','cftp_admin'); ?></th>
-		<th><?php _e('Notify','cftp_admin'); ?></th>
-		<th><?php _e('Internal contact','cftp_admin'); ?></th>
-		<th><?php _e('Added on','cftp_admin'); ?></th>
-		<th><?php _e('Files','cftp_admin'); ?></th>
-		<th><?php _e('Actions','cftp_admin'); ?></th>
-	</tr>
-</thead>
-<tbody>
-
-<?php
-		while($row = mysql_fetch_array($sql)) {
-		$client_user = $row["client_user"];
-?>
-
-	<tr>
-		<td><?php echo $row["name"]; ?></td>
-		<td><?php echo $row["client_user"]; ?></td>
-		<td><?php echo $row["address"]; ?></td>
-		<td><?php echo $row["phone"]; ?></td>
-		<td><?php echo $row["email"]; ?></td>
-		<td><?php if ($row["notify"] == '1') { _e('Yes','cftp_admin'); } else { _e('No','cftp_admin'); }?></td>
-		<td><?php echo $row["contact"]; ?></td>
-		<td>
-			<?php
-			$time_stamp=$row['timestamp']; //get timestamp
-			$date_format=date(TIMEFORMAT_USE,$time_stamp); // formats timestamp in mm:dd:yy
-			echo $date_format; // results here ... 02 : 11 : 07
-			?>
-		</td>
-		<td>
-			<?php
-				$sql_files = $database->query("SELECT * FROM tbl_files WHERE client_user='$client_user'");
-				$count_files=mysql_num_rows($sql_files);
-				echo $count_files;
-			?>
-		</td>
-		<td>
-			<a href="upload/<?php echo $row["client_user"]; ?>/" class="button button_small button_blue" target="_blank"><?php _e('View','cftp_admin'); ?></a>
-			<a href="clientform.php?do=edit&amp;client=<?php echo $row["id"]; ?>" class="button button_small button_blue"><?php _e('Edit','cftp_admin'); ?></a>
-			<a href="process.php?do=del_client&amp;client=<?php echo $row["client_user"]; ?>" class="button button_small button_red" onclick="return confirm_delete();"><?php _e('Delete','cftp_admin'); ?></a>
-		</td>
-	</tr>
-
+<form action="clients.php" name="clients_list" method="post">
+	<table id="clients_tbl" class="tablesorter vertical_middle">
+	<thead>
+		<tr>
+			<th><?php _e('Full name','cftp_admin'); ?></th>
+			<th><?php _e('Log in username','cftp_admin'); ?></th>
+			<th><?php _e('Address','cftp_admin'); ?></th>
+			<th><?php _e('Telephone','cftp_admin'); ?></th>
+			<th><?php _e('E-mail','cftp_admin'); ?></th>
+			<th><?php _e('Notify','cftp_admin'); ?></th>
+			<th><?php _e('Internal contact','cftp_admin'); ?></th>
+			<th><?php _e('Added on','cftp_admin'); ?></th>
+			<th><?php _e('Files','cftp_admin'); ?></th>
+			<th><?php _e('Actions','cftp_admin'); ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	
 	<?php
+			while($row = mysql_fetch_array($sql)) {
+			$client_user = $row["client_user"];
+	?>
+	
+		<tr>
+			<td><?php echo $row["name"]; ?></td>
+			<td><?php echo $row["client_user"]; ?></td>
+			<td><?php echo $row["address"]; ?></td>
+			<td><?php echo $row["phone"]; ?></td>
+			<td><?php echo $row["email"]; ?></td>
+			<td><?php if ($row["notify"] == '1') { _e('Yes','cftp_admin'); } else { _e('No','cftp_admin'); }?></td>
+			<td><?php echo $row["contact"]; ?></td>
+			<td>
+				<?php
+				$time_stamp=$row['timestamp']; //get timestamp
+				$date_format=date(TIMEFORMAT_USE,$time_stamp); // formats timestamp in mm:dd:yy
+				echo $date_format; // results here ... 02 : 11 : 07
+				?>
+			</td>
+			<td>
+				<?php
+					$sql_files = $database->query("SELECT * FROM tbl_files WHERE client_user='$client_user'");
+					$count_files=mysql_num_rows($sql_files);
+					echo $count_files;
+				?>
+			</td>
+			<td>
+				<a href="manage-files.php?id=<?php echo $row["id"]; ?>" class="button button_blue"><?php _e('Manage files','cftp_admin'); ?></a>
+				<a href="upload/<?php echo $row["client_user"]; ?>/" class="button button_blue" target="_blank"><?php _e('View as client','cftp_admin'); ?></a>
+				<a href="clientform.php?do=edit&amp;client=<?php echo $row["id"]; ?>" class="button button_small button_blue"><?php _e('Edit','cftp_admin'); ?></a>
+				<a href="process.php?do=del_client&amp;client=<?php echo $row["client_user"]; ?>" class="button button_small button_red" onclick="return confirm_delete();"><?php _e('Delete','cftp_admin'); ?></a>
+			</td>
+		</tr>
+	
+		<?php
+			}
 		}
-	}
-
-	$database->Close();
-?>
-
-</tbody>
-</table>
+	
+		$database->Close();
+	?>
+	
+	</tbody>
+	</table>
+</form>
 
 <?php if ($count > 10) { ?>
 <div id="pager" class="pager">
