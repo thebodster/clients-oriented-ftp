@@ -7,21 +7,6 @@ class process {
 	function process() {
 		$this->database = new MySQLDB;
 		switch ($_GET['do']) {
-			case 'del_file':
-				$this->delete_file();
-			break;
-			case 'hide_file':
-				$this->change_hidden_file_status('1');
-			break;
-			case 'show_file':
-				$this->change_hidden_file_status('0');
-			break;
-			case 'del_client':
-				$this->delete_client();
-			break;
-			case 'del_user':
-				$this->delete_user();
-			break;
 			case 'download':
 				$this->download_file();
 			break;
@@ -32,69 +17,6 @@ class process {
 		$this->database->Close();
 	}
 	
-	function delete_file() {
-		$this->check_level = array(9,8);
-		if (isset($_GET['client_id']) && isset($_GET['client_user']) && isset($_GET['file_id']) && isset($_GET['file_name'])) {
-			$this->client_id = mysql_real_escape_string($_GET['client_id']);
-			$this->client = mysql_real_escape_string($_GET['client_user']);
-			$this->id = mysql_real_escape_string($_GET['file_id']);
-			$this->file = mysql_real_escape_string($_GET['file_name']);
-			// do a permissions check
-			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
-				// delete from database
-				$this->sql = $this->database->query('DELETE FROM tbl_files WHERE client_user="' . $this->client .'" AND id="' . $this->id . '"');
-				// make the filename var
-				$this->gone = 'upload/' . $this->client .'/' . $this->file;
-				$this->thumb = 'upload/' . $this->client .'/thumbs/' . $this->file;
-				delfile($this->gone);
-				if (file_exists($this->thumb)) {
-					delfile($this->thumb);
-				}
-			}
-			header("location:manage-files.php?id=".$this->client_id);
-		}
-	}
-	
-	function change_hidden_file_status($change_to) {
-		$this->check_level = array(9,8,7);
-		if (isset($_GET['client']) && isset($_GET['id'])) {
-			$this->client = mysql_real_escape_string($_GET['client']);
-			$this->id = mysql_real_escape_string($_GET['id']);
-			// do a permissions check
-			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
-				$this->sql = $this->database->query('UPDATE tbl_files SET hidden='.$change_to.' WHERE id="' . $this->id . '"');
-			}
-			header("location:manage-files.php?id=".$this->client);
-		}
-	}
-
-	function delete_client() {
-		$this->check_level = array(9,8);
-		if (isset($_GET['client'])) {
-			$this->client = mysql_real_escape_string($_GET['client']);
-			// do a permissions check
-			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
-				$this->sql = $this->database->query('DELETE FROM tbl_clients WHERE client_user="' . $this->client .'"');
-				$this->sql = $this->database->query('DELETE FROM tbl_files WHERE client_user="' . $this->client .'"');
-				$this->folder = "./upload/" . $this->client . "/";
-				deleteall($this->folder);
-			}
-			header("location:clients.php");
-		}
-	}
-
-	function delete_user() {
-		$this->check_level = array(9);
-		if (isset($_GET['user'])) {
-			$this->user = mysql_real_escape_string($_GET['user']);
-			// do a permissions check
-			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
-				$this->sql = $this->database->query('DELETE FROM tbl_users WHERE user="' . $this->user .'"');
-			}
-			header("location:users.php");
-		}
-	}
-
 	function download_file() {
 		$this->check_level = array(9,8,7,0);
 		if (isset($_GET['file']) && isset($_GET['client'])) {

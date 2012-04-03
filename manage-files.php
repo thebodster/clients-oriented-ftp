@@ -3,6 +3,7 @@
 	$allowed_levels = array(9,8);
 	require_once('includes/includes.php');
 
+
 	$this_id = $_GET['id'];
 	$this_client = get_client_information($this_id);
 
@@ -18,11 +19,38 @@
 	$(document).ready(function() {
 		$("#files_list")
 			.tablesorter( {
-				sortList: [[0,1]], widgets: ['zebra'], headers: {
-					7: { sorter: false }
+				sortList: [[1,1]], widgets: ['zebra'], headers: {
+					0: { sorter: false },
+					8: { sorter: false }
 				}
 		})
 		.tablesorterPager({container: $("#pager")})
+
+		$("#select_all").click(function(){
+			var status = $(this).attr("checked");
+			$("td>input:checkbox").attr("checked",status);
+		});
+
+		$("form").submit(function() {
+			var checks = $("td>input:checkbox").serializeArray(); 
+			if (checks.length == 0) { 
+				alert('<?php _e('Please select at least one file to proceed.','cftp_admin'); ?>');
+				return false; 
+			} 
+			else {
+				var action = $('#files_actions').val();
+				if (action == 'delete') {
+					var msg_1 = '<?php _e("You are about to delete",'cftp_admin'); ?>';
+					var msg_2 = '<?php _e("files. Are you sure you want to continue?",'cftp_admin'); ?>';
+					if (confirm(msg_1+' '+checks.length+' '+msg_2)) {
+						return true;
+					} else {
+						return false;
+					}
+				}
+			}
+		});
+
 	});
 
 	function confirm_file_delete() {
@@ -46,6 +74,46 @@
 	?>
 	
 		<?php
+
+			// Mass actions
+			if(isset($_POST['btn_proceed_files'])) {
+				if(!empty($_POST['formfiles'])) {
+					$selected_files = $_POST['formfiles'];
+					switch($_POST['files_actions']) {
+						case 'hide':
+							foreach ($selected_files as $work_file) {
+								$this_file = new FilesActions();
+								$hide_file = $this_file->change_files_hide_status($work_file,'1');
+							}
+							$msg = __('The selected files were marked as hidden.','cftp_admin');
+							echo system_message('ok',$msg);
+							break;
+
+						case 'show':
+							foreach ($selected_files as $work_file) {
+								$this_file = new FilesActions();
+								$show_file = $this_file->change_files_hide_status($work_file,'0');
+							}
+							$msg = __('The selected files were marked as visible.','cftp_admin');
+							echo system_message('ok',$msg);
+							break;
+
+						case 'delete':
+							foreach ($selected_files as $work_file) {
+								$this_file = new FilesActions();
+								$delete_file = $this_file->delete_files($work_file);
+							}
+							$msg = __('The selected files were deleted.','cftp_admin');
+							echo system_message('ok',$msg);
+							break;
+					}
+				}
+				else {
+					$msg = __('Please select at least one file.','cftp_admin');
+					echo system_message('error',$msg);
+				}
+			}
+
 			$database->MySQLDB();
 			$files_query = 'SELECT * FROM tbl_files WHERE client_user="' . $this_client['username'] .'"';
 		
@@ -61,64 +129,71 @@
 			else {
 		?>
 	
-				<p><?php _e('Please note that downloading a file from here will not add to the download count.','cftp_admin'); ?></p>
+				<form action="manage-files.php?id=<?php echo $this_id; ?>" name="files_list" method="post">
+					<div class="form_actions">
+						<div class="form_actions_count">
+							<p><?php _e('Files','cftp_admin'); ?>: <span><?php echo $count; ?></span></p>
+						</div>
+						<div class="form_actions_submit">
+							<label><?php _e('Selected files actions','cftp_admin'); ?>:</label>
+							<select name="files_actions" id="files_actions" class="txtfield">
+								<option value="hide"><?php _e('Hide','cftp_admin'); ?></option>
+								<option value="show"><?php _e('Show','cftp_admin'); ?></option>
+								<option value="delete"><?php _e('Delete','cftp_admin'); ?></option>
+							</select>
+							<input type="submit" name="btn_proceed_files" id="btn_proceed_files" value="<?php _e('Proceed','cftp_admin'); ?>" class="button_form" />
+						</div>
+					</div>
 	
-				<table id="files_list" class="tablesorter">
-					<thead>
-						<tr>
-							<th><?php _e('Uploaded','cftp_template'); ?></th>
-							<th><?php _e('Name','cftp_template'); ?></th>
-							<th><?php _e('Description','cftp_template'); ?></th>
-							<th><?php _e('Size','cftp_template'); ?></th>
-							<th><?php _e('Status','cftp_template'); ?></th>
-							<th><?php _e('Uploader','cftp_template'); ?></th>
-							<th><?php _e('Download count','cftp_template'); ?></th>
-							<th><?php _e('Actions','cftp_template'); ?></th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php
-							while($row = mysql_fetch_array($sql)) {
-								$this_file_uri = 'upload/'.$this_client['username'].'/'.$row['url'];
-						?>
-								<tr>
-									<td><?php echo date(TIMEFORMAT_USE, $row['timestamp']); ?></td>
-									<td><strong><?php echo htmlentities($row['filename']); ?></strong></td>
-									<td><?php echo htmlentities($row['description']); ?></td>
-									<td><?php $this_file = filesize($this_file_uri); echo format_file_size($this_file); ?></td>
-									<td>
-										<?php
-											$status_hidden = __('Hidden','cftp_admin');
-											$status_visible = __('Visible','cftp_admin');
-											echo ($row['hidden'] === '1') ? $status_hidden : $status_visible;
-										?>
-									</td>
-									<td><?php echo $row['uploader']; ?></td>
-									<td><?php echo $row['download_count']; ?></td>
-									<td>
-										<a href="<?php echo $this_file_uri; ?>" target="_blank" class="button button_blue">
-											<?php _e('Download','cftp_template'); ?>
-										</a>
-										<?php
-											if($row['hidden'] === '0' || empty($row['hidden'])) {
-										?>
-												<a href="process.php?do=hide_file&amp;client=<?php echo $this_id; ?>&amp;id=<?php echo $row['id']; ?>" class="button button_small button_red"><?php _e('Hide','cftp_admin'); ?></a>
-										<?php
-											} else {
-										?>
-												<a href="process.php?do=show_file&amp;client=<?php echo $this_id; ?>&amp;id=<?php echo $row['id']; ?>" class="button button_small button_green"><?php _e('Show','cftp_admin'); ?></a>
-										<?php
-											}
-										?>
-										<a href="process.php?do=del_file&amp;client_id=<?php echo $this_id; ?>&amp;client_user=<?php echo $this_client['username']; ?>&amp;file_id=<?php echo $row['id']; ?>&amp;file_name=<?php echo $row['url']; ?>" class="button button_small button_red" onclick="return confirm_file_delete();"><?php _e('Delete','cftp_admin'); ?></a>
-									</td>
-								</tr>
-						<?php
-							}
-						?>
-					</tbody>
-				</table>
-	
+					<table id="files_list" class="tablesorter">
+						<thead>
+							<tr>
+								<th class="td_checkbox">
+									<input type="checkbox" name="select_all" id="select_all" value="0" />
+								</th>
+								<th><?php _e('Uploaded','cftp_template'); ?></th>
+								<th><?php _e('Name','cftp_template'); ?></th>
+								<th><?php _e('Description','cftp_template'); ?></th>
+								<th><?php _e('Size','cftp_template'); ?></th>
+								<th><?php _e('Status','cftp_template'); ?></th>
+								<th><?php _e('Uploader','cftp_template'); ?></th>
+								<th><?php _e('Download count','cftp_template'); ?></th>
+								<th><?php _e('Actions','cftp_template'); ?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+								while($row = mysql_fetch_array($sql)) {
+									$this_file_uri = 'upload/'.$this_client['username'].'/'.$row['url'];
+							?>
+									<tr>
+										<td><input type="checkbox" name="formfiles[]" value="<?php echo $row["id"]; ?>" /></td>
+										<td><?php echo date(TIMEFORMAT_USE, $row['timestamp']); ?></td>
+										<td><strong><?php echo htmlentities($row['filename']); ?></strong></td>
+										<td><?php echo htmlentities($row['description']); ?></td>
+										<td><?php $this_file = filesize($this_file_uri); echo format_file_size($this_file); ?></td>
+										<td class="<?php echo ($row['hidden'] === '1') ? 'file_status_hidden' : 'file_status_visible'; ?>">
+											<?php
+												$status_hidden = __('Hidden','cftp_admin');
+												$status_visible = __('Visible','cftp_admin');
+												echo ($row['hidden'] === '1') ? $status_hidden : $status_visible;
+											?>
+										</td>
+										<td><?php echo $row['uploader']; ?></td>
+										<td><?php echo $row['download_count']; ?></td>
+										<td>
+											<a href="<?php echo $this_file_uri; ?>" target="_blank" class="button button_blue">
+												<?php _e('Download','cftp_template'); ?>
+											</a>
+										</td>
+									</tr>
+							<?php
+								}
+							?>
+						</tbody>
+					</table>
+				</form>
+
 				<?php if ($count > 10) { ?>
 					<div id="pager" class="pager">
 						<form>
@@ -144,6 +219,8 @@
 						</form>
 					</div>
 				<?php } ?>
+
+				<div class="message message_info"><?php _e('Please note that downloading a file from here will not add to the download count.','cftp_admin'); ?></div>
 	
 	<?php
 		// End IF COUNT
