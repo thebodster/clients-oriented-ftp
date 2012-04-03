@@ -15,7 +15,8 @@ strong {
 	font-weight:bold;
 }
 
-* :focus { outline: 0; }
+:focus { outline:none; }
+::-moz-focus-inner { border:0; }
 
 p {
 	margin-bottom:1.2em;

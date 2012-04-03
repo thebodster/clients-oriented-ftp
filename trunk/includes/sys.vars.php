@@ -1,7 +1,7 @@
 <?php
 define('CURRENT_VERSION', 'r105');
 
-error_reporting(0);
+//error_reporting(0);
 
 define('ROOT_DIR', dirname(__FILE__));
 
