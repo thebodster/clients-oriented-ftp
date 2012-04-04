@@ -32,6 +32,7 @@ if($_POST) {
 	$this_install_title = mysql_real_escape_string($_POST['this_install_title']);
 	$base_uri = mysql_real_escape_string($_POST['base_uri']);
 	$got_admin_name = mysql_real_escape_string($_POST['install_user_fullname']);
+	$got_admin_username = mysql_real_escape_string($_POST['install_user_username']);
 	$got_admin_email = mysql_real_escape_string($_POST['install_user_mail']);
 	$got_admin_pass = mysql_real_escape_string(md5($_POST['install_user_pass']));
 	$got_admin_pass2 = mysql_real_escape_string(md5($_POST['install_user_repeat']));
@@ -78,6 +79,11 @@ if ($_POST) {
 	$valid_me->validate('completed',$base_uri,$install_no_baseuri);
 	$valid_me->validate('completed',$got_admin_name,$validation_no_name);
 	$valid_me->validate('completed',$got_admin_email,$validation_no_email);
+	// username
+	$valid_me->validate('completed',$got_admin_username,$validation_no_user);
+	$valid_me->validate('length',$got_admin_username,$validation_length_user,MIN_USER_CHARS,MAX_USER_CHARS);
+	$valid_me->validate('alpha',$got_admin_username,$validation_alpha_user);
+	// password fields
 	$valid_me->validate('completed',$_POST['install_user_pass'],$validation_no_pass);
 	$valid_me->validate('completed',$_POST['install_user_repeat'],$validation_no_pass2);
 	$valid_me->validate('email',$got_admin_email,$validation_invalid_mail);
@@ -111,7 +117,7 @@ if ($_POST) {
 				$msg = __('Congratulations! Everything is up and running.','cftp_admin');
 				echo system_message('ok',$msg);
 				?>
-					<p><?php _e('You may proceed to','cftp_admin'); ?> <a href="../index.php" target="_self"><?php _e('log in','cftp_admin'); ?></a> <?php _e('with your newely created user. Remember, the username for that account is <strong>admin</strong>.','cftp_admin'); ?></p>
+					<p><?php _e('You may proceed to','cftp_admin'); ?> <a href="../index.php" target="_self"><?php _e('log in','cftp_admin'); ?></a> <?php _e('with your newely created username and password.','cftp_admin'); ?></p>
 				<?php
 				break;
 			case 'err':
@@ -136,6 +142,11 @@ if ($_POST) {
 					is_complete(this.base_uri,'<?php echo $install_no_baseuri; ?>');
 					is_complete(this.install_user_fullname,'<?php echo $validation_no_name; ?>');
 					is_complete(this.install_user_mail,'<?php echo $validation_no_email; ?>');
+					// username
+					is_complete(this.install_user_username,'<?php echo $validation_no_user; ?>');
+					is_length(this.install_user_username,<?php echo MIN_USER_CHARS; ?>,<?php echo MAX_USER_CHARS; ?>,'<?php echo $validation_length_user; ?>');
+					is_alpha(this.install_user_username,'<?php echo $validation_alpha_user; ?>');
+					// password fields
 					is_complete(this.install_user_pass,'<?php echo $validation_no_pass; ?>');
 					is_complete(this.install_user_repeat,'<?php echo $validation_no_pass2; ?>');
 					is_email(this.install_user_mail,'<?php echo $validation_invalid_mail; ?>');
@@ -178,6 +189,10 @@ if ($_POST) {
 				<li>
 					<label for="install_user_mail"><?php _e('Admin e-mail','cftp_admin'); ?></label>
 					<input name="install_user_mail" id="install_user_mail" class="required" value="<?php echo (isset($got_admin_email) ? $got_admin_email : ''); ?>" />
+				</li>
+				<li>
+					<label for="install_user_username"><?php _e('Administrator username','cftp_admin'); ?></label>
+					<input name="install_user_username" id="install_user_username" class="required" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo (isset($got_admin_username) ? $got_admin_username : ''); ?>" />
 				</li>
 				<li>
 					<label for="install_user_pass"><?php _e('Password','cftp_admin'); ?></label>

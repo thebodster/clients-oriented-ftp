@@ -100,7 +100,7 @@
 				?>
 				<tr>
 					<td>
-						<?php if ($row["user"] != 'admin') { ?>
+						<?php if ($row["id"] != '1') { ?>
 							<input type="checkbox" name="delete[]" value="<?php echo $row["id"]; ?>" />
 						<?php } ?>
 					</td>

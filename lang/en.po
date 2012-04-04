@@ -1107,6 +1107,6 @@ msgstr ""
 
 #. Text in echo
 #: ProjectSend/install/index.php:114
-msgid "with your newely created user. Remember, the username for that account is <strong>admin</strong>."
+msgid "with your newely created username and password."
 msgstr ""
 
