@@ -18,7 +18,7 @@ When those are steps are completed, follow this instructions:
 4. Complete the information there and wait for the correct installation message.
 
 Congratulations! ProjectSend is now installed and ready for action!
-You may login with the default username "admin" and your new password.
+You may login with you new username and password.
 
 --------------------------------------------------------------------------------------------
 
