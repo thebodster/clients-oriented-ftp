@@ -7,8 +7,7 @@ if (in_session_or_cookies($allowed_update)) {
 	
 	//r92 updates
 	$new_database_values = array(
-									'logo_filename' => 'logo.png',
-									'site_lang' => 'en'
+									'logo_filename' => 'logo.png'
 								);
 	
 	foreach($new_database_values as $row => $value) {
