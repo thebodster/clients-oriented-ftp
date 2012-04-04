@@ -82,7 +82,7 @@ if ($_POST) {
 	$valid_me->validate('completed',$_POST['install_user_repeat'],$validation_no_pass2);
 	$valid_me->validate('email',$got_admin_email,$validation_invalid_mail);
 	$valid_me->validate('length',$_POST['install_user_pass'],$validation_length_pass,MIN_USER_CHARS,MAX_USER_CHARS);
-	$valid_me->validate('alpha',$_POST['install_user_pass'],$validation_alpha_pass);
+	$valid_me->validate('password',$_POST['install_user_pass'],$validation_alpha_pass);
 	$valid_me->validate('pass_match','',$validation_match_pass,'','',$_POST['install_user_pass'],$_POST['install_user_repeat']);
 
 	if ($valid_me->return_val) { //lets continue

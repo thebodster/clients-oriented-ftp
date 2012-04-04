@@ -322,12 +322,12 @@ ul.menu .topline {border-top:1px solid #aaa}
 /* file managment */
 
 .file_status_visible {
-	color:green!important;
+	color:#639822!important;
 	font-weight:bold;
 }
 
 .file_status_hidden {
-	color:red!important;
+	color:#D24244!important;
 	font-weight:bold;
 }
 
