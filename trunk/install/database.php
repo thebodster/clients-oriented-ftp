@@ -75,7 +75,7 @@ INSERT INTO `tbl_options` (`id`, `name`, `value`) VALUES
 
 $q6 = '
 INSERT INTO `tbl_users` (`id`, `user`, `password`, `name`, `email`, `level`, `timestamp`) VALUES
-(1, \'admin\', \''.$got_admin_pass.'\', \''.$got_admin_name.'\', \''.$got_admin_email.'\', 9, '.$timestampdate.');
+(1, \''.$got_admin_username.'\', \''.$got_admin_pass.'\', \''.$got_admin_name.'\', \''.$got_admin_email.'\', 9, '.$timestampdate.');
 ';
 
 try_query(array($q1,$q2,$q3,$q4,$q5,$q6));
