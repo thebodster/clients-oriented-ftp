@@ -3,6 +3,10 @@ define('CURRENT_VERSION', 'r110');
 
 error_reporting(0);
 
+define('GLOBAL_TIME_LIMIT', 5*60);
+define('UPLOAD_TIME_LIMIT', 120*60);
+@set_time_limit(GLOBAL_TIME_LIMIT);
+
 define('ROOT_DIR', dirname(__FILE__));
 
 if(file_exists(ROOT_DIR.'/sys.config.php')) {
@@ -22,7 +26,7 @@ define('MAX_USER_CHARS', 16);
 define('MIN_PASS_CHARS', 5);
 define('MAX_PASS_CHARS', 16);
 
-define('COOKIE_EXP_TIME', 93600);
+define('COOKIE_EXP_TIME', 60*60*24*30);
 
 require_once(ROOT_DIR.'/classes/database.php');
 require_once(ROOT_DIR.'/site.options.php');
