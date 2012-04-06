@@ -22,7 +22,12 @@ $database->MySQLDB();
 		}
 		else { 
 	?>
-			<p><?php _e('Click on Add files to select all the files that you want to upload, and then click continue. On the next step, you will be able to set a name and description for each uploaded file. Remember that the maximum allowed file size (in mb.) is ','cftp_admin'); echo '<strong>'.MAX_FILESIZE.'</strong>.'; ?></p>
+			<p>
+				<?php
+					_e('Click on Add files to select all the files that you want to upload, and then click continue. On the next step, you will be able to set a name and description for each uploaded file. Remember that the maximum allowed file size (in mb.) is ','cftp_admin');
+					echo '<strong>'.MAX_FILESIZE.'</strong>.';
+				?>
+			</p>
 
 			<style type="text/css">@import url(includes/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css);</style>
 			<script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
@@ -75,7 +80,10 @@ $database->MySQLDB();
 
 						uploader.bind('FileUploaded', function (up, file, info) {
 							var uploaded_files = $('#uploaded_files').attr('value');
-							var appended_files = uploaded_files + file.name + ',';
+							// replace any commas on the filename
+							var file_name = file.name;
+							var fix_name = file_name.replace(/\,/g, '');
+							var appended_files = uploaded_files + fix_name + ',';
 							$('#uploaded_files').attr('value',appended_files);
 						});			
 

@@ -9,6 +9,7 @@ class PSend_Upload_File {
 	var $name;
 	var $description;
 	var $upload_state;
+	var $separator = '_';
 	
 	function is_filetype_allowed($filename) {
 		global $options_values;
@@ -22,16 +23,16 @@ class PSend_Upload_File {
 	
 	function safe_rename($name) {
 		$this->name = $name;
-		$safe_filename = preg_replace('/[^\w\._]+/', '_', $this->name);
-		return $safe_filename;
+		$this->safe_filename = preg_replace('/[^\w\._]+/', $this->separator, $this->name);
+		return $this->safe_filename;
 	}
 	
 	function safe_rename_on_disc($name,$folder) {
 		$this->name = $name;
 		$this->folder = $folder;
-		$new_filename = preg_replace('/[^\w\._]+/', '_', $this->name);
-		if(rename($this->folder.'/'.$this->name, $this->folder.'/'.$new_filename)) {
-			return $new_filename;
+		$this->new_filename = preg_replace('/[^\w\._]+/', $this->separator, $this->name);
+		if(rename($this->folder.'/'.$this->name, $this->folder.'/'.$this->new_filename)) {
+			return $this->new_filename;
 		}
 		else {
 			return false;
