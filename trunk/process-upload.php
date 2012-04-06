@@ -24,8 +24,7 @@ $targetDir = 'upload/temp';
 $cleanupTargetDir = true; // Remove old files
 $maxFileAge = 5 * 3600; // Temp file age in seconds
 
-// 5 minutes execution time
-@set_time_limit(5 * 60);
+@set_time_limit(UPLOAD_TIME_LIMIT);
 
 // Uncomment this one to fake upload time
 // usleep(5000);
