@@ -128,6 +128,6 @@ if (!$chunks || $chunk == $chunks - 1) {
 
 
 // Return JSON-RPC response
-die('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');
+die('{"jsonrpc" : "2.0", "result" : null, "id" : "id", "NewFileName" : "'.$fileName.'"}');
 
 ?>
