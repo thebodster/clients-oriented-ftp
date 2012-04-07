@@ -53,7 +53,8 @@ $window_title = __('Gallery','cftp_template_gallery');
 			while($row = mysql_fetch_array($sql)) {
 		?>
 			<?php
-				$extension = strtolower(substr($row['url'], -3));
+				$pathinfo = pathinfo($row['url']);
+				$extension = strtolower($pathinfo['extension']);
 				$img_formats = array('gif','jpg','pjpeg','jpeg','png');
 				if (in_array($extension,$img_formats)) {
 			?>
