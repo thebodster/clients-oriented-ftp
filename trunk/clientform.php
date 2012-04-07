@@ -167,7 +167,7 @@ if ($_POST) {
 					$notify_client = new PSend_Email();
 					$notify_send = $notify_client->psend_send_email('new_client',$add_client_data_email,$add_client_data_user,$_POST['add_client_form_pass']);
 
-					if (notify_send == 1){
+					if ($notify_send == 1){
 						$email_state = 'ok';
 					}
 					else{
