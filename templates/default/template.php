@@ -110,7 +110,7 @@ $window_title = __('File downloads','cftp_template');
 					<td>
 						<?php
 							$pathinfo = pathinfo($row['url']);
-							$extension = $pathinfo['extension'];
+							$extension = strtolower($pathinfo['extension']);
 							if (
 								$extension == "gif" ||
 								$extension == "jpg" ||

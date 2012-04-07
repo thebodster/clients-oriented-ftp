@@ -62,7 +62,7 @@ switch($_GET['type']) {
 $destination = $do_on_folder.$thumb_name;
 
 if (!file_exists($thumb_name)) {
-	$extension = $pathinfo['extension'];
+	$extension = strtolower($pathinfo['extension']);
 	/* Detect filetype and make a temp image */
 	if ($extension == "gif") {
 		$fuente = imagecreatefromgif($_GET['src']);
