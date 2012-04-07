@@ -69,6 +69,15 @@ function default_footer_info() {
 <?php
 }
 
+function message_no_clients() {
+?>
+	<div class="whitebox whiteform whitebox_text">
+		<p><?php _e('There are no clients at the moment', 'cftp_admin'); ?></p>
+		<p><a href="clientform.php" target="_self"><?php _e('Create a new one', 'cftp_admin'); ?></a> <?php _e('to be able to upload files for that account.', 'cftp_admin'); ?></p>
+	</div>
+<?php
+}
+
 function system_message($type,$message,$div_id = '') {
 	/*
 		Current CSS available message classes:

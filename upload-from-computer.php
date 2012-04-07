@@ -15,10 +15,8 @@ $database->MySQLDB();
 		$sql = $database->query("SELECT * FROM tbl_clients");
 		$count = mysql_num_rows($sql);
 		if (!$count) {
-	?>
-			<p><?php _e('There are no clients at the moment', 'cftp_admin'); ?></p>
-			<p><a href="clientform.php" target="_self"><?php _e('Create a new one', 'cftp_admin'); ?></a> <?php _e('to be able to upload files for that account.', 'cftp_admin'); ?></p>
-	<?php
+			// Echo the no clients default message
+			message_no_clients();
 		}
 		else { 
 	?>
@@ -80,10 +78,12 @@ $database->MySQLDB();
 
 						uploader.bind('FileUploaded', function (up, file, info) {
 							var uploaded_files = $('#uploaded_files').attr('value');
+
 							// replace any commas on the filename
 							var file_name = file.name;
-							var fix_name = file_name.replace(/\,/g, '');
+							var fix_name = file_name.replace(/\,/g, '_');
 							var appended_files = uploaded_files + fix_name + ',';
+
 							$('#uploaded_files').attr('value',appended_files);
 						});			
 

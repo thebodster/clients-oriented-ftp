@@ -77,12 +77,8 @@ $(document).ready(function() {
 	$sql = $database->query($cq);
 	$count = mysql_num_rows($sql);
 	if (!$count) {
-	?>
-		<div class="whiteform whitebox">
-			<p><?php _e('There are no clients at the moment.','cftp_admin'); ?></p>
-			<p><?php _e('Please create at least one to be able to upload files.','cftp_admin'); ?></p>
-		</div>
-	<?php
+		// Echo the no clients default message
+		message_no_clients();
 	}
 	else {
 ?>

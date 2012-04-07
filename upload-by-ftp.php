@@ -18,10 +18,8 @@ $work_folder = 'upload/temp';
 		$sql = $database->query("SELECT * FROM tbl_clients");
 		$count = mysql_num_rows($sql);
 		if (!$count) {
-	?>
-			<p><?php _e('There are no clients at the moment', 'cftp_admin'); ?></p>
-			<p><a href="clientform.php" target="_self"><?php _e('Create a new one', 'cftp_admin'); ?></a> <?php _e('to be able to upload files for that account.', 'cftp_admin'); ?></p>
-	<?php
+			// Echo the no clients default message
+			message_no_clients();
 		}
 		else {
 		
@@ -114,7 +112,7 @@ $work_folder = 'upload/temp';
 			}
 			else {
 			?>
-				<div class="whitebox whiteform">
+				<div class="whitebox whiteform whitebox_text">
 					<p><?php _e('There are no files available to add right now.', 'cftp_admin'); ?></p>
 					<p>
 						<?php

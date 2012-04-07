@@ -65,7 +65,7 @@
 	<?php
 		if(empty($this_id)) {
 	?>
-			<div class="whiteform whitebox">
+			<div class="whiteform whitebox whitebox_text">
 				<p><?php _e('Please go to the clients administration page and select "Manage files" from any client.','cftp_admin'); ?></p>
 			</div>
 	<?php
@@ -121,7 +121,7 @@
 			$count = mysql_num_rows($sql);
 			if (!$count) {
 			?>
-				<div class="whiteform whitebox">
+				<div class="whiteform whitebox whitebox_text">
 					<p><?php _e('There are no files for this client.','cftp_admin'); ?></p>
 				</div>
 			<?php
