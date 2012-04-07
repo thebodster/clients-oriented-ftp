@@ -141,7 +141,7 @@ require_once('includes/classes/send-email.php');
 					<th><?php _e('Description','cftp_admin'); ?></th>
 					<th><?php _e('Assigned to','cftp_admin'); ?></th>
 					<th><?php _e('Client was notified','cftp_admin'); ?></th>
-					<th><?php _e("Client's file list",'cftp_admin'); ?></th>
+					<th><?php _e("Client's files",'cftp_admin'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -171,7 +171,10 @@ require_once('includes/classes/send-email.php');
 								echo (isset($reason) ? ' ('.$reason.')' : '');
 							?>
 						</td>
-						<td><a href="upload/<?php echo $uploaded['client']; ?>/" target="_blank" class="btn_link"><?php _e('Access','cftp_admin'); ?></a></td>
+						<td>
+							<a href="manage-files.php?id=<?php $this_client = get_client_by_id($uploaded['client']); echo $this_client['id']; ?>" class="button button_blue"><?php _e('Manage files','cftp_admin'); ?></a>
+							<a href="upload/<?php echo $uploaded['client']; ?>/" target="_blank" class="button button_blue"><?php _e('View as client','cftp_admin'); ?></a>
+						</td>
 					</tr>
 			<?php
 				}
