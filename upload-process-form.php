@@ -15,10 +15,8 @@ $database->MySQLDB();
 $work_folder = 'upload/temp/';
 
 // Coming from the web uploader
-if(isset($_POST['uploaded_files'])) {
-	$uploaded_files = $_POST['uploaded_files'];
-	$uploaded_files = explode(',',$uploaded_files);
-	$uploaded_files = array_filter($uploaded_files);
+if(isset($_POST['finished_files'])) {
+	$uploaded_files = array_filter($_POST['finished_files']);
 }
 // Coming from upload by FTP
 if(isset($_POST['add'])) {
@@ -133,7 +131,7 @@ require_once('includes/classes/send-email.php');
 	if(!empty($upload_finish)) {
 ?>
 		<h3><?php _e('Files uploaded correctly','cftp_admin'); ?></h3>
-		<table id="uploaded_files_tbl" class="tablesorter edit_files">
+		<table id="uploaded_files_tbl" class="tablesorter edit_files vertical_middle">
 			<thead>
 				<tr>
 					<th><?php _e('File Name','cftp_admin'); ?></th>
@@ -183,10 +181,7 @@ require_once('includes/classes/send-email.php');
 		</table>
 <?php
 	}
-
-	// Make it a string again to use on the hidden field
-	$uploaded_hidden = implode(',',$uploaded_files);
-	?>
+?>
 
 	<?php
 		if(!empty($uploaded_files)) {
@@ -221,7 +216,12 @@ require_once('includes/classes/send-email.php');
 
 
 			<form action="upload-process-form.php" name="save_files" id="save_files" method="post">
-				<input type="hidden" name="uploaded_files" value="<?php echo $uploaded_hidden; ?>" />
+				<?php
+					foreach($uploaded_files as $add_uploaded_field) {
+						echo '<input type="hidden" name="finished_files[]" value="'.$add_uploaded_field.'" />
+						';
+					}
+				?>
 				<table id="edit_files_tbl" class="tablesorter edit_files">
 					<thead>
 						<tr>

@@ -77,15 +77,10 @@ $database->MySQLDB();
 						uploader.start();
 
 						uploader.bind('FileUploaded', function (up, file, info) {
-							var uploaded_files = $('#uploaded_files').attr('value');
-
-							// replace any commas on the filename
-							var file_name = file.name;
-							var fix_name = file_name.replace(/\,/g, '_');
-							var appended_files = uploaded_files + fix_name + ',';
-
-							$('#uploaded_files').attr('value',appended_files);
-						});			
+							var obj = JSON.parse(info.response);
+							var new_file_field = '<input type="hidden" name="finished_files[]" value="'+obj.NewFileName+'" />'
+							$('form').append(new_file_field);
+						});
 
 						return false;
 					} else {
