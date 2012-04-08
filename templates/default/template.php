@@ -97,13 +97,7 @@ $window_title = __('File downloads','cftp_template');
 			?>
 			
 				<tr>
-					<td>
-						<?php
-						$time_stamp=$row['timestamp']; //get timestamp
-						$date_format=date(TIMEFORMAT_USE,$time_stamp); // formats timestamp
-						echo $date_format; // results here ... 02 : 11 : 07
-						?>
-					</td>
+					<td><?php echo date(TIMEFORMAT_USE,$row['timestamp']); ?></td>
 					<td><strong><?php echo htmlentities($row['filename']); ?></strong></td>
 					<td><?php echo htmlentities($row['description']); ?></td>
 					<td><?php $this_file = filesize($row['url']); echo format_file_size($this_file); ?></td>

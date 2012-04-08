@@ -5,7 +5,7 @@
 
 
 	$this_id = $_GET['id'];
-	$this_client = get_client_information($this_id);
+	$this_client = get_client_by_id($this_id);
 
 	$page_title = __('Manage files','cftp_admin');
 	if(!empty($this_client)) {

@@ -1,5 +1,6 @@
 <?php
 // Call the file uploading class
+require_once('includes/sys.vars.php');
 require_once('includes/classes/file-upload.php');
 /**
  * upload.php
@@ -19,7 +20,7 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
 // Settings
-$targetDir = 'upload/temp';
+$targetDir = USER_UPLOADS_TEMP_FOLDER;
 
 $cleanupTargetDir = true; // Remove old files
 $maxFileAge = 5 * 3600; // Temp file age in seconds

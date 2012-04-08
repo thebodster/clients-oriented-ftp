@@ -1,19 +1,37 @@
 <?php
-/*
-	ProjectSend on Google Code
-	http://code.google.com/p/clients-oriented-ftp/
-	Distributed under GPL2
-	Feel free to participate!
-*/
+/**
+ * ProjectSend (previously cFTP) is a free, clients-oriented, private file
+ * sharing web application.
+ * Clients are created and assigned a username and a password. Then you can
+ * upload as much files as you want under each account, and optionally add
+ * a name and description to them. 
+ *
+ * ProjectSend is hosted on Google Code.
+ * Feel free to participate!
+ *
+ * @link		http://code.google.com/p/clients-oriented-ftp/
+ * @license		http://www.gnu.org/licenses/gpl-2.0.html GNU GPL version 2
+ * @package		ProjectSend
+ *
+ */
 session_start();
 ob_start();
+
+/**
+ * Define the level required to access the following function, where
+ * all system users are included, and clients (level 0) are not.
+ */
 $allowed_enter = array(9,8,7);
 require_once('includes/includes.php');
-//if logged as a system user, go directly to home.php
+
+/** If logged as a system user, go directly to the back-end homepage */
 if (in_session_or_cookies($allowed_enter)) {
 	header("location:home.php");
 }
+
+/** If client is logged in, redirect to the files list. */
 check_for_client();
+
 $database->MySQLDB();
 ?>
 <!DOCTYPE html>
@@ -39,140 +57,147 @@ $database->MySQLDB();
 	<div id="login_header_low">
 	</div>
 
-<div id="main">
-
-<?php
-if ($_POST) {
-	$sysuser_username = mysql_real_escape_string($_POST['login_form_user']);
-	$sysuser_password = mysql_real_escape_string(md5($_POST['login_form_pass']));
-
-	// try to login as system user
-	$sql_user = $database->query("SELECT * FROM tbl_users WHERE user='$sysuser_username'");
-	$count_user = mysql_num_rows($sql_user);
-	if($count_user > 0){
-		$try_login = 'user';
-	} else {
-		$sql_client = $database->query("SELECT * FROM tbl_clients WHERE client_user='$sysuser_username'");
-		$count_client = mysql_num_rows($sql_client);
-		if($count_client > 0){
-			$try_login = 'client';
-		}
-	}
-	if(!empty($try_login)) {
-		switch($try_login) {
-			case 'user':
-				while($row = mysql_fetch_array($sql_user)) {
-					$db_pass = $row['password'];
-					$user_level = $row["level"];
-				}
-				if ($db_pass == $sysuser_password) {
-					// changes here should also be reflected on header.php
-					$_SESSION['loggedin'] = $sysuser_username;
-					$_SESSION['access'] = 'admin';
-					$_SESSION['userlevel'] = $user_level;
-					// if remember me is on, set the cookie
-					if ($_POST['login_form_remember']=='on') {
-						setcookie("loggedin",$sysuser_username,time()+COOKIE_EXP_TIME);
-						setcookie("password",$sysuser_password,time()+COOKIE_EXP_TIME);
-						setcookie("access","admin",time()+COOKIE_EXP_TIME);
-						setcookie("userlevel",$user_level,time()+COOKIE_EXP_TIME);
-					}
-					header("location:home.php");
-					exit;
-				}
-				else {
-					$errorstate = 'wrong_password';
-				}
-			break;
-			case 'client';
-				while($row = mysql_fetch_array($sql_client)) {
-					$db_pass = $row['password'];
-				}
-				if ($db_pass == $sysuser_password) {
-					// changes here should also be reflected on templates
-					$_SESSION['loggedin'] = $sysuser_username;
-					$_SESSION['access'] = $sysuser_username;
-					$_SESSION['userlevel'] = '0';
-					// if remember me is on, set the cookie
-					if ($_POST['login_form_remember']=='on') {
-						setcookie("loggedin",$sysuser_username,time()+COOKIE_EXP_TIME);
-						setcookie("password",$sysuser_password,time()+COOKIE_EXP_TIME);
-						setcookie("access",$sysuser_username,time()+COOKIE_EXP_TIME);
-						setcookie("userlevel","0",time()+COOKIE_EXP_TIME);
-					}
-					header("location:upload/$sysuser_username/");
-					exit;
-				}
-				else {
-					$errorstate = 'wrong_password';
-				}
-			break;
-		}
-	}
-	else {
-		$errorstate = 'wrong_username';
-	}
-
-}
-?>
+	<div id="main">
 	
-	<div class="whiteform whitebox" id="loginform">
+	<?php
+	/** The form was submitted */
+	if ($_POST) {
+		$sysuser_username = mysql_real_escape_string($_POST['login_form_user']);
+		$sysuser_password = mysql_real_escape_string(md5($_POST['login_form_pass']));
 	
-		<?php
-			// show login errors here.
-			if (isset($errorstate)) {
-				switch ($errorstate) {
-				 case 'wrong_username':
-				 	$login_err_message = __("The supplied username doesn't exist.",'cftp_admin');
-				 break;
-				 case 'wrong_password':
-				 	$login_err_message = __("The supplied password is incorrect.",'cftp_admin');
-				 break;
+		/** Look up the system users table to see if the entered username exists */
+		$sql_user = $database->query("SELECT * FROM tbl_users WHERE user='$sysuser_username'");
+		$count_user = mysql_num_rows($sql_user);
+		if($count_user > 0){
+			$try_login = 'user';
+		} else {
+		/** If not, search for the same username on the clients table */
+			$sql_client = $database->query("SELECT * FROM tbl_clients WHERE client_user='$sysuser_username'");
+			$count_client = mysql_num_rows($sql_client);
+			if($count_client > 0){
+				$try_login = 'client';
+			}
+		}
+		/** If the username was found on any table, try to log in */
+		if(!empty($try_login)) {
+			switch($try_login) {
+				/** If the username was found on the system users table */
+				case 'user':
+					while($row = mysql_fetch_array($sql_user)) {
+						$db_pass = $row['password'];
+						$user_level = $row["level"];
+					}
+					if ($db_pass == $sysuser_password) {
+						$_SESSION['loggedin'] = $sysuser_username;
+						$_SESSION['access'] = 'admin';
+						$_SESSION['userlevel'] = $user_level;
+						/** If "remember me" checkbox is on, set the cookie */
+						if ($_POST['login_form_remember']=='on') {
+							setcookie("loggedin",$sysuser_username,time()+COOKIE_EXP_TIME);
+							setcookie("password",$sysuser_password,time()+COOKIE_EXP_TIME);
+							setcookie("access","admin",time()+COOKIE_EXP_TIME);
+							setcookie("userlevel",$user_level,time()+COOKIE_EXP_TIME);
+						}
+						header("location:home.php");
+						exit;
+					}
+					else {
+						$errorstate = 'wrong_password';
+					}
+				break;
+
+				/** If the username was found on the clients table */
+				case 'client';
+					while($row = mysql_fetch_array($sql_client)) {
+						$db_pass = $row['password'];
+					}
+					if ($db_pass == $sysuser_password) {
+						$_SESSION['loggedin'] = $sysuser_username;
+						$_SESSION['access'] = $sysuser_username;
+						$_SESSION['userlevel'] = '0';
+						/** If "remember me" checkbox is on, set the cookie */
+						if ($_POST['login_form_remember']=='on') {
+							setcookie("loggedin",$sysuser_username,time()+COOKIE_EXP_TIME);
+							setcookie("password",$sysuser_password,time()+COOKIE_EXP_TIME);
+							setcookie("access",$sysuser_username,time()+COOKIE_EXP_TIME);
+							setcookie("userlevel","0",time()+COOKIE_EXP_TIME);
+						}
+						/** Send the client directly to the files list */
+						header("location:upload/$sysuser_username/");
+						exit;
+					}
+					else {
+						$errorstate = 'wrong_password';
+					}
+				break;
+			}
+		}
+		else {
+			$errorstate = 'wrong_username';
+		}
+	
+	}
+	?>
+		
+		<div class="whiteform whitebox" id="loginform">
+			<?php
+				/**
+				 * Show login errors
+				 */
+				if (isset($errorstate)) {
+					switch ($errorstate) {
+						case 'wrong_username':
+							$login_err_message = __("The supplied username doesn't exist.",'cftp_admin');
+							break;
+						case 'wrong_password':
+							$login_err_message = __("The supplied password is incorrect.",'cftp_admin');
+							break;
+					}
+	
+					echo system_message('error',$login_err_message,'login_error');
 				}
-				echo system_message('error',$login_err_message,'login_error');
 			?>
-		<?php } ?>
-	
-		<script type="text/javascript">
-			$(document).ready(function() {
-				$("form").submit(function() {
-					clean_form(this);
-	
-					is_complete(this.login_form_user,'<?php _e('Username was not completed','cftp_admin'); ?>');
-					is_complete(this.login_form_pass,'<?php _e('Password was not completed','cftp_admin'); ?>');
-	
-					// show the errors or continue if everything is ok
-					if (show_form_errors() == false) { return false; }
+		
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$("form").submit(function() {
+						clean_form(this);
+		
+						is_complete(this.login_form_user,'<?php _e('Username was not completed','cftp_admin'); ?>');
+						is_complete(this.login_form_pass,'<?php _e('Password was not completed','cftp_admin'); ?>');
+		
+						// show the errors or continue if everything is ok
+						if (show_form_errors() == false) { return false; }
+					});
 				});
-			});
-		</script>
+			</script>
+		
+			<form action="index.php" method="post" name="login_admin">
+				<input type="hidden" name="sent_admin" id="sent_admin">
+				<ul class="form_fields">
+					<li>
+						<label for="login_form_user"><?php _e('Username','cftp_admin'); ?></label>
+						<input type="text" name="login_form_user" id="login_form_user" value="<?php if (isset($sysuser_username)) { echo $sysuser_username; } ?>" class="field" />
+					</li>
+					<li>
+						<label for="login_form_pass"><?php _e('Password','cftp_admin'); ?></label>
+						<input type="password" name="login_form_pass" id="login_form_pass" class="field" />
+					</li>
+					<li>
+						<label for="login_form_remember"><?php _e('Remember me','cftp_admin'); ?></label>
+						<input type="checkbox" name="login_form_remember" id="login_form_remember" />
+					</li>
+					<li class="form_submit_li">
+						<input type="submit" name="Submit" value="<?php _e('Continue to log in','cftp_admin'); ?>" class="boton" />
+					</li>
+				</ul>
+			</form>
 	
-		<form action="index.php" method="post" name="login_admin">
-			<input type="hidden" name="sent_admin" id="sent_admin">
-			<ul class="form_fields">
-				<li>
-					<label for="login_form_user"><?php _e('Username','cftp_admin'); ?></label>
-					<input type="text" name="login_form_user" id="login_form_user" value="<?php if (isset($sysuser_username)) { echo $sysuser_username; } ?>" class="field" />
-				</li>
-				<li>
-					<label for="login_form_pass"><?php _e('Password','cftp_admin'); ?></label>
-					<input type="password" name="login_form_pass" id="login_form_pass" class="field" />
-				</li>
-				<li>
-					<label for="login_form_remember"><?php _e('Remember me','cftp_admin'); ?></label>
-					<input type="checkbox" name="login_form_remember" id="login_form_remember" />
-				</li>
-				<li class="form_submit_li">
-					<input type="submit" name="Submit" value="<?php _e('Continue to log in','cftp_admin'); ?>" class="boton" />
-				</li>
-			</ul>
-		</form>
+		</div>
+	
+	</div> <!-- main -->
 
-	</div>
-
-</div> <!-- main -->
-
-<?php default_footer_info(); ?>
+	<?php default_footer_info(); ?>
 
 </body>
 </html>

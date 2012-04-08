@@ -1,11 +1,33 @@
 <?php
+/**
+ * This file generates the header back-end part only if the current logged in
+ * account is that of a system user. Clients are redirected to thir files lists
+ * via index.php.
+ *
+ * Other checks for user level are performed later to generate the different
+ * menu items, and the content of the page that called this file.
+ *
+ * @package ProjectSend
+ * @see check_for_session
+ * @see check_for_admin
+ * @see can_see_content
+ */
 session_start();
 ob_start();
 header("Cache-control: private");
+
+/** Check for an active session or cookie */
 check_for_session();
+
+/** Check if the active account belongs to a system user or a client. */
 check_for_admin();
-if (!isset($page_title)) { $page_title = $page_title_basic; }
+
+/** If no page title is defined, revert to a default one */
+if (!isset($page_title)) { $page_title = __('System Administration','cftp_admin'); }
+
+/** Call the database update file to see if any change is needed */
 require_once('includes/core.update.php');
+
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -43,11 +65,18 @@ require_once('includes/core.update.php');
 		<a href="process.php?do=logout" target="_self" id="logout"><?php _e('Logout', 'cftp_admin'); ?></a>
 	</div>
 
-	<?php if($updates_made > 0) { ?>
-		<div id="system_msg">
-			<p><strong><?php _e('System Notice:', 'cftp_admin');?></strong> <?php _e('The database was updated to support this version of the software: ', 'cftp_admin'); echo CURRENT_VERSION; ?></p>
-		</div>
-	<?php } ?>
+	<?php
+		/**
+		 * If any update was made to the database structure, show the message
+		 */
+		if($updates_made > 0) {
+	?>
+			<div id="system_msg">
+				<p><strong><?php _e('System Notice:', 'cftp_admin');?></strong> <?php _e('The database was updated to support this version of the software: ', 'cftp_admin'); echo CURRENT_VERSION; ?></p>
+			</div>
+	<?php
+		}
+	?>
 	
 	<div id="top_menu">
 		<ul class="menu" id="menu">
@@ -60,47 +89,67 @@ require_once('includes/core.update.php');
 				</ul>
 			</li>
 	
-			<?php // show CLIENTS to allowd users
+			<?php
+				/**
+				 * Show the CLIENTS menu only to
+				 * System administrators and Account managers
+				 */
 				$clients_allowed = array(9,8);
 				if (in_session_or_cookies($clients_allowed)) {
 			?>
-			<li>
-				<a href="clients.php" class="menulink dropready"><?php _e('Clients', 'cftp_admin'); ?></a>
-				<ul>
-					<li><a href="clientform.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
-					<li><a href="clients.php"><?php _e('Manage clients', 'cftp_admin'); ?></a></li>
-				</ul>
-			</li>
+					<li>
+						<a href="clients.php" class="menulink dropready"><?php _e('Clients', 'cftp_admin'); ?></a>
+						<ul>
+							<li><a href="clientform.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
+							<li><a href="clients.php"><?php _e('Manage clients', 'cftp_admin'); ?></a></li>
+						</ul>
+					</li>
 			<?php } ?>
 	
-			<?php // show USERS to allowd users
+			<?php
+				/**
+				 * Show the USERS menu only to
+				 * System administrators
+				 */
 				$users_allowed = array(9);
 				if (in_session_or_cookies($users_allowed)) {
 			?>
-			<li>
-				<a href="users.php" class="menulink dropready"><?php _e('Users', 'cftp_admin'); ?></a>
-				<ul>
-					<li><a href="userform.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
-					<li><a href="users.php"><?php _e('Manage users', 'cftp_admin'); ?></a></li>
-				</ul>
-			</li>
+					<li>
+						<a href="users.php" class="menulink dropready"><?php _e('Users', 'cftp_admin'); ?></a>
+						<ul>
+							<li><a href="userform.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
+							<li><a href="users.php"><?php _e('Manage users', 'cftp_admin'); ?></a></li>
+						</ul>
+					</li>
 			<?php } ?>
 	
-			<?php // show LOGO and OPTIONS to allowd users
+			<?php
+				/**
+				 * Show the OPTIONS menu only to
+				 * System administrators
+				 */
 				$options_allowed = array(9);
 				if (in_session_or_cookies($options_allowed)) {
 			?>
-			<li>
-				<a href="options.php" class="menulink dropready"><?php _e('Options', 'cftp_admin'); ?></a>
-				<ul>
-					<li><a href="options.php"><?php _e('General options', 'cftp_admin'); ?></a></li>
-					<li><a href="branding.php"><?php _e('Branding', 'cftp_admin'); ?></a></li>
-				</ul>
-			</li>
+					<li>
+						<a href="options.php" class="menulink dropready"><?php _e('Options', 'cftp_admin'); ?></a>
+						<ul>
+							<li><a href="options.php"><?php _e('General options', 'cftp_admin'); ?></a></li>
+							<li><a href="branding.php"><?php _e('Branding', 'cftp_admin'); ?></a></li>
+						</ul>
+					</li>
 			<?php } ?>
 	
 		</ul>
 		<div class="clear"></div>
 	</div>
 
-<?php can_see_content($allowed_levels); ?>
+<?php
+	/**
+	 * Check if the current user has permission to view this page.
+	 * If not, an error message is generated instead of the actual content.
+	 * The allowed levels are defined on each individual page before the
+	 * inclusion of this file.
+	 */
+	can_see_content($allowed_levels);
+?>

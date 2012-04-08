@@ -1,8 +1,22 @@
 <?php
+/**
+ * Contains all the functions used to validate the current logged in
+ * client or user.
+ *
+ * @package ProjectSend
+ *
+ */
+
 require_once('classes/database.php');
 $database->MySQLDB();
 
-function check_valid_cookie() {
+/**
+ * Used when checking if there is a client or user logged in via cookie.
+ *
+ * @see check_for_session
+ */
+function check_valid_cookie()
+{
 	if (isset($_COOKIE['password']) && isset($_COOKIE['loggedin']) && isset($_COOKIE['userlevel'])) {
 		$cookie_pass = mysql_real_escape_string($_COOKIE['password']);
 		$cookie_user = mysql_real_escape_string($_COOKIE['loggedin']);
@@ -20,8 +34,13 @@ function check_valid_cookie() {
 	}
 }
 
-// session check for the header. if no session or cookie is set, go to login
-function check_for_session() {
+/**
+ * Used on header.php to check if there is an active session or valid
+ * cookie before generating the content.
+ * If none is found, redirect to the log in form.
+ */
+function check_for_session()
+{
 	$is_logged_now = false;
 	if (isset($_SESSION['loggedin'])) {
 		$is_logged_now = true;
@@ -37,7 +56,16 @@ function check_for_session() {
 	}
 }
 
-// check for admin users. this separetes system users from clietns
+/**
+ * Used on header.php to check if the current logged in account is either
+ * a system user or a client.
+ *
+ * Clients are then redirected to the index page, where another check is
+ * performed and then a second redirection takes the client to the
+ * correspondent file list.
+ *
+ * @see check_for_client
+ */
 function check_for_admin() {
 	$is_logged_admin = false;
 	if ($_SESSION['access'] == 'admin') {
@@ -51,6 +79,13 @@ function check_for_admin() {
 	}
 }
 
+/**
+ * Used on the log in form page (index.php) to take the clients directly to their
+ * files list.
+ *
+ * The client username (which corresponds to it's unique folder and URI)
+ * is gotten either from the active session, or the saved cookie information.
+ */
 function check_for_client() {
 	if (isset($_SESSION['userlevel']) || isset($_COOKIE['userlevel'])) {
 		if ($_SESSION['userlevel'] == '0') {
@@ -64,29 +99,34 @@ function check_for_client() {
 	}
 }
 
+/**
+ * Used on header.php to check if the current logged in system user has the
+ * permission to view this page.
+ */
 function can_see_content($allowed_levels) {
 	$permission = false;
 	if(isset($allowed_levels)) {
-		/*
-			we are doing 2 checks.
-			first, we look for a cookie, and if it set, then get the
-			associated userlevel to see if we are allowed to enter
-			the page
+		/**
+		 * We are doing 2 checks.
+		 * First, we look for a cookie, and if it set, then we get the associated
+		 * userlevel to see if we are allowed to enter the current page.
 		*/
-		if (isset($_COOKIE['userlevel']) && in_array($_COOKIE['userlevel'],$allowed_levels)) { // gentleman, we have a cookie! userlevel is allowed
+		if (isset($_COOKIE['userlevel']) && in_array($_COOKIE['userlevel'],$allowed_levels)) {
 			$permission = true;
 		}
-		/*
-			the second second check looks for a session, and if found
-			see if the user level is among those defined by the page.
+		/**
+		 * The second second check looks for a session, and if found see if the user
+		 * level is among those defined by the page.
+		 *
+		 * $allowed_levels in defined on each page before the inclusion of header.php
 		*/
-		if (isset($_SESSION['userlevel']) && in_array($_SESSION['userlevel'],$allowed_levels)) { // the page has desfined levels and we are included on them
+		if (isset($_SESSION['userlevel']) && in_array($_SESSION['userlevel'],$allowed_levels)) {
 			$permission = true;
 		}
-		/*
-			after the checks, if the user is allowed, continue,
-			else show the "not allowed message", then the footer, then die();
-			so the actual page content is not shown.
+		/**
+		 * After the checks, if the user is allowed, continue.
+		 * If not, show the "Not allowed message", then the footer, then die(); so the
+		 * actual page content is not generated.
 		*/
 	}
 	if (!$permission) {

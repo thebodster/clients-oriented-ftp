@@ -1,5 +1,20 @@
 <?php
+/**
+ * Define the common header and footer markup used on all sent e-mails.
+ *
+ * @package ProjectSend
+ */
+
+/**
+ * Styles that can be applied to images to prevent display issues on
+ * webmail readers.
+ */
 $img_safe_style = 'display:block; margin:0; border:none;';
+
+/**
+ * Define the header. A table cell remains open and the content of the
+ * e-mail is inserted there.
+ */
 $email_template_header = '<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -15,7 +30,9 @@ $email_template_header = '<!DOCTYPE html>
 				%SUBJECT%
 			</h3>';
 
-
+/**
+ * Define the footer
+ */
 $email_template_footer = '</td>
 	</tr>
 	<tr>

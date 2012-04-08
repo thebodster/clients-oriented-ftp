@@ -1,14 +1,27 @@
 <?php
-// get options from db
+/**
+ * Gets all the options from the database and define each as a constant.
+ *
+ * @package ProjectSend
+ *
+ */
 $database->MySQLDB();
 
-// get admin email address for upload notifications
+/**
+ * Get the main admin e-mail address used for sending notifications.
+ * This is the system user that is created when ProjectSend is installed.
+ */
 $sql = $database->query('SELECT * FROM tbl_users WHERE user="admin"');
 while($row = @mysql_fetch_array($sql)) {
 	define('ADMIN_EMAIL_ADDRESS',$row['email']);
 }
 
-// create array of options
+/**
+ * Gets the values from the options table, which has 2 columns.
+ * The first one is the option name, and the second is the assigned value.
+ *
+ * @return array
+ */
 $options_values = array();
 $options = $database->query("SELECT * FROM tbl_options");
 while ($row = @mysql_fetch_array($options)) {
@@ -17,8 +30,15 @@ while ($row = @mysql_fetch_array($options)) {
 
 $database->Close();
 
-// here we get the system options
+/**
+ * Set the options returned before as constants.
+ */
 if(!empty($options_values)) {
+	/**
+	 * The allowed file types array is set as variable and not a constant
+	 * because it is re-set later on other pages (the options and the upload
+	 * forms currently).
+	 */
 	$allowed_file_types = $options_values['allowed_file_types'];
 	
 	define('BASE_URI',$options_values['base_uri']);
