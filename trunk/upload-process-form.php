@@ -12,7 +12,7 @@ include('header.php');
 <?php
 $database->MySQLDB();
 
-$work_folder = 'upload/temp/';
+$work_folder = USER_UPLOADS_TEMP_FOLDER;
 
 // Coming from the web uploader
 if(isset($_POST['finished_files'])) {
@@ -74,7 +74,7 @@ require_once('includes/classes/send-email.php');
 			if(!empty($file['name'])) {
 				$this_upload = new PSend_Upload_File();
 				$file['file'] = $this_upload->safe_rename($file['file']);
-				$location = $work_folder.$file['file'];
+				$location = $work_folder.'/'.$file['file'];
 				if(file_exists($location)) {
 					$move_arguments = array(
 											'uploaded_name' => $location,
@@ -152,7 +152,12 @@ require_once('includes/classes/send-email.php');
 						<td><?php echo $uploaded['description']; ?></td>
 						<td><?php echo $uploaded['client_name']; ?></td>
 						<td><?php
-								if(isset($reason)) { unset($reason); } // So the next client will have no $reason variable set
+								/**
+								 * Unset $reason so the next client will start fresh
+								 */
+								if(isset($reason)) {
+									unset($reason);
+								}
 								switch ($users_emailed[$uploaded['client']]) {
 									case 0:
 										_e('No','cftp_admin');
@@ -170,7 +175,7 @@ require_once('includes/classes/send-email.php');
 							?>
 						</td>
 						<td>
-							<a href="manage-files.php?id=<?php $this_client = get_client_by_id($uploaded['client']); echo $this_client['id']; ?>" class="button button_blue"><?php _e('Manage files','cftp_admin'); ?></a>
+							<a href="manage-files.php?id=<?php $this_client = get_client_by_username($uploaded['client']); echo $this_client['id']; ?>" class="button button_blue"><?php _e('Manage files','cftp_admin'); ?></a>
 							<a href="upload/<?php echo $uploaded['client']; ?>/" target="_blank" class="button button_blue"><?php _e('View as client','cftp_admin'); ?></a>
 						</td>
 					</tr>
@@ -242,7 +247,7 @@ require_once('includes/classes/send-email.php');
 								$file_original = $file;
 								$file = $this_upload->safe_rename($file);
 		
-								$location = $work_folder.$file;
+								$location = $work_folder.'/'.$file;
 		
 								if(file_exists($location)) {
 									$filename_no_ext = substr($file, 0, strrpos($file, '.'));

@@ -141,6 +141,8 @@ $allowed_file_types = implode(',',$allowed_file_types);
 				<li>
 					<label for="timeformat"><?php _e('Time format','cftp_admin'); ?></label>
 					<input name="timeformat" id="timeformat" value="<?php echo TIMEFORMAT_USE; ?>" />
+					<p class="field_note"><?php _e('For example, d/m/Y h:i:s will result in something like','cftp_admin'); ?> <strong><?php echo date('d/m/Y h:i:s'); ?></strong>.
+					<?php _e('For the full list of available values, visit','cftp_admin'); ?> <a href="http://php.net/manual/en/function.date.php" target="_blank"><?php _e('this page','cftp_admin'); ?></a>.</p>
 				</li>
 
 				<li class="options_divide"></li>

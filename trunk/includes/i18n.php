@@ -1,11 +1,14 @@
 <?php
-
 /**
- * Implement the {@link I18n} class and some useful functions
+ * Implement the I18n class and some useful functions.
+ * Slightly modified version where the functions names are replaced
+ * so the .po file generator from ICanLocalize can be used.
  *
- * @package Classes
- *
- * @subpackage I18n
+ * @author		davidesper
+ * @copyright	23-Jan-2010
+ * @link		http://www.php-hispano.net/archivos/Clases/323/1
+ * @package		ProjectSend
+ * @subpackage	Classes
  *
  */
 
@@ -14,8 +17,7 @@
  * using in auxilar functions around {@link I18n} class.
  *
  */
-if( ! defined( 'I18N_DEFAULT_DOMAIN' ) )
-{
+if( ! defined( 'I18N_DEFAULT_DOMAIN' ) ) {
   define( 'I18N_DEFAULT_DOMAIN', '' );
 }
 
@@ -23,9 +25,7 @@ if( ! defined( 'I18N_DEFAULT_DOMAIN' ) )
  * Get a translated string
  *
  * @param String $string To be translated
- *
  * @param String $domain String domain text
- *
  * @return String Translated string if possible
  *
  */
@@ -38,11 +38,10 @@ function __( $string, $domain = I18N_DEFAULT_DOMAIN )
  * Print a translated string
  *
  * @param String $string To be translated
- *
  * @param String $domain String domain text
  *
  */
-function _e( $string, $domain = I18N_DEFAULT_DOMAIN )
+function _e( $string, $domain = I18N_DEFAULT_DOMAIN ) 
 {
   echo I18n::Translate( $string, $domain );
 }
@@ -51,13 +50,9 @@ function _e( $string, $domain = I18N_DEFAULT_DOMAIN )
  * Get a translated singular or plural string
  *
  * @param String $singular Singular string version
- *
  * @param String $plural Plural string version
- *
  * @param Integer $count Determine what string version use
- *
  * @param String $domain String domain text
- *
  * @return String Translated string if possible
  *
  */
@@ -70,11 +65,8 @@ function _n( $singular, $plural, $count, $domain = I18N_DEFAULT_DOMAIN )
  * Print a translated singular or plural string
  *
  * @param String $singular Singular string version
- *
  * @param String $plural Plural string version
- *
  * @param Integer $count Determine what string version use
- *
  * @param String $domain String domain text
  *
  */
@@ -91,10 +83,6 @@ function _ne( $singular, $plural, $count, $domain = I18N_DEFAULT_DOMAIN )
  *
  * Use this class to load text domain to be availables, then use
  * the auxiliar functions (implemented above) to work.
- *
- * @package Classes
- *
- * @subpackage I18n
  *
  */
 class I18n
@@ -161,9 +149,7 @@ class I18n
    * More than one domain text (and MO files) can be loaded.
    *
    * @param String $moFile MO file path to be loaded
-   *
    * @param String $domain Text domain to store the messages
-   *
    * @return Boolean True on success or False on failure
    * 
    */
@@ -182,9 +168,7 @@ class I18n
    * the identifier is tiny and fast, ideal to a profuse use.
    *
    * @param String $string To be translate
-   *
    * @param String $domain Text domain where find
-   *
    * @return Strint Translated string if possible
    *
    */
@@ -205,13 +189,9 @@ class I18n
  * this method from {@link n()} function.
  *
  * @param String $singular Singular string version
- *
  * @param String $plural Plural string version
- *
  * @param Integer $count Determine what string version use
- *
  * @param String $domain String domain text
- *
  * @return String Translated string if possible
  *
  */
@@ -228,7 +208,7 @@ class I18n
 				return self::$messages[ $domain ][ $singular ][1][ $n ];
 			}
 		}
-		# fall-through else for both cases
+		/** fall-through else for both cases */
 		return $count == 1 ? $singular : $plural;
 	}
 
@@ -242,9 +222,7 @@ class I18n
    * Load MO files
    *
    * @param String $moPath MO file path to be loaded
-   *
    * @param String $domain Text domain messages to set
-   * 
    * @return Boolean True on success or False on failure
    *
    */
@@ -276,9 +254,7 @@ class I18n
    * <danilo@kvota.net>.
    *
    * @param String $moPath Absolute MO file path
-   * 
    * @param String $domain Text domain messages to set
-   *
    * @return Boolean True on success or False on failure
    *
    */
@@ -290,7 +266,7 @@ class I18n
 		}
 		if( filesize( $moPath ) < 24 )
     {
-		  # Invalid .MO file
+		  /** Invalid .MO file */
 			return false;
 		}
 
@@ -298,7 +274,7 @@ class I18n
 		$data = fread( $fp, filesize( $moPath ) );
 		fclose( $fp );
 
-		# Determine endianness
+		/** Determine endianness */
 		$littleEndian = true;
 		
     list( , $magic )= unpack( 'V1', substr( $data, 0, 4 ) );
@@ -314,14 +290,13 @@ class I18n
 				break;
 
 			default:
-			  # Invalid magic number
+			  /** Invalid magic number */
 			  return false;
 		}
 
 		$revision = substr( $data, 4, 4 );
-		if( $revision != 0 )
-    {
-		  # Unknown revision number
+		if( $revision != 0 ) {
+			/** Unknown revision number */
 			return false;
 		}
 
@@ -334,7 +309,7 @@ class I18n
 
 			if($header['msgblock'] + ($header['msgcount'] - 1) * 8 > filesize($moPath))
       {
-			  # Message count out of bounds
+			  /** Message count out of bounds */
         return false;
 			}
 
@@ -382,7 +357,6 @@ class I18n
    * Completly taken from Habari project <http://habariproject.org/>.
    *
    * @see ParseFile()
-   *
    * @return Unique function name as a string or False on error
    *
    */
@@ -402,7 +376,7 @@ class I18n
          )
     )
     {
-			# sanitize
+			/** sanitize */
 			$nplurals = preg_replace( '/[^0-9]/', '', $matches[1] );
 
 			$plural = preg_replace
@@ -417,7 +391,7 @@ class I18n
         "nplurals={$nplurals}; plural={$plural}"
 			);
 
-			# add parens (important since PHP's ternary evaluates from left to right)
+			/** Add parens (important since PHP's ternary evaluates from left to right) */
 			$body .= ';';
 
 			$res = '';
@@ -455,11 +429,11 @@ class I18n
 		}
 		else
     {
-			# default: one plural form for all cases
-      # but n==1 (english and spanish for example)
-
-      # http://www.gnu.org/software/gettext/manual/html_node/Plural-forms.html#Plural-forms
-      
+		/**
+		 * default: one plural form for all cases
+		 * but n==1 (english and spanish for example)
+		 * http://www.gnu.org/software/gettext/manual/html_node/Plural-forms.html#Plural-forms
+		 */
 			$fn = create_function
       (
 				'$n',

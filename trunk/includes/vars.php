@@ -1,5 +1,14 @@
 <?php
-// lang vars user acorss the system
+/**
+ * Define the language strings that are used on several parts of
+ * the system, to avoid repetition.
+ *
+ * @package		ProjectSend
+ */
+
+/**
+ * Validation class strings
+ */
 $validation_no_name = __('Name was not completed','cftp_admin');
 $validation_no_user = __('Username was not completed','cftp_admin');
 $validation_no_pass = __('Password was not completed','cftp_admin');
@@ -15,7 +24,10 @@ $add_user_mail_exists = __('A system user or client with this e-mail address alr
 $validation_valid_pass = __('Your password can only contain letters, numbers and the following characters:','cftp_admin');
 $validation_valid_chars = ('` ! " ? $ ? % ^ & * ( ) _ - + = { [ } ] : ; @ ~ # | < , > . ? \' / \ ');
 
-// length vars
+/**
+ * Validation strings for the length of usernames and passwords.
+ * Uses the MIN and MAX values defined on sys.vars.php
+ */
 $validation_length_usr_1 = __('Username','cftp_admin');
 $validation_length_pass_1 = __('Password','cftp_admin');
 $validation_length_1 = __('length should be between','cftp_admin');

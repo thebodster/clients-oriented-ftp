@@ -7,7 +7,7 @@ include('header.php');
 
 $database->MySQLDB();
 
-$work_folder = 'upload/temp';
+$work_folder = USER_UPLOADS_TEMP_FOLDER;
 ?>
 
 <div id="main">

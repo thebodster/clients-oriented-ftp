@@ -1,11 +1,25 @@
 <?php
+/**
+ * This file is called on header.php and checks the database to see
+ * if it up to date with the current software version.
+ *
+ * In case you are updating from an old one, the new values, columns
+ * and rows will be created, and a message will appear under the menu
+ * one time only.
+ *
+ * @package ProjectSend
+ */
+
 $allowed_update = array(9,8,7);
 if (in_session_or_cookies($allowed_update)) {
-	//header("location:home.php");
 	
 	$updates_made = 0;
 	
-	//r92 updates
+	/**
+	 * r92 updates
+	 * The logo file name is now stored on the database.
+	 * If the row doesn't exist, create it and add the default value.
+	 */
 	$new_database_values = array(
 									'logo_filename' => 'logo.png'
 								);
@@ -22,14 +36,23 @@ if (in_session_or_cookies($allowed_update)) {
 		unset($q);
 	}
 
-	// r94 updates
+	/**
+	 * r94 updates
+	 * A new column was added on the clients table, to store the value of the
+	 * user that created it.
+	 * If the column doesn't exist, create it.
+	 */
 	$q = $database->query("SELECT created_by FROM tbl_clients");
 	if (!$q) {
 		mysql_query("ALTER TABLE tbl_clients ADD created_by VARCHAR(".MAX_USER_CHARS.") NOT NULL");
 		$updates_made++;
 	}
 
-	// r102 updates
+	/**
+	 * r102 updates
+	 * A function was added to hide or show uploaded files from the clients lists.
+	 * If the "hidden" column on the files table doesn't exist, create it.
+	 */
 	$q = $database->query("SELECT hidden FROM tbl_files");
 	if (!$q) {
 		mysql_query("ALTER TABLE tbl_files ADD hidden INT(1) NOT NULL");

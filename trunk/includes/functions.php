@@ -1,10 +1,24 @@
 <?php
+/**
+ * Define the common functions that can be accessed from anywhere.
+ *
+ * @package		ProjectSend
+ * @subpackage	Functions
+ */
 
-function get_client_information($client) {
+/**
+ * Get all the client information knowing only the id
+ * Used on the Manage files page.
+ *
+ * @return array
+ */
+function get_client_by_id($client)
+{
 	global $database;
 	$get_client_info = $database->query("SELECT * FROM tbl_clients WHERE id='$client'");
 	while ($row = mysql_fetch_assoc($get_client_info)) {
 		$information = array(
+							'id' => $row['id'],
 							'name' => $row['name'],
 							'username' => $row['client_user'],
 							'address' => $row['address'],
@@ -24,13 +38,21 @@ function get_client_information($client) {
 	}
 }
 
-function get_client_by_id($client) {
+
+/**
+ * Get all the client information knowing only the log in username
+ *
+ * @return array
+ */
+function get_client_by_username($client)
+{
 	global $database;
 	$get_client_info = $database->query("SELECT * FROM tbl_clients WHERE client_user='$client'");
 	while ($row = mysql_fetch_assoc($get_client_info)) {
 		$information = array(
 							'id' => $row['id'],
 							'name' => $row['name'],
+							'username' => $row['client_user'],
 							'address' => $row['address'],
 							'phone' => $row['phone'],
 							'email' => $row['email'],
@@ -48,7 +70,13 @@ function get_client_by_id($client) {
 	}
 }
 
-function check_if_notify_client($client) {
+
+/**
+ * Used on the file uploading process to determine if the client
+ * needs to be notified by e-mail.
+ */
+function check_if_notify_client($client)
+{
 	global $database;
 	$get_notify = $database->query("SELECT notify, email FROM tbl_clients WHERE client_user='$client'");
 	while ($row = mysql_fetch_assoc($get_notify)) {
@@ -61,7 +89,15 @@ function check_if_notify_client($client) {
 	}
 }
 
-function default_footer_info() {
+
+/**
+ * Standard footer mark up and information generated on this function to
+ * prevent code repetition.
+ * Used on the default template, log in page, install page and the back-end
+ * footer file.
+ */
+function default_footer_info()
+{
 ?>
 	<div id="footer">
 			<span><?php _e('ProjectSend Free software (GPL2) | 2007 - ', 'cftp_admin'); ?> <?php echo date("Y") ?> | <a href="<?php echo SYSTEM_URI; ?>" target="_blank"><?php echo SYSTEM_URI_LABEL; ?></a></span>
@@ -69,7 +105,15 @@ function default_footer_info() {
 <?php
 }
 
-function message_no_clients() {
+
+/**
+ * Standard "There are no clients" message mark up and information
+ * generated on this function to prevent code repetition.
+ *
+ * Used on the upload pages and the clients list.
+ */
+function message_no_clients()
+{
 ?>
 	<div class="whitebox whiteform whitebox_text">
 		<p><?php _e('There are no clients at the moment', 'cftp_admin'); ?></p>
@@ -78,23 +122,34 @@ function message_no_clients() {
 <?php
 }
 
-function system_message($type,$message,$div_id = '') {
-	/*
-		Current CSS available message classes:
-		- message_ok
-		- message_error
-		- message_info
-	*/	
+
+/**
+ * Generate a system text message.
+ *
+ * Current CSS available message classes:
+ * - message_ok
+ * - message_error
+ * - message_info
+ *
+ */	
+function system_message($type,$message,$div_id = '')
+{
 	$return = '<div class="message message_'.$type.'"';
 	if (isset($div_id) && $div_id != '') {
 		$return .= ' id="'.$div_id.'"';
 	}
 	$return .= '>'.$message.'</div>';
-	// Output
 	return $return;
 }
 
-function in_session_or_cookies($levels) {
+
+/**
+ * Function used accross the system to determine if the current logged in
+ * account has permission to do something.
+ * 
+ */
+function in_session_or_cookies($levels)
+{
 	if (isset($_SESSION['userlevel']) || isset($_COOKIE['userlevel'])) {
 		if (in_array($_SESSION['userlevel'],$levels) || in_array($_COOKIE['userlevel'],$levels)) {
 			return true;
@@ -105,42 +160,79 @@ function in_session_or_cookies($levels) {
 	}
 }
 
-function get_current_user_level() {
+
+/**
+ * Returns the current logged in account level either from the active
+ * session or the cookies.
+ *
+ * @todo Validate the returned value against the one stored on the database
+ */
+function get_current_user_level()
+{
 	if (isset($_SESSION['userlevel'])) {
-		$l = $_SESSION['userlevel'];
+		$level = $_SESSION['userlevel'];
 	}
 	elseif (isset($_COOKIE['userlevel'])) {
-		$l = $_COOKIE['userlevel'];
+		$level = $_COOKIE['userlevel'];
 	}
-	return $l;
+	return $level;
 }
 
-function get_current_user_username() {
+
+/**
+ * Returns the current logged in account username either from the active
+ * session or the cookies.
+ *
+ * @todo Validate the returned value against the one stored on the database
+ */
+function get_current_user_username()
+{
 	if (isset($_COOKIE['loggedin'])) {
-		$u = $_COOKIE['loggedin'];
+		$user = $_COOKIE['loggedin'];
 	}
 	elseif (isset($_SESSION['loggedin'])) {
-		$u = $_SESSION['loggedin'];
+		$user = $_SESSION['loggedin'];
 	}
-	return $u;
+	return $user;
 }
 
-function mysql_real_escape_array($t){
-	// nice function by brian on http://php.net/manual/es/function.mysql-real-escape-string.php
-    return array_map("mysql_real_escape_string",$t);
+
+/**
+ * @author		brian dot folts at gmail dot com
+ * @copyright	06-Sep-2006
+ * @link		http://php.net/manual/es/function.mysql-real-escape-string.php
+ */
+function mysql_real_escape_array($array)
+{
+    return array_map("mysql_real_escape_string",$array);
 }
 
-function gettheurl() {
-	// based on a script found on http://www.webcheatsheet.com/php/get_current_page_url.php
+
+/**
+ * Based on a script found on webcheatsheet. Fixed an issue from the original code.
+ * Used on the installation form to fill the URI field automatically.
+ *
+ * @author		http://webcheatsheet.com
+ * @link		http://www.webcheatsheet.com/php/get_current_page_url.php
+ */
+function gettheurl()
+{
 	$pageURL = 'http';
-	if (!empty($_SERVER['HTTPS'])) {if($_SERVER['HTTPS'] == 'on'){$pageURL .= "s";}}
-		$pageURL .= "://";
+	if (!empty($_SERVER['HTTPS'])) {
+		if($_SERVER['HTTPS'] == 'on'){
+			$pageURL .= "s";
+		}
+	}
+	$pageURL .= "://";
 	if ($_SERVER["SERVER_PORT"] != "80") {
 		$pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
 	} else {
 		$pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
 	}
-	// check if we are accesing the install folder or the index.php file directly
+
+	/**
+	 * Check if we are accesing the install folder or the index.php file directly
+	 */
 	$extension = substr($pageURL,-4);
 	if ($extension=='.php') {
 		$pageURL = substr($pageURL,0,-17);
@@ -152,41 +244,57 @@ function gettheurl() {
 	}
 }
 
-function format_file_size($size) {
-	if( $size < 1024 ) {
+/**
+ * Receives the size of a file in bytes, and formats it for readability.
+ * Used on files listings (templates and the files manager).
+ */
+function format_file_size($size)
+{
+	if ($size < 1024) {
 		$format_size = $size . " bytes";
 	}
-	else if( $size < 1024000 ) {
-		$format_size = round( ( $size / 1024 ), 1 ) . " kb.";
+	else if ($size < 1024*1000) {
+		$divide_by = 1024;
+		$format_size = round(($size / $divide_by), 1) . " kB";
+	}
+	else if ($size < 1024*1000*1000) {
+		$divide_by = 1024*1000;
+		$format_size = round(($size / $divide_by), 1) . " MB";
 	}
 	else {
-		$format_size = round( ( $size / 1024000 ), 1 ) . " mb.";
+		$divide_by = 1024*1000*1000;
+		$format_size = round(($size / $divide_by), 1) . " GB";
 	}
 	return $format_size;
 }
 
-function delfile($curfile)
+/**
+ * Delete just one file.
+ * Used on the files managment page.
+ */
+function delete_file($filename)
 {
-	chmod($curfile, 0777);
-	unlink($curfile);
+	chmod($filename, 0777);
+	unlink($filename);
 }
 
-function deleteall($dir)
+/**
+ * Deletes all files and sub-folders of the selected directory.
+ * Used when deleting a client.
+ */
+function delete_recursive($dir)
 {
 	if (is_dir($dir)) {
-	   if ($dh = opendir($dir)) {
-		   while (($file = readdir($dh)) !== false ) {
-				if( $file != "." && $file != ".." )
-				{
-						if( is_dir( $dir . $file ) )
-						{
-								deleteall( $dir . $file . "/" );
-								rmdir( $dir . $file );
-						}
-						else
-						{
-								unlink( $dir . $file );
-						}
+		if ($dh = opendir($dir)) {
+			while (($file = readdir($dh)) !== false ) {
+				if( $file != "." && $file != ".." ) {
+					if( is_dir( $dir . $file ) ) {
+						delete_recursive( $dir . $file . "/" );
+						rmdir( $dir . $file );
+					}
+					else {
+						unlink( $dir . $file );
+					}
 				}
 		   }
 		   closedir($dh);

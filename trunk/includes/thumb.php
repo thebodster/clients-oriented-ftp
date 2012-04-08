@@ -1,30 +1,18 @@
 <?php
-/*
- 	made this script a long ago, taking code pieces from all around the net.
-	if something cant be used, please let me know
-*/
+/**
+ * Thumbnails generating functions.
+ * Parts of this file are taken from another scripts from around the WWW.
+ *
+ * @package		ProjectSend
+ * @subpackage	Thumbnails
+ * 
+ */
 
-// get thumbnails options
+/** Get thumbnails options from the database */
 require_once('sys.vars.php');
 require_once('site.options.php');
 
-function meassureimg($pic_source) {
-	$picture = getimagesize($pic_source);
-	$img_width = $the_picture[0];
-	$img_height = $the_picture[1];
-
-	if ($img_width > $img_height) {
-		$use_side = LOGO_MAX_HEIGHT;
-		return 'h';
-	}
-	else {
-		$use_side = LOGO_MAX_WIDTH;
-		return 'w';
-	}
-}
-
-// start process
-// if we set the quality via url, ignore the default one that comes from the database
+/** If we set the quality via URI, ignore the default value that comes from the database */
 if(!empty($_GET['ql'])) {
 	$thumbnail_quality = $_GET['ql'];
 }
@@ -32,50 +20,53 @@ else {
 	$thumbnail_quality = THUMBS_QUALITY;
 }
 
+/**
+ * Type is a required parameter that defines where the generated thumbnail
+ * image will be saved.
+ */
 if(empty($_GET['type'])) {
 	return false;
 }
+else {
+	switch($_GET['type']) {
+		case 'logo':
+			$do_on_folder = THUMBS_FOLDER;
+		break;
+		case 'tlogo':
+			$do_on_folder = LOGO_THUMB_FOLDER;
+		break;
+		case 'prev':
+			$who = $_GET['who'];
+			$thumb_name = $_GET['name'];
+			$do_on_folder = '../upload/'.$who.'/thumbs/';
+		break;
+	}
+}
 
+/** Generate the thumbnail file name */
 $pathinfo = pathinfo($_GET['src']);
-
-// Generate the file name
 $thumb_name = $pathinfo['filename'];
 if(isset($_GET['w'])) { $thumb_name .= '-W'.$_GET['w']; }
 if(isset($_GET['h'])) { $thumb_name .= '-H'.$_GET['h']; }
 $thumb_name .= '.'.$pathinfo['extension'];
 
-// Continue
-switch($_GET['type']) {
-	case 'logo':
-		$do_on_folder = THUMBS_FOLDER;
-	break;
-	case 'tlogo':
-		$do_on_folder = LOGO_THUMB_FOLDER;
-	break;
-	case 'prev':
-		$who = $_GET['who'];
-		$thumb_name = $_GET['name'];
-		$do_on_folder = '../upload/'.$who.'/thumbs/';
-	break;
-}
-
 $destination = $do_on_folder.$thumb_name;
 
 if (!file_exists($thumb_name)) {
 	$extension = strtolower($pathinfo['extension']);
-	/* Detect filetype and make a temp image */
+	/** Detect filetype and make a temp image */
 	if ($extension == "gif") {
-		$fuente = imagecreatefromgif($_GET['src']);
+		$source = imagecreatefromgif($_GET['src']);
 	}
 	if ($extension == "jpeg" || $extension == "pjpeg" || $extension == "jpg" ) {
-		$fuente = imagecreatefromjpeg($_GET['src']);
+		$source = imagecreatefromjpeg($_GET['src']);
 	}
 	if ($extension == "png") {
-		$fuente = imagecreatefrompng($_GET['src']);
+		$source = imagecreatefrompng($_GET['src']);
 	}
 
-	$image_width = imagesx($fuente);
-	$image_height = imagesy($fuente);
+	$image_width = imagesx($source);
+	$image_height = imagesy($source);
 	$new_width = $_GET['w'];
 	$new_height = $_GET['h'];
 	
@@ -92,37 +83,38 @@ if (!file_exists($thumb_name)) {
 		$new_height = $_GET['h'];
 	}
 	
-	/* racreate the picture with the original colors and avoiding pixelation */
-	$imagen = imagecreatetruecolor($new_width,$new_height);
-	imagealphablending($imagen,false);
-	imagesavealpha($imagen,true);
-	imagecopyresampled($imagen,$fuente,0,0,0,0,$new_width,$new_height,$image_width,$image_height);
+	/** Recreate the picture with the original colors and avoiding pixelation */
+	$image = imagecreatetruecolor($new_width,$new_height);
+	imagealphablending($image,false);
+	imagesavealpha($image,true);
+	imagecopyresampled($image,$source,0,0,0,0,$new_width,$new_height,$image_width,$image_height);
 
 
-	/* copy thumbnail to the corresponding folder */
+	/** Copy thumbnail to the corresponding folder */
 	switch($extension) {
 		case 'png':
-			imagepng($imagen,$destination,3,NULL);
+			imagepng($image,$destination,3,NULL);
 			break;
 		case 'gif':
-			imagegif($imagen);
+			imagegif($image);
 			break;
 		case 'jpg':
-			imagejpeg($imagen,$destination,$thumbnail_quality);
+			imagejpeg($image,$destination,$thumbnail_quality);
 			break;
 		default:
-			imagejpeg($imagen,$destination,$thumbnail_quality);
+			imagejpeg($image,$destination,$thumbnail_quality);
 			break;
 	}
 	
 }
 
-
 switch($extension) {
 	case 'png':
 		$output = imagecreatefrompng($destination);
-		imagealphablending($output, false); // setting alpha blending on
-		imagesavealpha($output, true); // save alphablending setting (important)
+		 /** Setting alpha blending on */
+		imagealphablending($output, false);
+		 /** Save alphablending setting */
+		imagesavealpha($output, true);
 		break;
 	case 'gif':
 		$output = imagecreatefromgif($destination);
@@ -136,14 +128,18 @@ switch($extension) {
 }
 
 
-/* add unsharp */
+/**
+ * Check if any effect needs to be applied to the thumbnail
+ */
+
+/** Add Unsharp */
 if ($_GET['sh']) { 
 	if ($_GET['sh'] == 1) { $cant = 70; $radio = 0.5; $thres = 3; }
 	else { $arraysh = explode("|", $_GET['sh']); $cant = $arraysh[0]; $radio = $arraysh[1]; $thres = $arraysh[2]; }
 	UnsharpMask($output, $cant, $radio, $thres);
 }
 
-/* rotate */
+/** Rotate */
 if($_GET['r']) { 
 	$arrayr = explode("|", $_GET['r']);
 	$grados = $arrayr[0];
@@ -152,16 +148,24 @@ if($_GET['r']) {
 	imagejpeg($rotate,NULL,$thumbnail_quality);
 }
 
-/* add blur */
-if($_GET['bl']) { $blcant = $_GET['bl']; blur($output,$blcant); }
+/** Add Blur */
+if($_GET['bl']) {
+	$blcant = $_GET['bl'];
+	blur($output,$blcant);
+}
 
-/* add pixelate */
-if($_GET['px']) { $pxcant = $_GET['px']; pixelate($output,$pxcant); }
+/** Add Pixelate */
+if($_GET['px']) {
+	$pxcant = $_GET['px'];
+	pixelate($output,$pxcant);
+}
 
-/* add scatter */
-if($_GET['sc']) { scatter($output); }
+/** Add Scatter */
+if($_GET['sc']) {
+	scatter($output);
+}
 
-/* add duotone */
+/** Make Duotone */
 if($_GET['duo']) { 
 	$arraynoi = explode("|", $_GET['duo']);
 	$noir = $arraynoi[0];
@@ -170,10 +174,12 @@ if($_GET['duo']) {
 	duotone($output,$noir,$noig,$noib);
 }
 
-/* make grayscale */
+/** Make Grayscale */
 if($_GET['gr']) { greyscale($output); }
 
-// save the file
+/**
+ * Finally, save the file on the corresponding folder
+ */
 switch($extension) {
 	case 'png':
 		header("Content-Type: image/png");
@@ -192,13 +198,17 @@ switch($extension) {
 		imagejpeg($output,NULL,$thumbnail_quality);
 		break;
 }
-// Create thumbnail ends here
+/**
+ * Thumbnail creation ends here
+ */
 
+/**
+ * Define the functions that can be applied to the file:
+ */
 
-// functions that can be applied to the file:
-
-// GRAYSCALE
-function greyscale($image) {
+/** GRAYSCALE */
+function greyscale($image)
+{
     $imagex = imagesx($image);
     $imagey = imagesy($image);
 
@@ -215,8 +225,9 @@ function greyscale($image) {
     }
 } 
 
-// SCATTER
-function scatter($image) {
+/** SCATTER */
+function scatter($image)
+{
     $imagex = imagesx($image);
     $imagey = imagesy($image);
 
@@ -238,8 +249,9 @@ function scatter($image) {
     }
 } 
 
-// DUOTONE
-function duotone($image, $rplus, $gplus, $bplus) {
+/** DUOTONE */
+function duotone($image, $rplus, $gplus, $bplus)
+{
     $imagex = imagesx($image);
     $imagey = imagesy($image);
 
@@ -267,8 +279,9 @@ function duotone($image, $rplus, $gplus, $bplus) {
     }
 } 
 
-// BLUR
-function blur($image,$dist) {
+/** BLUR */
+function blur($image,$dist)
+{
     $imagex = imagesx($image);
     $imagey = imagesy($image);
 
@@ -308,8 +321,9 @@ function blur($image,$dist) {
     }
 } 
 
-// PIXELATE
-function pixelate($image,$blocksize) {
+/** PIXELATE */
+function pixelate($image,$blocksize)
+{
     $imagex = imagesx($image);
     $imagey = imagesy($image);
 
@@ -361,7 +375,7 @@ function pixelate($image,$blocksize) {
     }
 } 
 
-// UNSHARP MASK -----------------------------------------------------------------------------------------------------------------------------------
+/** UNSHARP MASK */
 
 /*
 New: 
@@ -388,7 +402,8 @@ and the roundoff errors in the Gaussian blur process, are welcome.
 
 */
 
-function UnsharpMask($img, $amount, $radius, $threshold)    { 
+function UnsharpMask($img, $amount, $radius, $threshold)
+{
 
 ////////////////////////////////////////////////////////////////////////////////////////////////  
 ////  

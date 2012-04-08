@@ -1,4 +1,12 @@
 <?php
+/**
+ * Contains the queries that will be used to create the database structure
+ * when installing the system.
+ *
+ * @package		ProjectSend
+ * @subpackage	Install
+ */
+
 $timestampdate = time();
 $q1 = '
 CREATE TABLE IF NOT EXISTS `tbl_clients` (
@@ -78,5 +86,4 @@ INSERT INTO `tbl_users` (`id`, `user`, `password`, `name`, `email`, `level`, `ti
 (1, \''.$got_admin_username.'\', \''.$got_admin_pass.'\', \''.$got_admin_name.'\', \''.$got_admin_email.'\', 9, '.$timestampdate.');
 ';
 
-try_query(array($q1,$q2,$q3,$q4,$q5,$q6));
 ?>

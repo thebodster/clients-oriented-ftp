@@ -1,6 +1,14 @@
 <?php
+/**
+ * Class that handles all the actions and functions that can be applied to
+ * files that are being uploaded.
+ *
+ * @package		ProjectSend
+ * @subpackage	Classes
+ */
 
-class PSend_Upload_File {
+class PSend_Upload_File
+{
 
 	var $folder;
 	var $client;
@@ -9,9 +17,17 @@ class PSend_Upload_File {
 	var $name;
 	var $description;
 	var $upload_state;
+	/**
+	 * the $separator is used to replace invalid characters on a file name.
+	 */
 	var $separator = '_';
 	
-	function is_filetype_allowed($filename) {
+	/**
+	 * Check if the file extension is among the allowed ones, that are defined on
+	 * the options page.
+	 */
+	function is_filetype_allowed($filename)
+	{
 		global $options_values;
 		$this->safe_filename = $filename;
 		$allowed_file_types = str_replace(',','|',$options_values['allowed_file_types']);
@@ -21,13 +37,28 @@ class PSend_Upload_File {
 		}
 	}
 	
-	function safe_rename($name) {
+	/**
+	 * Generate a safe filename that includes only letters, numbers and underscores.
+	 * If there are multiple invalid characters in a row, only one replacement character
+	 * will be used, to avoid unnecessarily long file names.
+	 */
+	function safe_rename($name)
+	{
 		$this->name = $name;
 		$this->safe_filename = preg_replace('/[^\w\._]+/', $this->separator, $this->name);
 		return $this->safe_filename;
 	}
 	
-	function safe_rename_on_disc($name,$folder) {
+	/**
+	 * Rename a file using only letters, numbers and underscores.
+	 * Used when reading the temp folder to add files to ProjectSend via the "Add from FTP"
+	 * feature.
+	 *
+	 * Files are renamed before being shown on the list.
+	 *
+	 */
+	function safe_rename_on_disc($name,$folder)
+	{
 		$this->name = $name;
 		$this->folder = $folder;
 		$this->new_filename = preg_replace('/[^\w\._]+/', $this->separator, $this->name);
@@ -39,19 +70,13 @@ class PSend_Upload_File {
 		}
 	}
 	
-	function upload_move($arguments) {
-		$this->uploaded_name = $arguments['uploaded_name'];
-		$this->folder = $arguments['move_to_folder'];
-		$this->filename = $arguments['filename'];
-
-		$this->file_final_name = time().'-'.$this->filename;
-		$this->path = $this->folder.$this->file_final_name;
-		if (move_uploaded_file($this->uploaded_name, $this->path)) {
-			return true;
-		}
-	}
-
-	function upload_copy($arguments) {
+	/**
+	 * Used to copy a file from the temporary folder (the default location where it's put
+	 * after uploading it) to the assigned client's personal folder.
+	 * If succesful, the original file is then deleted.
+	 */
+	function upload_copy($arguments)
+	{
 		$this->uploaded_name = $arguments['uploaded_name'];
 		$this->folder = $arguments['move_to_folder'];
 		$this->filename = $arguments['filename'];
@@ -67,7 +92,11 @@ class PSend_Upload_File {
 		}
 	}
 	
-	function upload_add_to_database($arguments) {
+	/**
+	 * Called after correctly moving the file to the final location.
+	 */
+	function upload_add_to_database($arguments)
+	{
 		global $database;
 		$this->post_file = $arguments['file'];
 		$this->name = $arguments['name'];
@@ -85,63 +114,6 @@ class PSend_Upload_File {
 		}
 	}
 
-	function upload($arguments) {
-		global $database;
-		global $options_values;
-		$this->folder = $arguments['folder'];
-		$this->client = $arguments['client'];
-		$this->uploader = $arguments['uploader'];
-		$this->post_file = $arguments['file'];
-		$this->name = $arguments['name'];
-		$this->description = $arguments['description'];
-
-		// CHECK: DOES FOLDER EXIST?
-		if(!is_dir($this->folder)){
-			$this->upload_state = 'folder_not_exists';
-		}
-		// CHECK: IS FILE UPLOADED?
-		else {
-			if(is_uploaded_file($this->post_file['tmp_name'])) {
-				// CHECK: DOES FILE EXIST?
-				if ($this->post_file['size'] > 0) {
-					// CHECK: IS FILE TYPE ALLOWED?
-					$allowed_file_types = str_replace(',','|',$options_values['allowed_file_types']);
-					$file_types = "/^\.(".$allowed_file_types."){1}$/i";
-
-					// Fix the filename
-					$safe_filename = preg_replace(array("/\s+/", "/[^-\.\w]+/"), array("-", ""), trim($this->post_file['name']));
-					if (preg_match($file_types, strrchr($safe_filename, '.'))) {
-						// Make the final filename using timestamp + sanitized name
-						$file_final_name = time().'-'.$safe_filename;
-						$path = $this->folder.$file_final_name;
-						// Try to upload
-						if (move_uploaded_file($this->post_file['tmp_name'], $path)) {
-							// Create MySQL entry if the file was uploaded correctly
-							$timestampdate = time();
-							$result = $database->query("INSERT INTO tbl_files (id,url,filename,description,client_user,timestamp,uploader)"
-							."VALUES ('NULL', '$file_final_name', '$this->name', '$this->description', '$this->client', '$timestampdate', '$this->uploader')");
-							$this->upload_state = 'ok';
-						}
-						else {
-							// could not move file
-							$this->upload_state = 'err_move';
-						}
-					}
-					else {
-						// filetype isn't allowed
-						$this->upload_state = 'err_type';
-					}
-				}
-				else {
-					// file doesn't exist anymore
-					$this->upload_state = 'err_exist';
-				}
-			}
-			else {
-				$this->upload_state = 'err';
-			}
-		}
-		return $this->upload_state;
-	}	
 }
+
 ?>
