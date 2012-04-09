@@ -84,6 +84,7 @@ class PSend_Upload_File
 		$this->file_final_name = time().'-'.$this->filename;
 		$this->path = $this->folder.$this->file_final_name;
 		if (copy($this->uploaded_name, $this->path)) {
+			chmod($this->path, 644);
 			unlink($this->uploaded_name);
 			return $this->file_final_name;
 		}
