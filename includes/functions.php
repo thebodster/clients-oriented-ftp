@@ -293,7 +293,8 @@ function delete_recursive($dir)
 						rmdir( $dir . $file );
 					}
 					else {
-						unlink( $dir . $file );
+						chmod($dir.$file, 0777);
+						unlink($dir.$file);
 					}
 				}
 		   }
