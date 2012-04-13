@@ -1,7 +1,8 @@
 <?php
-// Call the file uploading class
-require_once('includes/sys.vars.php');
-require_once('includes/classes/file-upload.php');
+/**
+ *  Call the required system files
+ */
+require_once('sys.includes.php');
 /**
  * upload.php
  *

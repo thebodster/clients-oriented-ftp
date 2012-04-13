@@ -1,7 +1,7 @@
 <?php
 	$tablesorter = 1;
 	$allowed_levels = array(9);
-	require_once('includes/includes.php');
+	require_once('sys.includes.php');
 	$page_title = __('Users administration','cftp_admin');;
 	include('header.php');
 ?>

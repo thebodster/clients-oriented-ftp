@@ -10,9 +10,7 @@ ob_start();
 session_start();
 header("Cache-control: private");
 
-require_once('../includes/sys.vars.php');
-require_once('../includes/vars.php');
-require_once('../includes/functions.php');
+require_once('../sys.includes.php');
 
 $database->MySQLDB();
 
@@ -184,7 +182,7 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 						<ul class="form_fields">
 							<li>
 								<h3><?php _e('Basic system options','cftp_admin'); ?></h3>
-								<p><?php _e("You need to provide this data for a correct system installation. The site name will be visible along the system panel, and the client's lists.<br />Don't forget to edit <em>/includes/sys.vars.php</em> with your database settings before installing.",'cftp_admin'); ?></p>
+								<p><?php _e("You need to provide this data for a correct system installation. The site name will be visible along the system panel, and the client's lists.<br />Don't forget to edit <em>/includes/sys.config.php</em> with your database settings before installing. If the file doesn't exist, you can create it by renanming the dummy file sys.config.sample.php.",'cftp_admin'); ?></p>
 							</li>
 							<li>
 								<label for="this_install_title"><?php _e('Site name','cftp_admin'); ?></label>
@@ -192,7 +190,7 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 							</li>
 							<li>
 								<label for="base_uri"><?php _e('ProjectSend URI (address)','cftp_admin'); ?></label>
-								<input name="base_uri" id="base_uri" class="required" value="<?php echo (isset($base_uri) ? $base_uri : gettheurl()); ?>" />
+								<input name="base_uri" id="base_uri" class="required" value="<?php echo (isset($base_uri) ? $base_uri : get_current_url()); ?>" />
 							</li>
 			
 							<li class="options_divide"></li>

@@ -1,7 +1,23 @@
 <?php
+/**
+ * Uploading files, step 2
+ *
+ * This file handles all the uploaded files, whether you are
+ * coming from the "Upload from computer" or "Import from FTP"
+ * pages. The only difference is from which POST array it takes
+ * the information to list the avaiable files to process.
+ *
+ * It can display up tp 3 tables:
+ * One that will list all the files that were brought in from
+ * the first step. One with the confirmed uploaded and assigned
+ * files, and a possible third one with the ones that failed.
+ *
+ * @package ProjectSend
+ * @subpackage Upload
+ */
 $tablesorter = 1;
 $allowed_levels = array(9,8,7);
-require_once('includes/includes.php');
+require_once('sys.includes.php');
 $page_title = __('Upload files', 'cftp_admin');
 include('header.php');
 ?>
@@ -14,21 +30,29 @@ $database->MySQLDB();
 
 $work_folder = USER_UPLOADS_TEMP_FOLDER;
 
-// Coming from the web uploader
+/** Coming from the web uploader */
 if(isset($_POST['finished_files'])) {
 	$uploaded_files = array_filter($_POST['finished_files']);
 }
-// Coming from upload by FTP
+/** Coming from upload by FTP */
 if(isset($_POST['add'])) {
 	$uploaded_files = $_POST['add'];
 }
 
+/**
+ * A hidden field sends the list of failed files as a string,
+ * where each filename is separated by a comma.
+ * Here we change it into an array so we can list the files
+ * on a separate table.
+ */
 if(isset($_POST['upload_failed'])) {
 	$upload_failed_hidden_post = $_POST['upload_failed'];
 	$upload_failed_hidden_post = explode(',',$upload_failed_hidden_post);
 	$upload_failed_hidden_post = array_filter($upload_failed_hidden_post);
 }
-
+/**
+ * Files that failed are removed from the uploaded files list.
+ */
 if(isset($upload_failed_hidden_post) && count($upload_failed_hidden_post) > 0) {
 	foreach ($upload_failed_hidden_post as $failed) {
 		$delete_key = array_search($failed, $uploaded_files);					
@@ -36,12 +60,20 @@ if(isset($upload_failed_hidden_post) && count($upload_failed_hidden_post) > 0) {
 	}
 }
 
-// Define the arrays
+/** Define the arrays */
 $upload_failed = array();
 $move_failed = array();
 $clients_to_email = array();
 
-// If clients to e-mail is posted, make an array with the values
+/**
+ * Another hidden field sends the list of e-mails from users
+ * which have new files assigned.
+ * This is also passed as a string separated by commas, and
+ * transformed into a filtered array.
+ * E-mails are only sent after there are no more files to
+ * assign, so they must be sent on the form on every step so
+ * no clients are lost.
+ */
 if(isset($_POST['upload_email_clients'])) {
 	$clients_to_email = $_POST['upload_email_clients'];
 	$clients_to_email = explode(',',$clients_to_email);
@@ -50,7 +82,7 @@ if(isset($_POST['upload_email_clients'])) {
 
 $empty_fields = 0;
 
-// Fill the clients array that will be used on the form
+/** Fill the clients array that will be used on the form */
 $clients = array();
 $cq = "SELECT * FROM tbl_clients";
 $sql = $database->query($cq);
@@ -58,17 +90,16 @@ $sql = $database->query($cq);
 	$clients[$row["client_user"]] = $row["name"];
 }
 
-// Call the file uploading class
-require_once('includes/classes/file-upload.php');
-
-// Call the form validation class
-require_once('includes/classes/form-validation.php');
-
-// Call the e-mail sending class
-require_once('includes/classes/send-email.php');
-
+/**
+ * A posted form will include information of the uploaded files
+ * (name, description and client).
+ */
 	if(isset($_POST['submit'])) {
-		$this_admin = get_current_user_username(); // who is uploading the files?
+		/**
+		 * Get the username of the current logged in account
+		 * and use it when saving the files on the database.
+		 */
+		$this_admin = get_current_user_username();
 
 		foreach ($_POST['file'] as $file) {
 			if(!empty($file['name'])) {
@@ -110,17 +141,30 @@ require_once('includes/classes/send-email.php');
 			}
 		}
 
-		// E-mail the clients
-		$clients_to_email = array_unique($clients_to_email); // Remove the duplicate values
+		/**
+		 * E-mail the clients which just got new files uploaded.
+		 * First, remove any duplicates from the array of clients.
+		 */
+		$clients_to_email = array_unique($clients_to_email);
 
 		if(empty($uploaded_files) && !empty($upload_finish)) {
 			foreach ($clients_to_email as $client) {
 				$get_notify_email = check_if_notify_client($client);
 				if ($get_notify_email != false) {
 					$notify_client = new PSend_Email();
+					/**
+					 * When sending the e-mail, save the returned value of
+					 * the function to an array where the key is the username
+					 * of the client.
+					 * This is used later on the confirmation table, in the
+					 * Notify column.
+					 * The possible returned values are 1 for ok and 2 for
+					 * error.
+					 */
 					$users_emailed[$client] = $notify_client->psend_send_email('new_file',$get_notify_email);
 				}
 				else {
+					/** A value of 0 means that notify is disable for this client */
 					$users_emailed[$client] = 0;
 				}
 			}
@@ -128,6 +172,12 @@ require_once('includes/classes/send-email.php');
 
 	}
 	
+	/**
+	 * Generate the table of files that were assigned to a client
+	 * on this last POST. These files appear on this table only once,
+	 * so if there is another submition of the form, only the new
+	 * assigned files will be displayed.
+	 */
 	if(!empty($upload_finish)) {
 ?>
 		<h3><?php _e('Files uploaded correctly','cftp_admin'); ?></h3>
@@ -189,18 +239,23 @@ require_once('includes/classes/send-email.php');
 ?>
 
 	<?php
+		/**
+		 * Generate the table of files ready to be assigned to a client.
+		 */
 		if(!empty($uploaded_files)) {
 	?>
 			<h3><?php _e('Files ready to upload','cftp_admin'); ?></h3>
 			<p><?php _e('Please complete the following information to finish the uploading proccess. "Name" and "Assign to client" fields are required.','cftp_admin'); ?></p>
 	<?php
-			// Show Empty fields error message
+			/**
+			 * First, do a server side validation for files that were submited
+			 * via the form, but the name field was left empty.
+			 */
 			if(!empty($empty_fields)) {
 				$msg = 'Name is a required field for all uploaded files.';
 				echo system_message('error',$msg);
 			}
 	?>
-
 
 			<script type="text/javascript">
 				$(document).ready(function() {
@@ -240,16 +295,23 @@ require_once('includes/classes/send-email.php');
 						<?php
 							$i = 0;
 							foreach ($uploaded_files as $file) {
-							
 								clearstatcache();
-								// Rename the file
 								$this_upload = new PSend_Upload_File();
 								$file_original = $file;
+								/** Generate a safe filename */
 								$file = $this_upload->safe_rename($file);
 		
 								$location = $work_folder.'/'.$file;
-		
+
+								/**
+								 * Check that the file is indeed present on the folder.
+								 * If not, it is added to the failed files array.
+								 */
 								if(file_exists($location)) {
+									/**
+									 * Remove the extension from the file name and replace every
+									 * underscore with a space to generate a valid upload name.
+									 */
 									$filename_no_ext = substr($file, 0, strrpos($file, '.'));
 									$file_title = str_replace('_',' ',$filename_no_ext);
 									if ($this_upload->is_filetype_allowed($file)) {
@@ -268,6 +330,10 @@ require_once('includes/classes/send-email.php');
 												</td>
 												<td><select name="file[<?php echo $i; ?>][client]" class="txtfield" >
 														<?php
+															/**
+															 * The clients list is generated early on the file so the
+															 * array doesn't need to be made once on every file.
+															 */
 															foreach($clients as $client => $client_name) {
 															?>
 																<option value="<?php echo $client; ?>"><?php echo $client_name; ?></option>
@@ -289,13 +355,21 @@ require_once('includes/classes/send-email.php');
 					</tbody>
 				</table>
 				<?php
+					/**
+					 * Take the list of failed files and store them as a text string
+					 * that will be passed on a hidden field when posting the form.
+					 */
 					$upload_failed = array_filter($upload_failed);
 					$upload_failed_hidden = implode(',',$upload_failed);
 				?>
 				<input type="hidden" name="upload_failed" value="<?php echo $upload_failed_hidden; ?>" />
 		
 				<?php
-					// Pass the clients to email on a hidden input, so only when the queue is empty we send the e-mails to avoid several copies for the same client
+					/**
+					 * Pass the clients to email on a hidden input, so only when the
+					 * queue is empty we send the e-mails to avoid sending several
+					 * copies to the same client.
+					 */
 					if(!empty($clients_to_email)) {
 						$clients_to_email = array_filter($clients_to_email);
 						$clients_to_email = implode(',',$clients_to_email);
@@ -313,7 +387,9 @@ require_once('includes/classes/send-email.php');
 	<?php
 		}
 		
-		// Show files with errors
+		/**
+		 * Generate the table for the failed files.
+		 */
 		if(count($upload_failed) > 0) {
 	?>
 			<h3><?php _e('Files not uploaded','cftp_admin'); ?></h3>
@@ -353,6 +429,10 @@ require_once('includes/classes/send-email.php');
 						3: { sorter: false }
 					}
 				})
+
+				// Autoclick the continue button
+				$('#upload_continue').click();
+
 		<?php
 			}
 			if(!empty($upload_finish)) {
@@ -362,6 +442,7 @@ require_once('includes/classes/send-email.php');
 						2: { sorter: false }
 					}
 				})
+				
 		<?php
 			}
 		?>

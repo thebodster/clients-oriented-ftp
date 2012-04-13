@@ -22,7 +22,7 @@ ob_start();
  * all system users are included, and clients (level 0) are not.
  */
 $allowed_enter = array(9,8,7);
-require_once('includes/includes.php');
+require_once('sys.includes.php');
 
 /** If logged as a system user, go directly to the back-end homepage */
 if (in_session_or_cookies($allowed_enter)) {

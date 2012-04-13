@@ -9,8 +9,7 @@
  */
 
 /** Get thumbnails options from the database */
-require_once('sys.vars.php');
-require_once('site.options.php');
+require_once('../sys.includes.php');
 
 /** If we set the quality via URI, ignore the default value that comes from the database */
 if(!empty($_GET['ql'])) {

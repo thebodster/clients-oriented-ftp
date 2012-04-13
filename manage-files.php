@@ -1,7 +1,7 @@
 <?php
 	$tablesorter = 1;
 	$allowed_levels = array(9,8);
-	require_once('includes/includes.php');
+	require_once('sys.includes.php');
 
 
 	$this_id = $_GET['id'];

@@ -1,7 +1,13 @@
-ProjectSend on Google Code (previously cFTP)
-http://code.google.com/p/clients-oriented-ftp/
-Distributed under GPL2
+ProjectSend (previously cFTP) is a free, clients-oriented, private file
+sharing web application.
+Clients are created and assigned a username and a password. Then you can
+upload as much files as you want under each account, and optionally add
+a name and description to them. 
+
+ProjectSend is hosted on Google Code.
 Feel free to participate!
+
+http://code.google.com/p/clients-oriented-ftp/
 
 --------------------------------------------------------------------------------------------
 
@@ -22,5 +28,21 @@ You may login with your new username and password.
 
 --------------------------------------------------------------------------------------------
 
+How to upgrade to a newer version:
+
+1. Download your version of choice from the official project page.
+2. Upload the files via FTP to your server and replace the ones of the older version.
+
+That's it!
+Your personal configuration file (sys.config.php) is never included on the downloadable
+versions, so it will not be replaced while upgrading.
+
+When a system user logs in to the system version, a check for database missing data will be
+made, and if anything is found, it will be updated automatically and a message will appear
+under the menu one time only.
+
+--------------------------------------------------------------------------------------------
+
 Questions, ideas? Want to join the project?
-You can contact me at contact@projectsend.org
+Send your message to contact@projectsend.org or join us on Facebook, on
+https://www.facebook.com/pages/ProjectSend/333455190044627
