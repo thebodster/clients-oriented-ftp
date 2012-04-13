@@ -8,6 +8,7 @@
  * one time only.
  *
  * @package ProjectSend
+ * @subpackage Core
  */
 
 $allowed_update = array(9,8,7);

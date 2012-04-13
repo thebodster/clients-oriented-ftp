@@ -1,6 +1,17 @@
 <?php
+/**
+ * Uploading files from computer, step 1
+ * Shows the plupload form that handles the uploads and moves
+ * them to a temporary folder. When the queue is empty, the user
+ * is redirected to step 2, and prompted to enter the name,
+ * description and client for each uploaded file.
+ *
+ * @package ProjectSend
+ * @subpackage Upload
+ */
+$plupload = 1;
 $allowed_levels = array(9,8,7);
-require_once('includes/includes.php');
+require_once('sys.includes.php');
 $page_title = __('Upload files', 'cftp_admin');
 include('header.php');
 
@@ -27,11 +38,6 @@ $database->MySQLDB();
 				?>
 			</p>
 
-			<style type="text/css">@import url(includes/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css);</style>
-			<script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
-			<script type="text/javascript" src="includes/plupload/js/plupload.full.js"></script>
-			<script type="text/javascript" src="includes/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js"></script>
-
 			<?php
 				if(SITE_LANG != 'en') {
 					$plupload_lang_file = 'includes/plupload/js/i18n/'.SITE_LANG.'.js';
@@ -42,54 +48,70 @@ $database->MySQLDB();
 			?>
 
 			<script type="text/javascript">
-			$(function() {
-				$("#uploader").pluploadQueue({
-					runtimes : 'gears,flash,silverlight,browserplus,html5',
-					url : 'process-upload.php',
-					max_file_size : '<?php echo MAX_FILESIZE; ?>mb',
-					chunk_size : '1mb',
-					multipart : true,
-					filters : [
-						{title : "Allowed files", extensions : "<?php echo $options_values['allowed_file_types']; ?>"}
-					],
-					flash_swf_url : 'includes/plupload/js/plupload.flash.swf',
-					silverlight_xap_url : 'includes/plupload/js/plupload.silverlight.xap'
-					/*
-					,init : {
-						QueueChanged: function(up) {
-							var uploader = $('#uploader').pluploadQueue();
-							uploader.start();
-						}
-					}
-					*/
-				});
-
-				$('form').submit(function(e) {
-					var uploader = $('#uploader').pluploadQueue();
-
-					if (uploader.files.length > 0) {
-						uploader.bind('StateChanged', function() {
-							if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
-								$('form')[0].submit();
+				$(document).ready(function() {
+					setInterval(function(){
+						// Send a keep alive action every 1 minute
+						var timestamp = new Date().getTime()
+						$.ajax({
+							type:	'GET',
+							cache:	false,
+							url:	'includes/ajax-keep-alive.php',
+							data:	'timestamp='+timestamp,
+							success: function(result) {
+								var dummy = result;
 							}
 						});
-							
-						uploader.start();
-
-						uploader.bind('FileUploaded', function (up, file, info) {
-							var obj = JSON.parse(info.response);
-							var new_file_field = '<input type="hidden" name="finished_files[]" value="'+obj.NewFileName+'" />'
-							$('form').append(new_file_field);
-						});
-
-						return false;
-					} else {
-						alert('<?php _e("You must select at least one file to upload.",'cftp_admin'); ?>');
-					}
-			
-					return false;
+					},1000*60);
 				});
-			});
+
+				$(function() {
+					$("#uploader").pluploadQueue({
+						runtimes : 'gears,flash,silverlight,browserplus,html5',
+						url : 'process-upload.php',
+						max_file_size : '<?php echo MAX_FILESIZE; ?>mb',
+						chunk_size : '1mb',
+						multipart : true,
+						filters : [
+							{title : "Allowed files", extensions : "<?php echo $options_values['allowed_file_types']; ?>"}
+						],
+						flash_swf_url : 'includes/plupload/js/plupload.flash.swf',
+						silverlight_xap_url : 'includes/plupload/js/plupload.silverlight.xap'
+						/*
+						,init : {
+							QueueChanged: function(up) {
+								var uploader = $('#uploader').pluploadQueue();
+								uploader.start();
+							}
+						}
+						*/
+					});
+	
+					$('form').submit(function(e) {
+						var uploader = $('#uploader').pluploadQueue();
+	
+						if (uploader.files.length > 0) {
+							uploader.bind('StateChanged', function() {
+								if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
+									$('form')[0].submit();
+								}
+							});
+								
+							uploader.start();
+	
+							uploader.bind('FileUploaded', function (up, file, info) {
+								var obj = JSON.parse(info.response);
+								var new_file_field = '<input type="hidden" name="finished_files[]" value="'+obj.NewFileName+'" />'
+								$('form').append(new_file_field);
+							});
+	
+							return false;
+						} else {
+							alert('<?php _e("You must select at least one file to upload.",'cftp_admin'); ?>');
+						}
+				
+						return false;
+					});
+				});
 			</script>			
 			<form action="upload-process-form.php" name="upload_by_client" id="upload_by_client" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="uploaded_files" id="uploaded_files" value="" />

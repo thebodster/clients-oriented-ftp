@@ -4,6 +4,7 @@
  * the system, to avoid repetition.
  *
  * @package		ProjectSend
+ * @subpackage	Core
  */
 
 /**

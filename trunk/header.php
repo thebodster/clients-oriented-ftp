@@ -27,7 +27,6 @@ if (!isset($page_title)) { $page_title = __('System Administration','cftp_admin'
 
 /** Call the database update file to see if any change is needed */
 require_once('includes/core.update.php');
-
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -44,13 +43,20 @@ require_once('includes/core.update.php');
 	<script type="text/javascript" src="includes/js/jquery.validations.js"></script>
 
 	<?php if (isset($tablesorter)) { ?>
-	<script src="includes/js/jquery.tablesorter.min.js" type="text/javascript"></script>
-	<script src="includes/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
+		<script src="includes/js/jquery.tablesorter.min.js" type="text/javascript"></script>
+		<script src="includes/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
 	<?php } ?>
 
 	<?php if (isset($textboxlist)) { ?>
-	<script src="includes/js/GrowingInput.js" type="text/javascript"></script>
-	<script src="includes/js/TextboxList.js" type="text/javascript"></script>
+		<script src="includes/js/GrowingInput.js" type="text/javascript"></script>
+		<script src="includes/js/TextboxList.js" type="text/javascript"></script>
+	<?php } ?>
+
+	<?php if (isset($plupload)) { ?>
+		<link rel="stylesheet" media="all" type="text/css" href="includes/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css" />
+		<script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
+		<script type="text/javascript" src="includes/plupload/js/plupload.full.js"></script>
+		<script type="text/javascript" src="includes/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js"></script>
 	<?php } ?>
 
 </head>

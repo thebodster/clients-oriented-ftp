@@ -1,6 +1,6 @@
 <?php
 $allowed_levels = array(9,8);
-require_once('includes/includes.php');
+require_once('sys.includes.php');
 
 if ($_GET['do']=='edit' || isset($_POST['edit_who'])) {
 	$page_title = __('Edit client','cftp_admin');

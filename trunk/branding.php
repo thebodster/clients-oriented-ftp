@@ -1,6 +1,6 @@
 <?php
 $allowed_levels = array(9);
-require_once('includes/includes.php');
+require_once('sys.includes.php');
 $page_title = __('Branding','cftp_admin');
 include('header.php');
 // lang vars
@@ -17,9 +17,9 @@ $select_logo_preview_3 = __("section.",'cftp_admin');
 <?php
 if ($_POST) { // form sent?	
 	
-	/*
-		Got part of this code from http://php.net/manual/es/function.move-uploaded-file.php, one of the user examples
-		Also, checked this one for aid http://blog.brezovsky.net/en-text-4.html
+	/**
+	 * Got part of this code from http://php.net/manual/es/function.move-uploaded-file.php, one of the user examples
+	 * Also, checked this one for aid http://blog.brezovsky.net/en-text-4.html
 	*/
 
 	//  Valid file extensions (images)  
@@ -84,7 +84,7 @@ else {
 			</div>
 			<div id="current_logo_right">
 				<div id="current_logo_img">
-					<img src="includes/thumb.php?src=../img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=220&amp;ql=<?php echo THUMBS_QUALITY; ?>&amp;type=tlogo" alt="" />
+					<img src="<?php echo BASE_URI; ?>includes/thumb.php?src=<?php echo BASE_URI; ?>img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=220&amp;ql=<?php echo THUMBS_QUALITY; ?>&amp;type=tlogo" alt="Logo Placeholder" />
 				</div>
 			</div>
 		</div>

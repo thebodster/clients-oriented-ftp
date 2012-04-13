@@ -215,7 +215,7 @@ function mysql_real_escape_array($array)
  * @author		http://webcheatsheet.com
  * @link		http://www.webcheatsheet.com/php/get_current_page_url.php
  */
-function gettheurl()
+function get_current_url()
 {
 	$pageURL = 'http';
 	if (!empty($_SERVER['HTTPS'])) {

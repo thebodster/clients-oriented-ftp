@@ -29,9 +29,6 @@ if (!isset($grant_access)) {
 }
 
 /** Continue loading the basic system files. */
-require_once('../../includes/vars.php');
-require_once('../../includes/sys.vars.php');
-require_once('../../includes/site.options.php');
-require_once('../../includes/functions.php');
+require_once('../../sys.vars.php');
 
 ?>

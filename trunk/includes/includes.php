@@ -2,12 +2,16 @@
 /**
  * Requirements and inclussions of basic system files.
  *
+ * Left here for backwards compatibility, since this file is directly
+ * loaded by the index.php file generated on the clients folders.
+ *
  * @package ProjectSend
+ * @deprecated Since r120
  *
  */
 
 /** Basic system constants */
-require_once('includes/sys.vars.php');
+require_once('sys.vars.php');
 
 /** Text strings used on various files */
 require_once('includes/vars.php');
@@ -27,6 +31,9 @@ require_once('includes/templates.php');
  *
  */
 require_once('includes/classes/actions-clients.php');
-require_once('includes/classes/actions-users.php');
 require_once('includes/classes/actions-files.php');
+require_once('includes/classes/actions-users.php');
+require_once('includes/classes/file-upload.php');
+require_once('includes/classes/form-validation.php');
+require_once('includes/classes/send-email.php');
 ?>

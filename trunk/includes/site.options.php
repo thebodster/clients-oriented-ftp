@@ -2,7 +2,8 @@
 /**
  * Gets all the options from the database and define each as a constant.
  *
- * @package ProjectSend
+ * @package		ProjectSend
+ * @subpackage	Core
  *
  */
 $database->MySQLDB();
