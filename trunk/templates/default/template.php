@@ -31,7 +31,7 @@ $window_title = __('File downloads','cftp_template');
 	<div id="header_info">
 		<h1><?php echo SYSTEM_NAME; ?></h1>
 	</div>
-	<a href="../../process.php?do=logout" target="_self" id="logout"><?php _e('Logout', 'cftp_admin'); ?></a>
+	<a href="../../process.php?do=logout" target="_self" id="logout" class="button button_blue"><?php _e('Logout', 'cftp_admin'); ?></a>
 </div>
 
 <div id="under_header">
