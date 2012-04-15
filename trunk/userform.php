@@ -278,7 +278,7 @@ if ($_POST) {
 					</select>
 				</li>
 				<li class="form_submit_li">
-					<input type="submit" name="Submit" value="<?php if ($_GET['do'] == 'edit' || isset($_POST['edit_who'])) { _e('Modify user','cftp_admin'); } else { _e('Add user','cftp_admin'); } ?>" class="boton" />
+					<input type="submit" name="Submit" value="<?php if ($_GET['do'] == 'edit' || isset($_POST['edit_who'])) { _e('Modify user','cftp_admin'); } else { _e('Add user','cftp_admin'); } ?>" class="button button_blue button_submit" />
 				</li>
 			</ul>
 

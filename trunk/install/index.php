@@ -220,7 +220,7 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 								<input type="password" name="install_user_repeat" id="install_user_repeat" class="required" maxlength="12" />
 							</li>
 							<li class="form_submit_li">
-								<input type="submit" name="Submit" value="<?php _e('Install','cftp_admin'); ?>" class="boton" />
+								<input type="submit" name="Submit" value="<?php _e('Install','cftp_admin'); ?>" class="button button_blue button_submit" />
 							</li>
 						</ul>
 			

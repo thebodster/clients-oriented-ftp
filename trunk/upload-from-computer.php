@@ -119,7 +119,7 @@ $database->MySQLDB();
 					<p><?php _e("Your browser doesn't have Flash, Silverlight, Google Gears, BrowserPlus or HTML5 support. Please update your browser or install Adobe Flash to continue.",'cftp_admin'); ?></p>
 				</div>
 				<div align="right">
-					<input type="submit" name="Submit" value="<?php _e('Continue','cftp_admin'); ?>" class="boton" />
+					<input type="submit" name="Submit" value="<?php _e('Continue','cftp_admin'); ?>" class="button button_blue button_submit" />
 				</div>
 			</form>
 	

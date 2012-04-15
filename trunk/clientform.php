@@ -324,7 +324,7 @@ if ($_POST) {
 					<input name="add_client_form_intcont" id="add_client_form_intcont" class="txtfield" value="<?php echo stripslashes($add_client_data_intcont); ?>" />
 				</li>
 				<li class="form_submit_li">
-					<input type="submit" name="Submit" value="<?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { _e('Edit account','cftp_admin'); } else { _e('Create account','cftp_admin'); } ?>" class="boton" />
+					<input type="submit" name="Submit" value="<?php if ($_GET['do']=='edit' || isset($_POST['edit_who'])) { _e('Edit account','cftp_admin'); } else { _e('Create account','cftp_admin'); } ?>" class="button button_blue button_submit" />
 				</li>
 			</ul>
 
