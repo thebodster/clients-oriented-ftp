@@ -188,7 +188,7 @@ $database->MySQLDB();
 						<input type="checkbox" name="login_form_remember" id="login_form_remember" />
 					</li>
 					<li class="form_submit_li">
-						<input type="submit" name="Submit" value="<?php _e('Continue to log in','cftp_admin'); ?>" class="boton" />
+						<input type="submit" name="Submit" value="<?php _e('Continue to log in','cftp_admin'); ?>" id="button_login" class="button button_blue button_submit" />
 					</li>
 				</ul>
 			</form>

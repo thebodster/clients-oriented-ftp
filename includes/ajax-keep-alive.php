@@ -9,6 +9,13 @@
  *
  * @package ProjectSend
  */
+session_start();
+/*
+$img = imagecreate( 1, 1 );
+header( "Content-type: image/jpeg" );
+imagejpeg($img);
+imagedestroy($img);
+*/
 $random = rand(1,1000000);
 echo $_GET['timestamp'].'-'.$random;
 ?>

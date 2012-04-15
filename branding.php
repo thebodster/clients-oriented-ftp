@@ -99,7 +99,7 @@ else {
 						<input type="file" name="select_logo" />
 					</li>
 					<li class="form_submit_li">
-						<input type="submit" name="Submit" value="<?php _e('Upload','cftp_admin'); ?>" class="boton" />
+						<input type="submit" name="Submit" value="<?php _e('Upload','cftp_admin'); ?>" class="button button_blue button_submit" />
 					</li>
 				</ul>
 			</form>

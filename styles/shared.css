@@ -15,6 +15,10 @@ strong {
 	font-weight:bold;
 }
 
+em {
+	font-style:italic;
+}
+
 :focus { outline:none; }
 ::-moz-focus-inner { border:0; }
 
@@ -57,23 +61,15 @@ body {
 	margin:0 0 0 -120px;
 	left:100%;
 	top:20px;
+	font-weight:normal;
 
 	width:100px;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
 	border-radius:5px;
 	padding:6px 0;
 	font-size:12px!important;
-	text-align:center;
-	text-decoration:none;
 	
-	background:#407FB6!important;
-	background:-moz-linear-gradient(center top , #407FB6, #236299)!important;
-	background:-webkit-gradient(linear, left top, left bottom, from(#407FB6), to(#236299))!important;
-	border:1px solid #004380!important;
 	box-shadow:0 1px 0 rgba(0, 0, 0, 0.3) inset, 0 0 0 1px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(0, 0, 0, 0.5)!important;
 	text-shadow:0 -1px 0 #000000!important;
-	color:white!important;
 }
 
 
@@ -107,6 +103,7 @@ body {
 
 .button:hover {
 	text-decoration:none;
+	-moz-box-shadow:2px 2px 2px #ccc;
 }
 
 .button {
@@ -125,10 +122,23 @@ body {
 	-webkit-border-radius:5px;
 	-o-border-radius:5px;
 	border-radius:5px;
+
+	box-shadow:0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 0 0 1px rgba(255, 255, 255, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.5)!important;
+}
+
+.button:focus {
+	box-shadow:3px 3px 3px rgba(0, 0, 0, 0.3) inset, -3px -3px 3px 1px rgba(0, 0, 0, 0.1) inset, 0 0 0 rgba(0, 0, 0, 0.5)!important;
+	text-shadow:0 -1px 0 #3E6A16!important;
 }
 
 .button_small {
 	width:35px!important;
+}
+
+.button_big {
+	width:150px!important;
+	padding:9px 10px;
+	font-size:13px;
 }
 
 .button_gray {
@@ -136,7 +146,6 @@ body {
 	background:-moz-linear-gradient(center top , #D1D1D1, #CACACA)!important;
 	background:-webkit-gradient(linear, left top, left bottom, from(#D1D1D1), to(#CACACA))!important;
 	border:1px solid #C4C2C2!important;
-	box-shadow:0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 0 0 1px rgba(255, 255, 255, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.5)!important;
 	text-shadow:0 1px 1px #777!important;
 }
 
@@ -145,7 +154,6 @@ body {
 	background:-moz-linear-gradient(center top , #82B741, #639822)!important;
 	background:-webkit-gradient(linear, left top, left bottom, from(#82B741), to(#639822))!important;
 	border:1px solid #468000!important;
-	box-shadow:0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 0 0 1px rgba(255, 255, 255, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.5)!important;
 }
 
 .button_blue {
@@ -153,7 +161,6 @@ body {
 	background:-moz-linear-gradient(center top , #407FB6, #236299)!important;
 	background:-webkit-gradient(linear, left top, left bottom, from(#407FB6), to(#236299))!important;
 	border:1px solid #004380!important;
-	box-shadow:0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 0 0 1px rgba(255, 255, 255, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.5)!important;
 }
 
 .button_red {
@@ -161,7 +168,13 @@ body {
 	background:-moz-linear-gradient(center top , #D7575A, #D24244)!important;
 	background:-webkit-gradient(linear, left top, left bottom, from(#D7575A), to(#D24244))!important;
 	border:1px solid #BF3133!important;
-	box-shadow:0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 0 0 1px rgba(255, 255, 255, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.5)!important;
+}
+
+.button_blue:hover {
+	background:#004B92!important;
+	background:-moz-linear-gradient(center top , #1C6EB5, #004B92)!important;
+	background:-webkit-gradient(linear, left top, left bottom, from(#1C6EB5), to(#004B92))!important;
+	border:1px solid #002170!important;
 }
 
 

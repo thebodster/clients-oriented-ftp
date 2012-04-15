@@ -79,7 +79,7 @@ $work_folder = USER_UPLOADS_TEMP_FOLDER;
 					</table>
 					<ul class="form_fields">
 						<li class="form_submit_li">
-							<input type="submit" name="Submit" value="<?php _e('Continue','cftp_admin'); ?>" class="boton" />
+							<input type="submit" name="Submit" value="<?php _e('Continue','cftp_admin'); ?>" class="button button_blue button_submit" />
 						</li>
 					</ul>
 				</form>

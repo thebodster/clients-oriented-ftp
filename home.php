@@ -1,4 +1,10 @@
 <?php
+/**
+ * Home page for logged in system users.
+ *
+ * @package		ProjectSend
+ *
+ */
 $allowed_levels = array(9,8,7);
 require_once('sys.includes.php');
 $page_title = __('Welcome to ProjectSend', 'cftp_admin');
@@ -9,56 +15,105 @@ $database->MySQLDB();
 <div id="main">
 	<h2><?php echo $page_title; ?></h2>
 
-	<div id="intstatbar" class="whitebox">
+	<?php
+	/**
+	 * Icons are from the set: Origami Colored Pencil
+	 *
+	 * @link		http://www.iconfinder.com/search/?q=iconset%3Acolorful
+	 * @author		Double-J designs
+	 */
+	?>
+	<div class="home_column_left">
+		<ul class="home_spaces">
+			<?php
+				/** Show UPLOAD widget to allowed users */
+				$upload_allowed = array(9,8,7);
+				if (in_session_or_cookies($upload_allowed)) {
+			?>
+					<li class="home_widget_small">
+						<div class="home_container">
+							<h4><?php _e('Upload files','cftp_admin'); ?></h4>
+							<img src="img/home-widget-files.png" alt="" />
+							<a href="upload-from-computer.php" class="button button_blue button_big"><?php _e('Upload from computer','cftp_admin'); ?></a>
+							<a href="upload-by-ftp.php" class="button button_blue button_big"><?php _e('Import from FTP','cftp_admin'); ?></a>
+							<div class="message message_info">
+								<p><?php _e('Total files:','cftp_admin'); ?>
+									<strong>
+									<?php
+										$sql = $database->query("SELECT distinct id FROM tbl_files");
+										$count = mysql_num_rows($sql);
+										echo $count;
+									?>
+									</strong>
+								</p>
+							</div>
+						</div>
+					</li>
+			<?php
+				}
+				/** Show CLIENTS widget to allowed users */
+				$clients_allowed = array(9,8);
+				if (in_session_or_cookies($clients_allowed)) {
+			?>
+					<li class="home_widget_small">
+						<div class="home_container">
+							<h4><?php _e('Clients','cftp_admin'); ?></h4>
+							<img src="img/home-widget-clients.png" alt="" />
+							<a href="clientform.php" class="button button_blue button_big"><?php _e('Add new client','cftp_admin'); ?></a>
+							<a href="clients.php" class="button button_blue button_big"><?php _e('Manage clients','cftp_admin'); ?></a>
+							<div class="message message_info">
+								<p><?php _e('Total clients:','cftp_admin'); ?>
+									<strong>
+									<?php
+										$sql = $database->query("SELECT distinct client_user FROM tbl_clients");
+										$count = mysql_num_rows($sql);
+										echo $count;
+									?>
+									</strong>
+								</p>
+							</div>
+						</div>
+					</li>
+			<?php
+				}
 	
-		<!-- Clientes -->
-			<div class="statbarlogo" id="stat_clients">
-				<span><?php _e('Clients', 'cftp_admin'); ?>:</span>
-				<?php
-					$sql = $database->query("SELECT distinct client_user FROM tbl_clients");
-					$count=mysql_num_rows($sql);
-					echo $count;
-				?>
-				<?php // show VIEW CLIENTS to allowed users
-					$clients_allowed = array(9,8);
-					if (in_session_or_cookies($clients_allowed)) {
-				?>
-					<a href="clients.php" target="_self"><?php _e('View', 'cftp_admin'); ?></a>
-				<?php } ?>
-			</div>
-
-		<?php
-			// users stats and logo are only visible by level 9 users (system administrators)
-			$allowed = array(9);
-			if (in_session_or_cookies($allowed)) {
-		?>
-		<!-- Usuarios -->								
-			<div class="statbarlogo" id="stat_users">
-				<span><?php _e('Users', 'cftp_admin'); ?>:</span> 
-				<?php
-				
-					$sql = $database->query("SELECT distinct user FROM tbl_users");
-					$count=mysql_num_rows($sql);
-					echo $count;
-				?>
-				<a href="users.php" target="_self"><?php _e('View', 'cftp_admin'); ?></a>
-			</div>
-
-		<!-- Logo -->				
-			<div class="statbarlogo" id="stat_logo">
-				<span><?php _e('Branding', 'cftp_admin'); ?>:</span>
-				<a href="branding.php" target="_self"><?php _e('Change logo', 'cftp_admin'); ?></a>
-			</div>
-		<?php } ?>
-
+				/** Show USERS and BRANDING widgets to system administrators (Level 9) only */
+				$users_allowed = array(9);
+				if (in_session_or_cookies($users_allowed)) {
+			?>
+					<li class="home_widget_small">
+						<div class="home_container">
+							<h4><?php _e('System users','cftp_admin'); ?></h4>
+							<img src="img/home-widget-users.png" alt="" />
+							<a href="userform.php" class="button button_blue button_big"><?php _e('Add new user','cftp_admin'); ?></a>
+							<a href="users.php" class="button button_blue button_big"><?php _e('Manage users','cftp_admin'); ?></a>
+							<div class="message message_info">
+								<p><?php _e('Total users:','cftp_admin'); ?>
+									<strong>
+									<?php
+										$sql = $database->query("SELECT distinct user FROM tbl_users");
+										$count = mysql_num_rows($sql);
+										echo $count;
+									?>
+									</strong>
+								</p>
+							</div>
+						</div>
+					</li>
+					<li class="home_widget_small">
+						<div class="home_container">
+							<h4><?php _e('Branding','cftp_admin'); ?></h4>
+							<img src="img/home-widget-branding.png" alt="" />
+							<a href="branding.php" class="button button_blue button_big"><?php _e('Change Logo','cftp_admin'); ?></a>
+							<p><?php _e("Upload your company logo. It will appear in every client's page.", 'cftp_admin'); ?></p>
+						</div>
+					</li>
+			<?php
+				}
+			?>
+		</ul>
 	</div>
-
-	<div id="txthome">
-		<p><?php _e('Thank you for choosing ProjectSend. This software allows you to upload files for specific clients, and keep them stored for as long as you need them.', 'cftp_admin'); ?></p>
-		<p><?php _e('ProjectSend lets choose a name and description for each individual file you upload, and relate it to an existing client or create a new one. When the upload is complete, the system wil give you a link that you can share, where you client can see and download every file available under his account.', 'cftp_admin'); ?></p>
-		<p><?php _e("Additionaly, you can select your own logo, that will appear in every client's page.", 'cftp_admin'); ?></p>
-		<p><?php _e("ProjectSend was originally called cFTP, but since the system isn't intended to use the FTP protocol for uploads the name was changed to avoid confusion. Also, ProjectSend is a fancier name!", 'cftp_admin'); ?></p>
-	</div>
+	<div class="clear"></div>
 	
 </div>
 <?php

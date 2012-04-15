@@ -68,7 +68,7 @@ require_once('includes/core.update.php');
 			<h1><?php echo SYSTEM_NAME; ?></h1>
 			<p><?php echo CURRENT_VERSION; ?></p>
 		</div>
-		<a href="process.php?do=logout" target="_self" id="logout"><?php _e('Logout', 'cftp_admin'); ?></a>
+		<a href="process.php?do=logout" target="_self" id="logout" class="button button_blue"><?php _e('Logout', 'cftp_admin'); ?></a>
 	</div>
 
 	<?php

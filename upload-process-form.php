@@ -380,7 +380,7 @@ $sql = $database->query($cq);
 				?>
 		
 				<div align="right">
-					<input type="submit" name="submit" value="<?php _e('Continue','cftp_admin'); ?>" class="boton" id="upload_continue" />
+					<input type="submit" name="submit" value="<?php _e('Continue','cftp_admin'); ?>" class="button button_blue button_submit" id="upload_continue" />
 				</div>
 			</form>
 
@@ -431,7 +431,7 @@ $sql = $database->query($cq);
 				})
 
 				// Autoclick the continue button
-				$('#upload_continue').click();
+				//$('#upload_continue').click();
 
 		<?php
 			}
