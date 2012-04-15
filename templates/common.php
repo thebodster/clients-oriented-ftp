@@ -10,7 +10,7 @@
 /** Loads a language file from the current template folder based on the system options */
 $lang = SITE_LANG;
 if(!isset($ld)) { $ld = 'cftp_admin'; }
-require_once('../../includes/i18n.php');
+require_once('../../includes/classes/i18n.php');
 I18n::LoadDomain("../../templates/".TEMPLATE_USE."/lang/{$lang}.mo", $ld);
 
 $this_template = '../../templates/'.TEMPLATE_USE.'/';
