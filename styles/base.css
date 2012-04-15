@@ -92,7 +92,7 @@ ul.menu ul {position:absolute; top:28px; left:0; display:none; opacity:0; list-s
 ul.menu ul li {position:relative; /*border:1px solid #aaa;*/ border-top:none; width:160px; margin:0}
 
 ul.menu ul li a {display:block; padding:10px; background-color:#222; color:white; border-bottom:1px solid #444444; font-size:12px;}
-ul.menu ul li a:hover {background-color:#333}
+ul.menu a:hover {background-color:#333}
 ul.menu ul ul {left:100px; top:-1px}
 
 ul.menu .menulink {/*border:1px solid #aaa;*/ padding:5px 27px 7px; font-weight:bold; margin:0 0px; border-right:1px solid #333; border-left:1px solid #000;}
@@ -122,19 +122,6 @@ ul.menu .topline {border-top:1px solid #aaa}
 .bold { font-weight:bold; }
 
 #main { padding:30px; }
-
-#txthome {
-	margin:0 0 30px 0;
-	font-size:12px;
-	line-height:19px;
-	width:60%;
-	float:left;
-	color:#333333;
-}
-
-#txthome p {
-	margin-bottom:20px;
-}
 
 /** Home widgets */
 
@@ -507,6 +494,7 @@ checkbox { border:1px solid #CCCCCC; }
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
 	border-radius:5px;
+	cursor:pointer;
 
 	background:#407FB6!important;
 	background:-moz-linear-gradient(center top , #FAFBFC, #E2E5E9)!important;
@@ -517,6 +505,11 @@ checkbox { border:1px solid #CCCCCC; }
 	color:#111!important;
 }
 
+.button_form:hover {
+	background:#D8DBDF!important;
+	background:-moz-linear-gradient(center top , #EDEEEF, #D8DBDF)!important;
+	background:-webkit-gradient(linear, left top, left bottom, from(#EDEEEF), to(#D8DBDF))!important;
+}
 
 /* logo config page */
 
