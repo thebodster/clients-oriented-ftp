@@ -92,7 +92,7 @@ define('LOGO_THUMB_FOLDER',ROOT_DIR.'/img/custom/thumbs/');
  */
 $lang = SITE_LANG;
 define('I18N_DEFAULT_DOMAIN', 'cftp_admin');
-require_once(ROOT_DIR.'/includes/i18n.php');
+require_once(ROOT_DIR.'/includes/classes/i18n.php');
 I18n::LoadDomain(ROOT_DIR."lang/{$lang}.mo", 'cftp_admin' );
 
 /** System User Roles names */
