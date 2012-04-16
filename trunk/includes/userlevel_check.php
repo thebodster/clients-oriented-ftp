@@ -44,7 +44,7 @@ function check_for_session()
 	if (isset($_SESSION['loggedin'])) {
 		$is_logged_now = true;
 	}
-	elseif ($_SESSION['access'] == 'admin') {
+	elseif (isset($_SESSION['access']) && $_SESSION['access'] == 'admin') {
 		$is_logged_now = true;
 	}
 	elseif (check_valid_cookie()) {
@@ -67,7 +67,7 @@ function check_for_session()
  */
 function check_for_admin() {
 	$is_logged_admin = false;
-	if ($_SESSION['access'] == 'admin') {
+	if (isset($_SESSION['access']) && $_SESSION['access'] == 'admin') {
 		$is_logged_admin = true;
 	}
 	elseif (check_valid_cookie() && mysql_real_escape_string($_COOKIE['access']) == 'admin') {

@@ -150,13 +150,14 @@ function system_message($type,$message,$div_id = '')
  */
 function in_session_or_cookies($levels)
 {
-	if (isset($_SESSION['userlevel']) || isset($_COOKIE['userlevel'])) {
-		if (in_array($_SESSION['userlevel'],$levels) || in_array($_COOKIE['userlevel'],$levels)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+	if (isset($_SESSION['userlevel']) && (in_array($_SESSION['userlevel'],$levels))) {
+		return true;
+	}
+	else if (isset($_COOKIE['userlevel']) && (in_array($_COOKIE['userlevel'],$levels))) {
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 
