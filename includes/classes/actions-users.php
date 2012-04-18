@@ -11,8 +11,170 @@ class UserActions
 {
 
 	var $user = '';
+	
+	/**
+	 * Validate the information from the form.
+	 */
+	function validate_user($arguments)
+	{
+		require(ROOT_DIR.'/includes/vars.php');
 
-	function delete_user($user) {
+		global $valid_me;
+		$this->state = array();
+
+		$this->id = $arguments['id'];
+		$this->name = $arguments['name'];
+		$this->email = $arguments['email'];
+		$this->password = $arguments['password'];
+		$this->password_repeat = $arguments['password_repeat'];
+		$this->role = $arguments['role'];
+		$this->type =  $arguments['type'];
+
+		/**
+		 * These validations are done both when creating a new user and
+		 * when editing an existing one.
+		 */
+		$valid_me->validate('completed',$this->name,$validation_no_name);
+		$valid_me->validate('completed',$this->email,$validation_no_email);
+		$valid_me->validate('completed',$this->role,$validation_no_level);
+		$valid_me->validate('email',$this->email,$validation_invalid_mail);
+		
+		/**
+		 * Validations for NEW USER submission only.
+		 */
+		if ($this->type == 'new_user') {
+			$this->username = $arguments['username'];
+
+			$valid_me->validate('email_exists',$this->email,$add_user_mail_exists);
+			/** Username checks */
+			$valid_me->validate('user_exists',$this->username,$add_user_exists);
+			$valid_me->validate('completed',$this->username,$validation_no_user);
+			$valid_me->validate('alpha',$this->username,$validation_alpha_user);
+			$valid_me->validate('length',$this->username,$validation_length_user,MIN_USER_CHARS,MAX_USER_CHARS);
+			
+			$this->validate_password = true;
+		}
+		/**
+		 * Validations for USER EDITING only.
+		 */
+		else if ($this->type == 'edit_user') {
+			/**
+			 * Changing password is optional.
+			 * Proceed only if any of the 2 fields is completed.
+			 */
+			if($arguments['password'] != '' || $arguments['password_repeat'] != '') {
+				$this->validate_password = true;
+			}
+			/**
+			 * Check if the email is currently assigned to this users's id.
+			 * If not, then check if it exists.
+			 */
+			$valid_me->validate('email_exists',$this->email,$add_user_mail_exists,'','','','','',$this->id);
+		}
+
+		/** Password checks */
+		if (isset($this->validate_password) && $this->validate_password === true) {
+			$valid_me->validate('completed',$this->password,$validation_no_pass);
+			$valid_me->validate('password',$this->password,$validation_valid_pass.' '.$validation_valid_chars);
+			$valid_me->validate('length',$this->password,$validation_length_pass,MIN_PASS_CHARS,MAX_PASS_CHARS);
+			$valid_me->validate('pass_match','',$validation_match_pass,'','',$this->password,$this->password_repeat);
+		}
+
+		if ($valid_me->return_val) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
+
+	/**
+	 * Create a new user.
+	 */
+	function create_user($arguments)
+	{
+		global $database;
+		$this->state = array();
+
+		/** Define the account information */
+		$this->username = $arguments['username'];
+		$this->password = $arguments['password'];
+		$this->name = $arguments['name'];
+		$this->email = $arguments['email'];
+		$this->role = $arguments['role'];
+		$this->enc_password = md5(mysql_real_escape_string($this->password));
+
+		$this->timestamp = time();
+		$this->sql_query = $database->query("INSERT INTO tbl_users (id,user,password,name,email,level,timestamp)"
+											."VALUES ('NULL', '$this->username', '$this->enc_password', '$this->name', '$this->email','$this->role', '$this->timestamp')");
+
+		if ($this->sql_query) {
+			$this->state['query'] = 1;
+
+			/** Send account data by email */
+			$this->notify_user = new PSend_Email();
+			$this->notify_send = $this->notify_user->psend_send_email('new_user',$this->email,$this->username,$this->password);
+
+			if ($this->notify_send == 1){
+				$this->state['email'] = 1;
+			}
+			else {
+				$this->state['email'] = 0;
+			}
+		}
+		else {
+			$this->state['query'] = 0;
+		}
+		
+		return $this->state;
+	}
+
+	/**
+	 * Edit an existing user.
+	 */
+	function edit_user($arguments)
+	{
+		global $database;
+		$this->state = array();
+
+		/** Define the account information */
+		$this->id = $arguments['id'];
+		$this->name = $arguments['name'];
+		$this->email = $arguments['email'];
+		$this->role = $arguments['role'];
+
+		$this->password = $arguments['password'];
+		$this->enc_password = md5(mysql_real_escape_string($this->password));
+
+		/** SQL query */
+		$this->edit_user_query = "UPDATE tbl_users SET 
+								name = '$this->name',
+								email = '$this->email',
+								level = '$this->role'";
+
+		/** Add the password to the query if it's not the dummy value '' */
+		if (!empty($arguments['password'])) {
+			$this->edit_user_query .= ", password = '$this->enc_password'";
+		}
+
+		$this->edit_user_query .= " WHERE id = $this->id";
+		$this->sql_query = $database->query($this->edit_user_query);
+
+		if ($this->sql_query) {
+			$this->state['query'] = 1;
+		}
+		else {
+			$this->state['query'] = 0;
+		}
+		
+		return $this->state;
+	}
+
+	/**
+	 * Delete an existing user.
+	 */
+	function delete_user($user)
+	{
 		global $database;
 		$this->check_level = array(9);
 		if (isset($user)) {

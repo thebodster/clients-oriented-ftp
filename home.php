@@ -85,7 +85,7 @@ $database->MySQLDB();
 						<div class="home_container">
 							<h4><?php _e('System users','cftp_admin'); ?></h4>
 							<img src="img/home-widget-users.png" alt="" />
-							<a href="userform.php" class="button button_blue button_big"><?php _e('Add new user','cftp_admin'); ?></a>
+							<a href="users-add.php" class="button button_blue button_big"><?php _e('Add new user','cftp_admin'); ?></a>
 							<a href="users.php" class="button button_blue button_big"><?php _e('Manage users','cftp_admin'); ?></a>
 							<div class="message message_info">
 								<p><?php _e('Total users:','cftp_admin'); ?>

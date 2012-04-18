@@ -330,6 +330,11 @@ ul.menu .topline {border-top:1px solid #aaa}
 	padding-right:30px;
 }
 
+input[readonly] {
+	background-color: #f0f0f0;
+	color:#999999;
+}
+
 .form_actions {
 	padding:0;
 	margin-bottom:30px;

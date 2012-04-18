@@ -123,7 +123,7 @@ require_once('includes/core.update.php');
 					<li>
 						<a href="users.php" class="menulink dropready"><?php _e('Users', 'cftp_admin'); ?></a>
 						<ul>
-							<li><a href="userform.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
+							<li><a href="users-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
 							<li><a href="users.php"><?php _e('Manage users', 'cftp_admin'); ?></a></li>
 						</ul>
 					</li>

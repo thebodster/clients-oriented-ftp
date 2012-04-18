@@ -7,6 +7,25 @@
  */
 
 /**
+ * Check if a user id exists on the database.
+ * Used on the Edit user page.
+ *
+ * @return bool
+ */
+function user_exists_id($id)
+{
+	global $database;
+	$id_exists = $database->query("SELECT * FROM tbl_users WHERE id='$id'");
+	$count_users = mysql_num_rows($id_exists);
+	if($count_users > 0){
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+/**
  * Get all the client information knowing only the id
  * Used on the Manage files page.
  *
@@ -100,7 +119,7 @@ function default_footer_info()
 {
 ?>
 	<div id="footer">
-			<span><?php _e('ProjectSend Free software (GPL2) | 2007 - ', 'cftp_admin'); ?> <?php echo date("Y") ?> | <a href="<?php echo SYSTEM_URI; ?>" target="_blank"><?php echo SYSTEM_URI_LABEL; ?></a></span>
+		<span><?php _e('ProjectSend Free software (GPL2) | 2007 - ', 'cftp_admin'); ?> <?php echo date("Y") ?> | <a href="<?php echo SYSTEM_URI; ?>" target="_blank"><?php echo SYSTEM_URI_LABEL; ?></a></span>
 	</div>
 <?php
 }

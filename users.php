@@ -117,7 +117,7 @@
 					</td>
 					<td><?php echo date(TIMEFORMAT_USE,$row['timestamp']); ?></td>
 					<td>
-						<a href="userform.php?do=edit&amp;user=<?php echo $row["id"]; ?>" class="button button_small button_blue"><?php _e('Edit','cftp_admin'); ?></a>
+						<a href="users-edit.php?id=<?php echo $row["id"]; ?>" class="button button_small button_blue"><?php _e('Edit','cftp_admin'); ?></a>
 					</td>
 				</tr>
 						
