@@ -12,8 +12,8 @@ $database->MySQLDB();
  * Get the main admin e-mail address used for sending notifications.
  * This is the system user that is created when ProjectSend is installed.
  */
-$sql = $database->query('SELECT * FROM tbl_users WHERE user="admin"');
-while($row = @mysql_fetch_array($sql)) {
+$sql = $database->query('SELECT * FROM tbl_users WHERE id="1"');
+while($row = mysql_fetch_array($sql)) {
 	define('ADMIN_EMAIL_ADDRESS',$row['email']);
 }
 
