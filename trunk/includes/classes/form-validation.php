@@ -106,16 +106,29 @@ class Validate_Form
 	 * Check if the supplied e-mail address already is already assigned to 
 	 * either a client or a system user.
 	 */
-	private function is_email_exists($field, $err)
+	private function is_email_exists($field, $err, $current_id)
 	{
-		if (mysql_num_rows(mysql_query("SELECT * FROM tbl_clients WHERE email = '$field'")) || mysql_num_rows(mysql_query("SELECT * FROM tbl_users WHERE email = '$field'"))){
+		$this->sql_clients = "SELECT * FROM tbl_clients WHERE email = '$field'";
+		$this->sql_users = "SELECT * FROM tbl_users WHERE email = '$field'";
+		/**
+		 * If the ID parameter is set, the validation is used when editing
+		 * a client or user, and prevents an error if the current user is
+		 * the owner of that e-mail address.
+		 */
+		if (!empty($current_id)) {
+			$this->sql_not_this = " AND id != $current_id";
+			$this->sql_clients .= $this->sql_not_this;
+			$this->sql_users .= $this->sql_not_this;
+		}
+
+		if (mysql_num_rows(mysql_query($this->sql_clients)) || mysql_num_rows(mysql_query($this->sql_users))){
 			$this->error_msg .= '<li>'.$err.'</li>';
 			$this->return_val = false;
 		}
 	}
 
 	/** Call the requested method and pass the corresponding values */
-	function validate($val_type, $field, $err='', $min='', $max='', $pass1='', $pass2='', $row='')
+	function validate($val_type, $field, $err='', $min='', $max='', $pass1='', $pass2='', $row='', $current_id='')
 	{
 		switch($val_type) {
 			case 'completed':
@@ -140,7 +153,7 @@ class Validate_Form
 				$this->is_user_exists($field, $err);
 			break;
 			case 'email_exists':
-				$this->is_email_exists($field, $err);
+				$this->is_email_exists($field, $err, $current_id);
 			break;
 		}
 	}
