@@ -59,7 +59,7 @@ $database->MySQLDB();
 						<div class="home_container">
 							<h4><?php _e('Clients','cftp_admin'); ?></h4>
 							<img src="img/home-widget-clients.png" alt="" />
-							<a href="clientform.php" class="button button_blue button_big"><?php _e('Add new client','cftp_admin'); ?></a>
+							<a href="clients-add.php" class="button button_blue button_big"><?php _e('Add new client','cftp_admin'); ?></a>
 							<a href="clients.php" class="button button_blue button_big"><?php _e('Manage clients','cftp_admin'); ?></a>
 							<div class="message message_info">
 								<p><?php _e('Total clients:','cftp_admin'); ?>
