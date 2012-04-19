@@ -61,11 +61,13 @@ switch ($user_form_type) {
 	case 'new_user':
 		$submit_value = __('Add user','cftp_admin');
 		$disable_user = false;
+		$require_pass = true;
 		$form_action = 'users-add.php';
 		break;
 	case 'edit_user':
 		$submit_value = __('Save user','cftp_admin');
 		$disable_user = true;
+		$require_pass = false;
 		$form_action = 'users-edit.php?id='.$user_id;
 		break;
 }
@@ -82,11 +84,11 @@ switch ($user_form_type) {
 		</li>
 		<li>
 			<label for="add_user_form_pass"><?php _e('Log in password','cftp_admin'); ?></label>
-			<input name="add_user_form_pass" id="add_user_form_pass" class="txtfield required" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
+			<input name="add_user_form_pass" id="add_user_form_pass" class="txtfield <?php if ($require_pass) { echo 'required'; } ?>" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
 		</li>
 		<li>
 			<label for="add_user_form_pass2"><?php _e('Repeat password','cftp_admin'); ?></label>
-			<input name="add_user_form_pass2" id="add_user_form_pass2" class="txtfield required" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
+			<input name="add_user_form_pass2" id="add_user_form_pass2" class="txtfield <?php if ($require_pass) { echo 'required'; } ?>" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
 		</li>
 		<li>
 			<label for="add_user_form_email"><?php _e('E-mail','cftp_admin'); ?></label>

@@ -60,11 +60,13 @@ switch ($clients_form_type) {
 	case 'new_client':
 		$submit_value = __('Add client','cftp_admin');
 		$disable_user = false;
+		$require_pass = true;
 		$form_action = 'clients-add.php';
 		break;
 	case 'edit_client':
 		$submit_value = __('Save client','cftp_admin');
 		$disable_user = true;
+		$require_pass = false;
 		$form_action = 'clients-edit.php?id='.$client_id;
 		break;
 }
@@ -82,11 +84,11 @@ switch ($clients_form_type) {
 		</li>
 		<li>
 			<label for="add_client_form_pass"><?php _e('Password','cftp_admin'); ?></label>
-			<input name="add_client_form_pass" id="add_client_form_pass" class="txtfield required" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
+			<input name="add_client_form_pass" id="add_client_form_pass" class="txtfield <?php if ($require_pass) { echo 'required'; } ?>" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
 		</li>
 		<li>
 			<label for="add_client_form_pass2"><?php _e('Repeat password','cftp_admin'); ?></label>
-			<input name="add_client_form_pass2" id="add_client_form_pass2" class="txtfield required" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
+			<input name="add_client_form_pass2" id="add_client_form_pass2" class="txtfield <?php if ($require_pass) { echo 'required'; } ?>" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
 		</li>
 		<li>
 			<label for="add_client_form_address"><?php _e('Address','cftp_admin'); ?></label>
