@@ -81,7 +81,7 @@ if ($_POST) {
 				 */
 				switch ($new_response['email']) {
 					case 1:
-						$msg = __('An e-mail notification with login information was sent to your client.','cftp_admin');
+						$msg = __('An e-mail notification with login information was sent to the new user.','cftp_admin');
 						echo system_message('ok',$msg);
 					break;
 					case 0:
