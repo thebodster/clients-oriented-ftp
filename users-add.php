@@ -29,6 +29,7 @@ if ($_POST) {
 
 	/** Arguments used on validation and user creation. */
 	$new_arguments = array(
+							'id' => '',
 							'username' => $add_user_data_user,
 							'password' => $_POST['add_user_form_pass'],
 							'password_repeat' => $_POST['add_user_form_pass2'],
