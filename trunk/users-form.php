@@ -35,11 +35,11 @@
 				}
 			?>
 
-				is_complete(this.add_user_form_pass,'<?php echo $validation_no_pass; ?>');
-				is_complete(this.add_user_form_pass2,'<?php echo $validation_no_pass2; ?>');
-				is_length(this.add_user_form_pass,<?php echo MIN_PASS_CHARS; ?>,<?php echo MAX_PASS_CHARS; ?>,'<?php echo $validation_length_pass; ?>');
-				is_password(this.add_user_form_pass,'<?php $chars = addslashes($validation_valid_chars); echo $validation_valid_pass." ".$chars; ?>');
-				is_match(this.add_user_form_pass,this.add_user_form_pass2,'<?php echo $validation_match_pass; ?>');
+						is_complete(this.add_user_form_pass,'<?php echo $validation_no_pass; ?>');
+						is_complete(this.add_user_form_pass2,'<?php echo $validation_no_pass2; ?>');
+						is_length(this.add_user_form_pass,<?php echo MIN_PASS_CHARS; ?>,<?php echo MAX_PASS_CHARS; ?>,'<?php echo $validation_length_pass; ?>');
+						is_password(this.add_user_form_pass,'<?php $chars = addslashes($validation_valid_chars); echo $validation_valid_pass." ".$chars; ?>');
+						is_match(this.add_user_form_pass,this.add_user_form_pass2,'<?php echo $validation_match_pass; ?>');
 
 			<?php
 				/** Close the jquery IF statement. */
@@ -51,7 +51,7 @@
 			?>
 
 			// show the errors or continue if everything is ok
-			//if (show_form_errors() == false) { return false; }
+			if (show_form_errors() == false) { return false; }
 		});
 	});
 </script>
@@ -78,7 +78,7 @@ switch ($user_form_type) {
 		</li>
 		<li>
 			<label for="add_user_form_user"><?php _e('Log in username','cftp_admin'); ?></label>
-			<input name="add_user_form_user" id="add_user_form_user" class="txtfield <?php if (!$disable_user) { echo 'required'; } ?>" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo (isset($add_user_data_user)) ? stripslashes($add_user_data_user) : ''; ?>" <?php if ($disable_user) { echo 'readonly'; }?> />
+			<input name="add_user_form_user" id="add_user_form_user" class="txtfield <?php if (!$disable_user) { echo 'required'; } ?>" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo (isset($add_user_data_user)) ? stripslashes($add_user_data_user) : ''; ?>" <?php if ($disable_user) { echo 'readonly'; } ?> />
 		</li>
 		<li>
 			<label for="add_user_form_pass"><?php _e('Log in password','cftp_admin'); ?></label>
