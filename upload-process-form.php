@@ -109,10 +109,10 @@ $sql = $database->query($cq);
 				if(file_exists($location)) {
 					$move_arguments = array(
 											'uploaded_name' => $location,
-											'move_to_folder' => 'upload/'.$file['client'].'/',
+											'move_to_folder' => ROOT_DIR.'/upload/'.$file['client'].'/',
 											'filename' => $file['file']
 										);
-					$new_filename = $this_upload->upload_copy($move_arguments);
+					$new_filename = $this_upload->upload_move($move_arguments);
 					if (!empty($new_filename)) {
 						$delete_key = array_search($file['original'], $uploaded_files);					
 						unset($uploaded_files[$delete_key]);
