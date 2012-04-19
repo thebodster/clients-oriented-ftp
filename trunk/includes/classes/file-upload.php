@@ -75,7 +75,7 @@ class PSend_Upload_File
 	 * after uploading it) to the assigned client's personal folder.
 	 * If succesful, the original file is then deleted.
 	 */
-	function upload_copy($arguments)
+	function upload_move($arguments)
 	{
 		$this->uploaded_name = $arguments['uploaded_name'];
 		$this->folder = $arguments['move_to_folder'];
@@ -83,9 +83,8 @@ class PSend_Upload_File
 
 		$this->file_final_name = time().'-'.$this->filename;
 		$this->path = $this->folder.$this->file_final_name;
-		if (copy($this->uploaded_name, $this->path)) {
+		if (rename($this->uploaded_name, $this->path)) {
 			chmod($this->path, 644);
-			unlink($this->uploaded_name);
 			return $this->file_final_name;
 		}
 		else {
