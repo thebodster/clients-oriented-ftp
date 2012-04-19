@@ -7,6 +7,25 @@
  */
 
 /**
+ * Check if a client id exists on the database.
+ * Used on the Edit client page.
+ *
+ * @return bool
+ */
+function client_exists_id($id)
+{
+	global $database;
+	$id_exists = $database->query("SELECT * FROM tbl_clients WHERE id='$id'");
+	$count_clients = mysql_num_rows($id_exists);
+	if($count_clients > 0){
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+/**
  * Check if a user id exists on the database.
  * Used on the Edit user page.
  *

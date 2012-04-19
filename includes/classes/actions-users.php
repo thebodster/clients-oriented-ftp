@@ -28,7 +28,7 @@ class UserActions
 		$this->password = $arguments['password'];
 		$this->password_repeat = $arguments['password_repeat'];
 		$this->role = $arguments['role'];
-		$this->type =  $arguments['type'];
+		$this->type = $arguments['type'];
 
 		/**
 		 * These validations are done both when creating a new user and

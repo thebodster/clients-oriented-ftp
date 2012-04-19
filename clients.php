@@ -1,9 +1,16 @@
 <?php
-	$tablesorter = 1;
-	$allowed_levels = array(9,8);
-	require_once('sys.includes.php');
-	$page_title = __('Clients Administration','cftp_admin');
-	include('header.php');
+/**
+ * Show the list of current clients.
+ *
+ * @package		ProjectSend
+ @ @subpackage	Clients
+ *
+ */
+$tablesorter = 1;
+$allowed_levels = array(9,8);
+require_once('sys.includes.php');
+$page_title = __('Clients Administration','cftp_admin');
+include('header.php');
 ?>
 
 <script type="text/javascript">
@@ -67,7 +74,7 @@ $(document).ready(function() {
 	$database->MySQLDB();
 	$cq = "SELECT * FROM tbl_clients";
 
-/*
+/**
 	// if the current user role is "account manager", only show the clients created by this user
 	if (get_current_user_level() == '8') {
 		$u = get_current_user_username();
@@ -77,7 +84,7 @@ $(document).ready(function() {
 	$sql = $database->query($cq);
 	$count = mysql_num_rows($sql);
 	if (!$count) {
-		// Echo the no clients default message
+		/** Echo the no clients default message */
 		message_no_clients();
 	}
 	else {
@@ -139,7 +146,7 @@ $(document).ready(function() {
 						<td>
 							<a href="manage-files.php?id=<?php echo $row["id"]; ?>" class="button button_blue"><?php _e('Manage files','cftp_admin'); ?></a>
 							<a href="upload/<?php echo $row["client_user"]; ?>/" class="button button_blue" target="_blank"><?php _e('View as client','cftp_admin'); ?></a>
-							<a href="clientform.php?do=edit&amp;client=<?php echo $row["id"]; ?>" class="button button_small button_blue"><?php _e('Edit','cftp_admin'); ?></a>
+							<a href="clients-edit.php?id=<?php echo $row["id"]; ?>" class="button button_small button_blue"><?php _e('Edit','cftp_admin'); ?></a>
 						</td>
 					</tr>
 				

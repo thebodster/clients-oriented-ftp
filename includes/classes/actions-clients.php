@@ -12,6 +12,219 @@ class ClientActions
 
 	var $client = '';
 
+	/**
+	 * Validate the information from the form.
+	 */
+	function validate_client($arguments)
+	{
+		require(ROOT_DIR.'/includes/vars.php');
+
+		global $valid_me;
+		$this->state = array();
+
+		$this->id = $arguments['id'];
+		$this->name = $arguments['name'];
+		$this->email = $arguments['email'];
+		$this->password = $arguments['password'];
+		$this->password_repeat = $arguments['password_repeat'];
+		$this->address = $arguments['address'];
+		$this->phone = $arguments['phone'];
+		$this->contact = $arguments['contact'];
+		$this->notify = $arguments['notify'];
+		$this->type = $arguments['type'];
+
+		/**
+		 * These validations are done both when creating a new client and
+		 * when editing an existing one.
+		 */
+		$valid_me->validate('completed',$this->name,$validation_no_name);
+		$valid_me->validate('completed',$this->email,$validation_no_email);
+		$valid_me->validate('email',$this->email,$validation_invalid_mail);
+		
+		/**
+		 * Validations for NEW CLIENT submission only.
+		 */
+		if ($this->type == 'new_client') {
+			$this->username = $arguments['username'];
+
+			$valid_me->validate('email_exists',$this->email,$add_user_mail_exists);
+			/** Username checks */
+			$valid_me->validate('user_exists',$this->username,$add_user_exists);
+			$valid_me->validate('completed',$this->username,$validation_no_user);
+			$valid_me->validate('alpha',$this->username,$validation_alpha_user);
+			$valid_me->validate('length',$this->username,$validation_length_user,MIN_USER_CHARS,MAX_USER_CHARS);
+			
+			$this->validate_password = true;
+		}
+		/**
+		 * Validations for CLIENT EDITING only.
+		 */
+		else if ($this->type == 'edit_client') {
+			/**
+			 * Changing password is optional.
+			 * Proceed only if any of the 2 fields is completed.
+			 */
+			if($arguments['password'] != '' || $arguments['password_repeat'] != '') {
+				$this->validate_password = true;
+			}
+			/**
+			 * Check if the email is currently assigned to this clients's id.
+			 * If not, then check if it exists.
+			 */
+			$valid_me->validate('email_exists',$this->email,$add_user_mail_exists,'','','','','',$this->id);
+		}
+
+		/** Password checks */
+		if (isset($this->validate_password) && $this->validate_password === true) {
+			$valid_me->validate('completed',$this->password,$validation_no_pass);
+			$valid_me->validate('password',$this->password,$validation_valid_pass.' '.$validation_valid_chars);
+			$valid_me->validate('length',$this->password,$validation_length_pass,MIN_PASS_CHARS,MAX_PASS_CHARS);
+			$valid_me->validate('pass_match','',$validation_match_pass,'','',$this->password,$this->password_repeat);
+		}
+
+		if ($valid_me->return_val) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
+
+
+	/**
+	 * Create a new client.
+	 */
+	function create_client($arguments)
+	{
+		global $database;
+		$this->state = array();
+
+		/** Define the account information */
+		$this->id = $arguments['id'];
+		$this->name = $arguments['name'];
+		$this->email = $arguments['email'];
+		$this->username = $arguments['username'];
+		$this->password = $arguments['password'];
+		$this->password_repeat = $arguments['password_repeat'];
+		$this->address = $arguments['address'];
+		$this->phone = $arguments['phone'];
+		$this->contact = $arguments['contact'];
+		$this->notify = $arguments['notify'];
+		$this->enc_password = md5(mysql_real_escape_string($this->password));
+
+		$this->folder = ROOT_DIR.'/upload/'.$this->username;
+
+		if (!file_exists($this->folder)) {
+			$this->success = @mkdir($this->folder);
+	
+			if ($this->success){
+				chmod($this->folder, 0755);
+				$this->thumbs_folder = $this->folder.'/thumbs';
+				mkdir($this->thumbs_folder);
+				chmod($this->thumbs_folder, 0755);
+	
+				/** Create index.php on clients folder */
+				$this->index_content = '<?php require_once(\'../../includes/sys.vars.php\'); $this_user = "'.$this->username.'"; $template = \'../../templates/\'.TEMPLATE_USE.\'/template.php\'; include_once($template); ?>';
+				$this->index_file = $this->folder .'/'. "index.php";   
+				
+				$this->file_handle = @fopen($this->index_file,"a");
+				@fwrite($this->file_handle, $this->index_content);
+				@fclose($this->file_handle);
+	
+				/** Who is creating the client? */
+				$this->this_admin = get_current_user_username();
+	
+				/** Insert the client information into the database */
+				$this->timestamp = time();
+				$this->sql_query = $database->query("INSERT INTO tbl_clients (id,name,client_user,password,address,phone,email,notify,contact,timestamp,created_by)"
+													."VALUES ('NULL', '$this->name', '$this->username', '$this->enc_password', '$this->address', '$this->phone', '$this->email', '$this->notify', '$this->contact', '$this->timestamp','$this->this_admin')");
+
+				if ($this->sql_query) {
+					$this->state['actions'] = 1;
+		
+					/** Send account data by email */
+					$this->notify_client = new PSend_Email();
+					$this->notify_send = $this->notify_client->psend_send_email('new_client',$this->email,$this->username,$this->password);
+		
+					if ($this->notify_send == 1){
+						$this->state['email'] = 1;
+					}
+					else {
+						$this->state['email'] = 0;
+					}
+				}
+				else {
+					/** Query couldn't be executed */
+					$this->state['actions'] = 0;
+				}
+			}
+			else {
+				/** The folder could not be created */
+				$this->state['actions'] = 2;
+			}
+		}
+		else {
+			/** The folder already exists */
+			$this->state['actions'] = 3;
+		}
+
+		return $this->state;
+	}
+
+	/**
+	 * Edit an existing client.
+	 */
+	function edit_client($arguments)
+	{
+		global $database;
+		$this->state = array();
+
+		/** Define the account information */
+		$this->id = $arguments['id'];
+		$this->name = $arguments['name'];
+		$this->email = $arguments['email'];
+		$this->password = $arguments['password'];
+		$this->address = $arguments['address'];
+		$this->phone = $arguments['phone'];
+		$this->contact = $arguments['contact'];
+		$this->notify = $arguments['notify'];
+		$this->enc_password = md5(mysql_real_escape_string($this->password));
+
+		/** SQL query */
+		$this->edit_client_query = "UPDATE tbl_clients SET 
+									name = '$this->name',
+									address = '$this->address',
+									phone = '$this->phone',
+									email = '$this->email',
+									contact = '$this->contact',
+									notify = '";
+
+
+		/** Add the notify value to the query '' */
+		$this->edit_client_query .= ($this->notify == '1') ? "1'" : "0'";
+
+		/** Add the password to the query if it's not the dummy value '' */
+		if (!empty($arguments['password'])) {
+			$this->edit_client_query .= ", password = '$this->enc_password'";
+		}
+
+
+		$this->edit_client_query .= " WHERE id = $this->id";
+		$this->sql_query = $database->query($this->edit_client_query);
+
+		if ($this->sql_query) {
+			$this->state['query'] = 1;
+		}
+		else {
+			$this->state['query'] = 0;
+		}
+		
+		return $this->state;
+	}
+
+	/**
+	 * Delete an existing client.
+	 */
 	function delete_client($client) {
 		global $database;
 		$this->check_level = array(9,8);

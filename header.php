@@ -106,7 +106,7 @@ require_once('includes/core.update.php');
 					<li>
 						<a href="clients.php" class="menulink dropready"><?php _e('Clients', 'cftp_admin'); ?></a>
 						<ul>
-							<li><a href="clientform.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
+							<li><a href="clients-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
 							<li><a href="clients.php"><?php _e('Manage clients', 'cftp_admin'); ?></a></li>
 						</ul>
 					</li>
