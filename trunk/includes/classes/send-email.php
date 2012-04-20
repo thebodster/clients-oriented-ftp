@@ -15,7 +15,7 @@
  * Call the file that has the markup for the header and footer
  * of the e-mails.
  */
-include_once('includes/email-template.php');
+include_once(ROOT_DIR.'/includes/email-template.php');
 
 /** Define the messages texts */
 
