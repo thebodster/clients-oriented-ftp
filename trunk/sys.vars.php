@@ -83,6 +83,7 @@ define('SYSTEM_URI_LABEL','ProjectSend on Google Code');
 /** Previously cFTP */
 define('SYSTEM_NAME','ProjectSend');
 
+define('LOGO_FOLDER',ROOT_DIR.'/img/custom/logo/');
 define('LOGO_THUMB_FOLDER',ROOT_DIR.'/img/custom/thumbs/');
 
 /**
