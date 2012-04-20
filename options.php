@@ -123,6 +123,10 @@ $allowed_file_types = implode(',',$allowed_file_types);
 					<input name="this_install_title" id="this_install_title" value="<?php echo THIS_INSTALL_SET_TITLE; ?>" />
 				</li>
 				<li>
+					<label for="admin_email_address"><?php _e('E-mail for notifications','cftp_admin'); ?></label>
+					<input name="admin_email_address" id="admin_email_address" value="<?php echo ADMIN_EMAIL_ADDRESS; ?>" />
+				</li>
+				<li>
 					<label for="selected_clients_template"><?php _e("Client's template",'cftp_admin'); ?></label>
 					<select name="selected_clients_template" id="selected_clients_template">
 						<?php

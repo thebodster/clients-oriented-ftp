@@ -78,8 +78,8 @@ INSERT INTO `tbl_options` (`id`, `name`, `value`) VALUES
 (11, \'timezone\', \'America/Argentina/Buenos_Aires\'),
 (12, \'timeformat\', \'d/m/Y\'),
 (13, \'allowed_file_types\', \'7z,ace,ai,avi,bin,bmp,cdr,doc,docm,docx,eps,fla,flv,gif,gz,gzip,htm,html,iso,jpeg,jpg,mp3,mp4,mpg,odt,oog,ppt,pptx,pptm,pps,ppsx,pdf,png,psd,rar,rtf,tar,tif,tiff,txt,wav,xls,xlsm,xlsx,zip\'),
-(14, \'logo_filename\', \'logo.png\');
-';
+(14, \'logo_filename\', \'logo.png\'),
+(15, \'admin_email_address\', \''.$got_admin_email.'\')';
 
 $q6 = '
 INSERT INTO `tbl_users` (`id`, `user`, `password`, `name`, `email`, `level`, `timestamp`) VALUES
