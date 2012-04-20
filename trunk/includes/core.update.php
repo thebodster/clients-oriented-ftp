@@ -60,5 +60,32 @@ if (in_session_or_cookies($allowed_update)) {
 		$updates_made++;
 	}
 
+
+	/**
+	 * r135 updates
+	 * The e-mail address used for notifications to new users, clients and files
+	 * can now be defined on the options page. When installing or updating, it
+	 * will default to the primary admin user's e-mail.
+	 */
+	$sql = $database->query('SELECT * FROM tbl_users WHERE id="1"');
+	while($row = mysql_fetch_array($sql)) {
+		$set_admin_email = $row['email'];
+	}
+
+	$new_database_values = array(
+									'admin_email_address' => $set_admin_email
+								);
+	
+	foreach($new_database_values as $row => $value) {
+		$q = "SELECT * FROM tbl_options WHERE name = '$row'";
+		$sql = $database->query($q);
+
+		if(!mysql_num_rows($sql)) {
+			$updates_made++;
+			$qi = "INSERT INTO tbl_options (name, value) VALUES ('$row', '$value')";
+			$sqli = $database->query($qi);
+		}
+		unset($q);
+	}
 }
 ?>

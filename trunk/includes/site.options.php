@@ -9,15 +9,6 @@
 $database->MySQLDB();
 
 /**
- * Get the main admin e-mail address used for sending notifications.
- * This is the system user that is created when ProjectSend is installed.
- */
-$sql = $database->query('SELECT * FROM tbl_users WHERE id="1"');
-while($row = mysql_fetch_array($sql)) {
-	define('ADMIN_EMAIL_ADDRESS',$row['email']);
-}
-
-/**
  * Gets the values from the options table, which has 2 columns.
  * The first one is the option name, and the second is the assigned value.
  *
@@ -54,7 +45,19 @@ if(!empty($options_values)) {
 	define('TEMPLATE_USE',$options_values['selected_clients_template']);
 	define('TIMEZONE_USE',$options_values['timezone']);
 	define('TIMEFORMAT_USE',$options_values['timeformat']);
-	
+	/**
+	 * Wrap the e-mail definition in an IF statement in case the user 
+	 * just updated to r135 and this value doesn't exist yet to prevent
+	 * a php notice.
+	 */	
+	if (isset($options_values['admin_email_address']))) {
+		define('ADMIN_EMAIL_ADDRESS',$options_values['admin_email_address']);
+	}
+
+	/**
+	 * Set the default timezone based on the value of the Timezone select box
+	 * of the options page.
+	 */
 	date_default_timezone_set(TIMEZONE_USE);
 }
 ?>

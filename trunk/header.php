@@ -78,7 +78,7 @@ require_once('includes/core.update.php');
 		if($updates_made > 0) {
 	?>
 			<div id="system_msg">
-				<p><strong><?php _e('System Notice:', 'cftp_admin');?></strong> <?php _e('The database was updated to support this version of the software: ', 'cftp_admin'); echo CURRENT_VERSION; ?></p>
+				<p><strong><?php _e('System Notice:', 'cftp_admin');?></strong> <?php _e('The database was updated to support this version of the software.', 'cftp_admin'); ?></p>
 			</div>
 	<?php
 		}
