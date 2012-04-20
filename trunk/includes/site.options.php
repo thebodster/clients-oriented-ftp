@@ -50,7 +50,7 @@ if(!empty($options_values)) {
 	 * just updated to r135 and this value doesn't exist yet to prevent
 	 * a php notice.
 	 */	
-	if (isset($options_values['admin_email_address']))) {
+	if (isset($options_values['admin_email_address'])) {
 		define('ADMIN_EMAIL_ADDRESS',$options_values['admin_email_address']);
 	}
 
