@@ -26,7 +26,7 @@ $database->MySQLDB();
 	<div class="home_column_left">
 		<ul class="home_spaces">
 			<?php
-				/** Show SIMPLE UPLOAD widget to clients */
+				/** Show SIMPLE UPLOAD widget and current logo to clients */
 				$upload_allowed = array(0);
 				if (in_session_or_cookies($upload_allowed)) {
 			?>

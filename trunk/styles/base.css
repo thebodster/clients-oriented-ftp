@@ -119,11 +119,12 @@ h4 {
 	display:table;
 }
 
-.home_spaces .home_container {
+.logo_home_li .home_container {
 	display:table-cell;
 	vertical-align:middle;
 	height:283px;
 }
+
 
 .home_spaces li h4 {
 	text-align:left;
