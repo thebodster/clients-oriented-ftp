@@ -1,9 +1,4 @@
-<?php default_footer_info(); ?>
-
-<script type="text/javascript">
-	var menu=new menu.dd("menu");
-	menu.init("menu","menuhover");
-</script>
+	<?php default_footer_info(); ?>
 
 </body>
 </html>
