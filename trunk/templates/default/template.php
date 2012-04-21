@@ -27,16 +27,22 @@ $window_title = __('File downloads','cftp_template');
 
 <body>
 
-<div id="header">
-	<div id="header_info">
-		<h1><?php echo SYSTEM_NAME; ?></h1>
+	<div id="header">
+		<div id="header_info">
+			<h1><?php echo SYSTEM_NAME; ?></h1>
+			<p><?php echo CURRENT_VERSION; ?></p>
+		</div>
+		<a href="../../process.php?do=logout" target="_self" id="logout" class="button button_blue"><?php _e('Logout', 'cftp_admin'); ?></a>
 	</div>
-	<a href="../../process.php?do=logout" target="_self" id="logout" class="button button_blue"><?php _e('Logout', 'cftp_admin'); ?></a>
-</div>
 
-<div id="under_header">
-	<p><?php echo $user_full_name, ', '; _e('welcome to your downloads', 'cftp_admin'); ?></p>
-</div>
+	<div id="top_menu">
+		<ul class="menu" id="menu">
+			<li><a href="../../home.php" class="menulink"><?php _e('Home', 'cftp_admin'); ?></a></li>
+			<li><a href="../../upload-from-computer.php" class="menulink"><?php _e('Upload files', 'cftp_admin'); ?></a></li>
+			<li><a href="<?php echo $my_files_link; ?>" class="menulink"><?php _e('View my files', 'cftp_admin'); ?></a></li>
+		</ul>
+		<div class="clear"></div>
+	</div>
 
 <div id="wrapper">
 
@@ -49,13 +55,6 @@ $window_title = __('File downloads','cftp_template');
 							4: { sorter: false },
 							5: { sorter: false },
 							6: { sorter: false }
-							<?php
-								$clients_allowed = array(9,8,7);
-								if (in_session_or_cookies($clients_allowed)) {
-							?>
-								,7: { sorter: false },
-								8: { sorter: false }
-							<?php } ?>
 						}
 				})
 				.tablesorterPager({container: $("#pager")})

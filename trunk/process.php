@@ -1,4 +1,9 @@
 <?php
+/**
+ * Class that handles the log out and file download actions.
+ *
+ * @package		ProjectSend
+ */
 $allowed_levels = array(9,8,7,0);
 require_once('sys.includes.php');
 require_once('header.php');

@@ -10,7 +10,7 @@
  * @subpackage Upload
  */
 $plupload = 1;
-$allowed_levels = array(9,8,7);
+$allowed_levels = array(9,8,7,0);
 require_once('sys.includes.php');
 $page_title = __('Upload files', 'cftp_admin');
 include('header.php');
