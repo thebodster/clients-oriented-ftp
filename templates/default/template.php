@@ -39,7 +39,21 @@ $window_title = __('File downloads','cftp_template');
 		<ul class="menu" id="menu">
 			<li><a href="../../home.php" class="menulink"><?php _e('Home', 'cftp_admin'); ?></a></li>
 			<li><a href="../../upload-from-computer.php" class="menulink"><?php _e('Upload files', 'cftp_admin'); ?></a></li>
-			<li><a href="<?php echo $my_files_link; ?>" class="menulink"><?php _e('View my files', 'cftp_admin'); ?></a></li>
+			<?php
+				/**
+				 * Show the MY FILES menu only to clients.
+				 */
+				$clients_allowed = array(0);
+				if (in_session_or_cookies($clients_allowed)) {
+
+					$my_username = get_current_user_username();
+					/** Define "MY FILES LIST" link to use here and on the home widget */
+					$my_files_link = BASE_URI.'upload/'.$my_username.'/';
+			?>
+					<li><a href="<?php echo $my_files_link; ?>" class="menulink"><?php _e('View my files', 'cftp_admin'); ?></a></li>
+			<?php
+				}
+			?>
 		</ul>
 		<div class="clear"></div>
 	</div>
