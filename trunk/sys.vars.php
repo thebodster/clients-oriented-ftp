@@ -48,6 +48,15 @@ else {
 }
 
 /**
+ * Define the tables names
+ */
+define('TABLE_CLIENTS','tbl_clients');
+define('TABLE_FILES','tbl_files');
+define('TABLE_OPTIONS','tbl_options');
+define('TABLE_USERS','tbl_users');
+$current_tables = array(TABLE_CLIENTS,TABLE_FILES,TABLE_OPTIONS,TABLE_USERS);
+
+/**
  * This values affect both validation methods (client and server side)
  * and also the maxlength value of the form fields.
  */
