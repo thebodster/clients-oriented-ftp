@@ -16,7 +16,6 @@
  */
 session_start();
 ob_start();
-
 /**
  * Define the level required to access the following function, where
  * all system users are included, and clients (level 0) are not.
@@ -26,7 +25,7 @@ require_once('sys.includes.php');
 
 /** If logged as a system user, go directly to the back-end homepage */
 if (in_session_or_cookies($allowed_enter)) {
-	header("location:".ROOT_DIR."home.php");
+	header("Location:".BASE_URI."home.php");
 }
 
 /** If client is logged in, redirect to the files list. */

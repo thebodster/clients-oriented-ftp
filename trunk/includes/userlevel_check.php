@@ -86,15 +86,13 @@ function check_for_admin() {
  * is gotten either from the active session, or the saved cookie information.
  */
 function check_for_client() {
-	if (isset($_SESSION['userlevel']) || isset($_COOKIE['userlevel'])) {
-		if ($_SESSION['userlevel'] == '0') {
-			$client_username = $_SESSION['access'];
-			header("location:upload/$client_username/");
-		}
-		elseif ($_COOKIE['userlevel'] == '0') {
-			$client_username = $_COOKIE['access'];
-			header("location:upload/$client_username/");
-		}
+	if (isset($_SESSION['userlevel']) && $_SESSION['userlevel'] == '0') {
+		$client_username = $_SESSION['access'];
+		header("location:upload/$client_username/");
+	}
+	if (isset($_COOKIE['userlevel']) && $_COOKIE['userlevel'] == '0') {
+		$client_username = $_COOKIE['access'];
+		header("location:upload/$client_username/");
 	}
 }
 
