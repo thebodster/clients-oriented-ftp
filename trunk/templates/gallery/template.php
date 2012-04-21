@@ -8,7 +8,7 @@ Delete icon: http://www.iconfinder.com/icondetails/37519/16/can_delete_trash_ico
 */
 
 $ld = 'cftp_template_gallery'; // specify the language domain for this template
-include_once('../../templates/common.php'); // include the required functions for every template
+include_once(ROOT_DIR.'/templates/common.php'); // include the required functions for every template
 
 $window_title = __('Gallery','cftp_template_gallery');
 
@@ -19,7 +19,7 @@ $window_title = __('Gallery','cftp_template_gallery');
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><?php echo $user_full_name.' | '.$window_title; ?> | <?php echo SYSTEM_NAME; ?></title>
 <link rel="stylesheet" media="all" type="text/css" href="<?php echo $this_template; ?>main.css" />
-<link rel="shortcut icon" href="../../favicon.ico" />
+<link rel="shortcut icon" href="<?php echo BASE_URI; ?>/favicon.ico" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
 <link href='http://fonts.googleapis.com/css?family=Sirin+Stencil' rel='stylesheet' type='text/css'>
 </head>
@@ -27,14 +27,13 @@ $window_title = __('Gallery','cftp_template_gallery');
 <body>
 
 <div id="header">
-
-	<?php if (file_exists('../../img/custom/logo/'.LOGO_FILENAME)) { ?>
+	<?php if (file_exists(ROOT_DIR.'/img/custom/logo/'.LOGO_FILENAME)) { ?>
 		<div id="current_logo">
-			<img src="../../includes/thumb.php?src=../img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=<?php echo LOGO_MAX_WIDTH; ?>&amp;type=tlogo" alt="" />
+			<img src="<?php echo BASE_URI; ?>includes/thumb.php?src=../img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=<?php echo LOGO_MAX_WIDTH; ?>&amp;type=tlogo" alt="" />
 		</div>
 	<?php } ?>
 
-	<a href="../../process.php?do=logout" target="_self" id="logout"><?php _e('Logout', 'cftp_admin'); ?></a>
+	<a href="<?php echo BASE_URI; ?>process.php?do=logout" target="_self" id="logout"><?php _e('Logout', 'cftp_admin'); ?></a>
 </div>
 	
 <div id="content">
@@ -42,7 +41,7 @@ $window_title = __('Gallery','cftp_template_gallery');
 	<div class="wrapper">
 
 <?php
-	$count=mysql_num_rows($sql);
+	$count = mysql_num_rows($template_files_sql);
 	if (!$count) {
 		_e('There are no files.','cftp_template_gallery');
 	}
@@ -50,7 +49,7 @@ $window_title = __('Gallery','cftp_template_gallery');
 ?>
 		<ul class="photo_list">
 		<?php
-			while($row = mysql_fetch_array($sql)) {
+			while($row = mysql_fetch_array($template_files_sql)) {
 		?>
 			<?php
 				$pathinfo = pathinfo($row['url']);
@@ -61,13 +60,13 @@ $window_title = __('Gallery','cftp_template_gallery');
 					<li>
 						<h5><?php echo htmlentities($row['filename']); ?></h5>
 						<div class="img_prev">
-							<a href="../../process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank">
-								<img src="../../includes/thumb.php?src=../upload/<?php echo $this_user; ?>/<?php echo $row['url']; ?>&amp;w=280&amp;gr=1&amp;type=prev&amp;who=<?php echo $this_user; ?>&amp;name=<?php echo $row['url']; ?>" class="thumbnail" alt="" />
+							<a href="<?php echo BASE_URI; ?>process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank">
+								<img src="<?php echo BASE_URI; ?>includes/thumb.php?src=../upload/<?php echo $this_user; ?>/<?php echo $row['url']; ?>&amp;w=280&amp;gr=1&amp;type=prev&amp;who=<?php echo $this_user; ?>&amp;name=<?php echo $row['url']; ?>" class="thumbnail" alt="" />
 							</a>
 						</div>
 						<div class="img_data">
 							<div class="download_link">
-								<a href="../../process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank">
+								<a href="<?php echo BASE_URI; ?>process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank">
 									<?php _e('Download original','cftp_template_gallery'); ?>
 								</a>
 							</div>

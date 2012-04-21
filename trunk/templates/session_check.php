@@ -5,7 +5,6 @@
  * @package		ProjectSend
  * @subpackage	Templates
  */
-
 ob_start();
 session_start();
 header("Cache-control: private");

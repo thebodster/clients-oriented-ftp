@@ -5,58 +5,12 @@ Default
 */
 
 $ld = 'cftp_template'; // specify the language domain for this template
-include_once('../../templates/common.php'); // include the required functions for every template
+include_once(ROOT_DIR.'/templates/common.php'); // include the required functions for every template
 
 $window_title = __('File downloads','cftp_template');
+
+include_once(ROOT_DIR.'/header.php'); // include the required functions for every template
 ?>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><?php echo $user_full_name.' | '.$window_title; ?> | <?php echo SYSTEM_NAME; ?></title>
-<link rel="shortcut icon" href="../../favicon.ico" />
-<link rel="stylesheet" media="all" type="text/css" href="../../styles/shared.css" />
-<link rel="stylesheet" media="all" type="text/css" href="<?php echo $this_template; ?>main.css" />
-<link rel="stylesheet" media="all" type="text/css" href="../../styles/font-sansation.css" />
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
-<script src="../../includes/js/jquery.tablesorter.min.js" type="text/javascript"></script>
-<script src="../../includes/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
-</head>
-
-<body>
-
-	<div id="header">
-		<div id="header_info">
-			<h1><?php echo SYSTEM_NAME; ?></h1>
-			<p><?php echo CURRENT_VERSION; ?></p>
-		</div>
-		<a href="../../process.php?do=logout" target="_self" id="logout" class="button button_blue"><?php _e('Logout', 'cftp_admin'); ?></a>
-	</div>
-
-	<div id="top_menu">
-		<ul class="menu" id="menu">
-			<li><a href="../../home.php" class="menulink"><?php _e('Home', 'cftp_admin'); ?></a></li>
-			<li><a href="../../upload-from-computer.php" class="menulink"><?php _e('Upload files', 'cftp_admin'); ?></a></li>
-			<?php
-				/**
-				 * Show the MY FILES menu only to clients.
-				 */
-				$clients_allowed = array(0);
-				if (in_session_or_cookies($clients_allowed)) {
-
-					$my_username = get_current_user_username();
-					/** Define "MY FILES LIST" link to use here and on the home widget */
-					$my_files_link = BASE_URI.'upload/'.$my_username.'/';
-			?>
-					<li><a href="<?php echo $my_files_link; ?>" class="menulink"><?php _e('View my files', 'cftp_admin'); ?></a></li>
-			<?php
-				}
-			?>
-		</ul>
-		<div class="clear"></div>
-	</div>
 
 <div id="wrapper">
 
@@ -78,14 +32,14 @@ $window_title = __('File downloads','cftp_template');
 
 	<div id="left_column">
 		<div id="current_logo">
-			<img src="../../includes/thumb.php?src=../img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=250&amp;type=tlogo" alt="" />
+			<img src="<?php echo BASE_URI; ?>includes/thumb.php?src=../img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=250&amp;type=tlogo" alt="" />
 		</div>
 	</div>
 
 	<div id="right_column">
 	
 		<?php
-			$count=mysql_num_rows($sql);
+			$count = mysql_num_rows($template_files_sql);
 			if (!$count) {
 				_e('There are no files.','cftp_template');
 			}
@@ -106,7 +60,7 @@ $window_title = __('File downloads','cftp_template');
 			<tbody>
 			
 			<?php
-				while($row = mysql_fetch_array($sql)) {
+				while($row = mysql_fetch_array($template_files_sql)) {
 			?>
 			
 				<tr>
@@ -126,11 +80,11 @@ $window_title = __('File downloads','cftp_template');
 								$extension == "png"
 							) {
 						?>
-							<img src="../../includes/thumb.php?src=../upload/<?php echo $this_user; ?>/<?php echo $row['url']; ?>&amp;w=<?php echo THUMBS_MAX_WIDTH; ?>&amp;type=prev&amp;who=<?php echo $this_user; ?>&amp;name=<?php echo $row['url']; ?>" class="thumbnail" alt="" />
+							<img src="<?php echo BASE_URI; ?>includes/thumb.php?src=../upload/<?php echo $this_user; ?>/<?php echo $row['url']; ?>&amp;w=<?php echo THUMBS_MAX_WIDTH; ?>&amp;type=prev&amp;who=<?php echo $this_user; ?>&amp;name=<?php echo $row['url']; ?>" class="thumbnail" alt="" />
 						<?php } ?>
 					</td>
 					<td>
-						<a href="../../process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank" class="button button_blue">
+						<a href="<?php echo BASE_URI; ?>process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank" class="button button_blue">
 							<?php _e('Download','cftp_template'); ?>
 						</a>
 					</td>

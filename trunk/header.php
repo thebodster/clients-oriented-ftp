@@ -1,8 +1,7 @@
 <?php
 /**
- * This file generates the header back-end part only if the current logged in
- * account is that of a system user. Clients are redirected to thir files lists
- * via index.php.
+ * This file generates the header for the back-end and also for the default
+ * template.
  *
  * Other checks for user level are performed later to generate the different
  * menu items, and the content of the page that called this file.
@@ -12,9 +11,12 @@
  * @see check_for_admin
  * @see can_see_content
  */
-session_start();
-ob_start();
-header("Cache-control: private");
+/** $is_template is defined on /templates/common.php */
+if (!isset($is_template)) {
+	session_start();
+	ob_start();
+	header("Cache-control: private");
+}
 
 /** Check for an active session or cookie */
 check_for_session();
@@ -25,38 +27,55 @@ check_for_session();
 /** If no page title is defined, revert to a default one */
 if (!isset($page_title)) { $page_title = __('System Administration','cftp_admin'); }
 
-/** Call the database update file to see if any change is needed */
-require_once('includes/core.update.php');
+/**
+ * Call the database update file to see if any change is needed,
+ * but only if logged in as a system user.
+ */
+$core_update_allowed = array(9,8,7);
+if (in_session_or_cookies($core_update_allowed)) {
+	require_once(ROOT_DIR.'/includes/core.update.php');
+}
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><?php echo THIS_INSTALL_SET_TITLE; ?> &raquo; <?php echo $page_title; ?> | <?php echo SYSTEM_NAME; ?></title>
-	<link rel="shortcut icon" href="favicon.ico" />
-	<link rel="stylesheet" media="all" type="text/css" href="styles/shared.css" />
-	<link rel="stylesheet" media="all" type="text/css" href="styles/base.css" />
-	<link rel="stylesheet" media="all" type="text/css" href="styles/font-sansation.css" />
+	<link rel="shortcut icon" href="<?php echo BASE_URI; ?>/favicon.ico" />
+	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/shared.css" />
+	<?php
+		/**
+		 * Load a different css file when called from the admin, or
+		 * the default template.
+		 */
+		if (!isset($this_template_css)) {
+	?>
+			<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/base.css" />
+	<?php } else { ?>
+			<link rel="stylesheet" media="all" type="text/css" href="<?php echo $this_template_css; ?>" />
+	<?php } ?>
+
+	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/font-sansation.css" />
 	
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-	<script src="includes/js/dropdownmenu.js" type="text/javascript"></script>
-	<script type="text/javascript" src="includes/js/jquery.validations.js"></script>
+	<script src="<?php echo BASE_URI; ?>includes/js/dropdownmenu.js" type="text/javascript"></script>
+	<script src="<?php echo BASE_URI; ?>includes/js/jquery.validations.js" type="text/javascript"></script>
 
 	<?php if (isset($tablesorter)) { ?>
-		<script src="includes/js/jquery.tablesorter.min.js" type="text/javascript"></script>
-		<script src="includes/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
+		<script src="<?php echo BASE_URI; ?>includes/js/jquery.tablesorter.min.js" type="text/javascript"></script>
+		<script src="<?php echo BASE_URI; ?>includes/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
 	<?php } ?>
 
 	<?php if (isset($textboxlist)) { ?>
-		<script src="includes/js/GrowingInput.js" type="text/javascript"></script>
-		<script src="includes/js/TextboxList.js" type="text/javascript"></script>
+		<script src="<?php echo BASE_URI; ?>includes/js/GrowingInput.js" type="text/javascript"></script>
+		<script src="<?php echo BASE_URI; ?>includes/js/TextboxList.js" type="text/javascript"></script>
 	<?php } ?>
 
 	<?php if (isset($plupload)) { ?>
-		<link rel="stylesheet" media="all" type="text/css" href="includes/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css" />
+		<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>includes/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css" />
 		<script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
-		<script type="text/javascript" src="includes/plupload/js/plupload.full.js"></script>
-		<script type="text/javascript" src="includes/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js"></script>
+		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/plupload/js/plupload.full.js"></script>
+		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js"></script>
 	<?php } ?>
 
 </head>
@@ -68,7 +87,7 @@ require_once('includes/core.update.php');
 			<h1><?php echo SYSTEM_NAME; ?></h1>
 			<p><?php echo CURRENT_VERSION; ?></p>
 		</div>
-		<a href="process.php?do=logout" target="_self" id="logout" class="button button_blue"><?php _e('Logout', 'cftp_admin'); ?></a>
+		<a href="<?php echo BASE_URI; ?>process.php?do=logout" target="_self" id="logout" class="button button_blue"><?php _e('Logout', 'cftp_admin'); ?></a>
 	</div>
 
 	<?php
@@ -93,9 +112,9 @@ require_once('includes/core.update.php');
 
 	<div id="top_menu">
 		<ul class="menu" id="menu">
-			<li><a href="home.php" class="menulink"><?php _e('Home', 'cftp_admin'); ?></a></li>
+			<li><a href="<?php echo BASE_URI; ?>home.php" class="menulink"><?php _e('Home', 'cftp_admin'); ?></a></li>
 			<li>
-				<a href="upload-from-computer.php" class="menulink"><?php _e('Upload files', 'cftp_admin'); ?></a>
+				<a href="<?php echo BASE_URI; ?>upload-from-computer.php" class="menulink"><?php _e('Upload files', 'cftp_admin'); ?></a>
 					<?php
 						/**
 						 * Hide the subitems from clients, since their upload form
@@ -105,8 +124,8 @@ require_once('includes/core.update.php');
 						if (in_session_or_cookies($clients_allowed)) {
 					?>
 						<ul>
-							<li><a href="upload-from-computer.php"><?php _e('Upload from computer', 'cftp_admin'); ?></a></li>
-							<li><a href="upload-by-ftp.php"><?php _e('Import from FTP', 'cftp_admin'); ?></a></li>
+							<li><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload from computer', 'cftp_admin'); ?></a></li>
+							<li><a href="<?php echo BASE_URI; ?>upload-by-ftp.php"><?php _e('Import from FTP', 'cftp_admin'); ?></a></li>
 						</ul>
 				<?php } ?>
 			</li>
@@ -120,10 +139,10 @@ require_once('includes/core.update.php');
 				if (in_session_or_cookies($clients_allowed)) {
 			?>
 					<li>
-						<a href="clients.php" class="menulink"><?php _e('Clients', 'cftp_admin'); ?></a>
+						<a href="<?php echo BASE_URI; ?>clients.php" class="menulink"><?php _e('Clients', 'cftp_admin'); ?></a>
 						<ul>
-							<li><a href="clients-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
-							<li><a href="clients.php"><?php _e('Manage clients', 'cftp_admin'); ?></a></li>
+							<li><a href="<?php echo BASE_URI; ?>clients-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
+							<li><a href="<?php echo BASE_URI; ?>clients.php"><?php _e('Manage clients', 'cftp_admin'); ?></a></li>
 						</ul>
 					</li>
 			<?php } ?>
@@ -137,10 +156,10 @@ require_once('includes/core.update.php');
 				if (in_session_or_cookies($users_allowed)) {
 			?>
 					<li>
-						<a href="users.php" class="menulink"><?php _e('Users', 'cftp_admin'); ?></a>
+						<a href="<?php echo BASE_URI; ?>users.php" class="menulink"><?php _e('Users', 'cftp_admin'); ?></a>
 						<ul>
-							<li><a href="users-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
-							<li><a href="users.php"><?php _e('Manage users', 'cftp_admin'); ?></a></li>
+							<li><a href="<?php echo BASE_URI; ?>users-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
+							<li><a href="<?php echo BASE_URI; ?>users.php"><?php _e('Manage users', 'cftp_admin'); ?></a></li>
 						</ul>
 					</li>
 			<?php } ?>
@@ -154,10 +173,10 @@ require_once('includes/core.update.php');
 				if (in_session_or_cookies($options_allowed)) {
 			?>
 					<li>
-						<a href="options.php" class="menulink"><?php _e('Options', 'cftp_admin'); ?></a>
+						<a href="<?php echo BASE_URI; ?>options.php" class="menulink"><?php _e('Options', 'cftp_admin'); ?></a>
 						<ul>
-							<li><a href="options.php"><?php _e('General options', 'cftp_admin'); ?></a></li>
-							<li><a href="branding.php"><?php _e('Branding', 'cftp_admin'); ?></a></li>
+							<li><a href="<?php echo BASE_URI; ?>options.php"><?php _e('General options', 'cftp_admin'); ?></a></li>
+							<li><a href="<?php echo BASE_URI; ?>branding.php"><?php _e('Branding', 'cftp_admin'); ?></a></li>
 						</ul>
 					</li>
 			<?php } ?>
