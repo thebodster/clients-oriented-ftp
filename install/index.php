@@ -199,18 +199,18 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 			
 							<li>
 								<h3><?php _e('Default system administrator options','cftp_admin'); ?></h3>
-								<p><?php _e("This info will be appended to the user <em>admin</em>, which is the default system user. It can't be deleted. Password should be between <strong>6 and 12 characters long</strong>.",'cftp_admin'); ?></p>
+								<p><?php _e("This info will be used to create a default system user, which can't be deleted afterwards. Password should be between <strong>6 and 12 characters long</strong>.",'cftp_admin'); ?></p>
 							</li>
 							<li>
 								<label for="install_user_fullname"><?php _e('Full name','cftp_admin'); ?></label>
 								<input name="install_user_fullname" id="install_user_fullname" class="required" value="<?php echo (isset($got_admin_name) ? $got_admin_name : ''); ?>" />
 							</li>
 							<li>
-								<label for="install_user_mail"><?php _e('Admin e-mail','cftp_admin'); ?></label>
+								<label for="install_user_mail"><?php _e('E-mail address','cftp_admin'); ?></label>
 								<input name="install_user_mail" id="install_user_mail" class="required" value="<?php echo (isset($got_admin_email) ? $got_admin_email : ''); ?>" />
 							</li>
 							<li>
-								<label for="install_user_username"><?php _e('Administrator username','cftp_admin'); ?></label>
+								<label for="install_user_username"><?php _e('Log in username','cftp_admin'); ?></label>
 								<input name="install_user_username" id="install_user_username" class="required" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo (isset($got_admin_username) ? $got_admin_username : ''); ?>" />
 							</li>
 							<li>
