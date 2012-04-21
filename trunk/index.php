@@ -26,7 +26,7 @@ require_once('sys.includes.php');
 
 /** If logged as a system user, go directly to the back-end homepage */
 if (in_session_or_cookies($allowed_enter)) {
-	header("location:home.php");
+	header("location:".ROOT_DIR."home.php");
 }
 
 /** If client is logged in, redirect to the files list. */
@@ -39,12 +39,12 @@ $database->MySQLDB();
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><?php _e('Log in','cftp_admin'); ?> | <?php echo SYSTEM_NAME; ?></title>
-	<link rel="shortcut icon" href="favicon.ico" />
-	<link rel="stylesheet" media="all" type="text/css" href="styles/shared.css" />
-	<link rel="stylesheet" media="all" type="text/css" href="styles/base.css" />
-	<link rel="stylesheet" media="all" type="text/css" href="styles/font-sansation.css" />
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-	<script src="includes/js/jquery.validations.js" type="text/javascript"></script>
+	<link rel="shortcut icon" href="<?php echo BASE_URI; ?>favicon.ico" />
+	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/shared.css" />
+	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/base.css" />
+	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/font-sansation.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript" ></script>
+	<script src="<?php echo BASE_URI; ?>includes/js/jquery.validations.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -68,13 +68,13 @@ $database->MySQLDB();
 		/** Look up the system users table to see if the entered username exists */
 		$sql_user = $database->query("SELECT * FROM tbl_users WHERE user='$sysuser_username'");
 		$count_user = mysql_num_rows($sql_user);
-		if($count_user > 0){
+		if ($count_user > 0){
 			$try_login = 'user';
 		} else {
 		/** If not, search for the same username on the clients table */
 			$sql_client = $database->query("SELECT * FROM tbl_clients WHERE client_user='$sysuser_username'");
 			$count_client = mysql_num_rows($sql_client);
-			if($count_client > 0){
+			if ($count_client > 0){
 				$try_login = 'client';
 			}
 		}
@@ -123,7 +123,7 @@ $database->MySQLDB();
 							setcookie("userlevel","0",time()+COOKIE_EXP_TIME);
 						}
 						/** Send the client directly to the files list */
-						header("location:upload/$sysuser_username/");
+						header("location:".BASE_URI."upload/$sysuser_username/");
 						exit;
 					}
 					else {

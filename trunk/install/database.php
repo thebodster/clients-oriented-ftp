@@ -6,8 +6,7 @@
  * @package		ProjectSend
  * @subpackage	Install
  */
-
-$timestampdate = time();
+$timestamp = time();
 $q1 = '
 CREATE TABLE IF NOT EXISTS `tbl_clients` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -49,7 +48,6 @@ CREATE TABLE IF NOT EXISTS `tbl_options` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=13 ;
 ';
 
-
 $q4 = '
 CREATE TABLE IF NOT EXISTS `tbl_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -83,7 +81,7 @@ INSERT INTO `tbl_options` (`id`, `name`, `value`) VALUES
 
 $q6 = '
 INSERT INTO `tbl_users` (`id`, `user`, `password`, `name`, `email`, `level`, `timestamp`) VALUES
-(1, \''.$got_admin_username.'\', \''.$got_admin_pass.'\', \''.$got_admin_name.'\', \''.$got_admin_email.'\', 9, '.$timestampdate.');
+(1, \''.$got_admin_username.'\', \''.$got_admin_pass.'\', \''.$got_admin_name.'\', \''.$got_admin_email.'\', 9, '.$timestamp.');
 ';
 
 ?>

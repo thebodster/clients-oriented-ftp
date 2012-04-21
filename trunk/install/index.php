@@ -5,7 +5,6 @@
  * @package		ProjectSend
  * @subpackage	Install
  */
-
 ob_start();
 session_start();
 header("Cache-control: private");
@@ -43,7 +42,7 @@ if($_POST) {
 }
 
 /** Call the form validation class */
-require_once('../includes/classes/form-validation.php');
+require_once(ROOT_DIR.'/includes/classes/form-validation.php');
 
 /** Define the installation text stirngs */
 $page_title_install = __('Install','cftp_admin');
@@ -60,7 +59,7 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 	<link rel="stylesheet" media="all" type="text/css" href="../styles/shared.css" />
 	<link rel="stylesheet" media="all" type="text/css" href="../styles/base.css" />
 	<link rel="stylesheet" media="all" type="text/css" href="../styles/font-sansation.css" />
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
 	<script src="../includes/js/jquery.validations.js" type="text/javascript"></script>
 </head>
 
@@ -79,7 +78,10 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 		<?php
 		if ($_POST) {
 			
-			if ($base_uri{(strlen($base_uri) - 1)}!='/') { $base_uri .= '/'; }
+			/**
+			 * The URI must end with a /, so add it if it wasn't posted.
+			 */
+			if ($base_uri{(strlen($base_uri) - 1)} != '/') { $base_uri .= '/'; }
 			/** Begin form validation */
 			$valid_me->validate('completed',$this_install_title,$install_no_sitename);
 			$valid_me->validate('completed',$base_uri,$install_no_baseuri);
@@ -101,7 +103,7 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 				/**
 				 * Call the file that creates the tables and fill it with the data we got previously
 				 */
-				include_once('database.php');
+				include_once(ROOT_DIR.'/install/database.php');
 				/**
 				 * Try to execute each query individually
 				 */
@@ -134,7 +136,7 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 							$msg = __('Congratulations! Everything is up and running.','cftp_admin');
 							echo system_message('ok',$msg);
 							?>
-								<p><?php _e('You may proceed to','cftp_admin'); ?> <a href="../index.php" target="_self"><?php _e('log in','cftp_admin'); ?></a> <?php _e('with your newely created username and password.','cftp_admin'); ?></p>
+								<p><?php _e('You may proceed to','cftp_admin'); ?> <a href="<?php echo BASE_URI; ?>" target="_self"><?php _e('log in','cftp_admin'); ?></a> <?php _e('with your newely created username and password.','cftp_admin'); ?></p>
 							<?php
 							break;
 						case 'err':
