@@ -23,6 +23,13 @@ ob_start();
 $allowed_enter = array(9,8,7);
 require_once('sys.includes.php');
 
+/**
+ * Check if the ProjectSend is installed. Done only on the log in form
+ * page since all other are inaccessible if no valid session or cookie
+ * is set.
+ */
+require_once('sys.check.installed.php');
+
 /** If logged as a system user, go directly to the back-end homepage */
 if (in_session_or_cookies($allowed_enter)) {
 	header("Location:".BASE_URI."home.php");
