@@ -49,16 +49,22 @@ if (in_session_or_cookies($core_update_allowed)) {
 		 * the default template.
 		 */
 		if (!isset($this_template_css)) {
+			/** Back-end */
 	?>
 			<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/base.css" />
-	<?php } else { ?>
+	<?php
+		}
+		else {
+			/** Template */
+	?>
 			<link rel="stylesheet" media="all" type="text/css" href="<?php echo $this_template_css; ?>" />
-	<?php } ?>
-
+	<?php
+		}
+	?>
 	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/font-sansation.css" />
 	
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-	<script src="<?php echo BASE_URI; ?>includes/js/dropdownmenu.js" type="text/javascript"></script>
+	<script src="<?php echo BASE_URI; ?>includes/js/superfish.js" type="text/javascript"></script>
 	<script src="<?php echo BASE_URI; ?>includes/js/jquery.validations.js" type="text/javascript"></script>
 
 	<?php if (isset($tablesorter)) { ?>
@@ -105,16 +111,15 @@ if (in_session_or_cookies($core_update_allowed)) {
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			// Add the dropdown arrow to all li elements that has children
-			$("#menu li:has(ul)").find("a:first").addClass('dropready');
+			$("ul.sf-menu").superfish();
 		});
 	</script>
 
 	<div id="top_menu">
-		<ul class="menu" id="menu">
-			<li><a href="<?php echo BASE_URI; ?>home.php" class="menulink"><?php _e('Home', 'cftp_admin'); ?></a></li>
+		<ul class="sf-menu">
+			<li><a href="<?php echo BASE_URI; ?>home.php"><?php _e('Home', 'cftp_admin'); ?></a></li>
 			<li>
-				<a href="<?php echo BASE_URI; ?>upload-from-computer.php" class="menulink"><?php _e('Upload files', 'cftp_admin'); ?></a>
+				<a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload files', 'cftp_admin'); ?></a>
 					<?php
 						/**
 						 * Hide the subitems from clients, since their upload form
@@ -139,7 +144,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 				if (in_session_or_cookies($clients_allowed)) {
 			?>
 					<li>
-						<a href="<?php echo BASE_URI; ?>clients.php" class="menulink"><?php _e('Clients', 'cftp_admin'); ?></a>
+						<a href="<?php echo BASE_URI; ?>clients.php"><?php _e('Clients', 'cftp_admin'); ?></a>
 						<ul>
 							<li><a href="<?php echo BASE_URI; ?>clients-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
 							<li><a href="<?php echo BASE_URI; ?>clients.php"><?php _e('Manage clients', 'cftp_admin'); ?></a></li>
@@ -156,7 +161,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 				if (in_session_or_cookies($users_allowed)) {
 			?>
 					<li>
-						<a href="<?php echo BASE_URI; ?>users.php" class="menulink"><?php _e('Users', 'cftp_admin'); ?></a>
+						<a href="<?php echo BASE_URI; ?>users.php"><?php _e('Users', 'cftp_admin'); ?></a>
 						<ul>
 							<li><a href="<?php echo BASE_URI; ?>users-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
 							<li><a href="<?php echo BASE_URI; ?>users.php"><?php _e('Manage users', 'cftp_admin'); ?></a></li>
@@ -173,7 +178,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 				if (in_session_or_cookies($options_allowed)) {
 			?>
 					<li>
-						<a href="<?php echo BASE_URI; ?>options.php" class="menulink"><?php _e('Options', 'cftp_admin'); ?></a>
+						<a href="<?php echo BASE_URI; ?>options.php"><?php _e('Options', 'cftp_admin'); ?></a>
 						<ul>
 							<li><a href="<?php echo BASE_URI; ?>options.php"><?php _e('General options', 'cftp_admin'); ?></a></li>
 							<li><a href="<?php echo BASE_URI; ?>branding.php"><?php _e('Branding', 'cftp_admin'); ?></a></li>
@@ -191,7 +196,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 					/** Define "MY FILES LIST" link to use here and on the home widget */
 					$my_files_link = BASE_URI.'upload/'.$my_username.'/';
 			?>
-					<li><a href="<?php echo $my_files_link; ?>" class="menulink"><?php _e('View my files', 'cftp_admin'); ?></a></li>
+					<li><a href="<?php echo $my_files_link; ?>"><?php _e('View my files', 'cftp_admin'); ?></a></li>
 			<?php
 				}
 			?>
