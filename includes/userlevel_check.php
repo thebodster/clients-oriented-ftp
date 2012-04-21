@@ -134,7 +134,7 @@ function can_see_content($allowed_levels) {
 			<h2><?php _e('Access denied','cftp_admin'); ?></h2>
 			<div class="whiteform whitebox">
 				<?php
-					$msg = __("Your user account doesn't allow you to view this page. Please contact a system administrator if you need to access this functions.",'cftp_admin');
+					$msg = __("Your account type doesn't allow you to view this page. Please contact a system administrator if you need to access this functions.",'cftp_admin');
 					echo system_message('error',$msg);
 				?>
 			</div>

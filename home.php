@@ -5,7 +5,7 @@
  * @package		ProjectSend
  *
  */
-$allowed_levels = array(9,8,7);
+$allowed_levels = array(9,8,7,0);
 require_once('sys.includes.php');
 $page_title = __('Welcome to ProjectSend', 'cftp_admin');
 include('header.php');
@@ -26,7 +26,39 @@ $database->MySQLDB();
 	<div class="home_column_left">
 		<ul class="home_spaces">
 			<?php
-				/** Show UPLOAD widget to allowed users */
+				/** Show SIMPLE UPLOAD widget to clients */
+				$upload_allowed = array(0);
+				if (in_session_or_cookies($upload_allowed)) {
+			?>
+					<li class="home_widget_small">
+						<div class="home_container">
+							<h4><?php _e('Files','cftp_admin'); ?></h4>
+							<img src="img/home-widget-files.png" alt="" />
+							<a href="upload-from-computer.php" class="button button_blue button_big"><?php _e('Upload from computer','cftp_admin'); ?></a>
+							<a href="<?php echo $my_files_link; ?>" class="button button_blue button_big"><?php _e('Access my files list','cftp_admin'); ?></a>
+							<div class="message message_info">
+								<p><?php _e('Total files on account:','cftp_admin'); ?>
+									<strong>
+									<?php
+										/** Count the VISIBLE files on this client's account */
+										$sql = $database->query("SELECT distinct id FROM tbl_files WHERE client_user = '$my_username' AND hidden = '0'");
+										$count = mysql_num_rows($sql);
+										echo $count;
+									?>
+									</strong>
+								</p>
+							</div>
+						</div>
+					</li>
+
+					<li class="logo_home_li">
+						<div class="home_container">
+							<img src="<?php echo BASE_URI; ?>includes/thumb.php?src=<?php echo BASE_URI; ?>img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=300&amp;ql=<?php echo THUMBS_QUALITY; ?>&amp;type=tlogo" alt="Logo Placeholder" />
+						</div>
+					</li>
+			<?php
+				}
+				/** Show COMPLETE UPLOAD widget to allowed users */
 				$upload_allowed = array(9,8,7);
 				if (in_session_or_cookies($upload_allowed)) {
 			?>

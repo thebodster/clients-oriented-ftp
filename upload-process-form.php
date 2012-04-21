@@ -16,7 +16,7 @@
  * @subpackage Upload
  */
 $tablesorter = 1;
-$allowed_levels = array(9,8,7);
+$allowed_levels = array(9,8,7,0);
 require_once('sys.includes.php');
 $page_title = __('Upload files', 'cftp_admin');
 include('header.php');
@@ -27,6 +27,12 @@ include('header.php');
 
 <?php
 $database->MySQLDB();
+
+/**
+ * Get the user level to determine if the uploader is a
+ * system user or a client.
+ */
+$current_level = get_current_user_level();
 
 $work_folder = USER_UPLOADS_TEMP_FOLDER;
 
@@ -80,6 +86,10 @@ if(isset($_POST['upload_email_clients'])) {
 	$clients_to_email = array_filter($clients_to_email);
 }
 
+/**
+ * $empty_fields counts the amount of "name" fields that
+ * were not completed.
+ */
 $empty_fields = 0;
 
 /** Fill the clients array that will be used on the form */
@@ -103,6 +113,14 @@ $sql = $database->query($cq);
 
 		foreach ($_POST['file'] as $file) {
 			if(!empty($file['name'])) {
+				/**
+				* If the uploader is a client, set the "client" var to the current
+				* uploader username, since the "client" field is not posted.
+				*/
+				if ($current_level == 0) {
+					$file['client'] = $this_admin;
+				}
+				
 				$this_upload = new PSend_Upload_File();
 				$file['file'] = $this_upload->safe_rename($file['file']);
 				$location = $work_folder.'/'.$file['file'];
@@ -187,8 +205,17 @@ $sql = $database->query($cq);
 					<th><?php _e('File Name','cftp_admin'); ?></th>
 					<th><?php _e('Name','cftp_admin'); ?></th>
 					<th><?php _e('Description','cftp_admin'); ?></th>
-					<th><?php _e('Assigned to','cftp_admin'); ?></th>
-					<th><?php _e('Client was notified','cftp_admin'); ?></th>
+					<?php
+						/*
+						 * Don't generate this columns if the uploader is a client.
+						 */
+						if ($current_level != 0) {
+					?>
+							<th><?php _e('Assigned to','cftp_admin'); ?></th>
+							<th><?php _e('Client was notified','cftp_admin'); ?></th>
+					<?php
+						}
+					?>
 					<th><?php _e("Client's files",'cftp_admin'); ?></th>
 				</tr>
 			</thead>
@@ -200,33 +227,57 @@ $sql = $database->query($cq);
 						<td><?php echo $uploaded['file']; ?></td>
 						<td><?php echo $uploaded['name']; ?></td>
 						<td><?php echo $uploaded['description']; ?></td>
-						<td><?php echo $uploaded['client_name']; ?></td>
-						<td><?php
-								/**
-								 * Unset $reason so the next client will start fresh
-								 */
-								if(isset($reason)) {
-									unset($reason);
-								}
-								switch ($users_emailed[$uploaded['client']]) {
-									case 0:
-										_e('No','cftp_admin');
-										$reason = __('Disabled for this client','cftp_admin');
-										break;
-									case 1:
-										_e('Yes','cftp_admin');
-										break;
-									case 2:
-										_e('No','cftp_admin');
-										$reason = __('Error sending notification','cftp_admin');
-										break;
-								}
-								echo (isset($reason) ? ' ('.$reason.')' : '');
-							?>
-						</td>
+						<?php
+							/*
+							 * Don't generate this columns if the uploader is a client.
+							 */
+							if ($current_level != 0) {
+						?>
+							<td><?php echo $uploaded['client_name']; ?></td>
+							<td><?php
+									/**
+									 * Unset $reason so the next client will start fresh
+									 */
+									if(isset($reason)) {
+										unset($reason);
+									}
+									switch ($users_emailed[$uploaded['client']]) {
+										case 0:
+											_e('No','cftp_admin');
+											$reason = __('Disabled for this client','cftp_admin');
+											break;
+										case 1:
+											_e('Yes','cftp_admin');
+											break;
+										case 2:
+											_e('No','cftp_admin');
+											$reason = __('Error sending notification','cftp_admin');
+											break;
+									}
+									echo (isset($reason) ? ' ('.$reason.')' : '');
+								?>
+							</td>
+						<?php
+							}
+						?>
 						<td>
-							<a href="manage-files.php?id=<?php $this_client = get_client_by_username($uploaded['client']); echo $this_client['id']; ?>" class="button button_blue"><?php _e('Manage files','cftp_admin'); ?></a>
-							<a href="upload/<?php echo $uploaded['client']; ?>/" target="_blank" class="button button_blue"><?php _e('View as client','cftp_admin'); ?></a>
+							<?php
+								/*
+								 * Show the different actions buttons depending on the uploader
+								 * account type (user or client).
+								 */
+								if ($current_level != 0) {
+							?>
+									<a href="manage-files.php?id=<?php $this_client = get_client_by_username($uploaded['client']); echo $this_client['id']; ?>" class="button button_blue"><?php _e('Manage files','cftp_admin'); ?></a>
+									<a href="upload/<?php echo $uploaded['client']; ?>/" target="_blank" class="button button_blue"><?php _e('View as client','cftp_admin'); ?></a>
+							<?php
+								}
+								else {
+							?>
+									<a href="upload/<?php echo $this_admin; ?>/" class="button button_blue"><?php _e('View my files','cftp_admin'); ?></a>
+							<?php
+								}
+							?>
 						</td>
 					</tr>
 			<?php
@@ -245,7 +296,7 @@ $sql = $database->query($cq);
 		if(!empty($uploaded_files)) {
 	?>
 			<h3><?php _e('Files ready to upload','cftp_admin'); ?></h3>
-			<p><?php _e('Please complete the following information to finish the uploading proccess. "Name" and "Assign to client" fields are required.','cftp_admin'); ?></p>
+			<p><?php _e('Please complete the following information to finish the uploading proccess. Remember that "Name" is a required field.','cftp_admin'); ?></p>
 	<?php
 			/**
 			 * First, do a server side validation for files that were submited
@@ -261,7 +312,7 @@ $sql = $database->query($cq);
 				$(document).ready(function() {
 					$("form").submit(function() {
 						clean_form(this);
-						
+
 						$(this).find('input[name$="[name]"]').each(function() {	
 							is_complete($(this)[0],'<?php echo $validation_no_name; ?>');
 						});
@@ -271,9 +322,7 @@ $sql = $database->query($cq);
 
 					});
 				});
-		
 			</script>
-
 
 			<form action="upload-process-form.php" name="save_files" id="save_files" method="post">
 				<?php
@@ -288,7 +337,17 @@ $sql = $database->query($cq);
 							<th><?php _e('File Name','cftp_admin'); ?></th>
 							<th><?php _e('Name','cftp_admin'); ?></th>
 							<th><?php _e('Description','cftp_admin'); ?></th>
-							<th><?php _e('Assign to client','cftp_admin'); ?></th>
+							<?php
+								/**
+								* Only show the ASSIGN TO CLIENT column if the current
+								* uploader is a system user, and not a client.
+								*/
+								if ($current_level != 0) {
+							?>
+									<th><?php _e('Assign to client','cftp_admin'); ?></th>
+							<?php
+								}
+							?>
 						</tr>
 					</thead>
 					<tbody>
@@ -328,20 +387,30 @@ $sql = $database->query($cq);
 												<td>
 													<textarea name="file[<?php echo $i; ?>][description]" class="txtfield"></textarea>
 												</td>
-												<td><select name="file[<?php echo $i; ?>][client]" class="txtfield" >
-														<?php
-															/**
-															 * The clients list is generated early on the file so the
-															 * array doesn't need to be made once on every file.
-															 */
-															foreach($clients as $client => $client_name) {
-															?>
-																<option value="<?php echo $client; ?>"><?php echo $client_name; ?></option>
-															<?php
-															}
-														?>
-													</select>
-												</td>
+												<?php
+													/**
+													* Only show the CLIENTS select field if the current
+													* uploader is a system user, and not a client.
+													*/
+													if ($current_level != 0) {
+												?>
+														<td><select name="file[<?php echo $i; ?>][client]" class="txtfield" >
+																<?php
+																	/**
+																	 * The clients list is generated early on the file so the
+																	 * array doesn't need to be made once on every file.
+																	 */
+																	foreach($clients as $client => $client_name) {
+																	?>
+																		<option value="<?php echo $client; ?>"><?php echo $client_name; ?></option>
+																	<?php
+																	}
+																?>
+															</select>
+														</td>
+												<?php
+													}
+												?>
 											</tr>
 							<?php
 										$i++;
@@ -439,7 +508,21 @@ $sql = $database->query($cq);
 		?>
 				$("#uploaded_files_tbl").tablesorter( {
 					sortList: [[0,0]], widgets: ['zebra'], headers: {
-						2: { sorter: false }
+						<?php
+							/**
+							 * Different sortable columns if the upload is client or user.
+							 */
+							if ($current_level != 0) {
+						?>
+								5: { sorter: false }
+						<?php
+							}
+							else {
+						?>
+								3: { sorter: false }
+						<?php
+							}
+						?>
 					}
 				})
 				

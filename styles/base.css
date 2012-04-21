@@ -70,39 +70,6 @@ h4 {
 	box-shadow:0 5px 5px #E1E1E1;
 }
 
-/* dropdown menu */
-
-#top_menu {
-	background:#222;
-	color:#FFFFFF;
-	clear:both;
-	padding:4px 0;
-	border-top:1px solid #555;
-	border-bottom:7px solid #CCCCCC;
-	-moz-box-shadow:0 5px 5px #E1E1E1;
-	-webkit-box-shadow:0 5px 5px #E1E1E1;
-	box-shadow:0 5px 5px #E1E1E1;
-}
-
-ul.menu {list-style:none; margin:0; padding:0}
-ul.menu * {margin:0; padding:0}
-ul.menu a {display:block; color:#fff; text-decoration:none}
-ul.menu li {position:relative; float:left;}
-ul.menu ul {position:absolute; top:28px; left:0; display:none; opacity:0; list-style:none; border:1px solid #111; -moz-box-shadow:2px 2px 2px #ccc; -webkit-box-shadow:2px 2px 2px #ccc; box-shadow:2px 4px 2px #ccc;}
-ul.menu ul li {position:relative; /*border:1px solid #aaa;*/ border-top:none; width:160px; margin:0}
-
-ul.menu ul li a {display:block; padding:10px; background-color:#222; color:white; border-bottom:1px solid #444444; font-size:12px;}
-ul.menu a:hover {background-color:#333}
-ul.menu ul ul {left:100px; top:-1px}
-
-ul.menu .menulink {/*border:1px solid #aaa;*/ padding:5px 27px 7px; font-weight:bold; margin:0 0px; border-right:1px solid #333; border-left:1px solid #000;}
-ul.menu .menulink:hover, ul.menu .menuhover {}
-ul.menu .dropready {background:url(../img/arrow.gif) right 12px no-repeat; padding-right:37px; }
-
-ul.menu .sub {background:url(../img/arrow.gif) right 12px no-repeat}
-ul.menu .topline {border-top:1px solid #aaa}
-
-
 #install_form {
 	margin-top:30px;
 }
@@ -145,6 +112,17 @@ ul.menu .topline {border-top:1px solid #aaa}
 	width:210px;
 	float:left;
 	margin-right:20px;
+}
+
+.home_spaces .logo_home_li {
+	width:400px!important;
+	display:table;
+}
+
+.home_spaces .home_container {
+	display:table-cell;
+	vertical-align:middle;
+	height:283px;
 }
 
 .home_spaces li h4 {

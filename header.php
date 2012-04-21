@@ -20,7 +20,7 @@ header("Cache-control: private");
 check_for_session();
 
 /** Check if the active account belongs to a system user or a client. */
-check_for_admin();
+//check_for_admin();
 
 /** If no page title is defined, revert to a default one */
 if (!isset($page_title)) { $page_title = __('System Administration','cftp_admin'); }
@@ -75,7 +75,7 @@ require_once('includes/core.update.php');
 		/**
 		 * If any update was made to the database structure, show the message
 		 */
-		if($updates_made > 0) {
+		if(isset($updates_made) && $updates_made > 0) {
 	?>
 			<div id="system_msg">
 				<p><strong><?php _e('System Notice:', 'cftp_admin');?></strong> <?php _e('The database was updated to support this version of the software.', 'cftp_admin'); ?></p>
@@ -83,16 +83,32 @@ require_once('includes/core.update.php');
 	<?php
 		}
 	?>
-	
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			// Add the dropdown arrow to all li elements that has children
+			$("#menu li:has(ul)").find("a:first").addClass('dropready');
+		});
+	</script>
+
 	<div id="top_menu">
 		<ul class="menu" id="menu">
 			<li><a href="home.php" class="menulink"><?php _e('Home', 'cftp_admin'); ?></a></li>
 			<li>
-				<a href="upload-from-computer.php" class="menulink dropready"><?php _e('Upload files', 'cftp_admin'); ?></a>
-				<ul>
-					<li><a href="upload-from-computer.php"><?php _e('Upload from computer', 'cftp_admin'); ?></a></li>
-					<li><a href="upload-by-ftp.php"><?php _e('Import from FTP', 'cftp_admin'); ?></a></li>
-				</ul>
+				<a href="upload-from-computer.php" class="menulink"><?php _e('Upload files', 'cftp_admin'); ?></a>
+					<?php
+						/**
+						 * Hide the subitems from clients, since their upload form
+						 * link is the same that was defined on the above item.
+						 */
+						$clients_allowed = array(9,8,7);
+						if (in_session_or_cookies($clients_allowed)) {
+					?>
+						<ul>
+							<li><a href="upload-from-computer.php"><?php _e('Upload from computer', 'cftp_admin'); ?></a></li>
+							<li><a href="upload-by-ftp.php"><?php _e('Import from FTP', 'cftp_admin'); ?></a></li>
+						</ul>
+				<?php } ?>
 			</li>
 	
 			<?php
@@ -104,7 +120,7 @@ require_once('includes/core.update.php');
 				if (in_session_or_cookies($clients_allowed)) {
 			?>
 					<li>
-						<a href="clients.php" class="menulink dropready"><?php _e('Clients', 'cftp_admin'); ?></a>
+						<a href="clients.php" class="menulink"><?php _e('Clients', 'cftp_admin'); ?></a>
 						<ul>
 							<li><a href="clients-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
 							<li><a href="clients.php"><?php _e('Manage clients', 'cftp_admin'); ?></a></li>
@@ -121,7 +137,7 @@ require_once('includes/core.update.php');
 				if (in_session_or_cookies($users_allowed)) {
 			?>
 					<li>
-						<a href="users.php" class="menulink dropready"><?php _e('Users', 'cftp_admin'); ?></a>
+						<a href="users.php" class="menulink"><?php _e('Users', 'cftp_admin'); ?></a>
 						<ul>
 							<li><a href="users-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
 							<li><a href="users.php"><?php _e('Manage users', 'cftp_admin'); ?></a></li>
@@ -138,13 +154,28 @@ require_once('includes/core.update.php');
 				if (in_session_or_cookies($options_allowed)) {
 			?>
 					<li>
-						<a href="options.php" class="menulink dropready"><?php _e('Options', 'cftp_admin'); ?></a>
+						<a href="options.php" class="menulink"><?php _e('Options', 'cftp_admin'); ?></a>
 						<ul>
 							<li><a href="options.php"><?php _e('General options', 'cftp_admin'); ?></a></li>
 							<li><a href="branding.php"><?php _e('Branding', 'cftp_admin'); ?></a></li>
 						</ul>
 					</li>
 			<?php } ?>
+
+			<?php
+				/**
+				 * Show the MY FILES menu only to clients.
+				 */
+				$clients_allowed = array(0);
+				if (in_session_or_cookies($clients_allowed)) {
+					$my_username = get_current_user_username();
+					/** Define "MY FILES LIST" link to use here and on the home widget */
+					$my_files_link = BASE_URI.'upload/'.$my_username.'/';
+			?>
+					<li><a href="<?php echo $my_files_link; ?>" class="menulink"><?php _e('View my files', 'cftp_admin'); ?></a></li>
+			<?php
+				}
+			?>
 	
 		</ul>
 		<div class="clear"></div>
