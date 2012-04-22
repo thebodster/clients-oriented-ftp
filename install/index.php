@@ -41,9 +41,6 @@ if($_POST) {
 	$got_admin_pass2 = mysql_real_escape_string(md5($_POST['install_user_repeat']));
 }
 
-/** Call the form validation class */
-require_once(ROOT_DIR.'/includes/classes/form-validation.php');
-
 /** Define the installation text stirngs */
 $page_title_install = __('Install','cftp_admin');
 $install_no_sitename = __('Sitename was not completed.','cftp_admin');
