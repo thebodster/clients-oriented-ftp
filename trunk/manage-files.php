@@ -1,18 +1,29 @@
 <?php
-	$tablesorter = 1;
-	$allowed_levels = array(9,8);
-	require_once('sys.includes.php');
+/**
+ * Allows to hide, show or delete the files assigend to the
+ * selected client.
+ *
+ * @package ProjectSend
+ */
+$tablesorter = 1;
+$allowed_levels = array(9,8);
+require_once('sys.includes.php');
 
+/**
+ * The client's id is passed on the URI.
+ * Then get_client_by_id() gets all the other account values.
+ */
+$this_id = $_GET['id'];
+$this_client = get_client_by_id($this_id);
 
-	$this_id = $_GET['id'];
-	$this_client = get_client_by_id($this_id);
+$page_title = __('Manage files','cftp_admin');
 
-	$page_title = __('Manage files','cftp_admin');
-	if(!empty($this_client)) {
-		$page_title .= ' for '.$this_client['name'];
-	}
-	include('header.php');
-	
+/** Add the name of the client to the page's title. */
+if(!empty($this_client)) {
+	$page_title .= ' for '.$this_client['name'];
+}
+
+include('header.php');
 ?>
 
 <script type="text/javascript">
@@ -63,6 +74,9 @@
 	<h2><?php echo $page_title; ?></h2>
 
 	<?php
+		/**
+		 * Show an error message if no ID value is passed on the URI.
+		 */
 		if(empty($this_id)) {
 	?>
 			<div class="whiteform whitebox whitebox_text">
@@ -75,12 +89,21 @@
 	
 		<?php
 
-			// Mass actions
+			/**
+			 * Apply the corresponding action to the selected files.
+			 */
 			if(isset($_POST['btn_proceed_files'])) {
+				/** Continue only if 1 or more files were selected. */
 				if(!empty($_POST['formfiles'])) {
 					$selected_files = $_POST['formfiles'];
 					switch($_POST['files_actions']) {
 						case 'hide':
+							/**
+							 * Changes the value on the "hidden" column value on the database.
+							 * This files are not shown on the client's file list. They are
+							 * also not counted on the home.php files count when the logged in
+							 * account is the client.
+							 */
 							foreach ($selected_files as $work_file) {
 								$this_file = new FilesActions();
 								$hide_file = $this_file->change_files_hide_status($work_file,'1');
@@ -90,6 +113,10 @@
 							break;
 
 						case 'show':
+							/**
+							 * Reverse of the previous action. Setting the value to 0 means
+							 * that the file is visible.
+							 */
 							foreach ($selected_files as $work_file) {
 								$this_file = new FilesActions();
 								$show_file = $this_file->change_files_hide_status($work_file,'0');
@@ -116,7 +143,11 @@
 
 			$database->MySQLDB();
 			$files_query = 'SELECT * FROM tbl_files WHERE client_user="' . $this_client['username'] .'"';
-		
+
+			/**
+			 * Count the files assigned to this client. If there is none, show
+			 * an error message.
+			 */
 			$sql = $database->query($files_query);
 			$count = mysql_num_rows($sql);
 			if (!$count) {
@@ -126,9 +157,11 @@
 				</div>
 			<?php
 			}
+			/**
+			 * Continue if client exists and has files under his account.
+			 */
 			else {
 		?>
-	
 				<form action="manage-files.php?id=<?php echo $this_id; ?>" name="files_list" method="post">
 					<div class="form_actions">
 						<div class="form_actions_count">
@@ -164,7 +197,10 @@
 						<tbody>
 							<?php
 								while($row = mysql_fetch_array($sql)) {
-									$this_file_uri = 'upload/'.$this_client['username'].'/'.$row['url'];
+									/**
+									 * Construct the complete file URI to use on the download button.
+									 */
+									$this_file_uri = BASE_URI.'upload/'.$this_client['username'].'/'.$row['url'];
 							?>
 									<tr>
 										<td><input type="checkbox" name="formfiles[]" value="<?php echo $row["id"]; ?>" /></td>
@@ -223,7 +259,9 @@
 				<div class="message message_info"><?php _e('Please note that downloading a file from here will not add to the download count.','cftp_admin'); ?></div>
 	
 	<?php
-		// End IF COUNT
+		/**
+		 * End the IF statement for counting files.
+		 */
 		}
 	
 		$database->Close();

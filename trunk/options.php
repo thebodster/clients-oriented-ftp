@@ -1,22 +1,33 @@
 <?php
+/**
+ * Options page and form.
+ *
+ * @package ProjectSend
+ */
 $allowed_levels = array(9);
 require_once('sys.includes.php');
 $page_title = __('System options','cftp_admin');
 
 $database->MySQLDB();
-require_once('includes/classes/form-validation.php');
 
+/** Uses TextBoxList for the allowed file types box. */
 $textboxlist = 1;
 include('header.php');
 
 if ($_POST) {
-	$_POST = mysql_real_escape_array($_POST); // escape the values
+	/**
+	 * Escape all the posted values on a single function.
+	 * Defined on functions.php
+	 */
+	$_POST = mysql_real_escape_array($_POST);
 	$keys = array_keys($_POST);
 
 	$options_total = count($keys);
 	$options_filled = 0;
 
-	// Check if all the options are filled
+	/**
+	 * Check if all the options are filled.
+	 */
 	for ($i = 0; $i < $options_total; $i++) {
 		if ($_POST[$keys[$i]] == '') {
 			$query_state = 'err_fill';
@@ -26,6 +37,7 @@ if ($_POST) {
 		}
 	}
 
+	/** If every option is completed, continue */
 	if ($options_filled == $options_total) {
 		$updated = 0;
 		for ($j = 0; $j < $options_total; $j++) {
@@ -43,15 +55,17 @@ if ($_POST) {
 
 }
 
-// replace | with , to use the tags system when showing the allowed filetypes on the form
+/**
+ * Replace | with , to use the tags system when showing
+ * the allowed filetypes on the form. This value comes from
+ * site.options.php
+*/
 $allowed_file_types = str_replace('|',',',$allowed_file_types);
-// explode, sort, and implode the values to list them alphabetically
+/** Explode, sort, and implode the values to list them alphabetically */
 $allowed_file_types = explode(',',$allowed_file_types);
 sort($allowed_file_types);
 $allowed_file_types = implode(',',$allowed_file_types);
 
-
-// TODO: recrear las opciones para mostrar abajo las actualizadas
 ?>
 
 <div id="main">
@@ -140,7 +154,16 @@ $allowed_file_types = implode(',',$allowed_file_types);
 							}
 						?>
 					</select>
-					<?php include_once('includes/timezones.php'); ?>
+				</li>
+				<li>
+					<label for="timezone"><?php _e('Timezone','cftp_admin'); ?></label>
+					<?php
+						/** 
+						 * Generates a select field.
+						 * Code is stored on a separate file since it's pretty long.
+						 */
+						include_once('includes/timezones.php');
+					?>
 				</li>
 				<li>
 					<label for="timeformat"><?php _e('Time format','cftp_admin'); ?></label>

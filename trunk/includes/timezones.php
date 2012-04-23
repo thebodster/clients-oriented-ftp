@@ -10,8 +10,6 @@
  * 
  */
 ?>
-
-<label for="timezone"><?php _e('Timezone','cftp_admin'); ?></label>
 <select id="timezone" name="timezone">
 	<?php
 		function timezonechoice($selectedzone) {
