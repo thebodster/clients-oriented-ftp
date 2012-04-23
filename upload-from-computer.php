@@ -22,11 +22,11 @@ $database->MySQLDB();
 	<h2><?php echo $page_title; ?></h2>
 	
 	<?php
-		// count clients to show error or form
+		/** Count the clients to show an error or the form */
 		$sql = $database->query("SELECT * FROM tbl_clients");
 		$count = mysql_num_rows($sql);
 		if (!$count) {
-			// Echo the no clients default message
+			/** Echo the no clients default message */
 			message_no_clients();
 		}
 		else { 
@@ -39,6 +39,11 @@ $database->MySQLDB();
 			</p>
 
 			<?php
+				/**
+				 * Load a plupload translation file, if the ProjectSend language
+				 * on sys.config.php is set to anything other than "en", and the
+				 * corresponding plupload file exists.
+				 */
 				if(SITE_LANG != 'en') {
 					$plupload_lang_file = 'includes/plupload/js/i18n/'.SITE_LANG.'.js';
 					if(file_exists($plupload_lang_file)) {
@@ -113,6 +118,7 @@ $database->MySQLDB();
 					});
 				});
 			</script>			
+
 			<form action="upload-process-form.php" name="upload_by_client" id="upload_by_client" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="uploaded_files" id="uploaded_files" value="" />
 				<div id="uploader">
@@ -124,7 +130,8 @@ $database->MySQLDB();
 			</form>
 	
 	<?php
-		} // end if for users count
+		/** End if for users count */
+		}
 	?>
 
 </div>
