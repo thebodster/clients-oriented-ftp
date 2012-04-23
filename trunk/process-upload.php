@@ -1,4 +1,5 @@
 <?php
+session_start();
 /**
  *  Call the required system files
  */
@@ -12,7 +13,6 @@ require_once('sys.includes.php');
  * License: http://www.plupload.com/license
  * Contributing: http://www.plupload.com/contributing
  */
-
 // HTTP headers for no cache etc
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
