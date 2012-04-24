@@ -2,12 +2,6 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Project-Id-Version: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: Ignacio <info@subwaydesign.com.ar>\n"
-"Language-Team: \n"
-"MIME-Version: 1.0\n"
 
 #. Text in echo
 #: options.php:180
@@ -1288,4 +1282,3 @@ msgstr ""
 #: install/index.php:136
 msgid "with your newely created username and password."
 msgstr ""
-
