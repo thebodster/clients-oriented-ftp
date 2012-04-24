@@ -22,8 +22,8 @@ $email_template_header = '<!DOCTYPE html>
 <title>%SUBJECT%</title>
 </head>
 
-<body style="background:#f4f4f4;" bgcolor="#f4f4f4">
-<table width="550" border="0" cellspacing="0" cellpadding="0" style="margin:40px auto; background:#fff;	border:1px solid #ccc; -moz-border-radius:5px; -moz-box-shadow:3px 3px 5px #dedede; -webkit-border-radius:5px; -webkit-box-shadow:3px 3px 5px #dedede; border-radius:5px; box-shadow:3px 3px 5px #dedede;" bgcolor="#FFFFFF" align="center">
+<body style="background:#f4f4f4; margin:40px 0; padding:40px 0;" bgcolor="#f4f4f4">
+<table width="550" border="0" cellspacing="0" cellpadding="0" style="background:#fff;	border:1px solid #ccc; -moz-border-radius:5px; -moz-box-shadow:3px 3px 5px #dedede; -webkit-border-radius:5px; -webkit-box-shadow:3px 3px 5px #dedede; border-radius:5px; box-shadow:3px 3px 5px #dedede;" bgcolor="#FFFFFF" align="center">
 	<tr>
 		<td style="padding:20px; font-family:Arial, Helvetica, sans-serif; font-size:12px;">
 			<h3 style="font-family:Georgia, "Times New Roman", Times, serif; font-size:19px; font-weight:normal; padding-bottom:6px; border-bottom:1px dotted #CCCCCC; margin-bottom:20px; margin-top:0; color:#333333;">

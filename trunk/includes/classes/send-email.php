@@ -19,13 +19,21 @@ include_once(ROOT_DIR.'/includes/email-template.php');
 
 /** Define the messages texts */
 
-/** Strings for the "New file uploaded" e-mail */
-$email_strings_notify_client = array(
+/** Strings for the "New file uploaded" BY A SUSTEM USER e-mail */
+$email_strings_file_by_user = array(
 									'subject' => __('New file uploaded for you','cftp_admin'),
 									'body' => __('A new file has been uploaded for you to download.','cftp_admin'),
 									'body2' => __("If you don't want to be notified about new files, please contact the uploader.",'cftp_admin'),
 									'body3' => __('You can access a list of all your files','cftp_admin'),
 									'body4' => __('by logging in here','cftp_admin')
+								);
+
+/** Strings for the "New file uploaded" BY A CLIENT e-mail */
+$email_strings_file_by_client = array(
+									'subject' => __('New file uploaded by a client.','cftp_admin'),
+									'body' => __('A new file has been uploaded by the client','cftp_admin'),
+									'body2' => __("You can manage this client's account and the corresponding files",'cftp_admin'),
+									'body3' => __('by logging in here','cftp_admin')
 								);
 
 
@@ -87,21 +95,55 @@ class PSend_Email
 	}
 
 	/**
-	 * Prepare the body for the "New File" e-mail and replace the tags with
-	 * the strings values set at the top of this file and the link to the
-	 * log in page.
+	 * Prepare the body for the "New File by user" e-mail and replace the
+	 * tags with the strings values set at the top of this file and the
+	 * link to the log in page.
 	 */
-	function email_new_file()
+	function email_new_file_by_user()
 	{
-		global $email_strings_notify_client;
+		global $email_strings_file_by_user;
 		$this->email_body = $this->email_prepare_body('new-file-for-client.html');
 		$this->email_body = str_replace(
 									array('%SUBJECT%','%BODY1%','%BODY2%','%BODY3%','%BODY4%','%LINK%'),
-									array($email_strings_notify_client['subject'],$email_strings_notify_client['body'],$email_strings_notify_client['body2'],$email_strings_notify_client['body3'],$email_strings_notify_client['body4'],BASE_URI),
+									array(
+										$email_strings_file_by_user['subject'],
+										$email_strings_file_by_user['body'],
+										$email_strings_file_by_user['body2'],
+										$email_strings_file_by_user['body3'],
+										$email_strings_file_by_user['body4'],
+										BASE_URI
+									),
 									$this->email_body
 								);
 		return array(
-					'subject' => $email_strings_notify_client['subject'],
+					'subject' => $email_strings_file_by_user['subject'],
+					'body' => $this->email_body
+				);
+	}
+
+	/**
+	 * Prepare the body for the "New File by client" e-mail and replace the
+	 * tags with the strings values set at the top of this file and the
+	 * link to the log in page.
+	 */
+	function email_new_file_by_client($client_id)
+	{
+		global $email_strings_file_by_client;
+		$this->client_info = get_client_by_id($client_id);
+		$this->email_body = $this->email_prepare_body('new-file-by-client.html');
+		$this->email_body = str_replace(
+									array('%SUBJECT%','%BODY1%','%BODY2%','%BODY3%','%LINK%'),
+									array(
+											$email_strings_file_by_client['subject'],
+											$email_strings_file_by_client['body'].' <strong>'.$this->client_info['name'].'</strong> ('.$this->client_info['username'].')',
+											$email_strings_file_by_client['body2'],
+											$email_strings_file_by_client['body3'],
+											BASE_URI
+									),
+									$this->email_body
+								);
+		return array(
+					'subject' => $email_strings_file_by_client['subject'].' '.$this->client_info['name'],
 					'body' => $this->email_body
 				);
 	}
@@ -116,7 +158,15 @@ class PSend_Email
 		$this->email_body = $this->email_prepare_body('new-client.html');
 		$this->email_body = str_replace(
 									array('%SUBJECT%','%BODY1%','%BODY2%','%BODY3%','%LBLUSER%','%LBLPASS%','%USERNAME%','%PASSWORD%','%URI%'),
-									array($email_strings_new_client['subject'],$email_strings_new_client['body'],$email_strings_new_client['body2'],$email_strings_new_client['body3'],$email_strings_new_client['label_user'],$email_strings_new_client['label_pass'],$username,$password,BASE_URI),
+									array(
+										$email_strings_new_client['subject'],
+										$email_strings_new_client['body'],
+										$email_strings_new_client['body2'],
+										$email_strings_new_client['body3'],
+										$email_strings_new_client['label_user'],
+										$email_strings_new_client['label_pass'],
+										$username,$password,BASE_URI
+										),
 									$this->email_body
 								);
 		return array(
@@ -135,7 +185,17 @@ class PSend_Email
 		$this->email_body = $this->email_prepare_body('new-user.html');
 		$this->email_body = str_replace(
 									array('%SUBJECT%','%BODY1%','%BODY2%','%BODY3%','%LBLUSER%','%LBLPASS%','%USERNAME%','%PASSWORD%','%URI%'),
-									array($email_strings_new_user['subject'],$email_strings_new_user['body'],$email_strings_new_user['body2'],$email_strings_new_user['body3'],$email_strings_new_user['label_user'],$email_strings_new_user['label_pass'],$username,$password,BASE_URI),
+									array(
+										$email_strings_new_user['subject'],
+										$email_strings_new_user['body'],
+										$email_strings_new_user['body2'],
+										$email_strings_new_user['body3'],
+										$email_strings_new_user['label_user'],
+										$email_strings_new_user['label_pass'],
+										$username,
+										$password,
+										BASE_URI
+									),
 									$this->email_body
 								);
 		return array(
@@ -152,12 +212,15 @@ class PSend_Email
 	 * Returns custom values instead of a boolean value to allow more
 	 * codes in the future, on new validations and functions.
 	 */
-	function psend_send_email($type,$address,$username = '',$password = '')
+	function psend_send_email($type,$address,$username = '',$password = '',$client_id = '')
 	{
 		$this->headers = $this->email_set_headers();
 		switch($type) {
-			case 'new_file':
-				$this->mail_info = $this->email_new_file();
+			case 'new_file_by_user':
+				$this->mail_info = $this->email_new_file_by_user();
+			break;
+			case 'new_file_by_client':
+				$this->mail_info = $this->email_new_file_by_client($client_id);
 			break;
 			case 'new_client':
 				$this->mail_info = $this->email_new_client($username,$password);

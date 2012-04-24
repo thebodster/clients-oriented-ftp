@@ -179,7 +179,7 @@ $sql = $database->query($cq);
 					 * The possible returned values are 1 for ok and 2 for
 					 * error.
 					 */
-					$users_emailed[$client] = $notify_client->psend_send_email('new_file',$get_notify_email);
+					$users_emailed[$client] = $notify_client->psend_send_email('new_file_by_user',$get_notify_email);
 				}
 				else {
 					/** A value of 0 means that notify is disable for this client */
@@ -286,10 +286,29 @@ $sql = $database->query($cq);
 			</tbody>
 		</table>
 <?php
-	}
-?>
+		/**
+		 * If the uploader is a client, files are correctly assigned,
+		 * and no files are left, notify the system administrator.
+		 */
+		if ($current_level == 0) {
+			if(empty($uploaded_files)) {
+				$client_uploader_id = get_client_by_username($this_admin);
+				$notify_sysadmin = new PSend_Email();
+				$email_sysadmin = $notify_sysadmin->psend_send_email('new_file_by_client',ADMIN_EMAIL_ADDRESS,'','',$client_uploader_id['id']);
+				
+				if ($email_sysadmin == 1) {
+					$msg = __('An e-mail was sent to the site administrator as a notification about the new files.','cftp_admin');
+					echo system_message('ok',$msg);
+				}
+				else {
+					$msg = __('The site administrator could not be e-mailed about the new files.','cftp_admin');
+					echo system_message('error',$msg);
+				}
+			}
+		}
 
-	<?php
+	}
+
 		/**
 		 * Generate the table of files ready to be assigned to a client.
 		 */
