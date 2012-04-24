@@ -33,7 +33,8 @@ $window_title = __('Gallery','cftp_template_gallery');
 		</div>
 	<?php } ?>
 
-	<a href="<?php echo BASE_URI; ?>process.php?do=logout" target="_self" id="logout"><?php _e('Logout', 'cftp_admin'); ?></a>
+	<a href="<?php echo BASE_URI; ?>process.php?do=logout" target="_self" id="logout" class="header_button"><?php _e('Logout', 'cftp_admin'); ?></a>
+	<a href="<?php echo BASE_URI; ?>upload-from-computer.php" target="_self" id="upload" class="header_button"><?php _e('Upload files', 'cftp_admin'); ?></a>
 </div>
 	
 <div id="content">

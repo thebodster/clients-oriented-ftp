@@ -21,15 +21,19 @@ body {
 }
 
 .wrapper {
-	width:960px;
 	margin:10px auto;
+	padding:0 20px;
+}
+
+#header {
+	padding:0 20px;
 }
 
 #current_logo {
 	margin:0;
 	padding:30px 0;
 	width:100%;
-	text-align:center;
+	text-align:left;
 }
 
 #content {
@@ -41,10 +45,10 @@ body {
 }
 
 .photo_list li {
-	display:block;
+	display:inline-block;
+	zoom:1;
 	width:280px;
 	height:280px;
-	float:left;
 	background:#000000;
 	margin:0 8px 8px 0;
 	padding:10px;
@@ -93,13 +97,24 @@ body {
 	overflow:visible;
 	margin:0 0 0 -140px;
 	left:100%;
-	top:25px;
+	top:50px;
+}
 
+#upload {
+	float:right;
+	position:absolute;
+	overflow:visible;
+	margin:0 0 0 -280px;
+	left:100%;
+	top:50px;
+}
+
+.header_button {
 	width:120px;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
 	border-radius:5px;
-	padding:3px 0 8px;
+	padding:5px 0 7px;
 	font-size:11px!important;
 	text-align:center;
 	text-decoration:none;
@@ -114,8 +129,9 @@ body {
 	color:#999!important;
 }
 
-#logout:hover {
+.header_button:hover {
 	color:#fff!important;
+	text-decoration:none;
 }
 
 #footer {
