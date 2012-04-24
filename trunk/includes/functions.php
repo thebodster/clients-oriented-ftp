@@ -155,7 +155,7 @@ function message_no_clients()
 ?>
 	<div class="whitebox whiteform whitebox_text">
 		<p><?php _e('There are no clients at the moment', 'cftp_admin'); ?></p>
-		<p><a href="clientform.php" target="_self"><?php _e('Create a new one', 'cftp_admin'); ?></a> <?php _e('to be able to upload files for that account.', 'cftp_admin'); ?></p>
+		<p><a href="clients-add.php" target="_self"><?php _e('Create a new one', 'cftp_admin'); ?></a> <?php _e('to be able to upload files for that account.', 'cftp_admin'); ?></p>
 	</div>
 <?php
 }
