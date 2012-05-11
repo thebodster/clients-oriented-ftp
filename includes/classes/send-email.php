@@ -87,7 +87,7 @@ class PSend_Email
 	function email_set_headers()
 	{
 		$this->email_headers = 'From: '.THIS_INSTALL_SET_TITLE.' <'.ADMIN_EMAIL_ADDRESS.'>' . "\n";
-		$this->email_headers .= 'Return-Path:<'.ADMIN_EMAIL_ADDRESS.'>\r\n';
+		$this->email_headers .= 'Return-Path:<'.ADMIN_EMAIL_ADDRESS.'>' . "\r\n";
 		$this->email_headers .= 'MIME-Version: 1.0' . "\n";
 		$this->email_headers .= 'Content-type: text/html; charset='.EMAIL_ENCODING."\r\n";
 		$this->email_headers .= "Sensitivity: Private\n";
