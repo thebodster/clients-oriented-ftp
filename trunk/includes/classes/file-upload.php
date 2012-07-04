@@ -104,8 +104,8 @@ class PSend_Upload_File
 		$this->client = $arguments['client'];
 		$this->uploader = $arguments['uploader'];
 		$this->timestamp = time();
-		$result = $database->query("INSERT INTO tbl_files (id,url,filename,description,client_user,timestamp,uploader)"
-		."VALUES ('NULL', '$this->post_file', '$this->name', '$this->description', '$this->client', '$this->timestamp', '$this->uploader')");
+		$result = $database->query("INSERT INTO tbl_files (url,filename,description,client_user,timestamp,uploader)"
+		."VALUES ('$this->post_file', '$this->name', '$this->description', '$this->client', '$this->timestamp', '$this->uploader')");
 		if(!empty($result)) {
 			return true;
 		}
