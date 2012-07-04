@@ -136,8 +136,8 @@ class ClientActions
 	
 				/** Insert the client information into the database */
 				$this->timestamp = time();
-				$this->sql_query = $database->query("INSERT INTO tbl_clients (id,name,client_user,password,address,phone,email,notify,contact,timestamp,created_by)"
-													."VALUES ('NULL', '$this->name', '$this->username', '$this->enc_password', '$this->address', '$this->phone', '$this->email', '$this->notify', '$this->contact', '$this->timestamp','$this->this_admin')");
+				$this->sql_query = $database->query("INSERT INTO tbl_clients (name,client_user,password,address,phone,email,notify,contact,timestamp,created_by)"
+													."VALUES ('$this->name', '$this->username', '$this->enc_password', '$this->address', '$this->phone', '$this->email', '$this->notify', '$this->contact', '$this->timestamp','$this->this_admin')");
 
 				if ($this->sql_query) {
 					$this->state['actions'] = 1;
