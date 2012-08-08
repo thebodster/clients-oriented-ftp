@@ -71,7 +71,7 @@ $database->MySQLDB();
 
 				$(function() {
 					$("#uploader").pluploadQueue({
-						runtimes : 'gears,flash,silverlight,browserplus,html5',
+						runtimes : 'gears,flash,silverlight,browserplus,html5,html4',
 						url : 'process-upload.php',
 						max_file_size : '<?php echo MAX_FILESIZE; ?>mb',
 						chunk_size : '1mb',
