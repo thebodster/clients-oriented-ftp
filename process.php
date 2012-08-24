@@ -34,7 +34,20 @@ class process {
 				$this->sql2 = $this->database->query('UPDATE tbl_files SET download_count=' . $this->value .' WHERE url="' . $_GET['file'] .'"');
 
 				$file = 'upload/'.$_GET['client'].'/'.$_GET['file'];
-				header('Location: '.$file);
+				if (file_exists($file)) {
+					header('Content-Description: File Transfer');
+					header('Content-Type: application/octet-stream');
+					header('Content-Disposition: attachment; filename='.basename($file));
+					header('Content-Transfer-Encoding: binary');
+					header('Expires: 0');
+					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+					header('Pragma: public');
+					header('Content-Length: ' . filesize($file));
+					ob_clean();
+					flush();
+					readfile($file);
+					exit;
+				}
 			}
 		}
 	}
