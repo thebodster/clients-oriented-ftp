@@ -79,7 +79,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 
 	<?php if (isset($plupload)) { ?>
 		<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>includes/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css" />
-		<script type="text/javascript" src="https://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
+		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/browserplus-min.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/plupload/js/plupload.full.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js"></script>
 	<?php } ?>
